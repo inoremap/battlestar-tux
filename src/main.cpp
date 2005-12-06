@@ -28,6 +28,7 @@
 #include <math.h>
 
 #include "Game.h"
+#include "Ground.h"
 #include "HUD.h"
 #include "Screen.h"
 
@@ -44,6 +45,8 @@ int main(int argc, char* argv[])
 		game->exitBT();
 		return 1;
 	}
+
+Ground* ground = new Ground( SOLID_GROUND, game );
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
@@ -76,38 +79,13 @@ int main(int argc, char* argv[])
 		// Clear screen before redrawing.
 		glClear( GL_COLOR_BUFFER_BIT );
 
+
 		// Draw stuff...
 		glLoadIdentity();
-		glTranslatef( 0.0, 0.0, -5.0 );
-		glBegin( GL_QUAD_STRIP );
-			glColor3f( 1.0, 0.0, 0.0 );
-			glVertex3f( -1.0, -1.0, 0.0 );
-			glVertex3f( -1.0, 1.0, 0.0 );
-			glVertex3f( 0.0, -1.0, 1.0 );
-			glVertex3f( 0.0, 1.0, 1.0 );
-			glVertex3f( 1.0, -1.0, 0.0 );
-			glVertex3f( 1.0, 1.0, 0.0 );
-			glVertex3f( 0.0, -1.0, -1.0 );
-			glVertex3f( 0.0, 1.0, -1.0 );
-			glVertex3f( -1.0, -1.0, 0.0 );
-			glVertex3f( -1.0, 1.0, 0.0 );
-		glEnd();
+		glTranslatef( 0.0, 0.0, -1.0 );
 
-		glLoadIdentity();
-		glTranslatef( -1.0, 0.0, -5.0 );
-		glBegin( GL_QUAD_STRIP );
-			glColor3f( 1.0, 0.0, 0.0 );
-			glVertex3f( -1.0/2, -1.0, 0.0 );
-			glVertex3f( -1.0/2, 1.0, 0.0 );
-			glVertex3f( 0.0, -1.0, 1.0/2 );
-			glVertex3f( 0.0, 1.0, 1.0/2 );
-			glVertex3f( 1.0/2, -1.0, 0.0 );
-			glVertex3f( 1.0/2, 1.0, 0.0 );
-			glVertex3f( 0.0, -1.0, -1.0/2 );
-			glVertex3f( 0.0, 1.0, -1.0/2 );
-			glVertex3f( -1.0/2, -1.0, 0.0 );
-			glVertex3f( -1.0/2, 1.0, 0.0 );
-		glEnd();
+		ground->Draw();
+
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();

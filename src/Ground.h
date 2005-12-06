@@ -1,4 +1,4 @@
-/* Screen.h
+/* Ground.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,29 +22,46 @@
  */
 
 
-#ifndef SCREEN_H_
-#define SCREEN_H_
+class GroundSegment;
 
-#include "SDL.h"
-#include "SDL_opengl.h"
+#ifndef GROUND_H_
+#define GROUND_H_
 
-/* Represents screen application will draw on. */
-class Screen {
+#include "Game.h"
+
+enum GroundType {
+	MENU_GROUND,		// Display while in menus
+	SOLID_GROUND		// Solid earth below
+};
+
+/* Lowest viewable level on the screen.  It's the ground. */
+class Ground {
 	public:
-				// Creates a screen in a new window.
-				Screen();
+				Ground( GroundType type, Game* g );
 
-				// Returns true if the SDL screen hasn't been created.
-				bool isNull();
+				void Draw();
 
-				// Call when the window size changes to resize the viewport
-				void Resize( int width, int height );
+				GroundType getType();
+
+				// Number of ground segments necessary to fill the screen.
+				static const int numSegX = 4;
+				static const int numSegY = 3;
+
+				// Size of each segment.
+				static const float segSize = 20;
 
 	private:
-				SDL_Surface* screen;
-				int height;
-				int width;
+				// Take the bottom segment and move it to the top.
+				void rotateSegments();
+
+				// Particular variation of ground texturing.
+				GroundType groundType;
+
+				// The first in the list of ground pieces.
+				GroundSegment* rootSeg;
+
+				Game* game;
 };
 
 
-#endif /*SCREEN_H_*/
+#endif /*GROUND_H_*/

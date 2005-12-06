@@ -53,7 +53,7 @@ Screen::Screen() {
 
 	// Open a window 800x600.
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
-	screen = SDL_SetVideoMode( 800, 600, 0, SDL_OPENGL );
+	screen = SDL_SetVideoMode( 1024, 768, 0, SDL_OPENGL );
 
 	// If the window couldn't be created at all, we're done.
 	if( screen == NULL )
@@ -105,6 +105,7 @@ void Screen::Resize( int w, int h ) {
 	glViewport( 0, 0, width, height );
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	gluPerspective( 30, (GLfloat) width / (GLfloat) height, 1, 50 );
+	//gluPerspective( 30, (GLfloat) width / (GLfloat) height, 1, 50 );
+	glFrustum( -40, 40, -30, 30, 1, 20 );
 	glMatrixMode( GL_MODELVIEW );
 }

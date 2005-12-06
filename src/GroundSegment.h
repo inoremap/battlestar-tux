@@ -1,4 +1,4 @@
-/* Screen.h
+/* GroundSegment.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,29 +22,41 @@
  */
 
 
-#ifndef SCREEN_H_
-#define SCREEN_H_
+#ifndef GROUNDSEGMENT_H_
+#define GROUNDSEGMENT_H_
 
-#include "SDL.h"
-#include "SDL_opengl.h"
+#include "Displayable.h"
+#include "Game.h"
+#include "Ground.h"
 
-/* Represents screen application will draw on. */
-class Screen {
+/* One portion of the entire ground. */
+class GroundSegment : public Displayable {
 	public:
-				// Creates a screen in a new window.
-				Screen();
+				GroundSegment( GroundType type, Ground* gr, Game* ga );
 
-				// Returns true if the SDL screen hasn't been created.
-				bool isNull();
+				void Draw();
 
-				// Call when the window size changes to resize the viewport
-				void Resize( int width, int height );
+				GroundSegment* getPrev();
+				GroundSegment* getNext();
+
+				void setPrev( GroundSegment* seg );
+				void setNext( GroundSegment* seg );
 
 	private:
-				SDL_Surface* screen;
-				int height;
-				int width;
+				// Particular variation of ground texturing.
+				GroundType groundType;
+
+				// Parent Ground object
+				Ground* ground;
+
+				// Previous piece of ground texture.
+				GroundSegment* prev;
+
+				// Next piece of ground texture.
+				GroundSegment* next;
+
+				Game* game;
 };
 
 
-#endif /*SCREEN_H_*/
+#endif /*GROUNDSEGMENT_H_*/

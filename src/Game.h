@@ -22,10 +22,10 @@
  */
 
 
-#include "time.h"
-
 #ifndef GAME_H_
 #define GAME_H_
+
+#include "time.h"
 
 /* Stores game states and information. */
 class Game {
@@ -48,6 +48,10 @@ class Game {
 				// Mark time when done drawing frame.
 				void stopFrame();
 
+				float getGameSpeed();
+				float* getBounds();
+				float getScrollSpeed();
+
 	private:
 				// Is Battlestar Tux finished?
 				static bool finished;
@@ -69,14 +73,30 @@ class Game {
 				// Last game frame that was drawn.
 				static int lastGameFrame;
 
+				// Increases when frames are dropped.
+				// Drops to 0 when frames are repeated.
+				static float gameSpeed;
+
 				// Time the game started.
-				static Uint32 startTime;
+				static unsigned int startTime;
 
 				// Time when the last frame started being drawn.
-				static Uint32 lastTime;
+				static unsigned int lastTime;
 
 				// Number of millisec to sleep between frames to remain synced.
 				static int syncSleep;
+
+				// Maximum bounds of objects on the screen.
+				//
+				//  (-40, 30)             (40, 30)
+				//
+				//  (-40, -30)            (40, -30)
+				//
+				static float bounds[2];
+
+				// Base scroll speed.  Objects on the ground will move at this speed.
+				// Aircraft have their own velocity and may move faster.
+				static float scrollSpeed;
 
 				static Game* instance;
 

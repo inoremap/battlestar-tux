@@ -32,16 +32,20 @@ float Game::desiredFps = 50.0;
 float Game::fps = desiredFps;
 int Game::frame = 0;
 int Game::gameFrame = 0;
-int Game::lastGameFrame = gameFrame;
-Uint32 Game::startTime = 0;
-Uint32 Game::lastTime = 0;
+int Game::lastGameFrame = 0;
+float Game::gameSpeed = 1.0;
+unsigned int Game::startTime = 0;
+unsigned int Game::lastTime = 0;
 int Game::syncSleep = 5;
+float Game::bounds[2] = { 40, 30 };
+float Game::scrollSpeed = .5;
 Game* Game::instance = 0;
 
 
 Game::Game() {
 	startTime = SDL_GetTicks();
 }
+
 
 Game* Game::getInstance() {
 	if( ! instance )
@@ -57,24 +61,25 @@ void Game::newGame() {
 
 
 void Game::startFrame() {
-	Uint32 curTime = SDL_GetTicks();
+	unsigned int curTime = SDL_GetTicks();
 
 	frame++;
-	if( frame%100 == 0 ) {
-		fps = frame / ((curTime - startTime) / 1000);
-		printf( "Frame: %8i   ---   Game Frame: %8i   ---   FPS: %f   ---   Sleep: %3i\n", frame, gameFrame, fps, syncSleep );
+	if( frame%200 == 0 ) {
+		fps = ((float) frame) / (((float) curTime - (float) startTime) / 1000);
+		printf( "Frame: %8i   ---   Game Frame: %8i   ---   Last Frame: %8i   ---   Time: %f   ---   FPS: %f   ---   Sleep: %3i\n", frame, gameFrame, lastGameFrame, (float) (curTime - startTime) / 1000, fps, syncSleep );
 	}
 
 	// Calculate how many frames we should have drawn up to now.
-	gameFrame = (int) floor( (curTime - startTime) / 1000 * desiredFps );
+	gameFrame = (int) floor( ((float) curTime - (float) startTime) / 1000 * desiredFps );
 
 	// Calculate how much we should be sleeping between frames.
-	if( (gameFrame - frame) < 0 )		// We're going too fast.
-		syncSleep += 1;
-	else {						// We need to go faster, if possible.
-		if( syncSleep >= 10 )	// Never sleep less than 5 ms,
-			syncSleep -= 1;		// we can't totally hog the CPU.
-	}
+	int lag = gameFrame - lastGameFrame;
+	if( lag <= 0 )			// We're going too fast.
+		gameSpeed = 0.0;
+	else if( lag == 1 )		// Exactly correct.
+		gameSpeed = 1.0;
+	else					// We need to go faster, if possible.
+		gameSpeed = lag;
 
 	lastTime = curTime;
 	SDL_Delay( syncSleep );
@@ -84,3 +89,8 @@ void Game::startFrame() {
 void Game::stopFrame() {
 	lastGameFrame = gameFrame;
 }
+
+
+float Game::getGameSpeed() { return gameSpeed; }
+float* Game::getBounds() { return bounds; }
+float Game::getScrollSpeed() { return scrollSpeed; }
