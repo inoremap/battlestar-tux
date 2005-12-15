@@ -1,0 +1,63 @@
+/* GfxUtils.cpp
+ *
+ * Copyright 2005 Eliot Eshelman
+ * eliot@6by9.net
+ *
+ *
+ *  This file is part of Battlestar Tux.
+ *
+ *  Battlestar Tux is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; version 2 of the License.
+ *
+ *  Battlestar Tux is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Battlestar Tux; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+
+#include "GfxUtils.h"
+
+GLuint loadTexture( char* filename ) {
+	SDL_Surface* surface;
+	GLuint textureid;
+	int mode;
+
+	surface = IMG_Load( filename );
+
+	if( !surface ) {
+		printf( "Couldn't load texture: %s\n", filename );
+		return 0;
+	}
+
+	/* RGB 24bit */
+	if( surface->format->BytesPerPixel == 3 ) {
+		mode = GL_RGB;
+	}
+	/* RGBA 32bit */
+	else if( surface->format->BytesPerPixel == 4 ) {
+		mode = GL_RGBA;
+	}
+	/* Unable to find suitable mode. */
+	else {
+		printf( "Couldn't find 24/32-bit texture: %s\n", filename );
+		SDL_FreeSurface( surface );
+		return 0;
+	}
+
+	glGenTextures( 1, &textureid );
+	glBindTexture( GL_TEXTURE_2D, textureid );
+	glTexImage2D( GL_TEXTURE_2D, 0, mode, surface->w, surface->h, 0, mode, GL_UNSIGNED_BYTE, surface->pixels );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+	SDL_FreeSurface(surface);
+
+	return textureid;
+}

@@ -55,6 +55,12 @@ Screen::Screen() {
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
 	screen = SDL_SetVideoMode( 1024, 768, 0, SDL_OPENGL );
 
+	// Grab the Keyboard and Mouse
+	SDL_WM_GrabInput( SDL_GRAB_ON );
+
+	// Don't actually show the cursor
+	SDL_ShowCursor( SDL_DISABLE );
+
 	// If the window couldn't be created at all, we're done.
 	if( screen == NULL )
 	{
@@ -101,11 +107,14 @@ void Screen::Resize( int w, int h ) {
 	// Configure the OpenGL screen for a 2D scrolling engine.
 	// Objects are drawn in 3D, with the z-axis perpendicular to the viewing plane.
 	//
-	// The coordinate system is configured so that ( 0, 0, 0 ) is at the centor of the screen.
+	// The coordinate system is configured so that ( 0, 0, 0 ) is at the center of the screen.
 	glViewport( 0, 0, width, height );
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	//gluPerspective( 30, (GLfloat) width / (GLfloat) height, 1, 50 );
-	glFrustum( -40, 40, -30, 30, 1, 20 );
+	glOrtho( -40, 40, -30, 30, 1, 2 );
 	glMatrixMode( GL_MODELVIEW );
 }
+
+
+int Screen::getWidth() { return width; }
+int Screen::getHeight() { return height; }

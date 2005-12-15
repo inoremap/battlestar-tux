@@ -40,6 +40,9 @@ class Screen {
 				// Call when the window size changes to resize the viewport
 				void Resize( int width, int height );
 
+				int getWidth();
+				int getHeight();
+
 	private:
 				SDL_Surface* screen;
 				int height;

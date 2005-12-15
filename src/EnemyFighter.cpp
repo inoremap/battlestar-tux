@@ -1,4 +1,4 @@
-/* GroundSegment.h
+/* EnemyFighter.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,35 +22,35 @@
  */
 
 
-#ifndef GROUNDSEGMENT_H_
-#define GROUNDSEGMENT_H_
+#include "EnemyFighter.h"
+#include "GfxUtils.h"
 
-#include "SDL_opengl.h"
+EnemyFighter::EnemyFighter( EnemyFighterType f, Game* g ) : Displayable( g ) {
+	type = f;
+	texture = loadTexture( "data/gfx/enemy_fighter_0001-64.png" );
+	game = g;
 
-#include "Displayable.h"
-#include "Game.h"
-#include "Ground.h"
-#include "ListItem.h"
+	pos[2] = zPos;
 
-/* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
-	public:
-				GroundSegment( GroundType type, Ground* gr, Game* ga );
-
-				void Draw();
-
-	private:
-				// Particular variation of ground texturing.
-				GroundType groundType;
-
-				// Parent Ground object
-				Ground* ground;
-
-				// Segment texture
-				GLuint texture;
-
-				Game* game;
-};
+	size[0] = 5;
+	size[1] = 5;
+}
 
 
-#endif /*GROUNDSEGMENT_H_*/
+void EnemyFighter::Draw() {
+	float mx = size[0] / 2;
+	float my = size[1] / 2;
+
+	glBindTexture( GL_TEXTURE_2D, texture );
+	glBegin( GL_QUADS );
+		glColor4f( 1.0, 1.0, 1.0, 1.0 );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( pos[0] - mx, pos[1] - my, pos[2] );
+		glTexCoord2f( 1, 1 );
+		glVertex3f( pos[0] + mx, pos[1] - my, pos[2] );
+		glTexCoord2f( 1, 0 );
+		glVertex3f( pos[0] + mx, pos[1] + my, pos[2] );
+		glTexCoord2f( 0, 0 );
+		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
+	glEnd();
+}

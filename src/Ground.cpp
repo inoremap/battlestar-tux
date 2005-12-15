@@ -22,29 +22,49 @@
  */
 
 
+#include "GfxUtils.h"
 #include "Ground.h"
 #include "GroundSegment.h"
 
 Ground::Ground( GroundType type, Game* g ) {
 	groundType = type;
+	texture = loadTexture( "data/gfx/ground_0001-256.png" );
 	game = g;
 
 	float baseY = game->getBounds()[1] + segSize / 2;
 
 	rootSeg = new GroundSegment( groundType, this, game );
-	rootSeg->setPos( 0.0, baseY, 0.0 );
+	rootSeg->setPos( 0.0, baseY );
 
 	GroundSegment* last = rootSeg;
 	GroundSegment* seg = 0;
 
 	for( int i=1; i < (numSegY + 1); i++ ) {
 		seg = new GroundSegment( type, this, game );
-		seg->setPos( 0.0, baseY - (i * segSize), 0.0 );
-		seg->setPrev( last );
+		seg->setPos( 0.0, baseY - (i * segSize) );
+		seg->setPrev( (GroundSegment*) last );
 
-		last->setNext( seg );
+		last->setNext( (GroundSegment*) seg );
 		last = seg;
 	}
+}
+
+
+Ground::~Ground() {
+	GroundSegment* cur = rootSeg;
+	GroundSegment* prev = cur;
+
+	while( cur ) {
+		prev = (GroundSegment*) cur->getPrev();
+		if( prev )
+			delete prev;
+		prev = cur;
+
+		cur = (GroundSegment*) cur->getNext();
+	}
+
+	if( prev )
+		delete prev;
 }
 
 
@@ -54,18 +74,15 @@ void Ground::Draw() {
 	while( seg ) {
 		// Determine if this segment is off screen.
 		float* pos = seg->getPos();
-		if( pos[1] < (- game->getBounds()[1] - segSize/2) )
+		if( pos[1] < (0.0 - game->getBounds()[1] - segSize/2) )
 			rotateSegments();
 
 		seg->UpdatePos();
 		seg->Draw();
 
-		seg = seg->getNext();
+		seg = (GroundSegment*) seg->getNext();
 	}
 }
-
-
-GroundType Ground::getType() { return groundType; }
 
 
 void Ground::rotateSegments() {
@@ -74,18 +91,22 @@ void Ground::rotateSegments() {
 	GroundSegment* last = 0;
 
 	// Find the very last segment.
-	while( (cur = cur->getNext()) ) {
+	while( (cur = (GroundSegment*) cur->getNext()) ) {
 		last = cur;
 	}
 
 	// Move the last segment to the front of the list.
 	last->getPrev()->setNext( 0 );
 	last->setPrev( 0 );
-	last->setNext( first );
-	first->setPrev( last );
+	last->setNext( (GroundSegment*) first );
+	first->setPrev( (GroundSegment*) last );
 	rootSeg = last;
 
 	// Move the last segment to the proper Y position.
 	float baseY = (float) first->getPos()[1] + segSize;
-	last->setPos( 0.0, baseY, 0.0 );
+	last->setPos( 0.0, baseY );
 }
+
+
+GroundType Ground::getType() { return groundType; }
+GLuint Ground::getTexture() { return texture; }

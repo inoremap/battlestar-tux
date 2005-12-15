@@ -1,4 +1,4 @@
-/* GroundSegment.h
+/* ListItem.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,35 +22,27 @@
  */
 
 
-#ifndef GROUNDSEGMENT_H_
-#define GROUNDSEGMENT_H_
+#ifndef LISTITEM_H_
+#define LISTITEM_H_
 
-#include "SDL_opengl.h"
-
-#include "Displayable.h"
-#include "Game.h"
-#include "Ground.h"
-#include "ListItem.h"
-
-/* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
+/* Linked list items.  This class is to be inheritted by objects
+ * which belong in a list.
+ */
+class ListItem {
 	public:
-				GroundSegment( GroundType type, Ground* gr, Game* ga );
+				ListItem();
+				virtual ~ListItem();
 
-				void Draw();
+				void setPrev( ListItem* p );
+				void setNext( ListItem* n );
 
-	private:
-				// Particular variation of ground texturing.
-				GroundType groundType;
+				ListItem* getPrev();
+				ListItem* getNext();
 
-				// Parent Ground object
-				Ground* ground;
-
-				// Segment texture
-				GLuint texture;
-
-				Game* game;
+	protected:
+				ListItem* prev;
+				ListItem* next;
 };
 
 
-#endif /*GROUNDSEGMENT_H_*/
+#endif /*LISTITEM_H_*/

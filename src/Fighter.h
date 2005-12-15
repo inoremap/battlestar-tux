@@ -1,4 +1,4 @@
-/* Ground.h
+/* Fighter.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,56 +22,35 @@
  */
 
 
-class GroundSegment;
-
-#ifndef GROUND_H_
-#define GROUND_H_
+#ifndef FIGHTER_H_
+#define FIGHTER_H_
 
 #include "SDL_opengl.h"
 
+#include "Displayable.h"
 #include "Game.h"
 
-enum GroundType {
-	MENU_GROUND,		// Display while in menus
-	SOLID_GROUND		// Solid earth below
+enum FighterType {
+	BASIC_FIGHTER		// Default fighter
 };
 
-/* Lowest viewable level on the screen.  It's the ground. */
-class Ground {
+/* The fighter ship controlled by the player. */
+class Fighter : public Displayable {
 	public:
-				Ground( GroundType type, Game* g );
-				~Ground();
+				Fighter( FighterType f, Game* g );
 
 				void Draw();
 
-				GroundType getType();
-				GLuint getTexture();
-
-				// Constant Z position for the ground.
-				static const float zPos = -2.0;
-
-				// Number of ground segments necessary to fill the screen.
-				static const int numSegX = 2;
-				static const int numSegY = 2;
-
-				// Size of each segment.
-				static const float segSize = 40;
-
 	private:
-				// Take the bottom segment and move it to the top.
-				void rotateSegments();
+				// Constant Z position of the fighter.
+				static const float zPos = -1.5;
 
-				// Particular variation of ground texturing.
-				GroundType groundType;
+				FighterType type;
 
-				// Ground texture for the segments.
 				GLuint texture;
-
-				// The first in the list of ground pieces.
-				GroundSegment* rootSeg;
 
 				Game* game;
 };
 
 
-#endif /*GROUND_H_*/
+#endif /*FIGHTER_H_*/

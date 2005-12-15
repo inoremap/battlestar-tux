@@ -29,8 +29,10 @@
 GroundSegment::GroundSegment( GroundType type, Ground* gr, Game* ga ) : Displayable( ga ) {
 	groundType = type;
 	ground = gr;
+	texture = ground->getTexture();
 	game = ga;
-	prev = next = 0;
+
+	pos[2] = ground->zPos;
 
 	// Set the proper velocity.
 	vel[1] = 0.0 - game->getScrollSpeed();
@@ -45,24 +47,34 @@ void GroundSegment::Draw() {
 	float my = size[1] / 2;
 	float offset = 0.0;
 
+	glBindTexture( GL_TEXTURE_2D, texture );
 	glBegin( GL_QUADS );
-		glColor3f( 0.3, 0.3, 0.0 );
+		glColor4f( 1.0, 1.0, 1.0, 1.0 );
 
 		for( int i=0; i < ground->numSegX/2; i++ ) {
 			offset = i * size[0];
 
+			glTexCoord2f( 0, 0 );
 			glVertex3f( pos[0] - offset - size[0], pos[1] - my, pos[2] );
+			glTexCoord2f( 1, 0 );
 			glVertex3f( pos[0] - offset, pos[1] - my, pos[2] );
+			glTexCoord2f( 1, 1 );
 			glVertex3f( pos[0] - offset, pos[1] + my, pos[2] );
+			glTexCoord2f( 0, 1 );
 			glVertex3f( pos[0] - offset - size[0], pos[1] + my, pos[2] );
 
+			glTexCoord2f( 1, 0 );
 			glVertex3f( pos[0] + offset, pos[1] - my, pos[2] );
+			glTexCoord2f( 0, 0 );
 			glVertex3f( pos[0] + offset + size[0], pos[1] - my, pos[2] );
+			glTexCoord2f( 0, 1 );
 			glVertex3f( pos[0] + offset + size[0], pos[1] + my, pos[2] );
+			glTexCoord2f( 1, 1 );
 			glVertex3f( pos[0] + offset, pos[1] + my, pos[2] );
 		}
 	glEnd();
 
+/*	Draw a line grid over the ground.
 	for( int i=0; i < 3; i++ ) {
 		offset = i * size[0];
 
@@ -83,13 +95,5 @@ void GroundSegment::Draw() {
 			glVertex3f( pos[0] + offset + size[0], pos[1] + my, pos[2] );
 			glVertex3f( pos[0] + offset, pos[1] + my, pos[2] );
 		glEnd();
-	}
+	}*/
 }
-
-
-GroundSegment* GroundSegment::getPrev() { return prev; }
-GroundSegment* GroundSegment::getNext() { return next; }
-
-
-void GroundSegment::setPrev( GroundSegment* seg ) { prev = seg; }
-void GroundSegment::setNext( GroundSegment* seg ) { next = seg; }

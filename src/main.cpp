@@ -27,6 +27,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "EnemyFighter.h"
+#include "Fighter.h"
 #include "Game.h"
 #include "Ground.h"
 #include "HUD.h"
@@ -37,6 +39,10 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	Screen* screen = new Screen();
+	int x = 0;
+	int y = 0;
+	float realWidth = 0.0;
+	float realHeight = 0.0;
 	Game* game = Game::getInstance();
 	SDL_Event event;
 
@@ -46,7 +52,12 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-Ground* ground = new Ground( SOLID_GROUND, game );
+	Ground* ground = new Ground( SOLID_GROUND, game );
+	Fighter* fighter = new Fighter( BASIC_FIGHTER, game );
+
+	EnemyFighter* enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, game );
+	enemyFighter->setPos( 0, 40 );
+	enemyFighter->setVel( 0, -0.2, 0 );
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
@@ -82,10 +93,20 @@ Ground* ground = new Ground( SOLID_GROUND, game );
 
 		// Draw stuff...
 		glLoadIdentity();
-		glTranslatef( 0.0, 0.0, -1.0 );
 
 		ground->Draw();
 
+		// Get cursor position and then set fighter position.
+		SDL_GetMouseState( &x, &y );
+		realWidth = (float) x - (float) screen->getWidth() / 2;
+		realHeight = (float) y - (float) screen->getHeight() / 2;
+		realWidth = realWidth / ((float) screen->getWidth() / 2);
+		realHeight = realHeight / ((float) screen->getHeight() / 2);
+		fighter->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
+		fighter->Draw();
+
+		enemyFighter->UpdatePos();
+		enemyFighter->Draw();
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();

@@ -1,4 +1,4 @@
-/* GroundSegment.h
+/* ListItem.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,35 +22,23 @@
  */
 
 
-#ifndef GROUNDSEGMENT_H_
-#define GROUNDSEGMENT_H_
-
-#include "SDL_opengl.h"
-
-#include "Displayable.h"
-#include "Game.h"
-#include "Ground.h"
 #include "ListItem.h"
 
-/* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
-	public:
-				GroundSegment( GroundType type, Ground* gr, Game* ga );
-
-				void Draw();
-
-	private:
-				// Particular variation of ground texturing.
-				GroundType groundType;
-
-				// Parent Ground object
-				Ground* ground;
-
-				// Segment texture
-				GLuint texture;
-
-				Game* game;
-};
+ListItem::ListItem() {
+	prev = 0;
+	next = 0;
+}
 
 
-#endif /*GROUNDSEGMENT_H_*/
+ListItem::~ListItem() {
+	prev = 0;
+	next = 0;
+}
+
+
+void ListItem::setPrev( ListItem* p ) { prev = p; }
+void ListItem::setNext( ListItem* n ) { next = n; }
+
+
+ListItem* ListItem::getPrev() { return prev; }
+ListItem* ListItem::getNext() { return next; }

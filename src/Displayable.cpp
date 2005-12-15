@@ -27,8 +27,8 @@
 Displayable::Displayable( Game* g ) {
 	game = g;
 
-	size[0] = 100;
-	size[1] = 100;
+	size[0] = 10;
+	size[1] = 10;
 
 	pos[0] = 0;
 	pos[1] = 0;
@@ -39,7 +39,12 @@ Displayable::Displayable( Game* g ) {
 	vel[2] = 0;
 
 	age = 0;
+
+	stayOnScreen = false;
 }
+
+
+Displayable::~Displayable() {}
 
 
 void Displayable::UpdatePos() {
@@ -58,13 +63,28 @@ void Displayable::setSize( float w, float h ) {
 }
 
 
+void Displayable::setPos( float x, float y ) { setPos( x, y, pos[2] ); }
 void Displayable::setPos( float x, float y, float z ) {
 	pos[0] = x;
 	pos[1] = y;
 	pos[2] = z;
+
+	if( stayOnScreen ) {
+		float mx = size[0] / 2;
+		float my = size[1] / 2;
+
+		if( (pos[0] + mx) > game->getBounds()[0] )
+			pos[0] = game->getBounds()[0] - mx;
+		if( (pos[0] - mx) < 0.0 - game->getBounds()[0] )
+			pos[0] = 0.0 - game->getBounds()[0] + mx;
+		if( (pos[1] + my) > game->getBounds()[1] )
+			pos[1] = game->getBounds()[1] - my;
+		if( (pos[1] - my) < 0.0 - game->getBounds()[1] )
+			pos[1] = 0.0 - game->getBounds()[1] + my;
+	}
 }
 
-void Displayable::setVel( float x, float y, float z, float mag ) {
+void Displayable::setVel( float x, float y, float z ) {
 	vel[0] = x;
 	vel[1] = y;
 	vel[2] = z;
@@ -72,7 +92,12 @@ void Displayable::setVel( float x, float y, float z, float mag ) {
 
 void Displayable::incrAge() { age++; }
 
+
+void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
+
+
 float* Displayable::getSize() { return size; }
 float* Displayable::getPos() { return pos; }
 float* Displayable::getVel() { return vel; }
 unsigned int Displayable::getAge() { return age; }
+bool Displayable::getStayOnScreen() { return stayOnScreen; }

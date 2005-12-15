@@ -1,4 +1,4 @@
-/* GroundSegment.h
+/* GfxUtils.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,35 +22,16 @@
  */
 
 
-#ifndef GROUNDSEGMENT_H_
-#define GROUNDSEGMENT_H_
+#ifndef GFXUTILS_H_
+#define GFXUTILS_H_
 
+#include "SDL_image.h"
 #include "SDL_opengl.h"
 
-#include "Displayable.h"
-#include "Game.h"
-#include "Ground.h"
-#include "ListItem.h"
-
-/* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
-	public:
-				GroundSegment( GroundType type, Ground* gr, Game* ga );
-
-				void Draw();
-
-	private:
-				// Particular variation of ground texturing.
-				GroundType groundType;
-
-				// Parent Ground object
-				Ground* ground;
-
-				// Segment texture
-				GLuint texture;
-
-				Game* game;
-};
+/* Adapted from example SDL code:
+ * http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example
+ */
+GLuint loadTexture( char* filename );
 
 
-#endif /*GROUNDSEGMENT_H_*/
+#endif /*GFXUTILS_H_*/

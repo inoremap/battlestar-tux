@@ -31,6 +31,7 @@
 class Displayable {
 	public:
 				Displayable( Game* g );
+				virtual ~Displayable();
 
 				// Move object to its new position.
 				virtual void UpdatePos();
@@ -40,16 +41,22 @@ class Displayable {
 
 				void setSize( float w, float h );
 
+				// Some (most?) objects have a set Z position.
+				// In this case, just set X and Y positions.
+				void setPos( float x, float y );
 				void setPos( float x, float y, float z );
 
-				void setVel( float x, float y, float z, float magnitude );
+				void setVel( float x, float y, float z );
 
 				void incrAge();
+
+				void setStayOnScreen( bool stay );
 
 				float* getSize();
 				float* getPos();
 				float* getVel();
 				unsigned int getAge();
+				bool getStayOnScreen();
 
 	protected:
 				// Size (width and height) of object.
@@ -66,6 +73,9 @@ class Displayable {
 
 				// Age of item in millisec
 				unsigned int age;
+
+				// Must the object remain on the screen at all times?
+				bool stayOnScreen;
 
 				Game* game;
 };

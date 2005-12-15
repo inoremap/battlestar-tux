@@ -38,7 +38,7 @@ unsigned int Game::startTime = 0;
 unsigned int Game::lastTime = 0;
 int Game::syncSleep = 5;
 float Game::bounds[2] = { 40, 30 };
-float Game::scrollSpeed = .5;
+float Game::scrollSpeed = .1;
 Game* Game::instance = 0;
 
 

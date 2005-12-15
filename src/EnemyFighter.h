@@ -1,4 +1,4 @@
-/* Ground.h
+/* EnemyFighter.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,56 +22,36 @@
  */
 
 
-class GroundSegment;
-
-#ifndef GROUND_H_
-#define GROUND_H_
+#ifndef ENEMYFIGHTER_H_
+#define ENEMYFIGHTER_H_
 
 #include "SDL_opengl.h"
 
+#include "Displayable.h"
 #include "Game.h"
+#include "ListItem.h"
 
-enum GroundType {
-	MENU_GROUND,		// Display while in menus
-	SOLID_GROUND		// Solid earth below
+enum EnemyFighterType {
+	BASIC_ENEMY_FIGHTER		// Default enemy fighter
 };
 
-/* Lowest viewable level on the screen.  It's the ground. */
-class Ground {
+/* An enemy fighter ship - NPC. */
+class EnemyFighter : public Displayable, public ListItem {
 	public:
-				Ground( GroundType type, Game* g );
-				~Ground();
+				EnemyFighter( EnemyFighterType f, Game* g );
 
 				void Draw();
 
-				GroundType getType();
-				GLuint getTexture();
-
-				// Constant Z position for the ground.
-				static const float zPos = -2.0;
-
-				// Number of ground segments necessary to fill the screen.
-				static const int numSegX = 2;
-				static const int numSegY = 2;
-
-				// Size of each segment.
-				static const float segSize = 40;
-
 	private:
-				// Take the bottom segment and move it to the top.
-				void rotateSegments();
+				// Constant Z position of the fighter.
+				static const float zPos = -1.5;
 
-				// Particular variation of ground texturing.
-				GroundType groundType;
+				EnemyFighterType type;
 
-				// Ground texture for the segments.
 				GLuint texture;
-
-				// The first in the list of ground pieces.
-				GroundSegment* rootSeg;
 
 				Game* game;
 };
 
 
-#endif /*GROUND_H_*/
+#endif /*ENEMYFIGHTER_H_*/

@@ -1,4 +1,4 @@
-/* GroundSegment.h
+/* EnemyAircraft.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,35 +22,39 @@
  */
 
 
-#ifndef GROUNDSEGMENT_H_
-#define GROUNDSEGMENT_H_
-
-#include "SDL_opengl.h"
+#ifndef ENEMYAIRCRAFT_H_
+#define ENEMYAIRCRAFT_H_
 
 #include "Displayable.h"
-#include "Game.h"
-#include "Ground.h"
-#include "ListItem.h"
+#include "EnemyFighter.h"
 
-/* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
+/* Holds, updates and draws a group of displayable objects. */
+class EnemyAircraft {
 	public:
-				GroundSegment( GroundType type, Ground* gr, Game* ga );
+				EnemyAircraft( Game* g );
 
-				void Draw();
+				// Move all the objects to their next position.
+				void UpdatePositions();
+
+				// Draw all the objects.
+				void DrawObjects();
+
+				// Determine if any object collides with 'object'.
+				void CheckCollisions( Displayable* object );
+
+				// Remove any objects that are out of bounds.
+				void CullObjects();
+
+				// Add a new object to be managed.
+				void addObject( EnemyFighter* obj );
+
+				// Remove an object.
+				void remObject( EnemyFighter* obj );
 
 	private:
-				// Particular variation of ground texturing.
-				GroundType groundType;
-
-				// Parent Ground object
-				Ground* ground;
-
-				// Segment texture
-				GLuint texture;
-
+				EnemyFighter* rootObj;
 				Game* game;
 };
 
 
-#endif /*GROUNDSEGMENT_H_*/
+#endif /*ENEMYAIRCRAFT_H_*/
