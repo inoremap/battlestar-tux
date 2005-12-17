@@ -1,4 +1,4 @@
-/* Fighter.cpp
+/* FighterAmmoList.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,37 +22,39 @@
  */
 
 
-#include "Fighter.h"
-#include "GfxUtils.h"
+#ifndef FIGHTERAMMOLIST_H_
+#define FIGHTERAMMOLIST_H_
 
-Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
-	type = f;
-	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
-	game = g;
+#include "Displayable.h"
+#include "FighterAmmo.h"
 
-	pos[2] = zPos;
+/* Holds, updates and draws the fighter's shots. */
+class FighterAmmoList {
+	public:
+				FighterAmmoList( Game* g );
 
-	size[0] = 6;
-	size[1] = 6;
+				// Move all the ammo to their next position.
+				void UpdatePositions();
 
-	stayOnScreen = true;
-}
+				// Draw all the objects.
+				void DrawObjects();
+
+				// Determine if any object collides with 'object'.
+				void CheckCollisions( Displayable* object );
+
+				// Remove any objects that are out of bounds.
+				void CullObjects();
+
+				// Add a new object to be managed.
+				void addObject( FighterAmmo* obj );
+
+				// Remove an object.
+				void remObject( FighterAmmo* obj );
+
+	private:
+				FighterAmmo* rootObj;
+				Game* game;
+};
 
 
-void Fighter::Draw() {
-	float mx = size[0] / 2;
-	float my = size[1] / 2;
-
-	glBindTexture( GL_TEXTURE_2D, texture );
-	glBegin( GL_QUADS );
-		glColor4f( color[0], color[1], color[2], color[3] );
-		glTexCoord2f( 0, 1 );
-		glVertex3f( pos[0] - mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 1 );
-		glVertex3f( pos[0] + mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 0 );
-		glVertex3f( pos[0] + mx, pos[1] + my, pos[2] );
-		glTexCoord2f( 0, 0 );
-		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
-	glEnd();
-}
+#endif /*FIGHTERAMMOLIST_H_*/

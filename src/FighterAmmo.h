@@ -1,4 +1,4 @@
-/* Fighter.cpp
+/* FighterAmmo.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,37 +22,35 @@
  */
 
 
-#include "Fighter.h"
-#include "GfxUtils.h"
+#ifndef FIGHTERAMMO_H_
+#define FIGHTERAMMO_H_
 
-Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
-	type = f;
-	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
-	game = g;
+#include "SDL_opengl.h"
 
-	pos[2] = zPos;
+#include "Displayable.h"
+#include "Game.h"
+#include "ListItem.h"
 
-	size[0] = 6;
-	size[1] = 6;
+enum FighterAmmoType {
+	BASIC_LASER				// Default weapon
+};
 
-	stayOnScreen = true;
-}
+class FighterAmmo : public Displayable, public ListItem {
+	public:
+				FighterAmmo( FighterAmmoType f, Game* g );
+
+				void Draw();
+
+	private:
+				// Constant Z position of the ammo.
+				static const float zPos = -1.4;
+
+				FighterAmmoType type;
+
+				GLuint texture;
+
+				Game* game;
+};
 
 
-void Fighter::Draw() {
-	float mx = size[0] / 2;
-	float my = size[1] / 2;
-
-	glBindTexture( GL_TEXTURE_2D, texture );
-	glBegin( GL_QUADS );
-		glColor4f( color[0], color[1], color[2], color[3] );
-		glTexCoord2f( 0, 1 );
-		glVertex3f( pos[0] - mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 1 );
-		glVertex3f( pos[0] + mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 0 );
-		glVertex3f( pos[0] + mx, pos[1] + my, pos[2] );
-		glTexCoord2f( 0, 0 );
-		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
-	glEnd();
-}
+#endif /*FIGHTERAMMO_H_*/

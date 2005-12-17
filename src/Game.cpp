@@ -30,15 +30,15 @@
 bool Game::finished = false;
 float Game::desiredFps = 50.0;
 float Game::fps = desiredFps;
-int Game::frame = 0;
-int Game::gameFrame = 0;
-int Game::lastGameFrame = 0;
+unsigned int Game::frame = 0;
+unsigned int Game::gameFrame = 0;
+unsigned int Game::lastGameFrame = 0;
 float Game::gameSpeed = 1.0;
 unsigned int Game::startTime = 0;
 unsigned int Game::lastTime = 0;
 int Game::syncSleep = 5;
 float Game::bounds[2] = { 40, 30 };
-float Game::scrollSpeed = .1;
+float Game::scrollSpeed = 0.1;
 Game* Game::instance = 0;
 
 
@@ -74,12 +74,16 @@ void Game::startFrame() {
 
 	// Calculate how much we should be sleeping between frames.
 	int lag = gameFrame - lastGameFrame;
-	if( lag <= 0 )			// We're going too fast.
+	if( lag <= 0 ) {		// We're going too fast.
+		//syncSleep++;
 		gameSpeed = 0.0;
+	}
 	else if( lag == 1 )		// Exactly correct.
 		gameSpeed = 1.0;
-	else					// We need to go faster, if possible.
+	else {					// We need to go faster, if possible.
+		//syncSleep--;
 		gameSpeed = lag;
+	}
 
 	lastTime = curTime;
 	SDL_Delay( syncSleep );
@@ -91,6 +95,7 @@ void Game::stopFrame() {
 }
 
 
+int Game::getGameFrame() { return gameFrame; }
 float Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }

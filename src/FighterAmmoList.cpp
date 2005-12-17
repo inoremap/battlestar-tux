@@ -1,4 +1,4 @@
-/* EnemyAircraft.cpp
+/* FighterAmmoList.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,39 +22,38 @@
  */
 
 
-#include <stdio.h>
 #include <math.h>
 
-#include "EnemyAircraft.h"
+#include "FighterAmmoList.h"
 
-EnemyAircraft::EnemyAircraft( Game* g ) {
+FighterAmmoList::FighterAmmoList( Game* g ) {
 	rootObj = 0;
 	game = g;
 }
 
 
-void EnemyAircraft::UpdatePositions() {
-	EnemyFighter* cur = rootObj;
+void FighterAmmoList::UpdatePositions() {
+	FighterAmmo* cur = rootObj;
 
 	while( cur ) {
 		cur->UpdatePos();
-		cur = (EnemyFighter*) cur->getNext();
+		cur = (FighterAmmo*) cur->getNext();
 	}
 }
 
 
-void EnemyAircraft::DrawObjects() {
-	EnemyFighter* cur = rootObj;
+void FighterAmmoList::DrawObjects() {
+	FighterAmmo* cur = rootObj;
 
 	while( cur ) {
 		cur->Draw();
-		cur = (EnemyFighter*) cur->getNext();
+		cur = (FighterAmmo*) cur->getNext();
 	}
 }
 
 
-void EnemyAircraft::CheckCollisions( Displayable* object ) {
-	EnemyFighter* cur = rootObj;
+void FighterAmmoList::CheckCollisions( Displayable* object ) {
+	FighterAmmo* cur = rootObj;
 	bool objColl = false;
 
 	while( cur ) {
@@ -72,7 +71,7 @@ void EnemyAircraft::CheckCollisions( Displayable* object ) {
 		else
 			cur->setColor( 1.0, 1.0, 1.0, 1.0 );
 
-		cur = (EnemyFighter*) cur->getNext();
+		cur = (FighterAmmo*) cur->getNext();
 	}
 
 	if( objColl ) {
@@ -83,51 +82,82 @@ void EnemyAircraft::CheckCollisions( Displayable* object ) {
 }
 
 
-void EnemyAircraft::CullObjects() {
+void FighterAmmoList::CullObjects() {
 	float* bounds = game->getBounds();
-	EnemyFighter* cur = rootObj;
-	EnemyFighter* rem = 0;
+	FighterAmmo* cur = rootObj;
+	FighterAmmo* rem = 0;
 
 	while( cur ) {
 		float* pos = cur->getPos();
 		float* size = cur->getSize();
+
+		// Top of screen.
+		if( (pos[1] - size[1] / 2) > bounds[1] ) {
+			rem = cur;
+	 		cur = (FighterAmmo*) cur->getNext();
+
+			remObject( rem );
+			continue;
+		}
+
+		// Bottom of screen.
 		if( (pos[1] + size[1] / 2) < (0.0 - bounds[1]) ) {
 			rem = cur;
-	 		cur = (EnemyFighter*) cur->getNext();
+	 		cur = (FighterAmmo*) cur->getNext();
+
 			remObject( rem );
+			continue;
 		}
-		else
-			cur = (EnemyFighter*) cur->getNext();
+
+		// Left of screen.
+		if( (pos[0] + size[0] / 2) < (0.0 - bounds[0]) ) {
+			rem = cur;
+	 		cur = (FighterAmmo*) cur->getNext();
+
+			remObject( rem );
+			continue;
+		}
+
+		// Right of screen.
+		if( (pos[0] - size[0] / 2) > bounds[0] ) {
+			rem = cur;
+	 		cur = (FighterAmmo*) cur->getNext();
+
+			remObject( rem );
+			continue;
+		}
+
+		cur = (FighterAmmo*) cur->getNext();
 	}
 }
 
 
-void EnemyAircraft::addObject( EnemyFighter* obj ) {
-	EnemyFighter* cur = rootObj;
-	EnemyFighter* last = cur;
+void FighterAmmoList::addObject( FighterAmmo* obj ) {
+	FighterAmmo* cur = rootObj;
+	FighterAmmo* last = cur;
 	while( cur ) {
 		last = cur;
-		cur = (EnemyFighter*) cur->getNext();
+		cur = (FighterAmmo*) cur->getNext();
 	}
 
 	if( !last )
 		rootObj = obj;
 	else {
-		last->setNext( (EnemyFighter*) obj );
-		obj->setPrev( (EnemyFighter*) last );
+		last->setNext( (FighterAmmo*) obj );
+		obj->setPrev( (FighterAmmo*) last );
 	}
 }
 
 
-void EnemyAircraft::remObject( EnemyFighter* obj ) {
+void FighterAmmoList::remObject( FighterAmmo* obj ) {
 	// obj is rootObj
 	if( !obj->getPrev() )
-		rootObj = (EnemyFighter*) obj->getNext();
+		rootObj = (FighterAmmo*) obj->getNext();
 	else
-		obj->getPrev()->setNext( (EnemyFighter*) obj->getNext() );
+		obj->getPrev()->setNext( (FighterAmmo*) obj->getNext() );
 
 	if( obj->getNext() )
-		obj->getNext()->setPrev( (EnemyFighter*) obj->getPrev() );
+		obj->getNext()->setPrev( (FighterAmmo*) obj->getPrev() );
 
 	delete obj;
 }

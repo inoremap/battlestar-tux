@@ -83,6 +83,13 @@ Screen::Screen() {
 	// Enable 2D textures.
 	glEnable( GL_TEXTURE_2D );
 
+	// Don't need normalization.
+	glDisable( GL_NORMALIZE );
+
+	// With Orthographic projection, we don't need fancy
+	// coordinate interpolation.
+	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST );
+
 	// Enable blending.
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );

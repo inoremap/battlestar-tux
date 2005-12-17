@@ -38,6 +38,11 @@ Displayable::Displayable( Game* g ) {
 	vel[1] = 0;
 	vel[2] = 0;
 
+	color[0] = 1.0;
+	color[1] = 1.0;
+	color[2] = 1.0;
+	color[3] = 1.0;
+
 	age = 0;
 
 	stayOnScreen = false;
@@ -90,6 +95,13 @@ void Displayable::setVel( float x, float y, float z ) {
 	vel[2] = z;
 }
 
+void Displayable::setColor( float r, float g, float b, float a ) {
+	color[0] = r;
+	color[1] = g;
+	color[2] = b;
+	color[3] = a;
+}
+
 void Displayable::incrAge() { age++; }
 
 
@@ -99,5 +111,6 @@ void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 float* Displayable::getSize() { return size; }
 float* Displayable::getPos() { return pos; }
 float* Displayable::getVel() { return vel; }
+float* Displayable::getColor() { return color; }
 unsigned int Displayable::getAge() { return age; }
 bool Displayable::getStayOnScreen() { return stayOnScreen; }

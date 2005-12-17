@@ -1,4 +1,4 @@
-/* Fighter.cpp
+/* FighterAmmo.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,24 +22,26 @@
  */
 
 
-#include "Fighter.h"
+#include "FighterAmmo.h"
 #include "GfxUtils.h"
 
-Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, Game* g ) : Displayable( g ) {
 	type = f;
-	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
+	texture = loadTexture( "data/gfx/laser_0001-64.png" );
 	game = g;
 
 	pos[2] = zPos;
 
-	size[0] = 6;
-	size[1] = 6;
+	size[0] = 0.5;
+	size[1] = 4;
 
-	stayOnScreen = true;
+	color[0] = 0.0;
+	color[1] = 1.0;
+	color[2] = 0.2;
 }
 
 
-void Fighter::Draw() {
+void FighterAmmo::Draw() {
 	float mx = size[0] / 2;
 	float my = size[1] / 2;
 

@@ -48,6 +48,8 @@ class Displayable {
 
 				void setVel( float x, float y, float z );
 
+				void setColor( float r, float g, float b, float a );
+
 				void incrAge();
 
 				void setStayOnScreen( bool stay );
@@ -55,6 +57,7 @@ class Displayable {
 				float* getSize();
 				float* getPos();
 				float* getVel();
+				float* getColor();
 				unsigned int getAge();
 				bool getStayOnScreen();
 
@@ -70,6 +73,9 @@ class Displayable {
 				// Remember that the game runs at 50 FPS, regardless of what the
 				// user's screen is actually displaying.
 				float vel[3];
+
+				// Color (Red, Green, Blue, Alpha)
+				float color[4];
 
 				// Age of item in millisec
 				unsigned int age;

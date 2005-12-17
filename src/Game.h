@@ -48,6 +48,7 @@ class Game {
 				// Mark time when done drawing frame.
 				void stopFrame();
 
+				int getGameFrame();
 				float getGameSpeed();
 				float* getBounds();
 				float getScrollSpeed();
@@ -64,14 +65,14 @@ class Game {
 
 				// Number of frames that have been drawn.
 				// When frames are dropped, 'frame' will lag behind 'gameFrame'.
-				static int frame;
+				static unsigned int frame;
 
 				// Number of frames that ought to have been drawn.
 				// Keep track of accurate game speeds, even if frames are dropped.
-				static int gameFrame;
+				static unsigned int gameFrame;
 
 				// Last game frame that was drawn.
-				static int lastGameFrame;
+				static unsigned int lastGameFrame;
 
 				// Increases when frames are dropped.
 				// Drops to 0 when frames are repeated.

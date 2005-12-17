@@ -28,7 +28,7 @@
 #include "Displayable.h"
 #include "EnemyFighter.h"
 
-/* Holds, updates and draws a group of displayable objects. */
+/* Holds, updates and draws enemy aircraft. */
 class EnemyAircraft {
 	public:
 				EnemyAircraft( Game* g );
@@ -43,6 +43,9 @@ class EnemyAircraft {
 				void CheckCollisions( Displayable* object );
 
 				// Remove any objects that are out of bounds.
+				// For now, only cull objects that leave the
+				// bottom of the screen.  Enemies will come in
+				// from the top and sides.
 				void CullObjects();
 
 				// Add a new object to be managed.

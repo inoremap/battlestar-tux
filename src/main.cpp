@@ -27,8 +27,11 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "EnemyAircraft.h"
 #include "EnemyFighter.h"
 #include "Fighter.h"
+#include "FighterAmmo.h"
+#include "FighterAmmoList.h"
 #include "Game.h"
 #include "Ground.h"
 #include "HUD.h"
@@ -54,10 +57,11 @@ int main(int argc, char* argv[])
 
 	Ground* ground = new Ground( SOLID_GROUND, game );
 	Fighter* fighter = new Fighter( BASIC_FIGHTER, game );
+	FighterAmmoList* fighterAmmoList = new FighterAmmoList( game );
+	EnemyAircraft* enemies = new EnemyAircraft( game );
 
-	EnemyFighter* enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, game );
-	enemyFighter->setPos( 0, 40 );
-	enemyFighter->setVel( 0, -0.2, 0 );
+	EnemyFighter* enemyFighter = 0;
+	FighterAmmo* fighterAmmo = 0;
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
@@ -87,14 +91,34 @@ int main(int argc, char* argv[])
 
 		game->startFrame();
 
-		// Clear screen before redrawing.
-		glClear( GL_COLOR_BUFFER_BIT );
+		// Don't need to clear the screen, because the
+		// entire area will be drawn again.  +20fps
+		// glClear( GL_COLOR_BUFFER_BIT );
+
+
+		if( game->getGameFrame()%10 == 0 && game->getGameSpeed() != 0 ) {
+			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, game );
+			enemyFighter->setPos( 0, 40 );
+			enemyFighter->setVel( 0, -0.2, 0 );
+			enemies->addObject( enemyFighter );
+			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, game );
+			enemyFighter->setPos( 10, 45 );
+			enemyFighter->setVel( 0, -0.2, 0 );
+			enemies->addObject( enemyFighter );
+			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, game );
+			enemyFighter->setPos( -10, 45 );
+			enemyFighter->setVel( 0, -0.2, 0 );
+			enemies->addObject( enemyFighter );
+
+			fighterAmmo = new FighterAmmo( BASIC_LASER, game );
+			fighterAmmo->setPos( fighter->getPos()[0], fighter->getPos()[1] );
+			fighterAmmo->setVel( 0.0, 1.0, 0.0 );
+			fighterAmmoList->addObject( fighterAmmo );
+		}
 
 
 		// Draw stuff...
 		glLoadIdentity();
-
-		ground->Draw();
 
 		// Get cursor position and then set fighter position.
 		SDL_GetMouseState( &x, &y );
@@ -103,10 +127,25 @@ int main(int argc, char* argv[])
 		realWidth = realWidth / ((float) screen->getWidth() / 2);
 		realHeight = realHeight / ((float) screen->getHeight() / 2);
 		fighter->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
-		fighter->Draw();
+		fighter->UpdatePos();
 
-		enemyFighter->UpdatePos();
-		enemyFighter->Draw();
+		fighterAmmoList->UpdatePositions();
+		fighterAmmoList->CullObjects();
+
+		enemies->UpdatePositions();
+		enemies->CullObjects();
+		enemies->CheckCollisions( fighter );
+
+		// As long as we draw in order, we don't need depth testing.
+		ground->Draw();
+		//draw ground units
+		//draw power ups
+		//draw enemy ammo
+		enemies->DrawObjects();
+		fighterAmmoList->DrawObjects();
+		fighter->Draw();
+		//draw shield
+		//draw HUD
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();

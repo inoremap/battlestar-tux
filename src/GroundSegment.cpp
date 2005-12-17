@@ -49,7 +49,7 @@ void GroundSegment::Draw() {
 
 	glBindTexture( GL_TEXTURE_2D, texture );
 	glBegin( GL_QUADS );
-		glColor4f( 1.0, 1.0, 1.0, 1.0 );
+		glColor4f( color[0], color[1], color[2], color[3] );
 
 		for( int i=0; i < ground->numSegX/2; i++ ) {
 			offset = i * size[0];
