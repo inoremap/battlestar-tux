@@ -27,6 +27,9 @@
 
 #include "time.h"
 
+class Fighter;
+
+
 /* Stores game states and information. */
 class Game {
 	public:
@@ -52,6 +55,9 @@ class Game {
 				float getGameSpeed();
 				float* getBounds();
 				float getScrollSpeed();
+
+				Fighter* getFighter();
+				void setFighter( Fighter* f );
 
 	private:
 				// Is Battlestar Tux finished?
@@ -100,6 +106,8 @@ class Game {
 				static float scrollSpeed;
 
 				static Game* instance;
+
+				Fighter* fighter;
 
 				Game();
 };

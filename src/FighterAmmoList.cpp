@@ -24,11 +24,25 @@
 
 #include <math.h>
 
+#include "FighterAmmo.h"
 #include "FighterAmmoList.h"
+#include "GfxUtils.h"
 
 FighterAmmoList::FighterAmmoList( Game* g ) {
 	rootObj = 0;
+
+	// Load all ammo textures.
+	textures[0] = loadTexture( "data/gfx/laser_0001-64.png" );		// BASIC_LASER
+
 	game = g;
+}
+
+
+FighterAmmoList::~FighterAmmoList() {
+	glDeleteTextures( numFighterAmmo, textures );
+
+	for( int i=0; i < numFighterAmmo; i++ )
+		textures[i] = 0;
 }
 
 
@@ -130,6 +144,9 @@ void FighterAmmoList::CullObjects() {
 		cur = (FighterAmmo*) cur->getNext();
 	}
 }
+
+
+GLuint FighterAmmoList::getTexture( int index ) { return textures[index]; }
 
 
 void FighterAmmoList::addObject( FighterAmmo* obj ) {

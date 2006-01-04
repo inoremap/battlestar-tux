@@ -41,7 +41,7 @@ class Displayable {
 
 				void setSize( float w, float h );
 
-				// Some (most?) objects have a set Z position.
+				// Some (all?) objects have a set Z position.
 				// In this case, just set X and Y positions.
 				void setPos( float x, float y );
 				void setPos( float x, float y, float z );
@@ -77,7 +77,7 @@ class Displayable {
 				// Color (Red, Green, Blue, Alpha)
 				float color[4];
 
-				// Age of item in millisec
+				// Age of item in frames
 				unsigned int age;
 
 				// Must the object remain on the screen at all times?

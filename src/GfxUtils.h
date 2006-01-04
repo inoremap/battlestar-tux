@@ -32,6 +32,7 @@
  * http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example
  */
 GLuint loadTexture( char* filename );
+GLuint loadTexture( char* filename, int texture_quality );
 
 
 #endif /*GFXUTILS_H_*/

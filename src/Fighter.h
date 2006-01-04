@@ -30,26 +30,45 @@
 #include "Displayable.h"
 #include "Game.h"
 
+
 enum FighterType {
 	BASIC_FIGHTER		// Default fighter
 };
+
 
 /* The fighter ship controlled by the player. */
 class Fighter : public Displayable {
 	public:
 				Fighter( FighterType f, Game* g );
+				~Fighter();
 
 				void Draw();
+
+				void damage( float damage );
+				float getHealth();
+				float getHealthFull();
+				float getShields();
+				float getShieldsFull();
 
 	private:
 				// Constant Z position of the fighter.
 				static const float zPos = -1.5;
 
+				// Remaining ship armor
+				float health;
+
+				// Maximum ship armor
+				float healthFull;
+
+				// Remaining shield strength
+				float shields;
+
+				// Maximum shield strength
+				float shieldsFull;
+
 				FighterType type;
 
 				GLuint texture;
-
-				Game* game;
 };
 
 

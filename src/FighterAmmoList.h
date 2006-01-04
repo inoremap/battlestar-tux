@@ -25,13 +25,24 @@
 #ifndef FIGHTERAMMOLIST_H_
 #define FIGHTERAMMOLIST_H_
 
+#include "SDL_opengl.h"
+
 #include "Displayable.h"
-#include "FighterAmmo.h"
+
+class FighterAmmo;
+
+
+enum FighterAmmoType {
+	BASIC_LASER				// Default weapon
+};
+static const int numFighterAmmo = 1;
+
 
 /* Holds, updates and draws the fighter's shots. */
 class FighterAmmoList {
 	public:
 				FighterAmmoList( Game* g );
+				~FighterAmmoList();
 
 				// Move all the ammo to their next position.
 				void UpdatePositions();
@@ -45,6 +56,9 @@ class FighterAmmoList {
 				// Remove any objects that are out of bounds.
 				void CullObjects();
 
+				// Get a texture ID.
+				GLuint getTexture( int index );
+
 				// Add a new object to be managed.
 				void addObject( FighterAmmo* obj );
 
@@ -53,6 +67,10 @@ class FighterAmmoList {
 
 	private:
 				FighterAmmo* rootObj;
+
+				// Texture for each type of ammo.
+				GLuint textures[numFighterAmmo];
+
 				Game* game;
 };
 

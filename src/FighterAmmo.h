@@ -28,16 +28,13 @@
 #include "SDL_opengl.h"
 
 #include "Displayable.h"
+#include "FighterAmmoList.h"
 #include "Game.h"
 #include "ListItem.h"
 
-enum FighterAmmoType {
-	BASIC_LASER				// Default weapon
-};
-
 class FighterAmmo : public Displayable, public ListItem {
 	public:
-				FighterAmmo( FighterAmmoType f, Game* g );
+				FighterAmmo( FighterAmmoType f, FighterAmmoList* l, Game* g );
 
 				void Draw();
 
@@ -48,8 +45,6 @@ class FighterAmmo : public Displayable, public ListItem {
 				FighterAmmoType type;
 
 				GLuint texture;
-
-				Game* game;
 };
 
 

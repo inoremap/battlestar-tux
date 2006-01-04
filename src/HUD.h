@@ -25,13 +25,24 @@
 #ifndef HUD_H_
 #define HUD_H_
 
+#include "SDL_opengl.h"
+
+#include "Game.h"
+
 /* Heads Up Display - Character info/health. */
 class HUD {
 	public:
-				HUD();
+				HUD( Game* g );
+				~HUD();
 
 				// Draw the HUD
 				void Draw();
+
+	private:
+				Game* game;
+
+				GLuint healthTexture;
+				GLuint shieldsTexture;
 };
 
 

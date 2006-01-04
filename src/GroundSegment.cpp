@@ -30,7 +30,6 @@ GroundSegment::GroundSegment( GroundType type, Ground* gr, Game* ga ) : Displaya
 	groundType = type;
 	ground = gr;
 	texture = ground->getTexture();
-	game = ga;
 
 	pos[2] = ground->zPos;
 

@@ -28,7 +28,6 @@
 Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
 	type = f;
 	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
-	game = g;
 
 	pos[2] = zPos;
 
@@ -36,6 +35,19 @@ Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
 	size[1] = 6;
 
 	stayOnScreen = true;
+
+	switch( type ) {
+		case BASIC_FIGHTER:
+		default:
+			health = healthFull = 1000;
+			shields = shieldsFull = 500;
+			break;
+	}
+}
+
+
+Fighter::~Fighter() {
+	glDeleteTextures( 1, &texture );
 }
 
 
@@ -56,3 +68,23 @@ void Fighter::Draw() {
 		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
 	glEnd();
 }
+
+
+void Fighter::damage( float damage ) {
+	if( (damage - shields) > 0 ) {
+		shields = 0;
+		health -= (damage - shields);
+	}
+	else {
+		shields -= damage;
+	}
+
+	if( health < 0 )
+		health = 0;
+}
+
+
+float Fighter::getHealth() { return health; }
+float Fighter::getHealthFull() { return healthFull; }
+float Fighter::getShields() { return shields; }
+float Fighter::getShieldsFull() { return shieldsFull; }

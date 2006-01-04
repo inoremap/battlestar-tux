@@ -25,10 +25,9 @@
 #include "EnemyFighter.h"
 #include "GfxUtils.h"
 
-EnemyFighter::EnemyFighter( EnemyFighterType f, Game* g ) : Displayable( g ) {
+EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l,  Game* g ) : Displayable( g ) {
 	type = f;
-	texture = loadTexture( "data/gfx/enemy_fighter_0001-64.png" );
-	game = g;
+	texture = l->getTexture( type );
 
 	pos[2] = zPos;
 

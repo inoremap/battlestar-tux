@@ -1,4 +1,4 @@
-/* EnemyAircraft.cpp
+/* EnemyFighterList.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,18 +22,31 @@
  */
 
 
-#include <stdio.h>
 #include <math.h>
 
-#include "EnemyAircraft.h"
+#include "EnemyFighter.h"
+#include "EnemyFighterList.h"
+#include "GfxUtils.h"
 
-EnemyAircraft::EnemyAircraft( Game* g ) {
+EnemyFighterList::EnemyFighterList( Game* g ) {
 	rootObj = 0;
+
+	// Load all enemy textures.
+	textures[0] = loadTexture( "data/gfx/enemy_fighter_0001-64.png" );		// BASIC_ENEMY_FIGHTER
+
 	game = g;
 }
 
 
-void EnemyAircraft::UpdatePositions() {
+EnemyFighterList::~EnemyFighterList() {
+	glDeleteTextures( numEnemyTypes, textures );
+
+	for( int i=0; i < numEnemyTypes; i++ )
+		textures[i] = 0;
+}
+
+
+void EnemyFighterList::UpdatePositions() {
 	EnemyFighter* cur = rootObj;
 
 	while( cur ) {
@@ -43,7 +56,7 @@ void EnemyAircraft::UpdatePositions() {
 }
 
 
-void EnemyAircraft::DrawObjects() {
+void EnemyFighterList::DrawObjects() {
 	EnemyFighter* cur = rootObj;
 
 	while( cur ) {
@@ -53,7 +66,7 @@ void EnemyAircraft::DrawObjects() {
 }
 
 
-void EnemyAircraft::CheckCollisions( Displayable* object ) {
+void EnemyFighterList::CheckCollisions( Displayable* object ) {
 	EnemyFighter* cur = rootObj;
 	bool objColl = false;
 
@@ -83,7 +96,7 @@ void EnemyAircraft::CheckCollisions( Displayable* object ) {
 }
 
 
-void EnemyAircraft::CullObjects() {
+void EnemyFighterList::CullObjects() {
 	float* bounds = game->getBounds();
 	EnemyFighter* cur = rootObj;
 	EnemyFighter* rem = 0;
@@ -102,7 +115,10 @@ void EnemyAircraft::CullObjects() {
 }
 
 
-void EnemyAircraft::addObject( EnemyFighter* obj ) {
+GLuint EnemyFighterList::getTexture( int index ) { return textures[index]; }
+
+
+void EnemyFighterList::addObject( EnemyFighter* obj ) {
 	EnemyFighter* cur = rootObj;
 	EnemyFighter* last = cur;
 	while( cur ) {
@@ -119,7 +135,7 @@ void EnemyAircraft::addObject( EnemyFighter* obj ) {
 }
 
 
-void EnemyAircraft::remObject( EnemyFighter* obj ) {
+void EnemyFighterList::remObject( EnemyFighter* obj ) {
 	// obj is rootObj
 	if( !obj->getPrev() )
 		rootObj = (EnemyFighter*) obj->getNext();

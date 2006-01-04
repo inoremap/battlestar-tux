@@ -24,7 +24,8 @@
 
 #include "GfxUtils.h"
 
-GLuint loadTexture( char* filename ) {
+GLuint loadTexture( char* filename ) { return loadTexture( filename, GL_LINEAR ); }
+GLuint loadTexture( char* filename, int texture_quality ) {
 	SDL_Surface* surface;
 	GLuint textureid;
 	int mode;
@@ -54,8 +55,10 @@ GLuint loadTexture( char* filename ) {
 	glGenTextures( 1, &textureid );
 	glBindTexture( GL_TEXTURE_2D, textureid );
 	glTexImage2D( GL_TEXTURE_2D, 0, mode, surface->w, surface->h, 0, mode, GL_UNSIGNED_BYTE, surface->pixels );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texture_quality );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texture_quality );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
 	SDL_FreeSurface(surface);
 

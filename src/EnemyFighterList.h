@@ -1,4 +1,4 @@
-/* EnemyAircraft.h
+/* EnemyFighterList.h
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,16 +22,27 @@
  */
 
 
-#ifndef ENEMYAIRCRAFT_H_
-#define ENEMYAIRCRAFT_H_
+#ifndef ENEMYFIGHTERLIST_H_
+#define ENEMYFIGHTERLIST_H_
+
+#include "SDL_opengl.h"
 
 #include "Displayable.h"
-#include "EnemyFighter.h"
+
+class EnemyFighter;
+
+
+enum EnemyFighterType {
+	BASIC_ENEMY_FIGHTER		// Default enemy fighter
+};
+static const int numEnemyTypes = 1;
+
 
 /* Holds, updates and draws enemy aircraft. */
-class EnemyAircraft {
+class EnemyFighterList {
 	public:
-				EnemyAircraft( Game* g );
+				EnemyFighterList( Game* g );
+				~EnemyFighterList();
 
 				// Move all the objects to their next position.
 				void UpdatePositions();
@@ -48,6 +59,9 @@ class EnemyAircraft {
 				// from the top and sides.
 				void CullObjects();
 
+				// Get a texture ID.
+				GLuint getTexture( int index );
+
 				// Add a new object to be managed.
 				void addObject( EnemyFighter* obj );
 
@@ -56,8 +70,12 @@ class EnemyAircraft {
 
 	private:
 				EnemyFighter* rootObj;
+
+				// Texture for each type of enemy.
+				GLuint textures[numEnemyTypes];
+
 				Game* game;
 };
 
 
-#endif /*ENEMYAIRCRAFT_H_*/
+#endif /*ENEMYFIGHTERLIST_H_*/

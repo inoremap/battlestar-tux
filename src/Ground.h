@@ -22,8 +22,6 @@
  */
 
 
-class GroundSegment;
-
 #ifndef GROUND_H_
 #define GROUND_H_
 
@@ -31,10 +29,14 @@ class GroundSegment;
 
 #include "Game.h"
 
+class GroundSegment;
+
+
 enum GroundType {
 	MENU_GROUND,		// Display while in menus
 	SOLID_GROUND		// Solid earth below
 };
+
 
 /* Lowest viewable level on the screen.  It's the ground. */
 class Ground {

@@ -28,17 +28,14 @@
 #include "SDL_opengl.h"
 
 #include "Displayable.h"
+#include "EnemyFighterList.h"
 #include "Game.h"
 #include "ListItem.h"
-
-enum EnemyFighterType {
-	BASIC_ENEMY_FIGHTER		// Default enemy fighter
-};
 
 /* An enemy fighter ship - NPC. */
 class EnemyFighter : public Displayable, public ListItem {
 	public:
-				EnemyFighter( EnemyFighterType f, Game* g );
+				EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g );
 
 				void Draw();
 
@@ -49,8 +46,6 @@ class EnemyFighter : public Displayable, public ListItem {
 				EnemyFighterType type;
 
 				GLuint texture;
-
-				Game* game;
 };
 
 

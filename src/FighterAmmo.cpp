@@ -23,12 +23,11 @@
 
 
 #include "FighterAmmo.h"
-#include "GfxUtils.h"
+#include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, Game* g ) : Displayable( g ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, FighterAmmoList* l, Game* g ) : Displayable( g ) {
 	type = f;
-	texture = loadTexture( "data/gfx/laser_0001-64.png" );
-	game = g;
+	texture = l->getTexture( type );
 
 	pos[2] = zPos;
 
@@ -38,6 +37,7 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, Game* g ) : Displayable( g ) {
 	color[0] = 0.0;
 	color[1] = 1.0;
 	color[2] = 0.2;
+	color[3] = 0.9;
 }
 
 

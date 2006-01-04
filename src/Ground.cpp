@@ -65,6 +65,8 @@ Ground::~Ground() {
 
 	if( prev )
 		delete prev;
+
+	glDeleteTextures( 1, &texture );
 }
 
 

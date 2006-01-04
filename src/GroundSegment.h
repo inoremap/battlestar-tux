@@ -48,8 +48,6 @@ class GroundSegment : public Displayable, public ListItem {
 
 				// Segment texture
 				GLuint texture;
-
-				Game* game;
 };
 
 

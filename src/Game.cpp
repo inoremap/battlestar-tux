@@ -25,6 +25,7 @@
 #include "math.h"
 #include "SDL.h"
 
+#include "Fighter.h"
 #include "Game.h"
 
 bool Game::finished = false;
@@ -44,6 +45,8 @@ Game* Game::instance = 0;
 
 Game::Game() {
 	startTime = SDL_GetTicks();
+
+	fighter = 0;
 }
 
 
@@ -99,3 +102,7 @@ int Game::getGameFrame() { return gameFrame; }
 float Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
+
+
+Fighter* Game::getFighter() { return fighter; }
+void Game::setFighter( Fighter* f ) { fighter = f; }
