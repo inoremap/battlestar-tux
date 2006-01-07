@@ -8,28 +8,3 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-AC_INIT([BattlestarTUX],
-        [0.0.1],
-        [Eliot Eshelman eliot@6by9.net],
-        [BattlestarTUX])
-AC_CONFIG_AUX_DIR(config)
-AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([dist-bzip2])
-
-LF_CONFIGURE_CC
-LF_CONFIGURE_CXX
-LF_HOST_TYPE
-LF_SET_WARNINGS
-AC_PROG_RANLIB
-
-AC_CONFIG_FILES([
-   Makefile
-   README
-   doc/Makefile
-   m4/Makefile
-   src/Makefile
-   src/data/Makefile
-   src/data/gfx/Makefile
-])
-
-AC_OUTPUT

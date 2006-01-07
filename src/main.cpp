@@ -1,6 +1,6 @@
 /* main.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -20,6 +20,11 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 
 #include "SDL.h"
