@@ -1,4 +1,4 @@
-/* FighterAmmo.h
+/* LightLaser.cpp
  *
  * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
@@ -22,38 +22,19 @@
  */
 
 
-#ifndef FIGHTERAMMO_H_
-#define FIGHTERAMMO_H_
+#include "LightLaser.h"
+#include "../../FighterAmmo.h"
 
-#include "SDL_opengl.h"
+LightLaser::LightLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
+	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
 
-#include "Displayable.h"
-#include "FighterAmmoList.h"
-#include "Game.h"
-#include "ListItem.h"
+	type = BASIC_LASER;
 
-class FighterAmmo : public Displayable, public ListItem {
-	public:
-				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
+	rechargeTime = 6.0;
 
-				void Draw();
+	velocity = 1.3;
+	damage = 50.0;
+	penetration = 0.0;
+}
 
-				float getDamage();
-
-	private:
-				// Constant Z position of the ammo.
-				static const float zPos = -1.4;
-
-				FighterAmmoType type;
-
-				// Damage dealt by the ammo.
-				float damage;
-
-				// Penetrating power of the ammo.
-				float penetration;
-
-				GLuint texture;
-};
-
-
-#endif /*FIGHTERAMMO_H_*/
+char* LightLaser::getName() { return "Light Laser"; }

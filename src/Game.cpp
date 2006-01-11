@@ -25,7 +25,8 @@
 #include "math.h"
 #include "SDL.h"
 
-#include "Fighter.h"
+#include "Fighter/Fighter.h"
+#include "FighterAmmoList.h"
 #include "Game.h"
 
 bool Game::finished = false;
@@ -104,5 +105,7 @@ float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
 
 
+FighterAmmoList* Game::getFighterAmmoList() { return fighterAmmoList; }
+void Game::setFighterAmmoList( FighterAmmoList* l ) { fighterAmmoList = l; }
 Fighter* Game::getFighter() { return fighter; }
 void Game::setFighter( Fighter* f ) { fighter = f; }

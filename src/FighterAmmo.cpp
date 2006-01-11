@@ -25,19 +25,25 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, FighterAmmoList* l, Game* g ) : Displayable( g ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Displayable( g ) {
 	type = f;
-	texture = l->getTexture( type );
+	damage = d;
+	penetration = p;
+	texture = t;
 
 	pos[2] = zPos;
 
-	size[0] = 0.5;
-	size[1] = 4;
-
-	color[0] = 0.0;
-	color[1] = 1.0;
-	color[2] = 0.2;
-	color[3] = 0.9;
+	switch( type ) {
+		case BASIC_LASER:
+		default:
+			size[0] = 0.5;
+			size[1] = 4;
+		
+			color[0] = 0.0;
+			color[1] = 1.0;
+			color[2] = 0.2;
+			color[3] = 0.7;
+	}
 }
 
 
@@ -58,3 +64,6 @@ void FighterAmmo::Draw() {
 		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
 	glEnd();
 }
+
+
+float FighterAmmo::getDamage() { return damage; }

@@ -27,12 +27,19 @@
 
 #include "SDL_opengl.h"
 
-#include "Displayable.h"
-#include "Game.h"
+#include "../Displayable.h"
+#include "../Game.h"
+#include "Weapon.h"
+#include "WeaponSystem.h"
 
 
 enum FighterType {
 	BASIC_FIGHTER		// Default fighter
+};
+
+
+enum FighterWeaponMounts {
+	BASIC_FIGHTER_MOUNTS		= PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R
 };
 
 
@@ -43,6 +50,15 @@ class Fighter : public Displayable {
 				~Fighter();
 
 				void Draw();
+
+				// Update fighter systems.
+				void Update();
+
+				// Weapons begin firing.
+				void startFiring();
+
+				// Weapons cease firing.
+				void stopFiring();
 
 				void damage( float damage );
 				float getHealth();
@@ -65,6 +81,11 @@ class Fighter : public Displayable {
 
 				// Maximum shield strength
 				float shieldsFull;
+
+				// Is fighter currently firing?
+				bool firing;
+
+				WeaponSystem* weaponSystem;
 
 				FighterType type;
 

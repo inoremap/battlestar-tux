@@ -23,7 +23,10 @@
 
 
 #include "Fighter.h"
-#include "GfxUtils.h"
+#include "../GfxUtils.h"
+
+#include "Weapons/LightLaser.h"
+#include "Weapons/MediumLaser.h"
 
 Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
 	type = f;
@@ -41,12 +44,27 @@ Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
 		default:
 			health = healthFull = 1000;
 			shields = shieldsFull = 500;
+			float offsets[3][2] = {
+				{ 0.0, 3.0 },
+				{ -1.0, 1.0 },
+				{ 1.0, 1.0 }
+			};
+			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
+			MediumLaser* primary = new MediumLaser( weaponSystem, game );
+			LightLaser* left = new LightLaser( weaponSystem, game );
+			LightLaser* right = new LightLaser( weaponSystem, game );
+			weaponSystem->Equip( primary, PRIMARY_WEAPON );
+			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
+			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
 			break;
 	}
+
+	firing = false;
 }
 
 
 Fighter::~Fighter() {
+	delete weaponSystem;
 	glDeleteTextures( 1, &texture );
 }
 
@@ -68,6 +86,16 @@ void Fighter::Draw() {
 		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
 	glEnd();
 }
+
+
+void Fighter::Update() {
+	if( firing )
+		weaponSystem->Fire();
+}
+
+
+void Fighter::startFiring() { firing = true; }
+void Fighter::stopFiring() { firing = false; }
 
 
 void Fighter::damage( float damage ) {

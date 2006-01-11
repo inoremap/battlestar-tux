@@ -25,7 +25,7 @@
 #include "SDL.h"
 #include "SDL_opengl.h"
 
-#include "Fighter.h"
+#include "Fighter/Fighter.h"
 #include "GfxUtils.h"
 #include "HUD.h"
 

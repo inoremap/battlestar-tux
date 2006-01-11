@@ -34,7 +34,7 @@
 
 #include "EnemyFighterList.h"
 #include "EnemyFighter.h"
-#include "Fighter.h"
+#include "Fighter/Fighter.h"
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
@@ -63,41 +63,16 @@ int main(int argc, char* argv[])
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );
 	Fighter* fighter = new Fighter( BASIC_FIGHTER, game );
+	fighter->startFiring();
 	game->setFighter( fighter );
 	FighterAmmoList* fighterAmmoList = new FighterAmmoList( game );
+	game->setFighterAmmoList( fighterAmmoList );
 	EnemyFighterList* enemies = new EnemyFighterList( game );
 
 	EnemyFighter* enemyFighter = 0;
-	FighterAmmo* fighterAmmo = 0;
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
-
-		// Check for OpenGL errors.
-
-		// Read all events off the queue.
-		while( !game->isFinished() && SDL_PollEvent(&event) ) {
-			switch( event.type ) {
-				case SDL_KEYDOWN:
-					switch( event.key.keysym.sym ) {
-						case SDLK_ESCAPE:
-							game->exitBT();
-							break;
-	
-						default:
-							break;
-					}
-					break;
-	
-				case SDL_QUIT:
-					game->exitBT();
-					break;
-
-				default:
-					break;
-			}
-		}
-
 		game->startFrame();
 
 		// Don't need to clear the screen, because the
@@ -118,11 +93,6 @@ int main(int argc, char* argv[])
 			enemyFighter->setPos( -10, 45 );
 			enemyFighter->setVel( 0, -0.2, 0 );
 			enemies->addObject( enemyFighter );
-
-			fighterAmmo = new FighterAmmo( BASIC_LASER, fighterAmmoList, game );
-			fighterAmmo->setPos( fighter->getPos()[0], fighter->getPos()[1] );
-			fighterAmmo->setVel( 0.0, 1.0, 0.0 );
-			fighterAmmoList->addObject( fighterAmmo );
 		}
 
 
@@ -158,6 +128,36 @@ int main(int argc, char* argv[])
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();
+
+
+
+		// Read all events off the queue.
+		while( !game->isFinished() && SDL_PollEvent(&event) ) {
+			switch( event.type ) {
+				case SDL_KEYDOWN:
+					switch( event.key.keysym.sym ) {
+						case SDLK_ESCAPE:
+							game->exitBT();
+							break;
+	
+						default:
+							break;
+					}
+					break;
+	
+				case SDL_QUIT:
+					game->exitBT();
+					break;
+
+				default:
+					break;
+			}
+		}
+		fighter->Update();
+
+
+		// Check for OpenGL errors.
+
 
 		game->stopFrame();
 	}

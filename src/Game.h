@@ -27,6 +27,7 @@
 
 #include "time.h"
 
+class FighterAmmoList;
 class Fighter;
 
 
@@ -56,6 +57,8 @@ class Game {
 				float* getBounds();
 				float getScrollSpeed();
 
+				FighterAmmoList* getFighterAmmoList();
+				void setFighterAmmoList( FighterAmmoList* l );
 				Fighter* getFighter();
 				void setFighter( Fighter* f );
 
@@ -107,6 +110,7 @@ class Game {
 
 				static Game* instance;
 
+				FighterAmmoList* fighterAmmoList;
 				Fighter* fighter;
 
 				Game();

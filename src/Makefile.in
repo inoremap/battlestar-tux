@@ -59,12 +59,17 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
+am__dirstamp = $(am__leading_dot)dirstamp
 am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
 	EnemyFighter.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
-	Fighter.$(OBJEXT) FighterAmmo.$(OBJEXT) \
-	FighterAmmoList.$(OBJEXT) Game.$(OBJEXT) GfxUtils.$(OBJEXT) \
-	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	ListItem.$(OBJEXT) Screen.$(OBJEXT) main.$(OBJEXT)
+	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
+	Fighter/Fighter.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) \
+	Fighter/Weapons/LightLaser.$(OBJEXT) \
+	Fighter/Weapons/MediumLaser.$(OBJEXT) Game.$(OBJEXT) \
+	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
+	HUD.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
+	main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -181,10 +186,46 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+AUTOMAKE_OPTIONS = subdir-objects
 INCLUDES = -I/usr/include -I/usr/include/SDL
 AM_LDFLAGS = -L/usr/lib
 LDADD = -lSDL -lSDL_image -lGL -lGLU
-battlestarTUX_SOURCES = Displayable.cpp Displayable.h EnemyFighter.cpp EnemyFighter.h EnemyFighterList.cpp EnemyFighterList.h Fighter.cpp Fighter.h FighterAmmo.cpp FighterAmmo.h FighterAmmoList.cpp FighterAmmoList.h Game.cpp Game.h GfxUtils.cpp GfxUtils.h Ground.cpp Ground.h GroundSegment.cpp GroundSegment.h HUD.cpp HUD.h ListItem.cpp ListItem.h Screen.cpp Screen.h main.cpp
+battlestarTUX_SOURCES = Displayable.cpp \
+			Displayable.h \
+			EnemyFighter.cpp \
+			EnemyFighter.h \
+			EnemyFighterList.cpp \
+			EnemyFighterList.h \
+			FighterAmmo.cpp \
+			FighterAmmo.h \
+			FighterAmmoList.cpp \
+			FighterAmmoList.h \
+			Fighter/Fighter.cpp \
+			Fighter/Fighter.h \
+			Fighter/Weapon.cpp \
+			Fighter/Weapon.h \
+			Fighter/WeaponSystem.cpp \
+			Fighter/WeaponSystem.h \
+			Fighter/Weapons/LightLaser.cpp \
+			Fighter/Weapons/LightLaser.h \
+			Fighter/Weapons/MediumLaser.cpp \
+			Fighter/Weapons/MediumLaser.h \
+			Game.cpp \
+			Game.h \
+			GfxUtils.cpp \
+			GfxUtils.h \
+			Ground.cpp \
+			Ground.h \
+			GroundSegment.cpp \
+			GroundSegment.h \
+			HUD.cpp \
+			HUD.h \
+			ListItem.cpp \
+			ListItem.h \
+			Screen.cpp \
+			Screen.h \
+			main.cpp
+
 SUBDIRS = data/
 all: all-recursive
 
@@ -242,12 +283,40 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+Fighter/$(am__dirstamp):
+	@$(mkdir_p) Fighter
+	@: > Fighter/$(am__dirstamp)
+Fighter/$(DEPDIR)/$(am__dirstamp):
+	@$(mkdir_p) Fighter/$(DEPDIR)
+	@: > Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/Fighter.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/Weapon.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/WeaponSystem.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/Weapons/$(am__dirstamp):
+	@$(mkdir_p) Fighter/Weapons
+	@: > Fighter/Weapons/$(am__dirstamp)
+Fighter/Weapons/$(DEPDIR)/$(am__dirstamp):
+	@$(mkdir_p) Fighter/Weapons/$(DEPDIR)
+	@: > Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
+Fighter/Weapons/LightLaser.$(OBJEXT): Fighter/Weapons/$(am__dirstamp) \
+	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
+Fighter/Weapons/MediumLaser.$(OBJEXT):  \
+	Fighter/Weapons/$(am__dirstamp) \
+	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f Fighter/Fighter.$(OBJEXT)
+	-rm -f Fighter/Weapon.$(OBJEXT)
+	-rm -f Fighter/WeaponSystem.$(OBJEXT)
+	-rm -f Fighter/Weapons/LightLaser.$(OBJEXT)
+	-rm -f Fighter/Weapons/MediumLaser.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -255,7 +324,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighterList.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Fighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmoList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Game.Po@am__quote@
@@ -266,17 +334,24 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Fighter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Weapon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/WeaponSystem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/LightLaser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumLaser.Po@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`; \
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$$depbase.Tpo" -c -o $@ $<; \
+@am__fastdepCXX_TRUE@	then mv -f "$$depbase.Tpo" "$$depbase.Po"; else rm -f "$$depbase.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`; \
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$$depbase.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
+@am__fastdepCXX_TRUE@	then mv -f "$$depbase.Tpo" "$$depbase.Po"; else rm -f "$$depbase.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
@@ -484,6 +559,10 @@ clean-generic:
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+	-rm -f Fighter/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Fighter/$(am__dirstamp)
+	-rm -f Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Fighter/Weapons/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -493,7 +572,7 @@ clean: clean-recursive
 clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -519,7 +598,7 @@ install-man:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
