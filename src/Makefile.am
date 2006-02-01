@@ -17,6 +17,8 @@ LDADD = -lSDL -lSDL_image -lGL -lGLU
 bin_PROGRAMS = battlestarTUX
 battlestarTUX_SOURCES = Displayable.cpp \
 			Displayable.h \
+			DisplayableList.cpp \
+			DisplayableList.h \
 			EnemyFighter.cpp \
 			EnemyFighter.h \
 			EnemyFighterList.cpp \

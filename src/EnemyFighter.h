@@ -30,10 +30,9 @@
 #include "Displayable.h"
 #include "EnemyFighterList.h"
 #include "Game.h"
-#include "ListItem.h"
 
 /* An enemy fighter ship - NPC. */
-class EnemyFighter : public Displayable, public ListItem {
+class EnemyFighter : public Displayable {
 	public:
 				EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g );
 

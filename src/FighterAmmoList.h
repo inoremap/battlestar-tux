@@ -1,6 +1,6 @@
 /* FighterAmmoList.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -28,6 +28,7 @@
 #include "SDL_opengl.h"
 
 #include "Displayable.h"
+#include "DisplayableList.h"
 
 class FighterAmmo;
 
@@ -39,39 +40,16 @@ static const int numFighterAmmo = 1;
 
 
 /* Holds, updates and draws the fighter's shots. */
-class FighterAmmoList {
+class FighterAmmoList : public DisplayableList {
 	public:
 				FighterAmmoList( Game* g );
 				~FighterAmmoList();
-
-				// Move all the ammo to their next position.
-				void UpdatePositions();
-
-				// Draw all the objects.
-				void DrawObjects();
-
-				// Determine if any object collides with 'object'.
-				void CheckCollisions( Displayable* object );
-
-				// Remove any objects that are out of bounds.
-				void CullObjects();
-
 				// Get a texture ID.
 				GLuint getTexture( int index );
 
-				// Add a new object to be managed.
-				void addObject( FighterAmmo* obj );
-
-				// Remove an object.
-				void remObject( FighterAmmo* obj );
-
 	private:
-				FighterAmmo* rootObj;
-
 				// Texture for each type of ammo.
 				GLuint textures[numFighterAmmo];
-
-				Game* game;
 };
 
 

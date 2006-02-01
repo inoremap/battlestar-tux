@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 		// glClear( GL_COLOR_BUFFER_BIT );
 
 
-		if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
+		if( game->getGameFrame()%1 == 0 && game->getGameSpeed() != 0 ) {
 			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 			enemyFighter->setPos( 0, 40 );
 			enemyFighter->setVel( 0, -0.2, 0 );
@@ -112,18 +112,19 @@ int main(int argc, char* argv[])
 		fighterAmmoList->CullObjects();
 
 		enemies->UpdatePositions();
-		enemies->CullObjects();
+		enemies->CullObjectsBottom();
 		enemies->CheckCollisions( fighter );
+		enemies->CheckCollisions( fighterAmmoList );
 
 		// As long as we draw in order, we don't need depth testing.
 		ground->Draw();
 		//draw ground units
-		//draw power ups
 		//draw enemy ammo
 		fighterAmmoList->DrawObjects();
 		enemies->DrawObjects();
 		fighter->Draw();
 		//draw shield
+		//draw power ups
 		hud->Draw();
 
 		// Swap buffers - the newly drawn items will appear.

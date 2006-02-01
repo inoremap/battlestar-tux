@@ -28,6 +28,7 @@
 #include "SDL_opengl.h"
 
 #include "Displayable.h"
+#include "DisplayableList.h"
 
 class EnemyFighter;
 
@@ -39,42 +40,17 @@ static const int numEnemyTypes = 1;
 
 
 /* Holds, updates and draws enemy aircraft. */
-class EnemyFighterList {
+class EnemyFighterList : public DisplayableList {
 	public:
 				EnemyFighterList( Game* g );
 				~EnemyFighterList();
 
-				// Move all the objects to their next position.
-				void UpdatePositions();
-
-				// Draw all the objects.
-				void DrawObjects();
-
-				// Determine if any object collides with 'object'.
-				void CheckCollisions( Displayable* object );
-
-				// Remove any objects that are out of bounds.
-				// For now, only cull objects that leave the
-				// bottom of the screen.  Enemies will come in
-				// from the top and sides.
-				void CullObjects();
-
 				// Get a texture ID.
 				GLuint getTexture( int index );
 
-				// Add a new object to be managed.
-				void addObject( EnemyFighter* obj );
-
-				// Remove an object.
-				void remObject( EnemyFighter* obj );
-
 	private:
-				EnemyFighter* rootObj;
-
 				// Texture for each type of enemy.
 				GLuint textures[numEnemyTypes];
-
-				Game* game;
 };
 
 

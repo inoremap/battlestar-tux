@@ -30,9 +30,8 @@
 #include "Displayable.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
-#include "ListItem.h"
 
-class FighterAmmo : public Displayable, public ListItem {
+class FighterAmmo : public Displayable {
 	public:
 				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
 

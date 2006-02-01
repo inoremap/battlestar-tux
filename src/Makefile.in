@@ -61,10 +61,10 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
-	EnemyFighter.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
-	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
-	Fighter/Fighter.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
-	Fighter/WeaponSystem.$(OBJEXT) \
+	DisplayableList.$(OBJEXT) EnemyFighter.$(OBJEXT) \
+	EnemyFighterList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
+	FighterAmmoList.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
+	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
 	Fighter/Weapons/MediumLaser.$(OBJEXT) Game.$(OBJEXT) \
 	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
@@ -192,6 +192,8 @@ AM_LDFLAGS = -L/usr/lib
 LDADD = -lSDL -lSDL_image -lGL -lGLU
 battlestarTUX_SOURCES = Displayable.cpp \
 			Displayable.h \
+			DisplayableList.cpp \
+			DisplayableList.h \
 			EnemyFighter.cpp \
 			EnemyFighter.h \
 			EnemyFighterList.cpp \
@@ -322,6 +324,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DisplayableList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighterList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmo.Po@am__quote@

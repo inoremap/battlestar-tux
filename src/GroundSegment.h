@@ -30,10 +30,9 @@
 #include "Displayable.h"
 #include "Game.h"
 #include "Ground.h"
-#include "ListItem.h"
 
 /* One portion of the entire ground. */
-class GroundSegment : public Displayable, public ListItem {
+class GroundSegment : public Displayable {
 	public:
 				GroundSegment( GroundType type, Ground* gr, Game* ga );
 

@@ -26,9 +26,10 @@
 #define DISPLAYABLE_H_
 
 #include "Game.h"
+#include "ListItem.h"
 
 /* Any item which appears on the screen is Displayable. */
-class Displayable {
+class Displayable : public ListItem {
 	public:
 				Displayable( Game* g );
 				virtual ~Displayable();

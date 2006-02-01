@@ -36,7 +36,7 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 	switch( type ) {
 		case BASIC_LASER:
 		default:
-			size[0] = 0.5;
+			size[0] = 0.3;
 			size[1] = 4;
 		
 			color[0] = 0.0;
