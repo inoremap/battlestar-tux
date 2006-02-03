@@ -92,23 +92,17 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 			float my = posA[1] - posB[1];
 			float dist = sqrtf( mx*mx + my*my );
 			float minDist = (sizeA[0] + sizeA[1] + sizeB[0] + sizeB[1]) / 4;
-	
-			if( dist < minDist ) {
+
+			// Collision detected.
+			if( dist < minDist )
 				objColl = true;
-				cur->setColor( 1.0, 0.0, 0.0, 1.0 );
-			}
-			else
-				cur->setColor( 1.0, 1.0, 1.0, 1.0 );
 		}
 
 		cur = (Displayable*) cur->getNext();
 	}
 
-	if( objColl ) {
+	if( objColl )
 		object->setColor( 1.0, 0.0, 0.0, 1.0 );
-	}
-	else
-		object->setColor( 1.0, 1.0, 1.0, 1.0 );
 }
 
 

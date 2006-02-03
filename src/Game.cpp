@@ -30,6 +30,7 @@
 #include "Game.h"
 
 bool Game::finished = false;
+bool Game::paused = false;
 float Game::desiredFps = 50.0;
 float Game::fps = desiredFps;
 unsigned int Game::frame = 0;
@@ -61,6 +62,28 @@ Game* Game::getInstance() {
 
 void Game::newGame() {
 	
+}
+
+
+void Game::pause() {
+	if( paused ) {
+		// Grab the Keyboard and Mouse
+		SDL_WM_GrabInput( SDL_GRAB_ON );
+
+		// Don't actually show the cursor
+		SDL_ShowCursor( SDL_DISABLE );
+
+		paused = false;
+	}
+	else {
+		// Release the Keyboard and Mouse
+		SDL_WM_GrabInput( SDL_GRAB_OFF );
+
+		// Show the cursor
+		SDL_ShowCursor( SDL_ENABLE );
+
+		paused = true;
+	}
 }
 
 

@@ -1,4 +1,4 @@
-/* FighterAmmo.h
+/* LightPlasma.h
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,38 +22,21 @@
  */
 
 
-#ifndef FIGHTERAMMO_H_
-#define FIGHTERAMMO_H_
+#ifndef LIGHTPLASMA_H_
+#define LIGHTPLASMA_H_
 
-#include "SDL_opengl.h"
+#include "../../Game.h"
+#include "../../FighterAmmoList.h"
+#include "../Weapon.h"
+#include "../WeaponSystem.h"
 
-#include "Displayable.h"
-#include "FighterAmmoList.h"
-#include "Game.h"
-
-class FighterAmmo : public Displayable {
+/* Light plasma weapon. */
+class LightPlasma : public Weapon {
 	public:
-				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
+				LightPlasma( WeaponSystem* w, Game* g );
 
-				void Draw();
-
-				float getDamage();
-				float getPenetration();
-
-	private:
-				// Constant Z position of the ammo.
-				static const float zPos = -1.4;
-
-				FighterAmmoType type;
-
-				// Damage dealt by the ammo.
-				float damage;
-
-				// Penetrating power of the ammo.
-				float penetration;
-
-				GLuint texture;
+				char* getName();
 };
 
 
-#endif /*FIGHTERAMMO_H_*/
+#endif /*LIGHTPLASMA_H_*/

@@ -63,7 +63,6 @@ int main(int argc, char* argv[])
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );
 	Fighter* fighter = new Fighter( BASIC_FIGHTER, game );
-	fighter->startFiring();
 	game->setFighter( fighter );
 	FighterAmmoList* fighterAmmoList = new FighterAmmoList( game );
 	game->setFighterAmmoList( fighterAmmoList );
@@ -75,46 +74,49 @@ int main(int argc, char* argv[])
 	while( !game->isFinished() ) {
 		game->startFrame();
 
+		// If not paused, update all positions/states.
+		if( !game->isPaused() ) {
+			if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
+				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
+				enemyFighter->setPos( 0, 40 );
+				enemyFighter->setVel( 0, -0.2, 0 );
+				enemies->addObject( enemyFighter );
+				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
+				enemyFighter->setPos( 10, 45 );
+				enemyFighter->setVel( 0, -0.2, 0 );
+				enemies->addObject( enemyFighter );
+				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
+				enemyFighter->setPos( -10, 45 );
+				enemyFighter->setVel( 0, -0.2, 0 );
+				enemies->addObject( enemyFighter );
+			}
+
+			// Get cursor position and then set fighter position.
+			SDL_GetMouseState( &x, &y );
+			realWidth = (float) x - (float) screen->getWidth() / 2;
+			realHeight = (float) y - (float) screen->getHeight() / 2;
+			realWidth = realWidth / ((float) screen->getWidth() / 2);
+			realHeight = realHeight / ((float) screen->getHeight() / 2);
+			fighter->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
+			fighter->UpdatePos();
+			fighter->Update();
+
+			fighterAmmoList->UpdatePositions();
+			fighterAmmoList->CullObjects();
+
+			enemies->UpdatePositions();
+			enemies->CullObjectsBottom();
+			enemies->CheckCollisions( fighter );
+			enemies->CheckCollisions( fighterAmmoList );
+		}
+
+
 		// Don't need to clear the screen, because the
 		// entire area will be drawn again.  +20fps
 		// glClear( GL_COLOR_BUFFER_BIT );
 
-
-		if( game->getGameFrame()%1 == 0 && game->getGameSpeed() != 0 ) {
-			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-			enemyFighter->setPos( 0, 40 );
-			enemyFighter->setVel( 0, -0.2, 0 );
-			enemies->addObject( enemyFighter );
-			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-			enemyFighter->setPos( 10, 45 );
-			enemyFighter->setVel( 0, -0.2, 0 );
-			enemies->addObject( enemyFighter );
-			enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-			enemyFighter->setPos( -10, 45 );
-			enemyFighter->setVel( 0, -0.2, 0 );
-			enemies->addObject( enemyFighter );
-		}
-
-
 		// Draw stuff...
 		glLoadIdentity();
-
-		// Get cursor position and then set fighter position.
-		SDL_GetMouseState( &x, &y );
-		realWidth = (float) x - (float) screen->getWidth() / 2;
-		realHeight = (float) y - (float) screen->getHeight() / 2;
-		realWidth = realWidth / ((float) screen->getWidth() / 2);
-		realHeight = realHeight / ((float) screen->getHeight() / 2);
-		fighter->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
-		fighter->UpdatePos();
-
-		fighterAmmoList->UpdatePositions();
-		fighterAmmoList->CullObjects();
-
-		enemies->UpdatePositions();
-		enemies->CullObjectsBottom();
-		enemies->CheckCollisions( fighter );
-		enemies->CheckCollisions( fighterAmmoList );
 
 		// As long as we draw in order, we don't need depth testing.
 		ground->Draw();
@@ -126,10 +128,9 @@ int main(int argc, char* argv[])
 		//draw shield
 		//draw power ups
 		hud->Draw();
-
+	
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();
-
 
 
 		// Read all events off the queue.
@@ -140,12 +141,16 @@ int main(int argc, char* argv[])
 						case SDLK_ESCAPE:
 							game->exitBT();
 							break;
-	
+
+						case SDLK_BACKSPACE:
+							game->pause();
+							break;
+
 						default:
 							break;
 					}
 					break;
-	
+
 				case SDL_QUIT:
 					game->exitBT();
 					break;
@@ -154,7 +159,10 @@ int main(int argc, char* argv[])
 					break;
 			}
 		}
-		fighter->Update();
+		if( SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(1) )
+			fighter->startFiring();
+		else
+			fighter->stopFiring();
 
 
 		// Check for OpenGL errors.

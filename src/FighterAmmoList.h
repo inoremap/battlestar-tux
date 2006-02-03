@@ -34,9 +34,14 @@ class FighterAmmo;
 
 
 enum FighterAmmoType {
-	BASIC_LASER				// Default weapon
+	LIGHT_LASER,			// Light laser beam
+	MEDIUM_LASER,			// Medium laser beam
+	HEAVY_LASER,			// Heavy laser beam
+	LIGHT_PLASMA,			// Light plasma bolt
+	MEDIUM_PLASMA,			// Medium plasma bolt
+	HEAVY_PLASMA			// Heavy plasma bolt
 };
-static const int numFighterAmmo = 1;
+static const int numFighterAmmo = 6;
 
 
 /* Holds, updates and draws the fighter's shots. */

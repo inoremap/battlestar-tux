@@ -1,6 +1,6 @@
 /* GroundSegment.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -26,7 +26,7 @@
 
 #include "GroundSegment.h"
 
-GroundSegment::GroundSegment( GroundType type, Ground* gr, Game* ga ) : Displayable( ga ) {
+GroundSegment::GroundSegment( GroundType type, Ground* gr, Game* ga ) : Displayable( GROUND, ga ) {
 	groundType = type;
 	ground = gr;
 	texture = ground->getTexture();

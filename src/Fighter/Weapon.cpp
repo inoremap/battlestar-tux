@@ -1,6 +1,6 @@
 /* Weapon.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -31,7 +31,7 @@ Weapon::Weapon( WeaponSystem* w, Game* g ) {
 
 	mount = PRIMARY_WEAPON;
 
-	type = BASIC_LASER;
+	type = LIGHT_LASER;
 
 	rechargeTime = 10.0;
 	chargingTime = 0.0;
@@ -71,21 +71,23 @@ bool Weapon::Recharged() {
 }
 
 
-void Weapon::Fire() {
+void Weapon::Fire( bool firing ) {
 	if( ! Recharged() )
 		return;
 
-	// Create ammo object and add to the list of ammo.
-	FighterAmmo* ammo = new FighterAmmo( type, damage, penetration, game->getFighterAmmoList()->getTexture(type), game );
-
-	float* fighterPos = weaponSystem->getPos();
-	ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
-	ammo->setVel( 0.0, velocity, 0.0 );
-
-	game->getFighterAmmoList()->addObject( ammo );
-
-	// Weapon will need to recharge.
-	chargingTime = rechargeTime;
+	if( firing ) {
+		// Create ammo object and add to the list of ammo.
+		FighterAmmo* ammo = new FighterAmmo( type, damage, penetration, game->getFighterAmmoList()->getTexture(type), game );
+	
+		float* fighterPos = weaponSystem->getPos();
+		ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
+		ammo->setVel( 0.0, velocity, 0.0 );
+	
+		game->getFighterAmmoList()->addObject( ammo );
+	
+		// Weapon will need to recharge.
+		chargingTime = rechargeTime;
+	}
 }
 
 

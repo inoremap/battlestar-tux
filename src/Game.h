@@ -43,6 +43,11 @@ class Game {
 				// Game finished
 				inline bool isFinished() { return finished; }
 
+				// Temporarily pause a game in mid-motion.
+				void pause();
+
+				inline bool isPaused() { return paused; }
+
 				// Exit game
 				inline void exitBT() { finished = true; }
 
@@ -65,6 +70,9 @@ class Game {
 	private:
 				// Is Battlestar Tux finished?
 				static bool finished;
+
+				// Is Battlestar Tux paused?
+				static bool paused;
 
 				// Desired Frames Per Second (FPS).
 				static float desiredFps;

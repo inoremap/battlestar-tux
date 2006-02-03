@@ -1,6 +1,6 @@
 /* MediumLaser.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -28,7 +28,7 @@
 MediumLaser::MediumLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
 
-	type = BASIC_LASER;
+	type = MEDIUM_LASER;
 
 	rechargeTime = 14.0;
 

@@ -28,10 +28,19 @@
 #include "Game.h"
 #include "ListItem.h"
 
+
+enum DisplayableType {
+	GROUND,				// Ground segment
+	FIGHTER,			// Player's aircraft
+	ENEMY,				// Enemy aircraft
+	AMMO				// Weapon ammo
+};
+
+
 /* Any item which appears on the screen is Displayable. */
 class Displayable : public ListItem {
 	public:
-				Displayable( Game* g );
+				Displayable( DisplayableType t, Game* g );
 				virtual ~Displayable();
 
 				// Move object to its new position.
@@ -60,6 +69,7 @@ class Displayable : public ListItem {
 				float* getVel();
 				float* getColor();
 				unsigned int getAge();
+				int getType();
 				bool getStayOnScreen();
 
 	protected:
@@ -80,6 +90,9 @@ class Displayable : public ListItem {
 
 				// Age of item in frames
 				unsigned int age;
+
+				// Type of displayable object.
+				int type;
 
 				// Must the object remain on the screen at all times?
 				bool stayOnScreen;

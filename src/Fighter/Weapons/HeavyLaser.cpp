@@ -1,4 +1,4 @@
-/* FighterAmmo.h
+/* HeavyLaser.cpp
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,38 +22,19 @@
  */
 
 
-#ifndef FIGHTERAMMO_H_
-#define FIGHTERAMMO_H_
+#include "HeavyLaser.h"
+#include "../../FighterAmmo.h"
 
-#include "SDL_opengl.h"
+HeavyLaser::HeavyLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
+	mount = PRIMARY_WEAPON;
 
-#include "Displayable.h"
-#include "FighterAmmoList.h"
-#include "Game.h"
+	type = HEAVY_LASER;
 
-class FighterAmmo : public Displayable {
-	public:
-				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
+	rechargeTime = 25.0;
 
-				void Draw();
+	velocity = 1.3;
+	damage = 200.0;
+	penetration = 0.5;
+}
 
-				float getDamage();
-				float getPenetration();
-
-	private:
-				// Constant Z position of the ammo.
-				static const float zPos = -1.4;
-
-				FighterAmmoType type;
-
-				// Damage dealt by the ammo.
-				float damage;
-
-				// Penetrating power of the ammo.
-				float penetration;
-
-				GLuint texture;
-};
-
-
-#endif /*FIGHTERAMMO_H_*/
+char* HeavyLaser::getName() { return "Heavy Laser"; }

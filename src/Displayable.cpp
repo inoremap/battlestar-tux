@@ -24,7 +24,7 @@
 
 #include "Displayable.h"
 
-Displayable::Displayable( Game* g ) {
+Displayable::Displayable( DisplayableType t, Game* g ) {
 	game = g;
 
 	size[0] = 10;
@@ -44,6 +44,8 @@ Displayable::Displayable( Game* g ) {
 	color[3] = 1.0;
 
 	age = 0;
+
+	type = t;
 
 	stayOnScreen = false;
 }
@@ -113,4 +115,5 @@ float* Displayable::getPos() { return pos; }
 float* Displayable::getVel() { return vel; }
 float* Displayable::getColor() { return color; }
 unsigned int Displayable::getAge() { return age; }
+int Displayable::getType() { return type; }
 bool Displayable::getStayOnScreen() { return stayOnScreen; }

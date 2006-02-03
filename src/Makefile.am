@@ -37,6 +37,14 @@ battlestarTUX_SOURCES = Displayable.cpp \
 			Fighter/Weapons/LightLaser.h \
 			Fighter/Weapons/MediumLaser.cpp \
 			Fighter/Weapons/MediumLaser.h \
+			Fighter/Weapons/HeavyLaser.cpp \
+			Fighter/Weapons/HeavyLaser.h \
+			Fighter/Weapons/LightPlasma.cpp \
+			Fighter/Weapons/LightPlasma.h \
+			Fighter/Weapons/MediumPlasma.cpp \
+			Fighter/Weapons/MediumPlasma.h \
+			Fighter/Weapons/HeavyPlasma.cpp \
+			Fighter/Weapons/HeavyPlasma.h \
 			Game.cpp \
 			Game.h \
 			GfxUtils.cpp \

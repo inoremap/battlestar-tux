@@ -1,6 +1,6 @@
 /* WeaponSystem.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -47,7 +47,7 @@ class WeaponSystem {
 				~WeaponSystem();
 
 				// Fire weapons.
-				void Fire();
+				void Fire( bool firing );
 
 				// Equip weapon in slot.
 				bool Equip( Weapon* weapon, WeaponMount point );

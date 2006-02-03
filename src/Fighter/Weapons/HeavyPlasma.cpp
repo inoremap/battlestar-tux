@@ -1,4 +1,4 @@
-/* FighterAmmo.h
+/* HeavyPlasma.cpp
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,38 +22,19 @@
  */
 
 
-#ifndef FIGHTERAMMO_H_
-#define FIGHTERAMMO_H_
+#include "HeavyPlasma.h"
+#include "../../FighterAmmo.h"
 
-#include "SDL_opengl.h"
+HeavyPlasma::HeavyPlasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
+	mount = PRIMARY_WEAPON;
 
-#include "Displayable.h"
-#include "FighterAmmoList.h"
-#include "Game.h"
+	type = HEAVY_PLASMA;
 
-class FighterAmmo : public Displayable {
-	public:
-				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
+	rechargeTime = 50.0;
 
-				void Draw();
+	velocity = 0.3;
+	damage = 800.0;
+	penetration = 0.0;
+}
 
-				float getDamage();
-				float getPenetration();
-
-	private:
-				// Constant Z position of the ammo.
-				static const float zPos = -1.4;
-
-				FighterAmmoType type;
-
-				// Damage dealt by the ammo.
-				float damage;
-
-				// Penetrating power of the ammo.
-				float penetration;
-
-				GLuint texture;
-};
-
-
-#endif /*FIGHTERAMMO_H_*/
+char* HeavyPlasma::getName() { return "Heavy Plasma"; }

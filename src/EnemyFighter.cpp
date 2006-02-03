@@ -25,7 +25,7 @@
 #include "EnemyFighter.h"
 #include "GfxUtils.h"
 
-EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l,  Game* g ) : Displayable( g ) {
+EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l,  Game* g ) : Displayable( ENEMY, g ) {
 	type = f;
 	texture = l->getTexture( type );
 

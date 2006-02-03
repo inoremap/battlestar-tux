@@ -1,6 +1,6 @@
 /* Weapon.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -36,7 +36,7 @@ class Weapon {
 				virtual ~Weapon();
 
 				// Fire weapon.
-				virtual void Fire();
+				virtual void Fire( bool firing );
 
 				void setOffset( float o[] );
 

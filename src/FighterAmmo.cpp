@@ -1,6 +1,6 @@
 /* FighterAmmo.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Displayable( g ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Displayable( AMMO, g ) {
 	type = f;
 	damage = d;
 	penetration = p;
@@ -34,15 +34,66 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 	pos[2] = zPos;
 
 	switch( type ) {
-		case BASIC_LASER:
 		default:
-			size[0] = 0.3;
+		case LIGHT_LASER:
+			size[0] = 0.2;
 			size[1] = 4;
 		
 			color[0] = 0.0;
 			color[1] = 1.0;
 			color[2] = 0.2;
 			color[3] = 0.7;
+			break;
+
+		case MEDIUM_LASER:
+			size[0] = 0.3;
+			size[1] = 4;
+		
+			color[0] = 0.0;
+			color[1] = 1.0;
+			color[2] = 0.2;
+			color[3] = 0.6;
+			break;
+
+		case HEAVY_LASER:
+			size[0] = 0.4;
+			size[1] = 4;
+		
+			color[0] = 0.0;
+			color[1] = 1.0;
+			color[2] = 0.2;
+			color[3] = 0.5;
+			break;
+
+		case LIGHT_PLASMA:
+			size[0] = 1;
+			size[1] = 1;
+		
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 0.9;
+			break;
+
+		case MEDIUM_PLASMA:
+			size[0] = 1.5;
+			size[1] = 1.5;
+		
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 0.9;
+			break;
+
+		case HEAVY_PLASMA:
+			size[0] = 2;
+			size[1] = 2;
+		
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 0.9;
+			break;
 	}
 }
 
@@ -67,3 +118,4 @@ void FighterAmmo::Draw() {
 
 
 float FighterAmmo::getDamage() { return damage; }
+float FighterAmmo::getPenetration() { return penetration; }

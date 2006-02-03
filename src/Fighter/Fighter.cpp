@@ -1,6 +1,6 @@
 /* Fighter.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -27,8 +27,12 @@
 
 #include "Weapons/LightLaser.h"
 #include "Weapons/MediumLaser.h"
+#include "Weapons/HeavyLaser.h"
+#include "Weapons/LightPlasma.h"
+#include "Weapons/MediumPlasma.h"
+#include "Weapons/HeavyPlasma.h"
 
-Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
+Fighter::Fighter( FighterType f, Game* g ) : Displayable( FIGHTER, g ) {
 	type = f;
 	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
 
@@ -51,8 +55,8 @@ Fighter::Fighter( FighterType f, Game* g ) : Displayable( g ) {
 			};
 			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
 			MediumLaser* primary = new MediumLaser( weaponSystem, game );
-			LightLaser* left = new LightLaser( weaponSystem, game );
-			LightLaser* right = new LightLaser( weaponSystem, game );
+			LightPlasma* left = new LightPlasma( weaponSystem, game );
+			LightPlasma* right = new LightPlasma( weaponSystem, game );
 			weaponSystem->Equip( primary, PRIMARY_WEAPON );
 			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
 			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
@@ -89,8 +93,7 @@ void Fighter::Draw() {
 
 
 void Fighter::Update() {
-	if( firing )
-		weaponSystem->Fire();
+	weaponSystem->Fire( firing );
 }
 
 

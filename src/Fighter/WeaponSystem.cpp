@@ -1,6 +1,6 @@
 /* WeaponSystem.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,6 +22,8 @@
  */
 
 
+#include <stdio.h>
+
 #include "WeaponSystem.h"
 #include "Fighter.h"
 #include "Weapon.h"
@@ -33,7 +35,7 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
 	// Determine number of mounts.
 	numMounts = 0;
 	for( int i=0, n=1; i < 8; i++ ) {
-		if( n ^ mount_points )
+		if( n & mount_points )
 			numMounts++;
 		n *= 2;
 	}
@@ -51,7 +53,7 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
 	}
 
 	for( int i=0, n=1, j=0; i < 8; i++ ) {
-		if( n ^ mount_points ) {
+		if( n & mount_points ) {
 			mountTypes[j] = (WeaponMount) n;
 			j++;
 		}
@@ -70,25 +72,29 @@ WeaponSystem::~WeaponSystem() {
 }
 
 
-void WeaponSystem::Fire() {
+void WeaponSystem::Fire( bool firing ) {
 	for( int i=0; i < numMounts; i++ ) {
 		if( weapons[i] )
-			weapons[i]->Fire();
+			weapons[i]->Fire( firing );
 	}
 }
 
 
 bool WeaponSystem::Equip( Weapon* weapon, WeaponMount point ) {
 	// Ensure weapon can be mounted at this point.
-	if( ! (weapon->getMount() ^ point) )
+	if( (weapon->getMount() & point) == 0 ) {
+		printf( "Unable to mount weapon (%i) on this mount point (%i): %i.\n", weapon->getMount(), point, weapon->getMount() & point );
 		return false;
+	}
 
 	for( int i=0; i < numMounts; i++ ) {
 		// Find WeaponMount point.
 		if( mountTypes[i] == point ) {
 			// A weapon is already equiped here.
-			if( weapons[i] )
+			if( weapons[i] ) {
+				printf( "There is already a weapon mounted here.\n" );
 				return false;
+			}
 			// Equip the weapon.
 			else {
 				weapons[i] = weapon;
