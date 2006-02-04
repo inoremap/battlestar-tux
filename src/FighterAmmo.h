@@ -44,7 +44,7 @@ class FighterAmmo : public Displayable {
 				// Constant Z position of the ammo.
 				static const float zPos = -1.4;
 
-				FighterAmmoType type;
+				FighterAmmoType ammoType;
 
 				// Damage dealt by the ammo.
 				float damage;

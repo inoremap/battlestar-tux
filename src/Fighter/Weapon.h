@@ -29,6 +29,7 @@
 #include "../FighterAmmoList.h"
 #include "WeaponSystem.h"
 
+
 /* Fighter weapon. */
 class Weapon {
 	public:
@@ -75,6 +76,9 @@ class Weapon {
 
 				// Position of weapon relative to fighter position.
 				float* offset;
+
+				// Is weapon mounted on player's or enemy's ship?
+				int align;
 
 				// Weapon system controlling the weapon.
 				WeaponSystem* weaponSystem;

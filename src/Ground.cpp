@@ -79,7 +79,7 @@ void Ground::Draw() {
 		if( pos[1] < (0.0 - game->getBounds()[1] - segSize/2) )
 			rotateSegments();
 
-		seg->UpdatePos();
+		seg->Update();
 		seg->Draw();
 
 		seg = (GroundSegment*) seg->getNext();

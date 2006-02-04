@@ -1,6 +1,6 @@
 /* Fighter.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -31,23 +31,29 @@
 #include "../Game.h"
 #include "Weapon.h"
 #include "WeaponSystem.h"
+#include "Weapons/LightLaser.h"
+#include "Weapons/MediumLaser.h"
+#include "Weapons/HeavyLaser.h"
+#include "Weapons/LightPlasma.h"
+#include "Weapons/MediumPlasma.h"
+#include "Weapons/HeavyPlasma.h"
 
 
-enum FighterType {
-	BASIC_FIGHTER		// Default fighter
+enum FighterAlignment {
+	HEROS_FIGHTER,		// Fighter flown by player
+	ENEMY_FIGHTER		// Enemy fighter
 };
-
 
 enum FighterWeaponMounts {
 	BASIC_FIGHTER_MOUNTS		= PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R
 };
 
 
-/* The fighter ship controlled by the player. */
+/* A fighter aircraft. */
 class Fighter : public Displayable {
 	public:
-				Fighter( FighterType f, Game* g );
-				~Fighter();
+				Fighter( FighterAlignment a, Game* g );
+				virtual ~Fighter();
 
 				void Draw();
 
@@ -60,13 +66,16 @@ class Fighter : public Displayable {
 				// Weapons cease firing.
 				void stopFiring();
 
+				// Do 'damage' amount of damage to ship.
 				void damage( float damage );
+
 				float getHealth();
 				float getHealthFull();
 				float getShields();
 				float getShieldsFull();
+				int getAlignment();
 
-	private:
+	protected:
 				// Constant Z position of the fighter.
 				static const float zPos = -1.5;
 
@@ -87,7 +96,7 @@ class Fighter : public Displayable {
 
 				WeaponSystem* weaponSystem;
 
-				FighterType type;
+				FighterAlignment align;
 
 				GLuint texture;
 };

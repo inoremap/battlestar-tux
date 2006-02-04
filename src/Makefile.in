@@ -61,10 +61,11 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
-	DisplayableList.$(OBJEXT) EnemyFighter.$(OBJEXT) \
-	EnemyFighterList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
-	FighterAmmoList.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
-	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
+	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
+	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
+	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
+	Fighter/HeroFighter.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
 	Fighter/Weapons/MediumLaser.$(OBJEXT) \
 	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
@@ -198,16 +199,18 @@ battlestarTUX_SOURCES = Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
 			DisplayableList.h \
-			EnemyFighter.cpp \
-			EnemyFighter.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \
 			FighterAmmoList.h \
+			Fighter/EnemyFighter.cpp \
+			Fighter/EnemyFighter.h \
 			Fighter/Fighter.cpp \
 			Fighter/Fighter.h \
+			Fighter/HeroFighter.cpp \
+			Fighter/HeroFighter.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
@@ -303,7 +306,11 @@ Fighter/$(am__dirstamp):
 Fighter/$(DEPDIR)/$(am__dirstamp):
 	@$(mkdir_p) Fighter/$(DEPDIR)
 	@: > Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/EnemyFighter.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Fighter.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/HeroFighter.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Weapon.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
@@ -337,7 +344,9 @@ battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f Fighter/EnemyFighter.$(OBJEXT)
 	-rm -f Fighter/Fighter.$(OBJEXT)
+	-rm -f Fighter/HeroFighter.$(OBJEXT)
 	-rm -f Fighter/Weapon.$(OBJEXT)
 	-rm -f Fighter/WeaponSystem.$(OBJEXT)
 	-rm -f Fighter/Weapons/HeavyLaser.$(OBJEXT)
@@ -352,7 +361,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DisplayableList.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighterList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmoList.Po@am__quote@
@@ -364,7 +372,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/EnemyFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Fighter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/HeroFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Weapon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/WeaponSystem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/HeavyLaser.Po@am__quote@

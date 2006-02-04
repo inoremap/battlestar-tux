@@ -1,6 +1,6 @@
 /* Displayable.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -54,7 +54,7 @@ Displayable::Displayable( DisplayableType t, Game* g ) {
 Displayable::~Displayable() {}
 
 
-void Displayable::UpdatePos() {
+void Displayable::Update() {
 	pos[0] = pos[0] + vel[0] * game->getGameSpeed();
 	pos[1] = pos[1] + vel[1] * game->getGameSpeed();
 	pos[2] = pos[2] + vel[2] * game->getGameSpeed();
@@ -106,6 +106,7 @@ void Displayable::setColor( float r, float g, float b, float a ) {
 
 void Displayable::incrAge() { age++; }
 
+void Displayable::setType( int t ) { type = t; }
 
 void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 

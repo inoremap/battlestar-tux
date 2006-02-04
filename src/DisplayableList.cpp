@@ -23,9 +23,13 @@
 
 
 #include <math.h>
+#include <stdio.h>
 
 #include "Displayable.h"
 #include "DisplayableList.h"
+#include "EnemyFighterList.h"
+#include "FighterAmmo.h"
+#include "Fighter/Fighter.h"
 
 DisplayableList::DisplayableList( Game* g ) {
 	rootObj = 0;
@@ -36,11 +40,11 @@ DisplayableList::DisplayableList( Game* g ) {
 DisplayableList::~DisplayableList() {}
 
 
-void DisplayableList::UpdatePositions() {
+void DisplayableList::Update() {
 	Displayable* cur = rootObj;
 
 	while( cur ) {
-		cur->UpdatePos();
+		cur->Update();
 		cur = (Displayable*) cur->getNext();
 	}
 }
@@ -58,16 +62,20 @@ void DisplayableList::DrawObjects() {
 
 void DisplayableList::CheckCollisions( DisplayableList* objectList ) {
 	Displayable* cur = objectList->getRoot();
+	Displayable* next = 0;
 
 	while( cur ) {
+		next = (Displayable*) cur->getNext();
+
 		CheckCollisions( cur );
-		cur = (Displayable*) cur->getNext();
+		cur = next;
 	}
 }
 
 
 void DisplayableList::CheckCollisions( Displayable* object ) {
 	Displayable* cur = rootObj;
+	Displayable* next = 0;
 	bool objColl = false;
 
 	float* sizeA = object->getSize();
@@ -78,7 +86,10 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 	float bottomA = posA[1] - sizeA[1]/2;
 
 	while( cur ) {
+		next = (Displayable*) cur->getNext();
+
 		// Do a 'rough estimate' collision detection.
+		// Determine if the objects bounding boxes intersect.
 		float* sizeB = cur->getSize();
 		float* posB = cur->getPos();
 		float rightB = posB[0] + sizeB[0]/2;
@@ -94,19 +105,74 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 			float minDist = (sizeA[0] + sizeA[1] + sizeB[0] + sizeB[1]) / 4;
 
 			// Collision detected.
-			if( dist < minDist )
-				objColl = true;
+			if( dist < minDist ) {
+				ResolveCollision( object, cur );
+			}
 		}
 
-		cur = (Displayable*) cur->getNext();
+		cur = next;
 	}
-
-	if( objColl )
-		object->setColor( 1.0, 0.0, 0.0, 1.0 );
 }
 
 
-void DisplayableList::CullObjects() {
+void DisplayableList::ResolveCollision( Displayable* a, Displayable* b ) {
+	// Two ammos are colliding
+	if( a->getType() & AMMO && b->getType() & AMMO ) {
+		printf( "Ammo collision.\n" );
+	}
+
+	// An ammo and an airframe are colliding.
+	else if( a->getType() & AMMO || b->getType() & AMMO ) {
+		FighterAmmo* ammo;
+		Fighter* airframe;
+
+		if( a->getType() & AMMO ) {
+			ammo = (FighterAmmo*) a;
+			airframe = (Fighter*) b;
+		}
+		else {
+			ammo = (FighterAmmo*) b;
+			airframe = (Fighter*) a;
+		}
+
+		airframe->damage( ammo->getDamage() );
+
+		// Does ammo penetrate airframe?
+		if( ammo->getPenetration() > 0 ) {
+			// Let ammo pass - some ships should probably stop it.
+		}
+		else {
+			if( ammo->getType() & HEROS_AMMO ) {
+				game->getHeroAmmoList()->remObject( ammo );
+				ammo = 0;
+			}
+			else {
+				game->getEnemyAmmoList()->remObject( ammo );
+				ammo = 0;
+			}
+		}
+
+		// Is the airframe dead?
+		if( airframe->getHealth() <= 0 ) {
+			if( airframe->getAlignment() == ENEMY_FIGHTER ) {
+				game->getEnemyFighterList()->remObject( airframe );
+				airframe = 0;
+			}
+			else {
+				// Game over!!!
+				printf( "Game over!!!!  Player is dead.\n" );
+			}
+		}
+	}
+
+	// Two airframes are colliding.
+	else {
+		printf( "Aircraft collision.\n" );
+	}
+}
+
+
+void DisplayableList::CullObjects( objectCulling cull ) {
 	float* bounds = game->getBounds();
 	Displayable* cur = rootObj;
 	Displayable* rem = 0;
@@ -116,7 +182,7 @@ void DisplayableList::CullObjects() {
 		float* size = cur->getSize();
 
 		// Top of screen.
-		if( (pos[1] - size[1] / 2) > bounds[1] ) {
+		if( cull & CULL_TOP && (pos[1] - size[1] / 2) > bounds[1] ) {
 			rem = cur;
 	 		cur = (Displayable*) cur->getNext();
 
@@ -125,7 +191,7 @@ void DisplayableList::CullObjects() {
 		}
 
 		// Bottom of screen.
-		if( (pos[1] + size[1] / 2) < (0.0 - bounds[1]) ) {
+		if( cull & CULL_BOTTOM && (pos[1] + size[1] / 2) < (0.0 - bounds[1]) ) {
 			rem = cur;
 	 		cur = (Displayable*) cur->getNext();
 
@@ -134,7 +200,7 @@ void DisplayableList::CullObjects() {
 		}
 
 		// Left of screen.
-		if( (pos[0] + size[0] / 2) < (0.0 - bounds[0]) ) {
+		if( cull & CULL_LEFT && (pos[0] + size[0] / 2) < (0.0 - bounds[0]) ) {
 			rem = cur;
 	 		cur = (Displayable*) cur->getNext();
 
@@ -143,30 +209,7 @@ void DisplayableList::CullObjects() {
 		}
 
 		// Right of screen.
-		if( (pos[0] - size[0] / 2) > bounds[0] ) {
-			rem = cur;
-	 		cur = (Displayable*) cur->getNext();
-
-			remObject( rem );
-			continue;
-		}
-
-		cur = (Displayable*) cur->getNext();
-	}
-}
-
-
-void DisplayableList::CullObjectsBottom() {
-	float* bounds = game->getBounds();
-	Displayable* cur = rootObj;
-	Displayable* rem = 0;
-
-	while( cur ) {
-		float* pos = cur->getPos();
-		float* size = cur->getSize();
-
-		// Bottom of screen.
-		if( (pos[1] + size[1] / 2) < (0.0 - bounds[1]) ) {
+		if( cull & CULL_RIGHT && (pos[0] - size[0] / 2) > bounds[0] ) {
 			rem = cur;
 	 		cur = (Displayable*) cur->getNext();
 
@@ -180,18 +223,14 @@ void DisplayableList::CullObjectsBottom() {
 
 
 void DisplayableList::addObject( Displayable* obj ) {
-	Displayable* cur = rootObj;
-	Displayable* last = cur;
-	while( cur ) {
-		last = cur;
-		cur = (Displayable*) cur->getNext();
-	}
+	Displayable* first = rootObj;
 
-	if( !last )
+	if( !first )
 		rootObj = obj;
 	else {
-		last->setNext( (Displayable*) obj );
-		obj->setPrev( (Displayable*) last );
+		first->setPrev( (Displayable*) obj );
+		obj->setNext( (Displayable*) first );
+		rootObj = obj;
 	}
 }
 

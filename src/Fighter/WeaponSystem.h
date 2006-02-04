@@ -57,6 +57,7 @@ class WeaponSystem {
 
 				int getMounts();
 				float* getPos();
+				int getAlign();
 				bool equipable( int weapon );
 
 	private:

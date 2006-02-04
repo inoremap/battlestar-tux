@@ -1,6 +1,6 @@
 /* Game.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -128,7 +128,14 @@ float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
 
 
-FighterAmmoList* Game::getFighterAmmoList() { return fighterAmmoList; }
-void Game::setFighterAmmoList( FighterAmmoList* l ) { fighterAmmoList = l; }
+EnemyFighterList* Game::getEnemyFighterList() { return enemyFighterList; }
+void Game::setEnemyFighterList( EnemyFighterList* l ) { enemyFighterList = l; }
+
+FighterAmmoList* Game::getEnemyAmmoList() { return enemyAmmoList; }
+void Game::setEnemyAmmoList( FighterAmmoList* l ) { enemyAmmoList = l; }
+
+FighterAmmoList* Game::getHeroAmmoList() { return heroAmmoList; }
+void Game::setHeroAmmoList( FighterAmmoList* l ) { heroAmmoList = l; }
+
 Fighter* Game::getFighter() { return fighter; }
 void Game::setFighter( Fighter* f ) { fighter = f; }

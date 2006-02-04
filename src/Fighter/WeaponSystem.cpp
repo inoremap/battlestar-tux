@@ -129,6 +129,9 @@ int WeaponSystem::getMounts() { return mount_points; }
 float* WeaponSystem::getPos() { return fighter->getPos(); }
 
 
+int WeaponSystem::getAlign() { return fighter->getAlignment(); }
+
+
 bool WeaponSystem::equipable( int weapon ) {
 	// This system can equip weapon.
 	if( weapon & mount_points )

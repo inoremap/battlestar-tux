@@ -1,6 +1,6 @@
 /* EnemyFighterList.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -29,8 +29,6 @@
 
 #include "Displayable.h"
 #include "DisplayableList.h"
-
-class EnemyFighter;
 
 
 enum EnemyFighterType {

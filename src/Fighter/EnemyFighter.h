@@ -1,4 +1,4 @@
-/* FighterAmmoList.h
+/* EnemyFighter.h
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,41 +22,23 @@
  */
 
 
-#ifndef FIGHTERAMMOLIST_H_
-#define FIGHTERAMMOLIST_H_
+#ifndef ENEMYFIGHTER_H_
+#define ENEMYFIGHTER_H_
 
-#include "SDL_opengl.h"
+#include "Fighter.h"
+#include "../EnemyFighterList.h"
 
-#include "Displayable.h"
-#include "DisplayableList.h"
-
-class FighterAmmo;
-
-
-enum FighterAmmoType {
-	LIGHT_LASER		=	0,			// Light laser beam
-	MEDIUM_LASER	=	1,			// Medium laser beam
-	HEAVY_LASER		=	2,			// Heavy laser beam
-	LIGHT_PLASMA	=	3,			// Light plasma bolt
-	MEDIUM_PLASMA	=	4,			// Medium plasma bolt
-	HEAVY_PLASMA	=	5			// Heavy plasma bolt
-};
-static const int numFighterAmmo = 6;
-
-
-/* Holds, updates and draws the fighter's shots. */
-class FighterAmmoList : public DisplayableList {
+/* An enemy fighter aircraft - NPC. */
+class EnemyFighter : public Fighter {
 	public:
-				FighterAmmoList( Game* g );
-				virtual ~FighterAmmoList();
+				EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g );
+				~EnemyFighter();
 
-				// Get a texture ID.
-				GLuint getTexture( int index );
+				int getFighterType();
 
 	private:
-				// Texture for each type of ammo.
-				GLuint textures[numFighterAmmo];
+				EnemyFighterType fighterType;
 };
 
 
-#endif /*FIGHTERAMMOLIST_H_*/
+#endif /*ENEMYFIGHTER_H_*/

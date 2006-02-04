@@ -1,6 +1,6 @@
-/* EnemyFighter.h
+/* HeroFighter.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,30 +22,28 @@
  */
 
 
-#ifndef ENEMYFIGHTER_H_
-#define ENEMYFIGHTER_H_
+#ifndef HEROFIGHTER_H_
+#define HEROFIGHTER_H_
 
-#include "SDL_opengl.h"
+#include "Fighter.h"
 
-#include "Displayable.h"
-#include "EnemyFighterList.h"
-#include "Game.h"
 
-/* An enemy fighter ship - NPC. */
-class EnemyFighter : public Displayable {
-	public:
-				EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g );
-
-				void Draw();
-
-	private:
-				// Constant Z position of the fighter.
-				static const float zPos = -1.5;
-
-				EnemyFighterType type;
-
-				GLuint texture;
+enum HeroFighterType {
+	BASIC_FIGHTER		// Default fighter
 };
 
 
-#endif /*ENEMYFIGHTER_H_*/
+/* The player's aircraft. */
+class HeroFighter : public Fighter {
+	public:
+				HeroFighter( HeroFighterType f, Game* g );
+				~HeroFighter();
+
+				int getFighterType();
+
+	private:
+				HeroFighterType fighterType;
+};
+
+
+#endif /*HEROFIGHTER_H_*/

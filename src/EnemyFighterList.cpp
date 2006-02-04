@@ -24,7 +24,7 @@
 
 #include <math.h>
 
-#include "EnemyFighter.h"
+#include "Fighter/EnemyFighter.h"
 #include "EnemyFighterList.h"
 #include "GfxUtils.h"
 

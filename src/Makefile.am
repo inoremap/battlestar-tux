@@ -19,16 +19,18 @@ battlestarTUX_SOURCES = Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
 			DisplayableList.h \
-			EnemyFighter.cpp \
-			EnemyFighter.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \
 			FighterAmmoList.h \
+			Fighter/EnemyFighter.cpp \
+			Fighter/EnemyFighter.h \
 			Fighter/Fighter.cpp \
 			Fighter/Fighter.h \
+			Fighter/HeroFighter.cpp \
+			Fighter/HeroFighter.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \

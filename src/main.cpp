@@ -33,8 +33,8 @@
 #include <math.h>
 
 #include "EnemyFighterList.h"
-#include "EnemyFighter.h"
-#include "Fighter/Fighter.h"
+#include "Fighter/EnemyFighter.h"
+#include "Fighter/HeroFighter.h"
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
@@ -62,11 +62,18 @@ int main(int argc, char* argv[])
 
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );
-	Fighter* fighter = new Fighter( BASIC_FIGHTER, game );
-	game->setFighter( fighter );
-	FighterAmmoList* fighterAmmoList = new FighterAmmoList( game );
-	game->setFighterAmmoList( fighterAmmoList );
+
+	HeroFighter* hero = new HeroFighter( BASIC_FIGHTER, game );
+	game->setFighter( hero );
+
+	FighterAmmoList* heroAmmoList = new FighterAmmoList( game );
+	game->setHeroAmmoList( heroAmmoList );
+
 	EnemyFighterList* enemies = new EnemyFighterList( game );
+	game->setEnemyFighterList( enemies );
+
+	FighterAmmoList* enemyAmmoList = new FighterAmmoList( game );
+	game->setEnemyAmmoList( enemyAmmoList );
 
 	EnemyFighter* enemyFighter = 0;
 
@@ -84,6 +91,7 @@ int main(int argc, char* argv[])
 				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 				enemyFighter->setPos( 10, 45 );
 				enemyFighter->setVel( 0, -0.2, 0 );
+				enemyFighter->startFiring();
 				enemies->addObject( enemyFighter );
 				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 				enemyFighter->setPos( -10, 45 );
@@ -97,17 +105,21 @@ int main(int argc, char* argv[])
 			realHeight = (float) y - (float) screen->getHeight() / 2;
 			realWidth = realWidth / ((float) screen->getWidth() / 2);
 			realHeight = realHeight / ((float) screen->getHeight() / 2);
-			fighter->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
-			fighter->UpdatePos();
-			fighter->Update();
+			hero->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
+			hero->Update();
 
-			fighterAmmoList->UpdatePositions();
-			fighterAmmoList->CullObjects();
+			heroAmmoList->Update();
+			heroAmmoList->CullObjects( CULL_TOP );
 
-			enemies->UpdatePositions();
-			enemies->CullObjectsBottom();
-			enemies->CheckCollisions( fighter );
-			enemies->CheckCollisions( fighterAmmoList );
+			enemyAmmoList->Update();
+			enemyAmmoList->CullObjects( CULL_BOTTOM );
+
+			enemies->Update();
+			enemies->CullObjects( CULL_BOTTOM );
+
+			enemies->CheckCollisions( heroAmmoList );
+			enemyAmmoList->CheckCollisions( hero );
+			enemies->CheckCollisions( hero );
 		}
 
 
@@ -121,10 +133,10 @@ int main(int argc, char* argv[])
 		// As long as we draw in order, we don't need depth testing.
 		ground->Draw();
 		//draw ground units
-		//draw enemy ammo
-		fighterAmmoList->DrawObjects();
+		enemyAmmoList->DrawObjects();
+		heroAmmoList->DrawObjects();
 		enemies->DrawObjects();
-		fighter->Draw();
+		hero->Draw();
 		//draw shield
 		//draw power ups
 		hud->Draw();
@@ -160,9 +172,9 @@ int main(int argc, char* argv[])
 			}
 		}
 		if( SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(1) )
-			fighter->startFiring();
+			hero->startFiring();
 		else
-			fighter->stopFiring();
+			hero->stopFiring();
 
 
 		// Check for OpenGL errors.

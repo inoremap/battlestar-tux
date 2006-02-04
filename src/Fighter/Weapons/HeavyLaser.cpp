@@ -33,7 +33,7 @@ HeavyLaser::HeavyLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	rechargeTime = 25.0;
 
 	velocity = 1.3;
-	damage = 200.0;
+	damage = 20.0;
 	penetration = 0.5;
 }
 

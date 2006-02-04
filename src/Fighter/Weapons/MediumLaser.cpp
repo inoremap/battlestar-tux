@@ -33,7 +33,7 @@ MediumLaser::MediumLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	rechargeTime = 14.0;
 
 	velocity = 1.3;
-	damage = 120.0;
+	damage = 12.0;
 	penetration = 0.25;
 }
 

@@ -26,14 +26,14 @@
 #include "FighterAmmoList.h"
 
 FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Displayable( AMMO, g ) {
-	type = f;
+	ammoType = f;
 	damage = d;
 	penetration = p;
 	texture = t;
 
 	pos[2] = zPos;
 
-	switch( type ) {
+	switch( ammoType ) {
 		default:
 		case LIGHT_LASER:
 			size[0] = 0.2;

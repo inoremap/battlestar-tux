@@ -27,14 +27,24 @@
 
 class Displayable;
 
+
+// What portions of the screen cut items off.
+enum objectCulling {
+	CULL_TOP		=	0x0001,
+	CULL_LEFT		=	0x0002,
+	CULL_BOTTOM		=	0x0004,
+	CULL_RIGHT		=	0x0008
+};
+
+
 /* Holds a group of displayable objects. */
 class DisplayableList {
 	public:
 				DisplayableList( Game* g );
 				virtual ~DisplayableList();
 
-				// Move all the objects to their next position.
-				void UpdatePositions();
+				// Update positions and states of all objects.
+				void Update();
 
 				// Draw all the objects.
 				void DrawObjects();
@@ -45,12 +55,11 @@ class DisplayableList {
 				// Determine if any objects collide.
 				void CheckCollisions( Displayable* object );
 
-				// Remove any objects that are out of bounds.
-				void CullObjects();
+				// Determine what should result from a collision.
+				void ResolveCollision( Displayable* a, Displayable* b );
 
-				// Remove any objects that are out of bounds, but only on the bottom.
-				// Many objects come in from the top and sides - technically out of bounds.
-				void CullObjectsBottom();
+				// Remove any objects that are out of bounds.
+				void CullObjects( objectCulling cull );
 
 				// Add a new object to be managed.
 				void addObject( Displayable* obj );

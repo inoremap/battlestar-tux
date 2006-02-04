@@ -1,6 +1,6 @@
 /* Displayable.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -30,10 +30,11 @@
 
 
 enum DisplayableType {
-	GROUND,				// Ground segment
-	FIGHTER,			// Player's aircraft
-	ENEMY,				// Enemy aircraft
-	AMMO				// Weapon ammo
+	GROUND		=	0x0001,				// Ground segment
+	FIGHTER		=	0x0002,				// Aircraft
+	AMMO		=	0x0004,				// Weapon ammo
+	HEROS_AMMO	=	0x0008 | 0x0004,	// Hero's ammo
+	ENEMY_AMMO	=	0x0010 | 0x0004		// Enemies' ammo
 };
 
 
@@ -43,8 +44,8 @@ class Displayable : public ListItem {
 				Displayable( DisplayableType t, Game* g );
 				virtual ~Displayable();
 
-				// Move object to its new position.
-				virtual void UpdatePos();
+				// Move object to its new position and update other elements.
+				virtual void Update();
 
 				// Draw the object to the screen.
 				virtual void Draw();
@@ -61,6 +62,8 @@ class Displayable : public ListItem {
 				void setColor( float r, float g, float b, float a );
 
 				void incrAge();
+
+				void setType( int t );
 
 				void setStayOnScreen( bool stay );
 

@@ -23,45 +23,16 @@
 
 
 #include "Fighter.h"
-#include "../GfxUtils.h"
 
-#include "Weapons/LightLaser.h"
-#include "Weapons/MediumLaser.h"
-#include "Weapons/HeavyLaser.h"
-#include "Weapons/LightPlasma.h"
-#include "Weapons/MediumPlasma.h"
-#include "Weapons/HeavyPlasma.h"
+Fighter::Fighter( FighterAlignment a, Game* g ) : Displayable( FIGHTER, g ) {
+	align = a;
 
-Fighter::Fighter( FighterType f, Game* g ) : Displayable( FIGHTER, g ) {
-	type = f;
-	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
+	texture = 0;
 
 	pos[2] = zPos;
 
-	size[0] = 6;
-	size[1] = 6;
-
-	stayOnScreen = true;
-
-	switch( type ) {
-		case BASIC_FIGHTER:
-		default:
-			health = healthFull = 1000;
-			shields = shieldsFull = 500;
-			float offsets[3][2] = {
-				{ 0.0, 3.0 },
-				{ -1.0, 1.0 },
-				{ 1.0, 1.0 }
-			};
-			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
-			MediumLaser* primary = new MediumLaser( weaponSystem, game );
-			LightPlasma* left = new LightPlasma( weaponSystem, game );
-			LightPlasma* right = new LightPlasma( weaponSystem, game );
-			weaponSystem->Equip( primary, PRIMARY_WEAPON );
-			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
-			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
-			break;
-	}
+	size[0] = 3;
+	size[1] = 3;
 
 	firing = false;
 }
@@ -69,7 +40,6 @@ Fighter::Fighter( FighterType f, Game* g ) : Displayable( FIGHTER, g ) {
 
 Fighter::~Fighter() {
 	delete weaponSystem;
-	glDeleteTextures( 1, &texture );
 }
 
 
@@ -94,6 +64,8 @@ void Fighter::Draw() {
 
 void Fighter::Update() {
 	weaponSystem->Fire( firing );
+
+	Displayable::Update();
 }
 
 
@@ -119,3 +91,4 @@ float Fighter::getHealth() { return health; }
 float Fighter::getHealthFull() { return healthFull; }
 float Fighter::getShields() { return shields; }
 float Fighter::getShieldsFull() { return shieldsFull; }
+int Fighter::getAlignment() { return align; }

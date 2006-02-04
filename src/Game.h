@@ -1,6 +1,6 @@
 /* Game.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -27,6 +27,7 @@
 
 #include "time.h"
 
+class EnemyFighterList;
 class FighterAmmoList;
 class Fighter;
 
@@ -62,8 +63,12 @@ class Game {
 				float* getBounds();
 				float getScrollSpeed();
 
-				FighterAmmoList* getFighterAmmoList();
-				void setFighterAmmoList( FighterAmmoList* l );
+				EnemyFighterList* getEnemyFighterList();
+				FighterAmmoList* getEnemyAmmoList();
+				FighterAmmoList* getHeroAmmoList();
+				void setEnemyFighterList( EnemyFighterList* l );
+				void setEnemyAmmoList( FighterAmmoList* l );
+				void setHeroAmmoList( FighterAmmoList* l );
 				Fighter* getFighter();
 				void setFighter( Fighter* f );
 
@@ -118,7 +123,9 @@ class Game {
 
 				static Game* instance;
 
-				FighterAmmoList* fighterAmmoList;
+				EnemyFighterList* enemyFighterList;
+				FighterAmmoList* enemyAmmoList;
+				FighterAmmoList* heroAmmoList;
 				Fighter* fighter;
 
 				Game();
