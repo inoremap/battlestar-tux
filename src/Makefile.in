@@ -47,6 +47,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = battlestarTUX$(EXEEXT)
+noinst_PROGRAMS = testTUX$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -58,7 +59,7 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
-PROGRAMS = $(bin_PROGRAMS)
+PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
 	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
@@ -78,6 +79,23 @@ am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
+am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
+	EnemyFighterList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
+	FighterAmmoList.$(OBJEXT) Fighter/EnemyFighter.$(OBJEXT) \
+	Fighter/Fighter.$(OBJEXT) Fighter/HeroFighter.$(OBJEXT) \
+	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
+	Fighter/Weapons/LightLaser.$(OBJEXT) \
+	Fighter/Weapons/MediumLaser.$(OBJEXT) \
+	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
+	Fighter/Weapons/LightPlasma.$(OBJEXT) \
+	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
+	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
+	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
+	HUD.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
+	test.$(OBJEXT)
+testTUX_OBJECTS = $(am_testTUX_OBJECTS)
+testTUX_LDADD = $(LDADD)
+testTUX_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -90,8 +108,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(battlestarTUX_SOURCES)
-DIST_SOURCES = $(battlestarTUX_SOURCES)
+SOURCES = $(battlestarTUX_SOURCES) $(testTUX_SOURCES)
+DIST_SOURCES = $(battlestarTUX_SOURCES) $(testTUX_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -243,6 +261,54 @@ battlestarTUX_SOURCES = Displayable.cpp \
 			Screen.h \
 			main.cpp
 
+testTUX_SOURCES = Displayable.cpp \
+			Displayable.h \
+			DisplayableList.cpp \
+			DisplayableList.h \
+			EnemyFighterList.cpp \
+			EnemyFighterList.h \
+			FighterAmmo.cpp \
+			FighterAmmo.h \
+			FighterAmmoList.cpp \
+			FighterAmmoList.h \
+			Fighter/EnemyFighter.cpp \
+			Fighter/EnemyFighter.h \
+			Fighter/Fighter.cpp \
+			Fighter/Fighter.h \
+			Fighter/HeroFighter.cpp \
+			Fighter/HeroFighter.h \
+			Fighter/Weapon.cpp \
+			Fighter/Weapon.h \
+			Fighter/WeaponSystem.cpp \
+			Fighter/WeaponSystem.h \
+			Fighter/Weapons/LightLaser.cpp \
+			Fighter/Weapons/LightLaser.h \
+			Fighter/Weapons/MediumLaser.cpp \
+			Fighter/Weapons/MediumLaser.h \
+			Fighter/Weapons/HeavyLaser.cpp \
+			Fighter/Weapons/HeavyLaser.h \
+			Fighter/Weapons/LightPlasma.cpp \
+			Fighter/Weapons/LightPlasma.h \
+			Fighter/Weapons/MediumPlasma.cpp \
+			Fighter/Weapons/MediumPlasma.h \
+			Fighter/Weapons/HeavyPlasma.cpp \
+			Fighter/Weapons/HeavyPlasma.h \
+			Game.cpp \
+			Game.h \
+			GfxUtils.cpp \
+			GfxUtils.h \
+			Ground.cpp \
+			Ground.h \
+			GroundSegment.cpp \
+			GroundSegment.h \
+			HUD.cpp \
+			HUD.h \
+			ListItem.cpp \
+			ListItem.h \
+			Screen.cpp \
+			Screen.h \
+			test.cpp
+
 SUBDIRS = data/
 all: all-recursive
 
@@ -300,6 +366,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+
+clean-noinstPROGRAMS:
+	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
 Fighter/$(am__dirstamp):
 	@$(mkdir_p) Fighter
 	@: > Fighter/$(am__dirstamp)
@@ -341,6 +410,9 @@ Fighter/Weapons/HeavyPlasma.$(OBJEXT):  \
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
+testTUX$(EXEEXT): $(testTUX_OBJECTS) $(testTUX_DEPENDENCIES) 
+	@rm -f testTUX$(EXEEXT)
+	$(CXXLINK) $(testTUX_LDFLAGS) $(testTUX_OBJECTS) $(testTUX_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -372,6 +444,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/EnemyFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Fighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/HeroFighter.Po@am__quote@
@@ -613,7 +686,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
+	mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR)
@@ -663,18 +737,18 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
-	clean clean-binPROGRAMS clean-generic clean-recursive ctags \
-	ctags-recursive distclean distclean-compile distclean-generic \
-	distclean-recursive distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-exec install-exec-am \
-	install-info install-info-am install-man install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-info-am
+	clean clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
+	clean-recursive ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-recursive \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-exec install-exec-am install-info \
+	install-info-am install-man install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
+	uninstall uninstall-am uninstall-binPROGRAMS uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

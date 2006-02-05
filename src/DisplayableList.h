@@ -70,6 +70,9 @@ class DisplayableList {
 				// Return the list of objects.
 				Displayable* getRoot();
 
+				// Print list of objects.
+				void printList();
+
 	protected:
 				Displayable* rootObj;
 

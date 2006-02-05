@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
 		//draw shield
 		//draw power ups
 		hud->Draw();
-	
+
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();
 

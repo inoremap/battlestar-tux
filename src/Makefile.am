@@ -15,6 +15,7 @@ AM_LDFLAGS = -L/usr/lib
 LDADD = -lSDL -lSDL_image -lGL -lGLU
 
 bin_PROGRAMS = battlestarTUX
+noinst_PROGRAMS = testTUX
 battlestarTUX_SOURCES = Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
@@ -62,4 +63,53 @@ battlestarTUX_SOURCES = Displayable.cpp \
 			Screen.cpp \
 			Screen.h \
 			main.cpp
+
+testTUX_SOURCES =	Displayable.cpp \
+			Displayable.h \
+			DisplayableList.cpp \
+			DisplayableList.h \
+			EnemyFighterList.cpp \
+			EnemyFighterList.h \
+			FighterAmmo.cpp \
+			FighterAmmo.h \
+			FighterAmmoList.cpp \
+			FighterAmmoList.h \
+			Fighter/EnemyFighter.cpp \
+			Fighter/EnemyFighter.h \
+			Fighter/Fighter.cpp \
+			Fighter/Fighter.h \
+			Fighter/HeroFighter.cpp \
+			Fighter/HeroFighter.h \
+			Fighter/Weapon.cpp \
+			Fighter/Weapon.h \
+			Fighter/WeaponSystem.cpp \
+			Fighter/WeaponSystem.h \
+			Fighter/Weapons/LightLaser.cpp \
+			Fighter/Weapons/LightLaser.h \
+			Fighter/Weapons/MediumLaser.cpp \
+			Fighter/Weapons/MediumLaser.h \
+			Fighter/Weapons/HeavyLaser.cpp \
+			Fighter/Weapons/HeavyLaser.h \
+			Fighter/Weapons/LightPlasma.cpp \
+			Fighter/Weapons/LightPlasma.h \
+			Fighter/Weapons/MediumPlasma.cpp \
+			Fighter/Weapons/MediumPlasma.h \
+			Fighter/Weapons/HeavyPlasma.cpp \
+			Fighter/Weapons/HeavyPlasma.h \
+			Game.cpp \
+			Game.h \
+			GfxUtils.cpp \
+			GfxUtils.h \
+			Ground.cpp \
+			Ground.h \
+			GroundSegment.cpp \
+			GroundSegment.h \
+			HUD.cpp \
+			HUD.h \
+			ListItem.cpp \
+			ListItem.h \
+			Screen.cpp \
+			Screen.h \
+			test.cpp
+
 SUBDIRS = data/

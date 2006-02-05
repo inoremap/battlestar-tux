@@ -52,10 +52,13 @@ void DisplayableList::Update() {
 
 void DisplayableList::DrawObjects() {
 	Displayable* cur = rootObj;
+	Displayable* next = 0;
 
 	while( cur ) {
+		next = (Displayable*) cur->getNext();
+
 		cur->Draw();
-		cur = (Displayable*) cur->getNext();
+		cur = next;
 	}
 }
 
@@ -250,3 +253,26 @@ void DisplayableList::remObject( Displayable* obj ) {
 
 
 Displayable* DisplayableList::getRoot() { return rootObj; }
+
+
+void DisplayableList::printList() {
+	Displayable* cur = rootObj;
+	int count = 0;
+
+	printf( "---List------------------\n" );
+
+	while( cur ) {
+		if( count < 10 ) {
+			printf( " Object: 0x%x", cur );
+			printf( "\tx: %12f\ty: %12f\n", cur->getPos()[0], cur->getPos()[1] );
+		}
+
+		count++;
+		cur = (Displayable*) cur->getNext();
+	}
+
+	if( count >= 10 )
+		printf( " more...%i total\n", count );
+
+	printf( "---List------------------\n\n" );
+}
