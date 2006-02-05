@@ -27,6 +27,7 @@
 
 #include "time.h"
 
+class Config;
 class EnemyFighterList;
 class FighterAmmoList;
 class Fighter;
@@ -62,6 +63,9 @@ class Game {
 				float getGameSpeed();
 				float* getBounds();
 				float getScrollSpeed();
+
+				Config* getConfig();
+				void setConfig( Config* c );
 
 				EnemyFighterList* getEnemyFighterList();
 				FighterAmmoList* getEnemyAmmoList();
@@ -122,6 +126,9 @@ class Game {
 				static float scrollSpeed;
 
 				static Game* instance;
+
+				// Stores game configuration
+				Config* config;
 
 				EnemyFighterList* enemyFighterList;
 				FighterAmmoList* enemyAmmoList;

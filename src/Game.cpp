@@ -25,6 +25,7 @@
 #include "math.h"
 #include "SDL.h"
 
+#include "Config.h"
 #include "Fighter/Fighter.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
@@ -127,6 +128,8 @@ float Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
 
+Config* Game::getConfig() { return config; }
+void Game::setConfig( Config* c ) { config = c; }
 
 EnemyFighterList* Game::getEnemyFighterList() { return enemyFighterList; }
 void Game::setEnemyFighterList( EnemyFighterList* l ) { enemyFighterList = l; }

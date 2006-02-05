@@ -61,7 +61,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_battlestarTUX_OBJECTS = Displayable.$(OBJEXT) \
+am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
@@ -213,7 +213,9 @@ AUTOMAKE_OPTIONS = subdir-objects
 INCLUDES = -I/usr/include -I/usr/include/SDL
 AM_LDFLAGS = -L/usr/lib
 LDADD = -lSDL -lSDL_image -lGL -lGLU
-battlestarTUX_SOURCES = Displayable.cpp \
+battlestarTUX_SOURCES = Config.cpp \
+			Config.h \
+			Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
 			DisplayableList.h \
@@ -431,6 +433,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Config.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DisplayableList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighterList.Po@am__quote@

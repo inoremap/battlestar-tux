@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "Config.h"
 #include "EnemyFighterList.h"
 #include "Fighter/EnemyFighter.h"
 #include "Fighter/HeroFighter.h"
@@ -46,12 +47,13 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	Screen* screen = new Screen();
 	int x = 0;
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
 	Game* game = Game::getInstance();
+	Config* config = new Config( game );
+	Screen* screen = new Screen();
 	SDL_Event event;
 
 	// Exit if there is no screen.
