@@ -74,8 +74,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
-	HUD.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
-	main.$(OBJEXT)
+	HUD.$(OBJEXT) List.$(OBJEXT) ListItem.$(OBJEXT) \
+	Screen.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -91,8 +91,8 @@ am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
-	HUD.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
-	test.$(OBJEXT)
+	HUD.$(OBJEXT) List.$(OBJEXT) ListItem.$(OBJEXT) \
+	Screen.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -257,6 +257,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			List.cpp \
+			List.h \
 			ListItem.cpp \
 			ListItem.h \
 			Screen.cpp \
@@ -305,6 +307,8 @@ testTUX_SOURCES = Displayable.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			List.cpp \
+			List.h \
 			ListItem.cpp \
 			ListItem.h \
 			Screen.cpp \
@@ -444,6 +448,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ground.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GroundSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HUD.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

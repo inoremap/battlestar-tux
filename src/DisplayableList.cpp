@@ -32,7 +32,6 @@
 #include "Fighter/Fighter.h"
 
 DisplayableList::DisplayableList( Game* g ) {
-	rootObj = 0;
 	game = g;
 }
 
@@ -41,7 +40,7 @@ DisplayableList::~DisplayableList() {}
 
 
 void DisplayableList::Update() {
-	Displayable* cur = rootObj;
+	Displayable* cur = (Displayable*) rootObj;
 
 	while( cur ) {
 		cur->Update();
@@ -51,20 +50,34 @@ void DisplayableList::Update() {
 
 
 void DisplayableList::DrawObjects() {
-	Displayable* cur = rootObj;
-	Displayable* next = 0;
+	if( rootObj && ((Displayable*) rootObj)->getType() == ENEMY_AMMO ) {
+		FighterAmmo* cur = (FighterAmmo*) rootObj;
+		FighterAmmo* next = 0;
+		printf( "\n---Start Drawing---\n" );
+		while( cur ) {
+				next = (FighterAmmo*) cur->getNext();
+				printf( "\n2 cur: %x\trootObj: %x\n", cur, rootObj );
+				cur->Draw();
+				printf( "\n3\n" );
+				cur = next;
+		}
+		printf( "\n---Stop Drawing---\n" );
+	}
+	else {
+		Displayable* cur = (Displayable*) rootObj;
+		Displayable* next = 0;
 
-	while( cur ) {
-		next = (Displayable*) cur->getNext();
-
-		cur->Draw();
-		cur = next;
+		while( cur ) {
+			next = (Displayable*) cur->getNext();
+			cur->Draw();
+			cur = next;
+		}
 	}
 }
 
 
 void DisplayableList::CheckCollisions( DisplayableList* objectList ) {
-	Displayable* cur = objectList->getRoot();
+	Displayable* cur = (Displayable*) objectList->getRoot();
 	Displayable* next = 0;
 
 	while( cur ) {
@@ -77,7 +90,7 @@ void DisplayableList::CheckCollisions( DisplayableList* objectList ) {
 
 
 void DisplayableList::CheckCollisions( Displayable* object ) {
-	Displayable* cur = rootObj;
+	Displayable* cur = (Displayable*) rootObj;
 	Displayable* next = 0;
 	bool objColl = false;
 
@@ -88,7 +101,7 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 	float topA = posA[1] + sizeA[1]/2;
 	float bottomA = posA[1] - sizeA[1]/2;
 
-	while( cur ) {
+	while( cur && object ) {
 		next = (Displayable*) cur->getNext();
 
 		// Do a 'rough estimate' collision detection.
@@ -147,11 +160,9 @@ void DisplayableList::ResolveCollision( Displayable* a, Displayable* b ) {
 		else {
 			if( ammo->getType() & HEROS_AMMO ) {
 				game->getHeroAmmoList()->remObject( ammo );
-				ammo = 0;
 			}
 			else {
 				game->getEnemyAmmoList()->remObject( ammo );
-				ammo = 0;
 			}
 		}
 
@@ -159,7 +170,6 @@ void DisplayableList::ResolveCollision( Displayable* a, Displayable* b ) {
 		if( airframe->getHealth() <= 0 ) {
 			if( airframe->getAlignment() == ENEMY_FIGHTER ) {
 				game->getEnemyFighterList()->remObject( airframe );
-				airframe = 0;
 			}
 			else {
 				// Game over!!!
@@ -177,7 +187,7 @@ void DisplayableList::ResolveCollision( Displayable* a, Displayable* b ) {
 
 void DisplayableList::CullObjects( objectCulling cull ) {
 	float* bounds = game->getBounds();
-	Displayable* cur = rootObj;
+	Displayable* cur = (Displayable*) rootObj;
 	Displayable* rem = 0;
 
 	while( cur ) {
@@ -222,57 +232,4 @@ void DisplayableList::CullObjects( objectCulling cull ) {
 
 		cur = (Displayable*) cur->getNext();
 	}
-}
-
-
-void DisplayableList::addObject( Displayable* obj ) {
-	Displayable* first = rootObj;
-
-	if( !first )
-		rootObj = obj;
-	else {
-		first->setPrev( (Displayable*) obj );
-		obj->setNext( (Displayable*) first );
-		rootObj = obj;
-	}
-}
-
-
-void DisplayableList::remObject( Displayable* obj ) {
-	// obj is rootObj
-	if( !obj->getPrev() )
-		rootObj = (Displayable*) obj->getNext();
-	else
-		obj->getPrev()->setNext( (Displayable*) obj->getNext() );
-
-	if( obj->getNext() )
-		obj->getNext()->setPrev( (Displayable*) obj->getPrev() );
-
-	delete obj;
-}
-
-
-Displayable* DisplayableList::getRoot() { return rootObj; }
-
-
-void DisplayableList::printList() {
-	Displayable* cur = rootObj;
-	int count = 0;
-
-	printf( "---List------------------\n" );
-
-	while( cur ) {
-		if( count < 10 ) {
-			printf( " Object: 0x%x", cur );
-			printf( "\tx: %12f\ty: %12f\n", cur->getPos()[0], cur->getPos()[1] );
-		}
-
-		count++;
-		cur = (Displayable*) cur->getNext();
-	}
-
-	if( count >= 10 )
-		printf( " more...%i total\n", count );
-
-	printf( "---List------------------\n\n" );
 }

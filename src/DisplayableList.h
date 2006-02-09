@@ -25,6 +25,8 @@
 #ifndef DISPLAYABLELIST_
 #define DISPLAYABLELIST_
 
+#include "List.h"
+
 class Displayable;
 
 
@@ -38,7 +40,7 @@ enum objectCulling {
 
 
 /* Holds a group of displayable objects. */
-class DisplayableList {
+class DisplayableList : public List {
 	public:
 				DisplayableList( Game* g );
 				virtual ~DisplayableList();
@@ -61,21 +63,7 @@ class DisplayableList {
 				// Remove any objects that are out of bounds.
 				void CullObjects( objectCulling cull );
 
-				// Add a new object to be managed.
-				void addObject( Displayable* obj );
-
-				// Remove an object.
-				void remObject( Displayable* obj );
-
-				// Return the list of objects.
-				Displayable* getRoot();
-
-				// Print list of objects.
-				void printList();
-
 	protected:
-				Displayable* rootObj;
-
 				Game* game;
 };
 

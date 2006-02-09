@@ -60,6 +60,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			List.cpp \
+			List.h \
 			ListItem.cpp \
 			ListItem.h \
 			Screen.cpp \
@@ -108,6 +110,8 @@ testTUX_SOURCES =	Displayable.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			List.cpp \
+			List.h \
 			ListItem.cpp \
 			ListItem.h \
 			Screen.cpp \
