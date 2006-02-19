@@ -28,9 +28,10 @@
 
 
 #include "SDL.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <time.h>
 
 #include "EnemyFighterList.h"
 #include "Fighter/EnemyFighter.h"
@@ -80,7 +81,7 @@ int main(int argc, char* argv[])
 ////// Test suite.
 
 	//// Test Displaylist:
-	printf( "Adding 1000 enemies...\n" );
+	printf( "\nAdding 1000 enemies...\n" );
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 		f->setPos( 0, n );
@@ -102,7 +103,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "Adding 1000 enemies...\n" );
+	printf( "\nAdding 1000 enemies...\n" );
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 		f->setPos( 0, n );
@@ -128,9 +129,50 @@ int main(int argc, char* argv[])
 		last = next;
 	}
 	enemies->printList();
+
+	printf( "\nAdding 1000 enemies...\n" );
+	for( int n=0; n < 1000; n++ ) {
+		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
+		f->setPos( 0, n );
+		enemies->addObject( f );
+		enemies->DrawObjects();
+	}
+	enemies->printList();
+
+	printf( "Removing all enemies in random order...\n" );
+	root = 0;
+	last = 0;
+	unsigned int rand = 0;
+	int count = 0;
+	srandom( time(NULL) );
+	while( root = (EnemyFighter*) enemies->getRoot() ) {
+		last = root;
+		rand = (unsigned int) (1000.0 * random() / RAND_MAX);
+
+		// Remove the first entry every once in a while.
+		if( count % 100 == 0 ) {}
+		else {
+			// Flip through a random number of enemies.
+			for( unsigned int i = 0; i < rand; i++ ) {
+				root = (EnemyFighter*) last->getNext();
+
+				if( root )
+					last = root;
+				else
+					break;
+			}
+		}
+
+		enemies->DrawObjects();
+
+		enemies->remObject( last );
+		count++;
+	}
+	enemies->printList();
 	//// Done testing DisplayList
 
 	//// Test culling:
+	printf( "\nTesting culling...\n" );
 	EnemyFighter* top = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 	top->setPos( 0, 100 );
 	enemies->addObject( top );
@@ -149,15 +191,19 @@ int main(int argc, char* argv[])
 
 	enemies->printList();
 
+	printf( "Culling top...\n" );
 	enemies->CullObjects( CULL_TOP );
 	enemies->printList();
 
+	printf( "Culling right...\n" );
 	enemies->CullObjects( CULL_RIGHT );
 	enemies->printList();
 
+	printf( "Culling bottom...\n" );
 	enemies->CullObjects( CULL_BOTTOM );
 	enemies->printList();
 
+	printf( "Culling left...\n" );
 	enemies->CullObjects( CULL_LEFT );
 	enemies->printList();
 	//// Done testing culling.

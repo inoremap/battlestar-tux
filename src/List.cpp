@@ -49,10 +49,6 @@ void List::addObject( ListItem* obj ) {
 
 
 void List::remObject( ListItem* obj ) {
-//if( obj->getType() == ENEMY_AMMO ) {
-	printf( "\nDelete: %x\tPrev: %x\tNext: %x\n", obj, obj->getPrev(), obj->getNext() );
-	printList( obj );
-//}
 	// obj is rootObj
 	if( obj == rootObj ) 
 		rootObj = obj->getNext();
@@ -64,11 +60,7 @@ void List::remObject( ListItem* obj ) {
 
 	if( obj->getNext() )
 		obj->getNext()->setPrev( obj->getPrev() );
-//if( obj->getType() == ENEMY_AMMO ) {
-	printf( "\nDelete: %x\n", obj );
-	printList();
-	printf( "\nrootObj: %x\n", rootObj );
-//}
+
 	obj->setPrev( 0 );
 	obj->setNext( 0 );
 	delete obj;
