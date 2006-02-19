@@ -122,7 +122,10 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 
 			// Collision detected.
 			if( dist < minDist ) {
-				ResolveCollision( object, cur );
+				if( object->getType() & AMMO && cur->getType() & FIGHTER )
+					ResolveCollision( cur, object );
+				else
+					ResolveCollision( object, cur );
 			}
 		}
 
@@ -131,51 +134,45 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 }
 
 
-void DisplayableList::ResolveCollision( Displayable* a, Displayable* b ) {
-	// Two ammos are colliding
-	if( a->getType() & AMMO && b->getType() & AMMO ) {
-		printf( "Ammo collision.\n" );
-	}
-
+void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
 	// An ammo and an airframe are colliding.
-	else if( a->getType() & AMMO || b->getType() & AMMO ) {
-		FighterAmmo* ammo;
-		Fighter* airframe;
+	if( a->getType() & FIGHTER && b->getType() & AMMO ) {
+		printf( "Ammo collision with Fighter.\n" );
+		// We know that a is the fighter and b is the ammo.
 
-		if( a->getType() & AMMO ) {
-			ammo = (FighterAmmo*) a;
-			airframe = (Fighter*) b;
-		}
-		else {
-			ammo = (FighterAmmo*) b;
-			airframe = (Fighter*) a;
-		}
-
-		airframe->damage( ammo->getDamage() );
+		((Fighter*) a)->damage( ((FighterAmmo*) b)->getDamage() );
 
 		// Does ammo penetrate airframe?
-		if( ammo->getPenetration() > 0 ) {
+		if( ((FighterAmmo*) b)->getPenetration() > 0 ) {
 			// Let ammo pass - some ships should probably stop it.
 		}
 		else {
-			if( ammo->getType() & HEROS_AMMO ) {
-				game->getHeroAmmoList()->remObject( ammo );
+			if( b->getType() & HEROS_AMMO ) {
+				game->getHeroAmmoList()->remObject( b );
 			}
 			else {
-				game->getEnemyAmmoList()->remObject( ammo );
+				game->getEnemyAmmoList()->remObject( b );
 			}
+
+			b = 0;
 		}
 
 		// Is the airframe dead?
-		if( airframe->getHealth() <= 0 ) {
-			if( airframe->getAlignment() == ENEMY_FIGHTER ) {
-				game->getEnemyFighterList()->remObject( airframe );
+		if( ((Fighter*) a)->getHealth() <= 0 ) {
+			if( ((Fighter*) a)->getAlignment() == ENEMY_FIGHTER ) {
+				game->getEnemyFighterList()->remObject( a );
+				a = 0;
 			}
 			else {
 				// Game over!!!
 				printf( "Game over!!!!  Player is dead.\n" );
 			}
 		}
+	}
+
+	// Two ammos are colliding
+	else if( a->getType() & AMMO && b->getType() & AMMO ) {
+		printf( "Ammo collision.\n" );
 	}
 
 	// Two airframes are colliding.
