@@ -44,6 +44,7 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
 	weapons = new Weapon*[numMounts];
 	offsets = new float*[numMounts];
 
+	// Set mount offsets.
 	for( int i=0; i < numMounts; i++ ) {
 		weapons[i] = 0;
 
@@ -52,6 +53,7 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
 		offsets[i][1] = allOffsets[i][1];
 	}
 
+	// Set each type of mount.
 	for( int i=0, n=1, j=0; i < 8; i++ ) {
 		if( n & mount_points ) {
 			mountTypes[j] = (WeaponMount) n;
@@ -113,7 +115,6 @@ bool WeaponSystem::UnEquip( Weapon* weapon ) {
 		// Find Weapon.
 		if( weapons[i] == weapon ) {
 			// UnEquip weapon
-			delete weapons[i];
 			weapons[i] = 0;
 			return true;
 		}
