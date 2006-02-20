@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
 							game->exitBT();
 							break;
 
-						case SDLK_BACKSPACE:
+						case SDLK_p:
 							game->pause();
 							break;
 
