@@ -59,7 +59,7 @@ class Game {
 				void stopFrame();
 
 				int getGameFrame();
-				float getGameSpeed();
+				int getGameSpeed();
 				float* getBounds();
 				float getScrollSpeed();
 
@@ -104,7 +104,7 @@ class Game {
 
 				// Increases when frames are dropped.
 				// Drops to 0 when frames are repeated.
-				float gameSpeed;
+				int gameSpeed;
 
 				// Time the game started.
 				unsigned int startTime;

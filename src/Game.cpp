@@ -45,7 +45,7 @@ Game::Game() {
 	gameFrame = 0;
 	lastGameFrame = 0;
 
-	gameSpeed = 1.0;
+	gameSpeed = 1;
 
 	syncSleep = 5;
 
@@ -124,7 +124,7 @@ void Game::stopFrame() {
 
 
 int Game::getGameFrame() { return gameFrame; }
-float Game::getGameSpeed() { return gameSpeed; }
+int Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
 

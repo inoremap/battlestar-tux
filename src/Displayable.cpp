@@ -55,9 +55,13 @@ Displayable::~Displayable() {}
 
 
 void Displayable::Update() {
-	pos[0] = pos[0] + vel[0] * game->getGameSpeed();
-	pos[1] = pos[1] + vel[1] * game->getGameSpeed();
-	pos[2] = pos[2] + vel[2] * game->getGameSpeed();
+	int speed = game->getGameSpeed();
+
+	pos[0] = pos[0] + vel[0] * speed;
+	pos[1] = pos[1] + vel[1] * speed;
+	pos[2] = pos[2] + vel[2] * speed;
+
+	age += speed;
 }
 
 
