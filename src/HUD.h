@@ -39,6 +39,9 @@ class HUD {
 				void Draw();
 
 	private:
+				HUD( const HUD &hud );
+				const HUD & operator= ( const HUD &hud );
+
 				Game* game;
 
 				GLuint healthTexture;

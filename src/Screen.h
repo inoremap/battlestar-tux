@@ -44,6 +44,9 @@ class Screen {
 				int getHeight();
 
 	private:
+				Screen( const Screen &screen );
+				const Screen & operator= ( const Screen &screen );
+
 				SDL_Surface* screen;
 				int height;
 				int width;

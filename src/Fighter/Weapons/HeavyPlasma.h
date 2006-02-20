@@ -36,6 +36,10 @@ class HeavyPlasma : public Weapon {
 				HeavyPlasma( WeaponSystem* w, Game* g );
 
 				char* getName();
+
+	private:
+				HeavyPlasma( const HeavyPlasma &plasma );
+				const HeavyPlasma & operator= ( const HeavyPlasma &plasma );
 };
 
 

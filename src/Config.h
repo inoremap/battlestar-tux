@@ -41,6 +41,9 @@ class Config {
 				void setGrabInput( bool g );
 
 	private:
+				Config( const Config &config );
+				const Config & operator= ( const Config &config );
+
 				// True when debugging application.
 				bool debug;
 

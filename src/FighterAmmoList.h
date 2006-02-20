@@ -54,6 +54,9 @@ class FighterAmmoList : public DisplayableList {
 				GLuint getTexture( int index );
 
 	private:
+				FighterAmmoList( const FighterAmmoList &list );
+				const FighterAmmoList & operator= ( const FighterAmmoList &list );
+
 				// Texture for each type of ammo.
 				GLuint textures[numFighterAmmo];
 };

@@ -36,6 +36,10 @@ class MediumLaser : public Weapon {
 				MediumLaser( WeaponSystem* w, Game* g );
 
 				char* getName();
+
+	private:
+				MediumLaser( const MediumLaser &laser );
+				const MediumLaser & operator= ( const MediumLaser &laser );
 };
 
 

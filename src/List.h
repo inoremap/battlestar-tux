@@ -50,6 +50,10 @@ class List {
 
 	protected:
 				ListItem* rootObj;
+
+	private:
+				List( const List &list );
+				const List & operator= ( const List &list );
 };
 
 

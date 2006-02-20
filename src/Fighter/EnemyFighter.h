@@ -37,6 +37,9 @@ class EnemyFighter : public Fighter {
 				int getFighterType();
 
 	private:
+				EnemyFighter( const EnemyFighter &fighter );
+				const EnemyFighter & operator= ( const EnemyFighter &fighter );
+
 				EnemyFighterType fighterType;
 };
 

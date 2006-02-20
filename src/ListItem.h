@@ -42,6 +42,10 @@ class ListItem {
 	protected:
 				ListItem* prev;
 				ListItem* next;
+
+	private:
+				ListItem( const ListItem &item );
+				const ListItem & operator= ( const ListItem &item );
 };
 
 

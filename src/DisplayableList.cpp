@@ -50,28 +50,13 @@ void DisplayableList::Update() {
 
 
 void DisplayableList::DrawObjects() {
-	if( rootObj && ((Displayable*) rootObj)->getType() == ENEMY_AMMO ) {
-		FighterAmmo* cur = (FighterAmmo*) rootObj;
-		FighterAmmo* next = 0;
-		printf( "\n---Start Drawing---\n" );
-		while( cur ) {
-				next = (FighterAmmo*) cur->getNext();
-				printf( "\n2 cur: %x\trootObj: %x\n", cur, rootObj );
-				cur->Draw();
-				printf( "\n3\n" );
-				cur = next;
-		}
-		printf( "\n---Stop Drawing---\n" );
-	}
-	else {
-		Displayable* cur = (Displayable*) rootObj;
-		Displayable* next = 0;
+	Displayable* cur = (Displayable*) rootObj;
+	Displayable* next = 0;
 
-		while( cur ) {
-			next = (Displayable*) cur->getNext();
-			cur->Draw();
-			cur = next;
-		}
+	while( cur ) {
+		next = (Displayable*) cur->getNext();
+		cur->Draw();
+		cur = next;
 	}
 }
 
@@ -137,7 +122,6 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
 	// An ammo and an airframe are colliding.
 	if( a->getType() & FIGHTER && b->getType() & AMMO ) {
-		printf( "Ammo collision with Fighter.\n" );
 		// We know that a is the fighter and b is the ammo.
 
 		((Fighter*) a)->damage( ((FighterAmmo*) b)->getDamage() );

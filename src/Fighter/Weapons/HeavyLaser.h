@@ -36,6 +36,10 @@ class HeavyLaser : public Weapon {
 				HeavyLaser( WeaponSystem* w, Game* g );
 
 				char* getName();
+
+	private:
+				HeavyLaser( const HeavyLaser &laser );
+				const HeavyLaser & operator= ( const HeavyLaser &laser );
 };
 
 

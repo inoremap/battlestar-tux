@@ -47,6 +47,9 @@ class EnemyFighterList : public DisplayableList {
 				GLuint getTexture( int index );
 
 	private:
+				EnemyFighterList( const EnemyFighterList &list );
+				const EnemyFighterList & operator= ( const EnemyFighterList &list );
+
 				// Texture for each type of enemy.
 				GLuint textures[numEnemyTypes];
 };

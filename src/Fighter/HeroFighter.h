@@ -42,6 +42,9 @@ class HeroFighter : public Fighter {
 				int getFighterType();
 
 	private:
+				HeroFighter( const HeroFighter &fighter );
+				const HeroFighter & operator= ( const HeroFighter &fighter );
+
 				HeroFighterType fighterType;
 };
 

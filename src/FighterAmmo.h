@@ -41,6 +41,9 @@ class FighterAmmo : public Displayable {
 				float getPenetration();
 
 	private:
+				FighterAmmo( const FighterAmmo &ammo );
+				const FighterAmmo & operator= ( const FighterAmmo &ammo );
+
 				// Constant Z position of the ammo.
 				static const float zPos = -1.4;
 

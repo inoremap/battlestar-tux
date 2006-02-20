@@ -101,6 +101,10 @@ class Displayable : public ListItem {
 				bool stayOnScreen;
 
 				Game* game;
+
+	private:
+				Displayable( const Displayable &displayable );
+				const Displayable & operator= ( const Displayable &displayable );
 };
 
 

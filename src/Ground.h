@@ -60,6 +60,9 @@ class Ground {
 				static const float segSize = 40;
 
 	private:
+				Ground( const Ground &ground );
+				const Ground & operator= ( const Ground &ground );
+
 				// Take the bottom segment and move it to the top.
 				void rotateSegments();
 

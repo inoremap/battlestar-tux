@@ -36,6 +36,10 @@ class LightPlasma : public Weapon {
 				LightPlasma( WeaponSystem* w, Game* g );
 
 				char* getName();
+
+	private:
+				LightPlasma( const LightPlasma &plasma );
+				const LightPlasma & operator= ( const LightPlasma &plasma );
 };
 
 

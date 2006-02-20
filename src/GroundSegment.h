@@ -39,6 +39,9 @@ class GroundSegment : public Displayable {
 				void Draw();
 
 	private:
+				GroundSegment( const GroundSegment &segment );
+				const GroundSegment & operator= ( const GroundSegment &segment );
+
 				// Particular variation of ground texturing.
 				GroundType groundType;
 

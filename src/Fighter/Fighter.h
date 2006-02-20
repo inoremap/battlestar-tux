@@ -76,6 +76,9 @@ class Fighter : public Displayable {
 				int getAlignment();
 
 	protected:
+				Fighter( const Fighter &fighter );
+				const Fighter & operator= ( const Fighter &fighter );
+
 				// Constant Z position of the fighter.
 				static const float zPos = -1.5;
 

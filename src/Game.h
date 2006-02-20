@@ -77,6 +77,9 @@ class Game {
 				void setFighter( Fighter* f );
 
 	private:
+				Game( const Game &game );
+				const Game & operator= ( const Game &game );
+
 				// Is Battlestar Tux finished?
 				static bool finished;
 

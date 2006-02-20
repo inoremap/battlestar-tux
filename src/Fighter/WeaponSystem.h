@@ -61,6 +61,9 @@ class WeaponSystem {
 				bool equipable( int weapon );
 
 	private:
+				WeaponSystem( const WeaponSystem &system );
+				const WeaponSystem & operator= ( const WeaponSystem &system );
+
 				// Available weapon mounts on the system.
 				int mount_points;
 

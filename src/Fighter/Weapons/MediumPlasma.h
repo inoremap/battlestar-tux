@@ -36,6 +36,10 @@ class MediumPlasma : public Weapon {
 				MediumPlasma( WeaponSystem* w, Game* g );
 
 				char* getName();
+
+	private:
+				MediumPlasma( const MediumPlasma &plasma );
+				const MediumPlasma & operator= ( const MediumPlasma &plasma );
 };
 
 

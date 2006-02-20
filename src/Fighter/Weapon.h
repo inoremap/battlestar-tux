@@ -47,6 +47,9 @@ class Weapon {
 				virtual char* getName();
 
 	protected:
+				Weapon( const Weapon &weapon );
+				const Weapon & operator= ( const Weapon &weapon );
+
 				// Is weapon recharged and ready to fire?
 				bool Recharged();
 

@@ -68,6 +68,10 @@ class DisplayableList : public List {
 
 	protected:
 				Game* game;
+
+	private:
+				DisplayableList( const DisplayableList &list );
+				const DisplayableList & operator= ( const DisplayableList &list );
 };
 
 
