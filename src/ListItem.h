@@ -1,6 +1,6 @@
 /* ListItem.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -36,8 +36,8 @@ class ListItem {
 				void setPrev( ListItem* p );
 				void setNext( ListItem* n );
 
-				ListItem* getPrev();
-				ListItem* getNext();
+				ListItem* & getPrev();
+				ListItem* & getNext();
 
 	protected:
 				ListItem* prev;

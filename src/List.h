@@ -40,7 +40,7 @@ class List {
 				void remObject( ListItem* obj );
 
 				// Return the list of objects.
-				ListItem* getRoot();
+				ListItem* & getRoot();
 
 				// Print list of objects.
 				void printList();

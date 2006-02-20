@@ -36,13 +36,11 @@ List::~List() {}
 
 
 void List::addObject( ListItem* obj ) {
-	ListItem* first = rootObj;
-
-	if( !first )
+	if( !rootObj )
 		rootObj = obj;
 	else {
-		first->setPrev( obj );
-		obj->setNext( first );
+		rootObj->setPrev( obj );
+		obj->setNext( rootObj );
 		rootObj = obj;
 	}
 }
@@ -51,7 +49,7 @@ void List::addObject( ListItem* obj ) {
 void List::remObject( ListItem* obj ) {
 	// obj is rootObj
 	if( obj == rootObj ) 
-		rootObj = obj->getNext();
+		rootObj = rootObj->getNext();
 	else if( ! obj->getPrev() ) {
 		printf( "--- There's a split in the list ---\n" );
 		printf( "The real list:\n" );
@@ -65,14 +63,14 @@ void List::remObject( ListItem* obj ) {
 
 	if( obj->getNext() )
 		obj->getNext()->setPrev( obj->getPrev() );
-printf( "Deleted: %8x\n", obj );
-	obj->setPrev( 0 );
-	obj->setNext( 0 );
+
+	printf( "Deleted: %8x\n", obj );
+
 	delete obj;
 }
 
 
-ListItem* List::getRoot() { return rootObj; }
+ListItem* & List::getRoot() { return rootObj; }
 
 
 void List::printList() { printList(rootObj); }
@@ -88,7 +86,7 @@ void List::printList( ListItem* obj ) {
 		printf( "\n" );
 
 	while( cur ) {
-		if( count < 30 ) {
+		if( count < 20 ) {
 			printf( " Object: 0x%x", cur );
 			printf( "\tprev: %8x\tnext: %8x\n", cur->getPrev(), cur->getNext() );
 		}
@@ -97,7 +95,7 @@ void List::printList( ListItem* obj ) {
 		cur = cur->getNext();
 	}
 
-	if( count >= 30 )
+	if( count >= 20 )
 		printf( " more...%i total\n", count );
 
 	printf( "---List------------------\n\n" );
