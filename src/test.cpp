@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
-	Game* game = Game::getInstance();
+	Game* game = new Game();
 	SDL_Event event;
 
 	// Exit if there is no screen.

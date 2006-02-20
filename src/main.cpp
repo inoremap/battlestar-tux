@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
-	Game* game = Game::getInstance();
+	Game* game = new Game();
 	Config* config = new Config( game );
 	Screen* screen = new Screen();
 	SDL_Event event;

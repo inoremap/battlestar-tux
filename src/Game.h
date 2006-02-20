@@ -36,8 +36,7 @@ class Fighter;
 /* Stores game states and information. */
 class Game {
 	public:
-				// Return instance of Game
-				static Game* getInstance();
+				Game();
 
 				// Create a new game
 				void newGame();
@@ -81,40 +80,40 @@ class Game {
 				const Game & operator= ( const Game &game );
 
 				// Is Battlestar Tux finished?
-				static bool finished;
+				bool finished;
 
 				// Is Battlestar Tux paused?
-				static bool paused;
+				bool paused;
 
 				// Desired Frames Per Second (FPS).
-				static float desiredFps;
+				float desiredFps;
 
 				// Current Frames Per Second (FPS).
-				static float fps;
+				float fps;
 
 				// Number of frames that have been drawn.
 				// When frames are dropped, 'frame' will lag behind 'gameFrame'.
-				static unsigned int frame;
+				unsigned int frame;
 
 				// Number of frames that ought to have been drawn.
 				// Keep track of accurate game speeds, even if frames are dropped.
-				static unsigned int gameFrame;
+				unsigned int gameFrame;
 
 				// Last game frame that was drawn.
-				static unsigned int lastGameFrame;
+				unsigned int lastGameFrame;
 
 				// Increases when frames are dropped.
 				// Drops to 0 when frames are repeated.
-				static float gameSpeed;
+				float gameSpeed;
 
 				// Time the game started.
-				static unsigned int startTime;
+				unsigned int startTime;
 
 				// Time when the last frame started being drawn.
-				static unsigned int lastTime;
+				unsigned int lastTime;
 
 				// Number of millisec to sleep between frames to remain synced.
-				static int syncSleep;
+				int syncSleep;
 
 				// Maximum bounds of objects on the screen.
 				//
@@ -122,13 +121,11 @@ class Game {
 				//
 				//  (-40, -30)            (40, -30)
 				//
-				static float bounds[2];
+				float bounds[2];
 
 				// Base scroll speed.  Objects on the ground will move at this speed.
 				// Aircraft have their own velocity and may move faster.
-				static float scrollSpeed;
-
-				static Game* instance;
+				float scrollSpeed;
 
 				// Stores game configuration
 				Config* config;
@@ -137,8 +134,6 @@ class Game {
 				FighterAmmoList* enemyAmmoList;
 				FighterAmmoList* heroAmmoList;
 				Fighter* fighter;
-
-				Game();
 };
 
 

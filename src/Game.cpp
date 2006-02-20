@@ -30,34 +30,34 @@
 #include "FighterAmmoList.h"
 #include "Game.h"
 
-bool Game::finished = false;
-bool Game::paused = false;
-float Game::desiredFps = 50.0;
-float Game::fps = desiredFps;
-unsigned int Game::frame = 0;
-unsigned int Game::gameFrame = 0;
-unsigned int Game::lastGameFrame = 0;
-float Game::gameSpeed = 1.0;
-unsigned int Game::startTime = 0;
-unsigned int Game::lastTime = 0;
-int Game::syncSleep = 5;
-float Game::bounds[2] = { 40, 30 };
-float Game::scrollSpeed = 0.1;
-Game* Game::instance = 0;
-
 
 Game::Game() {
 	startTime = SDL_GetTicks();
+	lastTime = 0;
 
+	finished = false;
+	paused = false;
+
+	desiredFps = 50.0;
+	fps = desiredFps;
+
+	frame = 0;
+	gameFrame = 0;
+	lastGameFrame = 0;
+
+	gameSpeed = 1.0;
+
+	syncSleep = 5;
+
+	bounds[0] = 40;
+	bounds[1] = 30;
+
+	scrollSpeed = 0.1;
+
+	enemyFighterList = 0;
+	enemyAmmoList = 0;
+	heroAmmoList = 0;
 	fighter = 0;
-}
-
-
-Game* Game::getInstance() {
-	if( ! instance )
-		instance = new Game();
-
-	return instance;
 }
 
 
