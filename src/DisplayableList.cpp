@@ -131,7 +131,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
 			// Let ammo pass - some ships should probably stop it.
 		}
 		else {
-			if( b->getType() & HEROS_AMMO ) {
+			if( b->getType() == HEROS_AMMO ) {
 				game->getHeroAmmoList()->remObject( b );
 			}
 			else {

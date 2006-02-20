@@ -36,8 +36,8 @@ class ListItem {
 				void setPrev( ListItem* p );
 				void setNext( ListItem* n );
 
-				ListItem* & getPrev();
-				ListItem* & getNext();
+				ListItem* getPrev();
+				ListItem* getNext();
 
 	protected:
 				ListItem* prev;

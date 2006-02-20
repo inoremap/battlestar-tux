@@ -40,13 +40,15 @@ class List {
 				void remObject( ListItem* obj );
 
 				// Return the list of objects.
-				ListItem* & getRoot();
+				ListItem* getRoot();
 
-				// Print list of objects.
+				// Print list of objects, starting at root.
 				void printList();
+				void printList( char* desc );
 
 				// Print list of objects, starting at obj.
 				void printList( ListItem* obj );
+				void printList( ListItem* obj, char* desc );
 
 	protected:
 				ListItem* rootObj;

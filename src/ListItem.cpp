@@ -40,5 +40,5 @@ void ListItem::setPrev( ListItem* p ) { prev = p; }
 void ListItem::setNext( ListItem* n ) { next = n; }
 
 
-ListItem* & ListItem::getPrev() { return prev; }
-ListItem* & ListItem::getNext() { return next; }
+ListItem* ListItem::getPrev() { return prev; }
+ListItem* ListItem::getNext() { return next; }
