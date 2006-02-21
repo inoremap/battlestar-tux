@@ -39,7 +39,7 @@ DisplayableList::DisplayableList( Game* g ) {
 DisplayableList::~DisplayableList() {}
 
 
-void DisplayableList::Update() {
+void DisplayableList::UpdateObjects() {
 	Displayable* cur = (Displayable*) rootObj;
 
 	while( cur ) {

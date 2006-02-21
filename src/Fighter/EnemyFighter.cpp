@@ -34,7 +34,6 @@ EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g ) :
 			size[0] = 4;
 			size[1] = 4;
 			health = healthFull = 1000;
-			shields = shieldsFull = 0;
 			float offsets[3][2] = {
 				{ 0.0, 0.0 },
 				{ -0.75, 1.0 },

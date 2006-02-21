@@ -32,9 +32,10 @@
 enum DisplayableType {
 	GROUND		=	0x0001,				// Ground segment
 	FIGHTER		=	0x0002,				// Aircraft
-	AMMO		=	0x0004,				// Weapon ammo
-	HEROS_AMMO	=	0x0008 | 0x0004,	// Hero's ammo
-	ENEMY_AMMO	=	0x0010 | 0x0004		// Enemies' ammo
+	SHIELD		=	0x0004,				// Aircraft shield
+	AMMO		=	0x0008,				// Weapon ammo
+	HEROS_AMMO	=	0x0010 | 0x0008,	// Hero's ammo
+	ENEMY_AMMO	=	0x0020 | 0x0008		// Enemies' ammo
 };
 
 

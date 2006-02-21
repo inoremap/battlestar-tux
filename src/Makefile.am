@@ -34,6 +34,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Fighter.h \
 			Fighter/HeroFighter.cpp \
 			Fighter/HeroFighter.h \
+			Fighter/Shield.cpp \
+			Fighter/Shield.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
@@ -84,6 +86,8 @@ testTUX_SOURCES =	Displayable.cpp \
 			Fighter/Fighter.h \
 			Fighter/HeroFighter.cpp \
 			Fighter/HeroFighter.h \
+			Fighter/Shield.cpp \
+			Fighter/Shield.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \

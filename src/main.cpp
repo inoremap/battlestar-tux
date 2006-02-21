@@ -110,13 +110,13 @@ int main(int argc, char* argv[])
 			hero->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
 			hero->Update();
 
-			heroAmmoList->Update();
+			heroAmmoList->UpdateObjects();
 			heroAmmoList->CullObjects( CULL_TOP );
 
-			enemyAmmoList->Update();
+			enemyAmmoList->UpdateObjects();
 			enemyAmmoList->CullObjects( CULL_BOTTOM );
 
-			enemies->Update();
+			enemies->UpdateObjects();
 			enemies->CullObjects( CULL_BOTTOM );
 
 			enemies->CheckCollisions( heroAmmoList );

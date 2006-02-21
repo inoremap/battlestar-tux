@@ -29,6 +29,7 @@
 
 #include "../Displayable.h"
 #include "../Game.h"
+#include "Shield.h"
 #include "Weapon.h"
 #include "WeaponSystem.h"
 #include "Weapons/LightLaser.h"
@@ -71,14 +72,12 @@ class Fighter : public Displayable {
 
 				float getHealth();
 				float getHealthFull();
+				Shield* getShield();
 				float getShields();
 				float getShieldsFull();
 				int getAlignment();
 
 	protected:
-				Fighter( const Fighter &fighter );
-				const Fighter & operator= ( const Fighter &fighter );
-
 				// Constant Z position of the fighter.
 				static const float zPos = -1.5;
 
@@ -88,20 +87,20 @@ class Fighter : public Displayable {
 				// Maximum ship armor
 				float healthFull;
 
-				// Remaining shield strength
-				float shields;
-
-				// Maximum shield strength
-				float shieldsFull;
-
 				// Is fighter currently firing?
 				bool firing;
+
+				Shield* shield;
 
 				WeaponSystem* weaponSystem;
 
 				FighterAlignment align;
 
 				GLuint texture;
+
+	private:
+				Fighter( const Fighter &fighter );
+				const Fighter & operator= ( const Fighter &fighter );
 };
 
 

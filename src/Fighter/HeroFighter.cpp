@@ -23,6 +23,7 @@
 
 
 #include "HeroFighter.h"
+#include "Shield.h"
 #include "../GfxUtils.h"
 
 HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER, g ) {
@@ -37,7 +38,7 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 			size[0] = 6;
 			size[1] = 6;
 			health = healthFull = 10000;
-			shields = shieldsFull = 5000;
+			shield = new Shield( 50000, game );
 			float offsets[3][2] = {
 				{ 0.0, 3.0 },
 				{ -1.0, 1.0 },
