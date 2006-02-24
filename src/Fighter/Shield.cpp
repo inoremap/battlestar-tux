@@ -1,6 +1,6 @@
-/* Fighter.cpp
+/* Shield.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,36 +22,36 @@
  */
 
 
+#include "Shield.h"
 #include "Fighter.h"
 
-Fighter::Fighter( FighterAlignment a, Game* g ) : Displayable( FIGHTER, g ) {
-	align = a;
+Shield::Shield( Fighter* f, float full, Game* g ) : Displayable( SHIELD, g ) {
+	fighter = f;
+	float width = fighter->getSize()[0];
+	float height = fighter->getSize()[1];
 
-	texture = 0;
+	if( width >= height )
+		size[0] = size[1] = width + 2;
+	else
+		size[0] = size[1] = height + 2;
 
-	pos[2] = zPos;
+	color[0] = 0.223;
+	color[1] = 0.400;
+	color[2] = 0.717;
+	color[3] = 0.5;
 
-	size[0] = 3;
-	size[1] = 3;
-
-	firing = false;
-
-	shield = 0;
-	weaponSystem = 0;
+	shields = shieldsFull = full;
 }
 
 
-Fighter::~Fighter() {
-	delete shield;
-	delete weaponSystem;
-}
+Shield::~Shield() {}
 
 
-void Fighter::Draw() {
+void Shield::Draw() {
 	float mx = size[0] / 2;
 	float my = size[1] / 2;
 
-	glBindTexture( GL_TEXTURE_2D, texture );
+	glBindTexture( GL_TEXTURE_2D, 0 );
 	glBegin( GL_QUADS );
 		glColor4f( color[0], color[1], color[2], color[3] );
 		glTexCoord2f( 0, 1 );
@@ -63,55 +63,32 @@ void Fighter::Draw() {
 		glTexCoord2f( 0, 0 );
 		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
 	glEnd();
-
-	if( shield )
-		shield->Draw();
 }
 
 
-void Fighter::Update() {
-	weaponSystem->Fire( firing );
-
-	if( shield )
-		shield->Update();
-
-	Displayable::Update();
+void Shield::Update() {
+	float* fighterPos = fighter->getPos();
+	pos[0] = fighterPos[0];
+	pos[1] = fighterPos[1];
+	pos[2] = fighterPos[2];
 }
 
 
-void Fighter::startFiring() { firing = true; }
-void Fighter::stopFiring() { firing = false; }
+float Shield::damage( float damage ) {
+	float remainder = 0.0;
 
+	remainder = damage - shields;
+	shields -= damage;
 
-void Fighter::damage( float damage ) {
-	if( shield )
-		damage = shield->damage( damage );
+	if( shields < 0 )
+		shields = 0;
 
-	health -= damage;
+	if( remainder < 0 )
+		remainder = 0;
 
-
-	if( health < 0 )
-		health = 0;
+	return remainder;
 }
 
 
-float Fighter::getHealth() { return health; }
-float Fighter::getHealthFull() { return healthFull; }
-
-Shield* Fighter::getShield() { return shield; }
-
-float Fighter::getShields() {
-	if( shield )
-		return shield->getShields();
-	else
-		return 0;
-}
-
-float Fighter::getShieldsFull() {
-	if( shield )
-		return shield->getShieldsFull();
-	else
-		return 0;
-}
-
-int Fighter::getAlignment() { return align; }
+float Shield::getShields() { return shields; }
+float Shield::getShieldsFull() { return shieldsFull; }

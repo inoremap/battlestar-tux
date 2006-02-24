@@ -38,7 +38,7 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 			size[0] = 6;
 			size[1] = 6;
 			health = healthFull = 10000;
-			shield = new Shield( 50000, game );
+			shield = new Shield( this, 50000, game );
 			float offsets[3][2] = {
 				{ 0.0, 3.0 },
 				{ -1.0, 1.0 },
