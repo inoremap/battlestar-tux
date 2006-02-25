@@ -41,7 +41,7 @@
 #include "Game.h"
 #include "Ground.h"
 #include "HUD.h"
-#include "ListItem.h"
+#include "Structures/ListItem.h"
 #include "Screen.h"
 
 using namespace std;

@@ -26,7 +26,7 @@
 #define DISPLAYABLE_H_
 
 #include "Game.h"
-#include "ListItem.h"
+#include "Structures/ListItem.h"
 
 
 enum DisplayableType {

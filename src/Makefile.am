@@ -60,12 +60,12 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
-			List.cpp \
-			List.h \
-			ListItem.cpp \
-			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			Structures/List.cpp \
+			Structures/List.h \
+			Structures/ListItem.cpp \
+			Structures/ListItem.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -112,12 +112,12 @@ testTUX_SOURCES =	Displayable.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
-			List.cpp \
-			List.h \
-			ListItem.cpp \
-			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			Structures/List.cpp \
+			Structures/List.h \
+			Structures/ListItem.cpp \
+			Structures/ListItem.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp

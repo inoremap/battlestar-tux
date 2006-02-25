@@ -74,8 +74,9 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	List.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
-	TextureManager.$(OBJEXT) main.$(OBJEXT)
+	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Structures/ListItem.$(OBJEXT) TextureManager.$(OBJEXT) \
+	main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -92,8 +93,9 @@ am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	List.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
-	TextureManager.$(OBJEXT) test.$(OBJEXT)
+	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Structures/ListItem.$(OBJEXT) TextureManager.$(OBJEXT) \
+	test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -258,12 +260,12 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
-			List.cpp \
-			List.h \
-			ListItem.cpp \
-			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			Structures/List.cpp \
+			Structures/List.h \
+			Structures/ListItem.cpp \
+			Structures/ListItem.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -310,12 +312,12 @@ testTUX_SOURCES = Displayable.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
-			List.cpp \
-			List.h \
-			ListItem.cpp \
-			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			Structures/List.cpp \
+			Structures/List.h \
+			Structures/ListItem.cpp \
+			Structures/ListItem.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp
@@ -420,6 +422,16 @@ Fighter/Weapons/MediumPlasma.$(OBJEXT):  \
 Fighter/Weapons/HeavyPlasma.$(OBJEXT):  \
 	Fighter/Weapons/$(am__dirstamp) \
 	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
+Structures/$(am__dirstamp):
+	@$(mkdir_p) Structures
+	@: > Structures/$(am__dirstamp)
+Structures/$(DEPDIR)/$(am__dirstamp):
+	@$(mkdir_p) Structures/$(DEPDIR)
+	@: > Structures/$(DEPDIR)/$(am__dirstamp)
+Structures/List.$(OBJEXT): Structures/$(am__dirstamp) \
+	Structures/$(DEPDIR)/$(am__dirstamp)
+Structures/ListItem.$(OBJEXT): Structures/$(am__dirstamp) \
+	Structures/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
@@ -441,6 +453,8 @@ mostlyclean-compile:
 	-rm -f Fighter/Weapons/LightPlasma.$(OBJEXT)
 	-rm -f Fighter/Weapons/MediumLaser.$(OBJEXT)
 	-rm -f Fighter/Weapons/MediumPlasma.$(OBJEXT)
+	-rm -f Structures/List.$(OBJEXT)
+	-rm -f Structures/ListItem.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -455,8 +469,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ground.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GroundSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HUD.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/List.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TextureManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
@@ -473,6 +485,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/LightPlasma.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumLaser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumPlasma.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/List.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`; \
@@ -697,6 +711,8 @@ distclean-generic:
 	-rm -f Fighter/$(am__dirstamp)
 	-rm -f Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Fighter/Weapons/$(am__dirstamp)
+	-rm -f Structures/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Structures/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -707,7 +723,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -733,7 +749,7 @@ install-man:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
