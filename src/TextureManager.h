@@ -50,6 +50,9 @@ class TextureManager {
 				void freeAllTextures();
 
 	private:
+				TextureManager( const TextureManager &t );
+				const TextureManager & operator= ( const TextureManager &t );
+
 				/* Adapted from example SDL code:
 				 * http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example
 				 */
