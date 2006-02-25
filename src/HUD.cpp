@@ -26,23 +26,25 @@
 #include "SDL_opengl.h"
 
 #include "Fighter/Fighter.h"
-#include "GfxUtils.h"
+#include "TextureManager.h"
 #include "HUD.h"
 
 HUD::HUD( Game* g ) {
-	healthTexture = shieldsTexture = loadTexture( "data/gfx/hud_shields-64.png", GL_NEAREST );
-
 	game = g;
+
+	healthTexture = shieldsTexture = game->getTextureManager()->loadTexture( "data/gfx/hud_shields-64.png", GL_NEAREST );
 }
 
 
 HUD::~HUD() {
-	if( healthTexture == shieldsTexture ) {
-		glDeleteTextures( 1, &healthTexture );
-		glDeleteTextures( 1, &shieldsTexture );
+	TextureManager* t = game->getTextureManager();
+
+	if( healthTexture != shieldsTexture ) {
+		t->freeTextures( 1, &healthTexture );
+		t->freeTextures( 1, &shieldsTexture );
 	}
 	else
-		glDeleteTextures( 1, &healthTexture );
+		t->freeTextures( 1, &healthTexture );
 
 	game = 0;
 }

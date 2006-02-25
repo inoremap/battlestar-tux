@@ -42,6 +42,7 @@
 #include "Ground.h"
 #include "HUD.h"
 #include "Screen.h"
+#include "TextureManager.h"
 
 using namespace std;
 
@@ -53,6 +54,9 @@ int main(int argc, char* argv[])
 	float realHeight = 0.0;
 	Game* game = new Game();
 	Config* config = new Config( game );
+	game->setConfig( config );
+	TextureManager* textureManager = new TextureManager();
+	game->setTextureManager( textureManager );
 	Screen* screen = new Screen();
 	SDL_Event event;
 
@@ -139,7 +143,6 @@ int main(int argc, char* argv[])
 		heroAmmoList->DrawObjects();
 		enemies->DrawObjects();
 		hero->Draw();
-		//draw shield
 		//draw power ups
 		hud->Draw();
 

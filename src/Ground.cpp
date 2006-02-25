@@ -22,14 +22,14 @@
  */
 
 
-#include "GfxUtils.h"
 #include "Ground.h"
 #include "GroundSegment.h"
+#include "TextureManager.h"
 
 Ground::Ground( GroundType type, Game* g ) {
 	groundType = type;
-	texture = loadTexture( "data/gfx/ground_0001-256.png" );
 	game = g;
+	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0001-256.png" );
 
 	float baseY = game->getBounds()[1] + segSize / 2;
 
@@ -66,7 +66,7 @@ Ground::~Ground() {
 	if( prev )
 		delete prev;
 
-	glDeleteTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

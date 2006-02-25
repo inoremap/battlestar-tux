@@ -54,8 +54,6 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Weapons/HeavyPlasma.h \
 			Game.cpp \
 			Game.h \
-			GfxUtils.cpp \
-			GfxUtils.h \
 			Ground.cpp \
 			Ground.h \
 			GroundSegment.cpp \
@@ -68,6 +66,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			TextureManager.cpp \
+			TextureManager.h \
 			main.cpp
 
 testTUX_SOURCES =	Displayable.cpp \
@@ -106,8 +106,6 @@ testTUX_SOURCES =	Displayable.cpp \
 			Fighter/Weapons/HeavyPlasma.h \
 			Game.cpp \
 			Game.h \
-			GfxUtils.cpp \
-			GfxUtils.h \
 			Ground.cpp \
 			Ground.h \
 			GroundSegment.cpp \
@@ -120,6 +118,8 @@ testTUX_SOURCES =	Displayable.cpp \
 			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			TextureManager.cpp \
+			TextureManager.h \
 			test.cpp
 
 SUBDIRS = data/

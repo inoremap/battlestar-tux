@@ -73,9 +73,9 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/LightPlasma.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
-	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
-	HUD.$(OBJEXT) List.$(OBJEXT) ListItem.$(OBJEXT) \
-	Screen.$(OBJEXT) main.$(OBJEXT)
+	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
+	List.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
+	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -91,9 +91,9 @@ am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
 	Fighter/Weapons/LightPlasma.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
-	GfxUtils.$(OBJEXT) Ground.$(OBJEXT) GroundSegment.$(OBJEXT) \
-	HUD.$(OBJEXT) List.$(OBJEXT) ListItem.$(OBJEXT) \
-	Screen.$(OBJEXT) test.$(OBJEXT)
+	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
+	List.$(OBJEXT) ListItem.$(OBJEXT) Screen.$(OBJEXT) \
+	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -252,8 +252,6 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Weapons/HeavyPlasma.h \
 			Game.cpp \
 			Game.h \
-			GfxUtils.cpp \
-			GfxUtils.h \
 			Ground.cpp \
 			Ground.h \
 			GroundSegment.cpp \
@@ -266,6 +264,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			TextureManager.cpp \
+			TextureManager.h \
 			main.cpp
 
 testTUX_SOURCES = Displayable.cpp \
@@ -304,8 +304,6 @@ testTUX_SOURCES = Displayable.cpp \
 			Fighter/Weapons/HeavyPlasma.h \
 			Game.cpp \
 			Game.h \
-			GfxUtils.cpp \
-			GfxUtils.h \
 			Ground.cpp \
 			Ground.h \
 			GroundSegment.cpp \
@@ -318,6 +316,8 @@ testTUX_SOURCES = Displayable.cpp \
 			ListItem.h \
 			Screen.cpp \
 			Screen.h \
+			TextureManager.cpp \
+			TextureManager.h \
 			test.cpp
 
 SUBDIRS = data/
@@ -452,13 +452,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmoList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Game.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GfxUtils.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ground.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GroundSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HUD.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TextureManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/EnemyFighter.Po@am__quote@

@@ -29,6 +29,7 @@
 #include "Fighter/Fighter.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
+#include "TextureManager.h"
 
 
 Game::Game() {
@@ -53,6 +54,9 @@ Game::Game() {
 	bounds[1] = 30;
 
 	scrollSpeed = 0.1;
+
+	config = 0;
+	textureManager = 0;
 
 	enemyFighterList = 0;
 	enemyAmmoList = 0;
@@ -104,10 +108,10 @@ void Game::startFrame() {
 	int lag = gameFrame - lastGameFrame;
 	if( lag <= 0 ) {		// We're going too fast.
 		//syncSleep++;
-		gameSpeed = 0.0;
+		gameSpeed = 0;
 	}
 	else if( lag == 1 )		// Exactly correct.
-		gameSpeed = 1.0;
+		gameSpeed = 1;
 	else {					// We need to go faster, if possible.
 		//syncSleep--;
 		gameSpeed = lag;
@@ -130,6 +134,9 @@ float Game::getScrollSpeed() { return scrollSpeed; }
 
 Config* Game::getConfig() { return config; }
 void Game::setConfig( Config* c ) { config = c; }
+
+TextureManager* Game::getTextureManager() { return textureManager; }
+void Game::setTextureManager( TextureManager* t ) { textureManager = t; }
 
 EnemyFighterList* Game::getEnemyFighterList() { return enemyFighterList; }
 void Game::setEnemyFighterList( EnemyFighterList* l ) { enemyFighterList = l; }

@@ -26,16 +26,16 @@
 
 #include "Fighter/EnemyFighter.h"
 #include "EnemyFighterList.h"
-#include "GfxUtils.h"
+#include "TextureManager.h"
 
 EnemyFighterList::EnemyFighterList( Game* g ) : DisplayableList( g ) {
 	// Load all enemy textures.
-	textures[0] = loadTexture( "data/gfx/enemy_fighter_0001-64.png" );		// BASIC_ENEMY_FIGHTER
+	textures[0] = game->getTextureManager()->loadTexture( "data/gfx/enemy_fighter_0001-64.png" );		// BASIC_ENEMY_FIGHTER
 }
 
 
 EnemyFighterList::~EnemyFighterList() {
-	glDeleteTextures( numEnemyTypes, textures );
+	game->getTextureManager()->freeTextures( numEnemyTypes, textures );
 
 	for( int i=0; i < numEnemyTypes; i++ )
 		textures[i] = 0;

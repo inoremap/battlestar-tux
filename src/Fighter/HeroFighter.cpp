@@ -24,11 +24,11 @@
 
 #include "HeroFighter.h"
 #include "Shield.h"
-#include "../GfxUtils.h"
+#include "../TextureManager.h"
 
 HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER, g ) {
 	fighterType = f;
-	texture = loadTexture( "data/gfx/fighter_0001-64.png" );
+	texture = game->getTextureManager()->loadTexture( "data/gfx/fighter_0001-64.png" );
 
 	stayOnScreen = true;
 
@@ -57,7 +57,7 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 
 
 HeroFighter::~HeroFighter() {
-	glDeleteTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

@@ -1,6 +1,6 @@
-/* GfxUtils.cpp
+/* TextureManager.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,10 +22,43 @@
  */
 
 
-#include "GfxUtils.h"
+#include "TextureManager.h"
 
-GLuint loadTexture( char* filename ) { return loadTexture( filename, GL_LINEAR ); }
-GLuint loadTexture( char* filename, int texture_quality ) {
+
+TextureManager::TextureManager() {
+}
+
+
+TextureManager::~TextureManager() {
+	// Remove all textures.
+}
+
+
+GLuint TextureManager::loadTexture( char* filename ) { return loadTexture( filename, GL_LINEAR ); }
+GLuint TextureManager::loadTexture( char* filename, int texture_quality ) {
+	return loadTextureFile( filename, texture_quality );
+}
+
+
+void TextureManager::freeTexture( char* filename ) {
+	GLuint id = 0;
+
+	if( id )
+		freeTextures( 1, &id );
+}
+
+
+void TextureManager::freeTexture( GLuint id ) {	freeTextures( 1, &id ); }
+void TextureManager::freeTextures( int num, GLuint* ids ) {
+	//glDeleteTextures( num, ids );
+}
+
+
+void TextureManager::freeAllTextures() {
+}
+
+
+GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
 	SDL_Surface* surface;
 	GLuint textureid;
 	int mode;

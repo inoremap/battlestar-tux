@@ -31,6 +31,7 @@ class Config;
 class EnemyFighterList;
 class FighterAmmoList;
 class Fighter;
+class TextureManager;
 
 
 /* Stores game states and information. */
@@ -65,6 +66,9 @@ class Game {
 
 				Config* getConfig();
 				void setConfig( Config* c );
+
+				TextureManager* getTextureManager();
+				void setTextureManager( TextureManager* t );
 
 				EnemyFighterList* getEnemyFighterList();
 				FighterAmmoList* getEnemyAmmoList();
@@ -129,6 +133,9 @@ class Game {
 
 				// Stores game configuration
 				Config* config;
+
+				// Manages all image textures.
+				TextureManager* textureManager;
 
 				EnemyFighterList* enemyFighterList;
 				FighterAmmoList* enemyAmmoList;
