@@ -181,6 +181,11 @@ int StringArray::getID( std::string value ) {
 		else
 			increment = 1;
 
+		if( index < 0 )
+			break;
+		else if( index >= used )
+			break;
+
 		if( value == values[index] ) {
 			position = index;
 			break;

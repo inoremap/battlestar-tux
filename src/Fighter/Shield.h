@@ -25,6 +25,8 @@
 #ifndef SHIELD_H_
 #define SHIELD_H_
 
+#include "SDL_opengl.h"
+
 #include "../Displayable.h"
 #include "../Game.h"
 
@@ -49,6 +51,9 @@ class Shield : public Displayable {
 				float getShieldsFull();
 
 	private:
+				Shield( const Shield &shield );
+				const Shield & operator= ( const Shield &shield );
+
 				// Remaining shield strength
 				float shields;
 
@@ -58,8 +63,7 @@ class Shield : public Displayable {
 				// Fighter that has shield mounted
 				Fighter* fighter;
 
-				Shield( const Shield &shield );
-				const Shield & operator= ( const Shield &shield );
+				GLuint texture;
 };
 
 

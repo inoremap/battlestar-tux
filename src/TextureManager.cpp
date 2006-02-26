@@ -77,7 +77,7 @@ void TextureManager::freeAllTextures() {
 
 
 GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
-	SDL_Surface* surface;
+	SDL_Surface* surface = 0;
 	GLuint textureid;
 	int mode;
 

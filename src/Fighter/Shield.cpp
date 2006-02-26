@@ -24,11 +24,14 @@
 
 #include "Shield.h"
 #include "Fighter.h"
+#include "../TextureManager.h"
 
 Shield::Shield( Fighter* f, float full, Game* g ) : Displayable( SHIELD, g ) {
 	fighter = f;
 	float width = fighter->getSize()[0];
 	float height = fighter->getSize()[1];
+
+	texture = game->getTextureManager()->loadTexture( "data/gfx/shields_0001-64.png" );
 
 	if( width >= height )
 		size[0] = size[1] = width + 2;
@@ -51,7 +54,7 @@ void Shield::Draw() {
 	float mx = size[0] / 2;
 	float my = size[1] / 2;
 
-	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBindTexture( GL_TEXTURE_2D, texture );
 	glBegin( GL_QUADS );
 		glColor4f( color[0], color[1], color[2], color[3] );
 		glTexCoord2f( 0, 1 );
