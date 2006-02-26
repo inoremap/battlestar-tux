@@ -75,8 +75,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
-	Structures/ListItem.$(OBJEXT) TextureManager.$(OBJEXT) \
-	main.$(OBJEXT)
+	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
+	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -94,8 +94,8 @@ am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
-	Structures/ListItem.$(OBJEXT) TextureManager.$(OBJEXT) \
-	test.$(OBJEXT)
+	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
+	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -266,6 +266,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/List.h \
 			Structures/ListItem.cpp \
 			Structures/ListItem.h \
+			Structures/StringArray.cpp \
+			Structures/StringArray.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -318,6 +320,8 @@ testTUX_SOURCES = Displayable.cpp \
 			Structures/List.h \
 			Structures/ListItem.cpp \
 			Structures/ListItem.h \
+			Structures/StringArray.cpp \
+			Structures/StringArray.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp
@@ -432,6 +436,8 @@ Structures/List.$(OBJEXT): Structures/$(am__dirstamp) \
 	Structures/$(DEPDIR)/$(am__dirstamp)
 Structures/ListItem.$(OBJEXT): Structures/$(am__dirstamp) \
 	Structures/$(DEPDIR)/$(am__dirstamp)
+Structures/StringArray.$(OBJEXT): Structures/$(am__dirstamp) \
+	Structures/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
@@ -455,6 +461,7 @@ mostlyclean-compile:
 	-rm -f Fighter/Weapons/MediumPlasma.$(OBJEXT)
 	-rm -f Structures/List.$(OBJEXT)
 	-rm -f Structures/ListItem.$(OBJEXT)
+	-rm -f Structures/StringArray.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -487,6 +494,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumPlasma.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`; \

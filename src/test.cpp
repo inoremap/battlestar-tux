@@ -42,6 +42,7 @@
 #include "Ground.h"
 #include "HUD.h"
 #include "Structures/ListItem.h"
+#include "Structures/StringArray.h"
 #include "Screen.h"
 
 using namespace std;
@@ -81,7 +82,7 @@ int main(int argc, char* argv[])
 	printf( "Testing Battlestar TUX...\n\n" );
 ////// Test suite.
 
-	//// Test Displaylist:
+	/*//// Test Displaylist:
 	printf( "\nAdding 1000 enemies...\n" );
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
@@ -170,9 +171,9 @@ int main(int argc, char* argv[])
 		count++;
 	}
 	enemies->printList();
-	//// Done testing DisplayList
+	//// Done testing DisplayList*/
 
-	//// Test culling:
+	/*//// Test culling:
 	printf( "\nTesting culling...\n" );
 	EnemyFighter* top = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 	top->setPos( 0, 100 );
@@ -207,7 +208,57 @@ int main(int argc, char* argv[])
 	printf( "Culling left...\n" );
 	enemies->CullObjects( CULL_LEFT );
 	enemies->printList();
-	//// Done testing culling.
+	//// Done testing culling.*/
+
+	/*//// Test StringArray
+	StringArray* array = new StringArray();
+	array->insert( "Alpha", 0 );
+	array->insert( "Test3", 3 );
+	array->insert( "Test5", 5 );
+	array->insert( "Test1", 1 );
+	array->insert( "Test4", 4 );
+	array->insert( "Test2", 2 );
+	array->insert( "Omega", 10 );
+	array->insert( "Wall2", 2 );
+	array->insert( "Wall5", 5 );
+	array->insert( "Wall1", 1 );
+	array->insert( "Wall4", 4 );
+	array->insert( "Wall3", 3 );
+	array->insert( "A", 1 );
+	array->insert( "B", 2 );
+	array->insert( "C", 3 );
+	array->insert( "D", 4 );
+	array->insert( "E", 5 );
+	array->insert( "F", 6 );
+	array->insert( "G", 7 );
+	array->insert( "H", 8 );
+	array->insert( "I", 9 );
+	array->insert( "J", 10 );
+	array->insert( "K", 11 );
+	array->insert( "L", 12 );
+	array->insert( "M", 13 );
+	array->insert( "N", 14 );
+	array->insert( "O", 15 );
+	array->insert( "P", 16 );
+	array->insert( "Q", 17 );
+	array->insert( "R", 18 );
+	array->insert( "S", 19 );
+	array->insert( "T", 20 );
+	array->insert( "U", 21 );
+	array->insert( "V", 22 );
+	array->insert( "W", 23 );
+	array->insert( "X", 24 );
+	array->insert( "Y", 25 );
+	array->insert( "Z", 26 );
+	array->print();
+	printf( "Find A: %i\n", array->getID("A") );
+	printf( "Find D: %i\n", array->getID("D") );
+	printf( "Find H: %i\n", array->getID("H") );
+	printf( "Find J: %i\n", array->getID("J") );
+	printf( "Find P: %i\n", array->getID("P") );
+	printf( "Find Q: %i\n", array->getID("Q") );
+	printf( "Find Z: %i\n", array->getID("Z") );
+	//// Done testing Stringarray.*/
 
 ////// End Test suite.
 

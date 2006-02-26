@@ -66,6 +66,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/List.h \
 			Structures/ListItem.cpp \
 			Structures/ListItem.h \
+			Structures/StringArray.cpp \
+			Structures/StringArray.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -118,6 +120,8 @@ testTUX_SOURCES =	Displayable.cpp \
 			Structures/List.h \
 			Structures/ListItem.cpp \
 			Structures/ListItem.h \
+			Structures/StringArray.cpp \
+			Structures/StringArray.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp
