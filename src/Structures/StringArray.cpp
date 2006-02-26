@@ -56,7 +56,7 @@ void StringArray::insert( std::string value, int id ) {
 	// Find the sorted position of the new value.
 	for( int i = 0; i < used; i++ ) {
 		if( value == values[i] ) {
-			printf( "Duplicate load attempted: %s\n", value.c_str() );
+			printf( "StringArray: Duplicate load attempted: %s\n", value.c_str() );
 			return;
 		}
 		else if( value < values[i] ) {
@@ -125,7 +125,7 @@ void StringArray::remove( std::string value ) {
 		used--;
 	}
 	else
-		printf( "Unable to remove value %s\n", value.c_str() );
+		printf( "StringArray: Unable to remove value %s\n", value.c_str() );
 }
 
 
@@ -152,12 +152,24 @@ void StringArray::remove( int id ) {
 		used--;
 	}
 	else
-		printf( "Unable to remove id %i\n", id );
+		printf( "StringArray: Unable to remove id %i\n", id );
+}
+
+
+void StringArray::removeAll() {
+	for( int i = 0; i < used; i++ ) {
+		values[i] = "";
+		ids[i] = 0;
+	}
+
+	used = 0;
 }
 
 
 int StringArray::getID( std::string value ) {
 	int index = used / 2;
+	int prevone = 0;
+	int prevtwo = 0;
 	int increment = index;
 	int position = -1;
 	int depth = 0;
@@ -178,6 +190,12 @@ int StringArray::getID( std::string value ) {
 		else
 			index += increment;
 
+		if( index == prevtwo )
+			break;
+
+		prevtwo = prevone;
+		prevone = index;
+
 		depth++;
 	}
 
@@ -188,7 +206,12 @@ int StringArray::getID( std::string value ) {
 }
 
 
-int StringArray::getSize() { return used; }
+const int* StringArray::getAllIDs() {
+	return ids;
+}
+
+
+const int StringArray::getSize() { return used; }
 
 
 void StringArray::print() {

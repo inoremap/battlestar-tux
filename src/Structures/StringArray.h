@@ -41,10 +41,14 @@ class StringArray {
 				void remove( std::string value );
 				void remove( int id );
 
+				void removeAll();
+
 				int getID( std::string value );
 
+				const int* getAllIDs();
+
 				// Return number of values and IDs stored.
-				int getSize();
+				const int getSize();
 
 				void print();
 

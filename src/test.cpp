@@ -28,11 +28,11 @@
 
 
 #include "SDL.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <math.h>
 
+#include "Config.h"
 #include "EnemyFighterList.h"
 #include "Fighter/EnemyFighter.h"
 #include "Fighter/HeroFighter.h"
@@ -41,9 +41,8 @@
 #include "Game.h"
 #include "Ground.h"
 #include "HUD.h"
-#include "Structures/ListItem.h"
-#include "Structures/StringArray.h"
 #include "Screen.h"
+#include "TextureManager.h"
 
 using namespace std;
 
@@ -55,6 +54,8 @@ int main(int argc, char* argv[])
 	float realWidth = 0.0;
 	float realHeight = 0.0;
 	Game* game = new Game();
+	TextureManager* textureManager = new TextureManager();
+	game->setTextureManager( textureManager );
 	SDL_Event event;
 
 	// Exit if there is no screen.
@@ -258,6 +259,7 @@ int main(int argc, char* argv[])
 	printf( "Find P: %i\n", array->getID("P") );
 	printf( "Find Q: %i\n", array->getID("Q") );
 	printf( "Find Z: %i\n", array->getID("Z") );
+	printf( "Find BAD: %i\n", array->getID("BAD") );
 	//// Done testing Stringarray.*/
 
 ////// End Test suite.

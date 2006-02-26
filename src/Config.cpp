@@ -27,7 +27,6 @@
 
 Config::Config( Game* g ) {
 	game = g;
-	game->setConfig( this );
 }
 
 

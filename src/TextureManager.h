@@ -28,6 +28,8 @@
 #include "SDL_image.h"
 #include "SDL_opengl.h"
 
+#include "Structures/StringArray.h"
+
 
 /* Manages all image textures. */
 class TextureManager {
@@ -52,6 +54,8 @@ class TextureManager {
 	private:
 				TextureManager( const TextureManager &t );
 				const TextureManager & operator= ( const TextureManager &t );
+
+				StringArray* textures;
 
 				/* Adapted from example SDL code:
 				 * http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example

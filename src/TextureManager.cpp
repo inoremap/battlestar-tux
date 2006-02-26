@@ -26,35 +26,53 @@
 
 
 TextureManager::TextureManager() {
+	textures = new StringArray();
 }
 
 
 TextureManager::~TextureManager() {
 	// Remove all textures.
+	delete textures;
 }
 
 
 GLuint TextureManager::loadTexture( char* filename ) { return loadTexture( filename, GL_LINEAR ); }
 GLuint TextureManager::loadTexture( char* filename, int texture_quality ) {
-	return loadTextureFile( filename, texture_quality );
+	// Check for existing texture.
+	GLuint textureID = textures->getID( filename );
+
+	// Load texture since it doesn't already exist.
+	if( !textureID ) {
+		textureID = loadTextureFile( filename, texture_quality );
+
+		if( textureID ) {
+			textures->insert( filename, textureID );
+		}
+	}
+
+	return textureID;
 }
 
 
 void TextureManager::freeTexture( char* filename ) {
-	GLuint id = 0;
+	GLuint id = textures->getID( filename );
 
 	if( id )
 		freeTextures( 1, &id );
 }
 
-
 void TextureManager::freeTexture( GLuint id ) {	freeTextures( 1, &id ); }
 void TextureManager::freeTextures( int num, GLuint* ids ) {
-	//glDeleteTextures( num, ids );
+	for( int i = 0; i < num; i++ )
+		textures->remove( ids[i] );
+
+	glDeleteTextures( num, ids );
 }
 
 
 void TextureManager::freeAllTextures() {
+	glDeleteTextures( textures->getSize(), (const GLuint*) textures->getAllIDs() );
+	textures->removeAll();
 }
 
 
@@ -66,7 +84,7 @@ GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
 	surface = IMG_Load( filename );
 
 	if( !surface ) {
-		printf( "Couldn't load texture: %s\n", filename );
+		printf( "TextureManager: Couldn't load texture: %s\n", filename );
 		return 0;
 	}
 
@@ -80,7 +98,7 @@ GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
 	}
 	/* Unable to find suitable mode. */
 	else {
-		printf( "Couldn't find 24/32-bit texture: %s\n", filename );
+		printf( "TextureManager: Couldn't find 24/32-bit texture: %s\n", filename );
 		SDL_FreeSurface( surface );
 		return 0;
 	}
@@ -94,6 +112,9 @@ GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
 	SDL_FreeSurface(surface);
+
+	// We need to know when textures are being loaded.
+	printf( "TextureManager: Texture loaded:  %s\n", filename );
 
 	return textureid;
 }
