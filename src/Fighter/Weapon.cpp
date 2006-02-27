@@ -68,6 +68,9 @@ bool Weapon::Recharged() {
 			chargingTime -= game->getGameSpeed();
 			return false;
 		}
+
+		else
+			chargingTime = 0;
 	}
 
 	return true;
