@@ -80,12 +80,12 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
-am_testTUX_OBJECTS = Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
-	EnemyFighterList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
-	FighterAmmoList.$(OBJEXT) Fighter/EnemyFighter.$(OBJEXT) \
-	Fighter/Fighter.$(OBJEXT) Fighter/HeroFighter.$(OBJEXT) \
-	Fighter/Shield.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
-	Fighter/WeaponSystem.$(OBJEXT) \
+am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
+	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
+	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
+	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
+	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
+	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
 	Fighter/Weapons/MediumLaser.$(OBJEXT) \
 	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
@@ -272,7 +272,9 @@ battlestarTUX_SOURCES = Config.cpp \
 			TextureManager.h \
 			main.cpp
 
-testTUX_SOURCES = Displayable.cpp \
+testTUX_SOURCES = Config.cpp \
+			Config.h \
+			Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
 			DisplayableList.h \

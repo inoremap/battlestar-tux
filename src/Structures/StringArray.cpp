@@ -23,7 +23,6 @@
 
 
 #include "StringArray.h"
-#include <stdlib.h>
 
 
 StringArray::StringArray() {

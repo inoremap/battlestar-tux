@@ -34,11 +34,20 @@ class Config {
 				Config( Game* g );
 				~Config();
 
+				// Read command line arguments and set
+				// variable appropriately.  Print  usage
+				// if illegal arguments are specified.
+				void parseCommandline( int argc, char* argv[] );
+
+				// Print initial Battlestar T.U.X. greeting message
+				void printGreeting();
+
+				// Print list of legal arguments
+				void printUsage();
+
 				bool getDebug();
-				void setDebug( bool d );
 
 				bool getGrabInput();
-				void setGrabInput( bool g );
 
 	private:
 				Config( const Config &config );

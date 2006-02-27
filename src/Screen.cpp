@@ -27,8 +27,9 @@
 #include <stdlib.h>
 
 #include "Screen.h"
+#include "Config.h"
 
-Screen::Screen() {
+Screen::Screen( Game* g ) {
 	screen = NULL;
 
 	// Try to initialize SDL. If it fails, then give up.
@@ -55,11 +56,13 @@ Screen::Screen() {
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
 	screen = SDL_SetVideoMode( 1024, 768, 0, SDL_OPENGL );
 
-	// Grab the Keyboard and Mouse
-	SDL_WM_GrabInput( SDL_GRAB_ON );
+	if( g->getConfig()->getGrabInput() ) {
+		// Grab the Keyboard and Mouse
+		SDL_WM_GrabInput( SDL_GRAB_ON );
 
-	// Don't actually show the cursor
-	SDL_ShowCursor( SDL_DISABLE );
+		// Don't actually show the cursor
+		SDL_ShowCursor( SDL_DISABLE );
+	}
 
 	// If the window couldn't be created at all, we're done.
 	if( screen == NULL )

@@ -72,7 +72,9 @@ battlestarTUX_SOURCES = Config.cpp \
 			TextureManager.h \
 			main.cpp
 
-testTUX_SOURCES =	Displayable.cpp \
+testTUX_SOURCES =	Config.cpp \
+			Config.h \
+			Displayable.cpp \
 			Displayable.h \
 			DisplayableList.cpp \
 			DisplayableList.h \

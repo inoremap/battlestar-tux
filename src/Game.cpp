@@ -72,20 +72,24 @@ void Game::newGame() {
 
 void Game::pause() {
 	if( paused ) {
-		// Grab the Keyboard and Mouse
-		SDL_WM_GrabInput( SDL_GRAB_ON );
+		if( config->getGrabInput() ) {
+			// Grab the Keyboard and Mouse
+			SDL_WM_GrabInput( SDL_GRAB_ON );
 
-		// Don't actually show the cursor
-		SDL_ShowCursor( SDL_DISABLE );
+			// Don't actually show the cursor
+			SDL_ShowCursor( SDL_DISABLE );
+		}
 
 		paused = false;
 	}
 	else {
-		// Release the Keyboard and Mouse
-		SDL_WM_GrabInput( SDL_GRAB_OFF );
+		if( config->getGrabInput() ) {
+			// Release the Keyboard and Mouse
+			SDL_WM_GrabInput( SDL_GRAB_OFF );
 
-		// Show the cursor
-		SDL_ShowCursor( SDL_ENABLE );
+			// Show the cursor
+			SDL_ShowCursor( SDL_ENABLE );
+		}
 
 		paused = true;
 	}
@@ -96,7 +100,7 @@ void Game::startFrame() {
 	unsigned int curTime = SDL_GetTicks();
 
 	frame++;
-	if( frame%200 == 0 ) {
+	if( config->getDebug() && frame%200 == 0 ) {
 		fps = ((float) frame) / (((float) curTime - (float) startTime) / 1000);
 		printf( "Frame: %8i   ---   Game Frame: %8i   ---   Last Frame: %8i   ---   Time: %f   ---   FPS: %f   ---   Sleep: %3i\n", frame, gameFrame, lastGameFrame, (float) (curTime - startTime) / 1000, fps, syncSleep );
 	}

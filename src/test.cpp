@@ -48,14 +48,17 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	Screen* screen = new Screen();
 	int x = 0;
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
 	Game* game = new Game();
+	Config* config = new Config( game );
+	config->parseCommandline( argc, argv );
+	game->setConfig( config );
 	TextureManager* textureManager = new TextureManager();
 	game->setTextureManager( textureManager );
+	Screen* screen = new Screen( game );
 	SDL_Event event;
 
 	// Exit if there is no screen.

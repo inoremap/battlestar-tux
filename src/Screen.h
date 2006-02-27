@@ -28,11 +28,13 @@
 #include "SDL.h"
 #include "SDL_opengl.h"
 
+#include "Game.h"
+
 /* Represents screen application will draw on. */
 class Screen {
 	public:
 				// Creates a screen in a new window.
-				Screen();
+				Screen( Game* g );
 
 				// Returns true if the SDL screen hasn't been created.
 				bool isNull();

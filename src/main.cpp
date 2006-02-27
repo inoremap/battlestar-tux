@@ -54,10 +54,11 @@ int main(int argc, char* argv[])
 	float realHeight = 0.0;
 	Game* game = new Game();
 	Config* config = new Config( game );
+	config->parseCommandline( argc, argv );
 	game->setConfig( config );
 	TextureManager* textureManager = new TextureManager();
 	game->setTextureManager( textureManager );
-	Screen* screen = new Screen();
+	Screen* screen = new Screen( game );
 	SDL_Event event;
 
 	// Exit if there is no screen.

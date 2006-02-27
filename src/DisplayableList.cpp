@@ -25,6 +25,7 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "Config.h"
 #include "Displayable.h"
 #include "DisplayableList.h"
 #include "EnemyFighterList.h"
@@ -149,19 +150,22 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
 			}
 			else {
 				// Game over!!!
-				printf( "Game over!!!!  Player is dead.\n" );
+				if( game->getConfig()->getDebug() )
+					printf( "Game over!!!!  Player is dead.\n" );
 			}
 		}
 	}
 
 	// Two ammos are colliding
 	else if( a->getType() & AMMO && b->getType() & AMMO ) {
-		printf( "Ammo collision.\n" );
+		if( game->getConfig()->getDebug() )
+			printf( "Ammo collision.\n" );
 	}
 
 	// Two airframes are colliding.
 	else {
-		printf( "Aircraft collision.\n" );
+		if( game->getConfig()->getDebug() )
+			printf( "Aircraft collision.\n" );
 	}
 }
 
