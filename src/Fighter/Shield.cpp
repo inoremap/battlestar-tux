@@ -34,14 +34,14 @@ Shield::Shield( Fighter* f, float full, Game* g ) : Displayable( SHIELD, g ) {
 	texture = game->getTextureManager()->loadTexture( "data/gfx/shields_0001-64.png" );
 
 	if( width >= height )
-		size[0] = size[1] = width + 2;
+		size[0] = size[1] = width + 2.5;
 	else
-		size[0] = size[1] = height + 2;
+		size[0] = size[1] = height + 2.5;
 
 	color[0] = 0.223;
 	color[1] = 0.400;
 	color[2] = 0.717;
-	color[3] = 0.5;
+	color[3] = 0.4;
 
 	shields = shieldsFull = full;
 }
