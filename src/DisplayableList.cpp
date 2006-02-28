@@ -78,7 +78,15 @@ void DisplayableList::CheckCollisions( DisplayableList* objectList ) {
 void DisplayableList::CheckCollisions( Displayable* object ) {
 	Displayable* cur = (Displayable*) rootObj;
 	Displayable* next = 0;
-	bool objColl = false;
+	bool collision = false;
+	float point[2] = { 0, 0 };
+	
+	// If object is a fighter, it may be protected by a shield.
+	// Collisions will occur on the shield, not the fighter.
+	if( object->getType() == FIGHTER ) {
+		if( ((Fighter*) object)->getShield() && ((Fighter*) object)->getShield()->getShields() )
+			object = ((Fighter*) object)->getShield();
+	}
 
 	float* sizeA = object->getSize();
 	float* posA = object->getPos();
@@ -90,8 +98,15 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 	while( cur && object ) {
 		next = (Displayable*) cur->getNext();
 
-		// Do a 'rough estimate' collision detection.
-		// Determine if the objects bounding boxes intersect.
+		// If cur is a fighter, it may be protected by a shield.
+		// Collisions will occur on the shield, not the fighter.
+		if( cur->getType() == FIGHTER ) {
+			if( ((Fighter*) cur)->getShield() && ((Fighter*) cur)->getShield()->getShields() )
+				cur = ((Fighter*) cur)->getShield();
+		}
+
+		// Do a 'rough estimate' rectangular collision detection.
+		// Determine if the objects' bounding boxes intersect.
 		float* sizeB = cur->getSize();
 		float* posB = cur->getPos();
 		float rightB = posB[0] + sizeB[0]/2;
@@ -99,19 +114,37 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 		float topB = posB[1] + sizeB[1]/2;
 		float bottomB = posB[1] - sizeB[1]/2;
 
+		// Bounding boxes intersect - this doesn't guarantee collision.
 		if( rightB > leftA && rightA > leftB && topB > bottomA && topA > bottomB ) {
-			// Accurate collision detection.
-			float mx = posA[0] - posB[0];
-			float my = posA[1] - posB[1];
-			float dist = sqrtf( mx*mx + my*my );
-			float minDist = (sizeA[0] + sizeA[1] + sizeB[0] + sizeB[1]) / 4;
+			collision = false;
 
-			// Collision detected.
-			if( dist < minDist ) {
-				if( object->getType() & AMMO && cur->getType() & FIGHTER )
-					ResolveCollision( cur, object );
+			// Circular collision detection.
+			if( cur->getCircular() && object->getCircular() ) {
+				float mx = posA[0] - posB[0];
+				float my = posA[1] - posB[1];
+				float dist = sqrtf( mx*mx + my*my );
+				float minDist = (sizeA[0] + sizeA[1] + sizeB[0] + sizeB[1]) / 4;
+
+				// Collision detected.
+				if( dist < minDist ) {
+					point[0] = ( posA[0] + posB[0] ) / 2;
+					point[1] = ( posA[1] + posB[1] ) / 2;
+
+					collision = true;
+				}
+			}
+
+			// Polygon collision detection.
+			else {
+				collision = true;
+			}
+
+			// Handle collision.
+			if( collision ) {
+				if( object->getType() & AMMO && (cur->getType() & FIGHTER || cur->getType() & SHIELD) )
+					ResolveCollision( cur, object, point );
 				else
-					ResolveCollision( object, cur );
+					ResolveCollision( object, cur, point );
 			}
 		}
 
@@ -120,7 +153,7 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 }
 
 
-void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
+void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float* p ) {
 	// An ammo and an airframe are colliding.
 	if( a->getType() & FIGHTER && b->getType() & AMMO ) {
 		// We know that a is the fighter and b is the ammo.
@@ -156,10 +189,37 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b ) {
 		}
 	}
 
+	// An ammo and a shield are colliding.
+	else if( a->getType() & SHIELD && b->getType() & AMMO ) {
+		// We know that a is the shield and b is the ammo.
+
+		// Penetration weapons do more damage.
+		((Shield*) a)->damage(
+			((FighterAmmo*) b)->getDamage() *
+			( ((FighterAmmo*) b)->getPenetration() + 1 )
+		);
+
+		// The ammo was blocked by the shield.
+		if( b->getType() == HEROS_AMMO ) {
+			game->getHeroAmmoList()->remObject( b );
+		}
+		else {
+			game->getEnemyAmmoList()->remObject( b );
+		}
+
+		b = 0;
+	}
+
 	// Two ammos are colliding
 	else if( a->getType() & AMMO && b->getType() & AMMO ) {
 		if( game->getConfig()->getDebug() )
 			printf( "Ammo collision.\n" );
+	}
+
+	// Two shields are colliding.
+	else if( a->getType() & SHIELD && b->getType() & SHIELD ) {
+		if( game->getConfig()->getDebug() )
+			printf( "Aircraft shield collision.\n" );
 	}
 
 	// Two airframes are colliding.

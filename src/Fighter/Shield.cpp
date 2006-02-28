@@ -51,21 +51,24 @@ Shield::~Shield() {}
 
 
 void Shield::Draw() {
-	float mx = size[0] / 2;
-	float my = size[1] / 2;
+	// Don't draw if shield energy is drained.
+	if( shields > 0 ) {
+		float mx = size[0] / 2;
+		float my = size[1] / 2;
 
-	glBindTexture( GL_TEXTURE_2D, texture );
-	glBegin( GL_QUADS );
-		glColor4f( color[0], color[1], color[2], color[3] );
-		glTexCoord2f( 0, 1 );
-		glVertex3f( pos[0] - mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 1 );
-		glVertex3f( pos[0] + mx, pos[1] - my, pos[2] );
-		glTexCoord2f( 1, 0 );
-		glVertex3f( pos[0] + mx, pos[1] + my, pos[2] );
-		glTexCoord2f( 0, 0 );
-		glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
-	glEnd();
+		glBindTexture( GL_TEXTURE_2D, texture );
+		glBegin( GL_QUADS );
+			glColor4f( color[0], color[1], color[2], color[3] );
+			glTexCoord2f( 0, 1 );
+			glVertex3f( pos[0] - mx, pos[1] - my, pos[2] );
+			glTexCoord2f( 1, 1 );
+			glVertex3f( pos[0] + mx, pos[1] - my, pos[2] );
+			glTexCoord2f( 1, 0 );
+			glVertex3f( pos[0] + mx, pos[1] + my, pos[2] );
+			glTexCoord2f( 0, 0 );
+			glVertex3f( pos[0] - mx, pos[1] + my, pos[2] );
+		glEnd();
+	}
 }
 
 

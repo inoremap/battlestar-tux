@@ -66,6 +66,8 @@ class Displayable : public ListItem {
 
 				void setType( int t );
 
+				void setCircular( bool circle );
+
 				void setStayOnScreen( bool stay );
 
 				float* getSize();
@@ -74,6 +76,7 @@ class Displayable : public ListItem {
 				float* getColor();
 				unsigned int getAge();
 				int getType();
+				bool getCircular();
 				bool getStayOnScreen();
 
 	protected:
@@ -97,6 +100,10 @@ class Displayable : public ListItem {
 
 				// Type of displayable object.
 				int type;
+
+				// Is the object a circle or a polygon?
+				// Needed for collision detection.
+				bool circular;
 
 				// Must the object remain on the screen at all times?
 				bool stayOnScreen;

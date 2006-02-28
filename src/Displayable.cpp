@@ -47,6 +47,8 @@ Displayable::Displayable( DisplayableType t, Game* g ) {
 
 	type = t;
 
+	circular = true;
+
 	stayOnScreen = false;
 }
 
@@ -112,6 +114,8 @@ void Displayable::incrAge() { age++; }
 
 void Displayable::setType( int t ) { type = t; }
 
+void Displayable::setCircular( bool circle ) { circular = circle; }
+
 void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 
 
@@ -121,4 +125,5 @@ float* Displayable::getVel() { return vel; }
 float* Displayable::getColor() { return color; }
 unsigned int Displayable::getAge() { return age; }
 int Displayable::getType() { return type; }
+bool Displayable::getCircular() { return circular; }
 bool Displayable::getStayOnScreen() { return stayOnScreen; }

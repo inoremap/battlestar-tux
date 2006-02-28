@@ -59,9 +59,11 @@ class DisplayableList : public List {
 
 				// Determine what should result from a collision.
 				//
-				// References to pointers are passed to ensure the
+				// References to Displayable* are passed to ensure the
 				// caller knows if an object was destroyed.
-				void ResolveCollision( Displayable* &a, Displayable* &b );
+				//
+				// Point (x, y) p specifies the location of the collision.
+				void ResolveCollision( Displayable* &a, Displayable* &b, float* p );
 
 				// Remove any objects that are out of bounds.
 				void CullObjects( objectCulling cull );
