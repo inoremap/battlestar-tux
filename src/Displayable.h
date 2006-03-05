@@ -25,6 +25,8 @@
 #ifndef DISPLAYABLE_H_
 #define DISPLAYABLE_H_
 
+#include "SDL_opengl.h"
+
 #include "Game.h"
 #include "Structures/ListItem.h"
 
@@ -49,6 +51,9 @@ class Displayable : public ListItem {
 				virtual void Update();
 
 				// Draw the object to the screen.
+				//
+				// Textures are enabled, so you need to bind
+				// a null texture if you don't want any textures.
 				virtual void Draw();
 
 				void setSize( float w, float h );
@@ -59,6 +64,9 @@ class Displayable : public ListItem {
 				void setPos( float x, float y, float z );
 
 				void setVel( float x, float y, float z );
+
+				void setRot( float r );
+				void setTorque( float t );
 
 				void setColor( float r, float g, float b, float a );
 
@@ -73,6 +81,8 @@ class Displayable : public ListItem {
 				float* getSize();
 				float* getPos();
 				float* getVel();
+				float getRot();
+				float getTorque();
 				float* getColor();
 				unsigned int getAge();
 				int getType();
@@ -91,6 +101,14 @@ class Displayable : public ListItem {
 				// Remember that the game runs at 50 FPS, regardless of what the
 				// user's screen is actually displaying.
 				float vel[3];
+
+				// Rotation (Degrees)
+				// The angular position of the object (counter-clockwise).
+				float rot;
+
+				// Torque (Degrees)
+				// The rotational velocity of the object (counter-clockwise).
+				float torque;
 
 				// Color (Red, Green, Blue, Alpha)
 				float color[4];

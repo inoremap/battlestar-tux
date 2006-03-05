@@ -38,6 +38,9 @@ Displayable::Displayable( DisplayableType t, Game* g ) {
 	vel[1] = 0;
 	vel[2] = 0;
 
+	rot = 0;
+	torque = 0;
+
 	color[0] = 1.0;
 	color[1] = 1.0;
 	color[2] = 1.0;
@@ -59,15 +62,40 @@ Displayable::~Displayable() {}
 void Displayable::Update() {
 	int speed = game->getGameSpeed();
 
-	pos[0] = pos[0] + vel[0] * speed;
-	pos[1] = pos[1] + vel[1] * speed;
-	pos[2] = pos[2] + vel[2] * speed;
+	pos[0] += vel[0] * speed;
+	pos[1] += vel[1] * speed;
+	pos[2] += vel[2] * speed;
+
+	rot += torque * speed;
 
 	age += speed;
 }
 
 
-void Displayable::Draw() {}
+void Displayable::Draw() {
+	glPushMatrix();
+	glLoadIdentity();
+
+	float mx = size[0] / 2;
+	float my = size[1] / 2;
+
+	glTranslatef( pos[0], pos[1], pos[2] );
+	glRotatef( rot, 0.0, 0.0, 1.0 );
+
+	glBegin( GL_QUADS );
+		glColor4f( color[0], color[1], color[2], color[3] );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( -mx, -my, 0.0 );
+		glTexCoord2f( 1, 1 );
+		glVertex3f( mx, -my, 0.0 );
+		glTexCoord2f( 1, 0 );
+		glVertex3f( mx, my, 0.0 );
+		glTexCoord2f( 0, 0 );
+		glVertex3f( -mx, my, 0.0 );
+	glEnd();
+
+	glPopMatrix();
+}
 
 
 void Displayable::setSize( float w, float h ) {
@@ -103,6 +131,9 @@ void Displayable::setVel( float x, float y, float z ) {
 	vel[2] = z;
 }
 
+void Displayable::setRot( float r ) { rot = r; }
+void Displayable::setTorque( float t ) { torque = t; }
+
 void Displayable::setColor( float r, float g, float b, float a ) {
 	color[0] = r;
 	color[1] = g;
@@ -122,6 +153,8 @@ void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 float* Displayable::getSize() { return size; }
 float* Displayable::getPos() { return pos; }
 float* Displayable::getVel() { return vel; }
+float Displayable::getRot() { return rot; }
+float Displayable::getTorque() { return torque; }
 float* Displayable::getColor() { return color; }
 unsigned int Displayable::getAge() { return age; }
 int Displayable::getType() { return type; }
