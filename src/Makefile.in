@@ -66,7 +66,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
-	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
+	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
 	Fighter/Weapons/MediumLaser.$(OBJEXT) \
 	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
@@ -85,7 +86,8 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
-	Fighter/Weapon.$(OBJEXT) Fighter/WeaponSystem.$(OBJEXT) \
+	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
 	Fighter/Weapons/MediumLaser.$(OBJEXT) \
 	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
@@ -236,6 +238,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpactList.cpp \
+			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
@@ -292,6 +296,8 @@ testTUX_SOURCES = Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpactList.cpp \
+			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
@@ -402,6 +408,8 @@ Fighter/HeroFighter.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Shield.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/ShieldImpactList.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Weapon.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/WeaponSystem.$(OBJEXT): Fighter/$(am__dirstamp) \
@@ -453,6 +461,7 @@ mostlyclean-compile:
 	-rm -f Fighter/Fighter.$(OBJEXT)
 	-rm -f Fighter/HeroFighter.$(OBJEXT)
 	-rm -f Fighter/Shield.$(OBJEXT)
+	-rm -f Fighter/ShieldImpactList.$(OBJEXT)
 	-rm -f Fighter/Weapon.$(OBJEXT)
 	-rm -f Fighter/WeaponSystem.$(OBJEXT)
 	-rm -f Fighter/Weapons/HeavyLaser.$(OBJEXT)
@@ -486,6 +495,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Fighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/HeroFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Shield.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/ShieldImpactList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Weapon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/WeaponSystem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/HeavyLaser.Po@am__quote@
