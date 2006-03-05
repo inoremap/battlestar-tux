@@ -194,20 +194,22 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 		// We know that a is the shield and b is the ammo.
 
 		// Penetration weapons do more damage.
-		((Shield*) a)->damage(
+		float remainder = ((Shield*) a)->damage(
 			((FighterAmmo*) b)->getDamage() *
 			( ((FighterAmmo*) b)->getPenetration() + 1 )
 		);
 
-		// The ammo was blocked by the shield.
-		if( b->getType() == HEROS_AMMO ) {
-			game->getHeroAmmoList()->remObject( b );
-		}
-		else {
-			game->getEnemyAmmoList()->remObject( b );
-		}
+		if( remainder == 0 ) {
+			// The ammo was blocked by the shield.
+			if( b->getType() == HEROS_AMMO ) {
+				game->getHeroAmmoList()->remObject( b );
+			}
+			else {
+				game->getEnemyAmmoList()->remObject( b );
+			}
 
-		b = 0;
+			b = 0;
+		}
 	}
 
 	// Two ammos are colliding

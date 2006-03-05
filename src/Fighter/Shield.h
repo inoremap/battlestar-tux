@@ -32,7 +32,7 @@
 
 class Fighter;
 
-
+/* Shield protection surrounding a fighter. */
 class Shield : public Displayable {
 	public:
 				Shield( Fighter* f, float full, Game* g );
