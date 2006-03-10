@@ -49,10 +49,9 @@ Screen::Screen( Game* g ) {
 	SDL_GL_SetAttribute( SDL_GL_RED_SIZE,     8 );
 	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE,   8 );
 	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE,    8 );
-	SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE,   8 );
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-	// Open a window 800x600.
+	// Open a window 1024x768.
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
 	screen = SDL_SetVideoMode( 1024, 768, 0, SDL_OPENGL );
 
