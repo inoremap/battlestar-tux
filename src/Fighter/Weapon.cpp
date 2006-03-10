@@ -101,6 +101,7 @@ void Weapon::Fire( bool firing ) {
 			float* fighterPos = weaponSystem->getPos();
 			ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
 			ammo->setVel( 0.0, -velocity, 0.0 );
+			ammo->setRot( 180 );
 
 			game->getEnemyAmmoList()->addObject( ammo );
 		}
