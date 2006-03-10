@@ -68,7 +68,8 @@ class Fighter : public Displayable {
 				void stopFiring();
 
 				// Do 'damage' amount of damage to ship.
-				void damage( float damage );
+				// Damage occurs at point ( X, Y ).
+				void damage( float damage, float* point );
 
 				float getHealth();
 				float getHealthFull();

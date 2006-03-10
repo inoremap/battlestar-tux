@@ -37,7 +37,8 @@ enum DisplayableType {
 	SHIELD		=	0x0004,				// Aircraft shield
 	AMMO		=	0x0008,				// Weapon ammo
 	HEROS_AMMO	=	0x0010 | 0x0008,	// Hero's ammo
-	ENEMY_AMMO	=	0x0020 | 0x0008		// Enemies' ammo
+	ENEMY_AMMO	=	0x0020 | 0x0008,	// Enemies' ammo
+	EFFECT		=	0x0040				// Special effect - not a real object
 };
 
 

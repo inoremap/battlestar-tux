@@ -29,6 +29,7 @@
 
 #include "../Displayable.h"
 #include "../Game.h"
+#include "ShieldImpactList.h"
 
 class Fighter;
 
@@ -44,8 +45,9 @@ class Shield : public Displayable {
 				void Update();
 
 				// Do 'damage' amount of damage to shield.
+				// Damage occurs at point ( X, Y )
 				// Returns the amount of damage the shield couldn't stop.
-				float damage( float damage );
+				float damage( float damage, float* point );
 
 				float getShields();
 				float getShieldsFull();
@@ -59,6 +61,9 @@ class Shield : public Displayable {
 
 				// Maximum shield strength
 				float shieldsFull;
+
+				// List of impacts on the shield
+				ShieldImpactList* impactList;
 
 				// Fighter that has shield mounted
 				Fighter* fighter;

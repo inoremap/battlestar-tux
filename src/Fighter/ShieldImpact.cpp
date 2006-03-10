@@ -1,4 +1,4 @@
-/* ShieldImpactList.h
+/* ShieldImpactList.cpp
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -21,39 +21,37 @@
  *
  */
 
+#include <stdio.h>
+#include "ShieldImpact.h"
 
-#ifndef SHIELDIMPACTLIST_H_
-#define SHIELDIMPACTLIST_H_
+ShieldImpact::ShieldImpact( Shield* s, float angle, GLuint t, Game* g ) :
+		Pulse( ALPHA, DOUBLE_ONE_PULSE, 1, 1, EFFECT, g ) {
 
-#include "SDL_opengl.h"
+	rot = angle;
+	texture = t;
 
-#include "../Displayable.h"
-#include "../Game.h"
-#include "../Structures/List.h"
+	float* shieldColor = s->getColor();
+	color[0] = shieldColor[0] + .05;
+	color[1] = shieldColor[1] + .05;
+	color[2] = shieldColor[2] + .05;
+	color[3] = shieldColor[3];
 
-class Shield;
+	float* shieldPos = s->getPos();
+	pos[0] = shieldPos[0];
+	pos[1] = shieldPos[1];
 
-/* List of impacts with the shield. */
-class ShieldImpactList : public List {
-	public:
-				ShieldImpactList( Shield* s, Game* g );
-				~ShieldImpactList();
+	float* shieldSize = s->getSize();
+	size[0] = shieldSize[0];
+	size[1] = shieldSize[1];
+}
 
-				// Draw shield impacts.
-				void Draw();
 
-				// Update shield impacts.
-				void Update();
+ShieldImpact::~ShieldImpact() {
+	texture = 0;
+}
 
-				// Adds an impact at the specified location.
-				void Impact( float* point );
 
-	private:
-				GLuint texture;
-
-				Shield* shield;
-
-				Game* game;
-};
-
-#endif /*SHIELDIMPACTLIST_H_*/
+void ShieldImpact::Draw() {
+	glBindTexture( GL_TEXTURE_2D, texture );
+	Displayable::Draw();
+}

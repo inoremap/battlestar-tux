@@ -1,4 +1,4 @@
-/* ShieldImpactList.h
+/* ShieldImpact.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,38 +22,24 @@
  */
 
 
-#ifndef SHIELDIMPACTLIST_H_
-#define SHIELDIMPACTLIST_H_
+#ifndef SHIELDIMPACT_H_
+#define SHIELDIMPACT_H_
 
 #include "SDL_opengl.h"
 
-#include "../Displayable.h"
+#include "Shield.h"
 #include "../Game.h"
-#include "../Structures/List.h"
+#include "../Pulse.h"
 
-class Shield;
-
-/* List of impacts with the shield. */
-class ShieldImpactList : public List {
+class ShieldImpact : public Pulse {
 	public:
-				ShieldImpactList( Shield* s, Game* g );
-				~ShieldImpactList();
+				ShieldImpact( Shield* s, float angle, GLuint t, Game* g );
+				~ShieldImpact();
 
-				// Draw shield impacts.
 				void Draw();
-
-				// Update shield impacts.
-				void Update();
-
-				// Adds an impact at the specified location.
-				void Impact( float* point );
 
 	private:
 				GLuint texture;
-
-				Shield* shield;
-
-				Game* game;
 };
 
-#endif /*SHIELDIMPACTLIST_H_*/
+#endif /*SHIELDIMPACT_H_*/

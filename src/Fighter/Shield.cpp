@@ -44,18 +44,23 @@ Shield::Shield( Fighter* f, float full, Game* g ) : Displayable( SHIELD, g ) {
 	color[3] = 0.4;
 
 	shields = shieldsFull = full;
+
+	impactList = new ShieldImpactList( this, g );
 }
 
 
-Shield::~Shield() {}
+Shield::~Shield() {
+	delete impactList;
+}
 
 
 void Shield::Draw() {
 	// Don't draw if shield energy is drained.
 	if( shields > 0 ) {
 		glBindTexture( GL_TEXTURE_2D, texture );
-
 		Displayable::Draw();
+
+		impactList->Draw();
 	}
 }
 
@@ -67,16 +72,20 @@ void Shield::Update() {
 	pos[0] = fighterPos[0];
 	pos[1] = fighterPos[1];
 	pos[2] = fighterPos[2];
+
+	impactList->Update();
 }
 
 
-float Shield::damage( float damage ) {
+float Shield::damage( float damage, float* point ) {
 	float remainder = 0.0;
 
 	remainder = damage - shields;
 	shields -= damage;
 
-	if( shields < 0 )
+	if( shields > 0 )
+		impactList->Impact( point );
+	else
 		shields = 0;
 
 	if( remainder < 0 )

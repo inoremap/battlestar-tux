@@ -22,31 +22,89 @@
  */
 
 
+#include <math.h>
+
+#include "Shield.h"
+#include "ShieldImpact.h"
 #include "ShieldImpactList.h"
 #include "../TextureManager.h"
 
-ShieldImpactList::ShieldImpactList( Game* g ) {
-	texture = g->getTextureManager()->loadTexture( "data/gfx/shields_0001-64.png" );
+ShieldImpactList::ShieldImpactList( Shield* s, Game* g ) {
+	texture = g->getTextureManager()->loadTexture( "data/gfx/shield_impact_0001-64.png" );
+	shield = s;
+	game = g;
 }
 
 
-ShieldImpactList::~ShieldImpactList() {}
+ShieldImpactList::~ShieldImpactList() {
+	texture = 0;
+	shield = 0;
+}
 
 
 void ShieldImpactList::Draw() {
-	if( rootObj ) {
-		glBindTexture( GL_TEXTURE_2D, texture );
+	ShieldImpact* cur = (ShieldImpact*) rootObj;
+	ShieldImpact* next = 0;
+
+	// Draw each impact, if there are any.
+	while( cur ) {
+		next = (ShieldImpact*) cur->getNext();
+
+		cur->Draw();
+
+		cur = next;
 	}
 }
 
 
 void ShieldImpactList::Update() {
-	Displayable* cur = (Displayable*) rootObj;
-	Displayable* next = 0;
+	ShieldImpact* cur = (ShieldImpact*) rootObj;
+	ShieldImpact* next = 0;
+	float* position = shield->getPos();
 
+	// Update each impact, if there are any.
 	while( cur ) {
-		next = (Displayable*) cur->getNext();
+		next = (ShieldImpact*) cur->getNext();
+
+		// Remove finished impact.
+		if( cur->done() )
+			remObject( cur );
+		else {
+			cur->Update();
+
+			// Set the position to match the shield.
+			cur->setPos( position[0], position[1] );
+		}
 
 		cur = next;
 	}
+}
+
+
+void ShieldImpactList::Impact( float* point ) {
+	float angle = 0.0;
+	float* shieldPosition = shield->getPos();
+
+	// Normalized height from (0, 0)
+	float height = point[1] - shieldPosition[1];
+	height /= (shield->getSize()[0] / 2);
+
+	// Calculate the proper angle.
+	angle = acos( height ) * (180 / M_PI);
+
+	// The value is 0-90, so an offset is needed.
+	// No offset needed if in quadrant 2.
+	if( point[0] < shieldPosition[0] && point[1] < shieldPosition[1] )
+		angle += 90;
+	else if( point[0] > shieldPosition[0] && point[1] < shieldPosition[1] )
+		angle = (90 - angle) + 180;
+	else if( point[0] > shieldPosition[0] && point[1] > shieldPosition[1] )
+		angle = (90 - angle) + 270;
+
+	if( angle < 270 && angle > 90 )
+		printf( "Angle: %f\tShield: (%f, %f)\tImpact: (%f, %f)\n",
+			angle, shieldPosition[0], shieldPosition[1], point[0], point[1] );
+
+	ShieldImpact* impact = new ShieldImpact( shield, angle, texture, game );
+	addObject( impact );
 }

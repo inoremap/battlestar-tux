@@ -70,12 +70,8 @@ void Fighter::startFiring() { firing = true; }
 void Fighter::stopFiring() { firing = false; }
 
 
-void Fighter::damage( float damage ) {
-	if( shield )
-		damage = shield->damage( damage );
-
+void Fighter::damage( float damage, float* point ) {
 	health -= damage;
-
 
 	if( health < 0 )
 		health = 0;

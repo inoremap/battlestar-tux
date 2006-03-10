@@ -165,7 +165,7 @@ dist_data_DATA = enemy_fighter_0001-64.png \
 			hud_shields-64.png \
 			laser_0001-64.png \
 			plasma_0001-32.png \
-			shields_0001-64.png
+			shield_impact_0001-64.png
 
 all: all-am
 
@@ -338,6 +338,7 @@ uninstall-am: uninstall-dist_dataDATA uninstall-info-am
 	pdf-am ps ps-am uninstall uninstall-am uninstall-dist_dataDATA \
 	uninstall-info-am
 
+			shields_0001-64.png
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

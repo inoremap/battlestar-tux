@@ -66,6 +66,7 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
+	Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
 	Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
@@ -75,7 +76,7 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
@@ -86,6 +87,7 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
+	Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
 	Fighter/WeaponSystem.$(OBJEXT) \
 	Fighter/Weapons/LightLaser.$(OBJEXT) \
@@ -95,7 +97,7 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
@@ -238,6 +240,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpact.cpp \
+			Fighter/ShieldImpact.h \
 			Fighter/ShieldImpactList.cpp \
 			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
@@ -264,6 +268,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			Pulse.cpp \
+			Pulse.h \
 			Screen.cpp \
 			Screen.h \
 			Structures/List.cpp \
@@ -296,6 +302,8 @@ testTUX_SOURCES = Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpact.cpp \
+			Fighter/ShieldImpact.h \
 			Fighter/ShieldImpactList.cpp \
 			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
@@ -322,6 +330,8 @@ testTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			Pulse.cpp \
+			Pulse.h \
 			Screen.cpp \
 			Screen.h \
 			Structures/List.cpp \
@@ -408,6 +418,8 @@ Fighter/HeroFighter.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Shield.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
+Fighter/ShieldImpact.$(OBJEXT): Fighter/$(am__dirstamp) \
+	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/ShieldImpactList.$(OBJEXT): Fighter/$(am__dirstamp) \
 	Fighter/$(DEPDIR)/$(am__dirstamp)
 Fighter/Weapon.$(OBJEXT): Fighter/$(am__dirstamp) \
@@ -461,6 +473,7 @@ mostlyclean-compile:
 	-rm -f Fighter/Fighter.$(OBJEXT)
 	-rm -f Fighter/HeroFighter.$(OBJEXT)
 	-rm -f Fighter/Shield.$(OBJEXT)
+	-rm -f Fighter/ShieldImpact.$(OBJEXT)
 	-rm -f Fighter/ShieldImpactList.$(OBJEXT)
 	-rm -f Fighter/Weapon.$(OBJEXT)
 	-rm -f Fighter/WeaponSystem.$(OBJEXT)
@@ -487,6 +500,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ground.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GroundSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HUD.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Pulse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TextureManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
@@ -495,6 +509,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Fighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/HeroFighter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Shield.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/ShieldImpact.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/ShieldImpactList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Weapon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/WeaponSystem.Po@am__quote@

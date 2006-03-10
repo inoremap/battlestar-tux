@@ -16,4 +16,5 @@ dist_data_DATA =	enemy_fighter_0001-64.png \
 			hud_shields-64.png \
 			laser_0001-64.png \
 			plasma_0001-32.png \
+			shield_impact_0001-64.png
 			shields_0001-64.png

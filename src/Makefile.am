@@ -36,6 +36,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpact.cpp \
+			Fighter/ShieldImpact.h \
 			Fighter/ShieldImpactList.cpp \
 			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
@@ -62,6 +64,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			Pulse.cpp \
+			Pulse.h \
 			Screen.cpp \
 			Screen.h \
 			Structures/List.cpp \
@@ -94,6 +98,8 @@ testTUX_SOURCES =	Config.cpp \
 			Fighter/HeroFighter.h \
 			Fighter/Shield.cpp \
 			Fighter/Shield.h \
+			Fighter/ShieldImpact.cpp \
+			Fighter/ShieldImpact.h \
 			Fighter/ShieldImpactList.cpp \
 			Fighter/ShieldImpactList.h \
 			Fighter/Weapon.cpp \
@@ -120,6 +126,8 @@ testTUX_SOURCES =	Config.cpp \
 			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
+			Pulse.cpp \
+			Pulse.h \
 			Screen.cpp \
 			Screen.h \
 			Structures/List.cpp \

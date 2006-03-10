@@ -123,12 +123,15 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 				float mx = posA[0] - posB[0];
 				float my = posA[1] - posB[1];
 				float dist = sqrtf( mx*mx + my*my );
-				float minDist = (sizeA[0] + sizeA[1] + sizeB[0] + sizeB[1]) / 4;
+				float minDist = (sizeA[0] + sizeB[0]) / 2;
 
 				// Collision detected.
 				if( dist < minDist ) {
-					point[0] = ( posA[0] + posB[0] ) / 2;
-					point[1] = ( posA[1] + posB[1] ) / 2;
+					// Calculate collision point.
+					// This assumes the circles touch at only one point.
+					float r1 = sizeA[0] / 2;
+					point[0] = posA[0] + r1 * (posB[0] - posA[0]) / dist;
+					point[1] = posA[1] + r1 * (posB[1] - posA[1]) / dist;
 
 					collision = true;
 				}
@@ -158,7 +161,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 	if( a->getType() & FIGHTER && b->getType() & AMMO ) {
 		// We know that a is the fighter and b is the ammo.
 
-		((Fighter*) a)->damage( ((FighterAmmo*) b)->getDamage() );
+		((Fighter*) a)->damage( ((FighterAmmo*) b)->getDamage(), p );
 
 		// Does ammo penetrate airframe?
 		if( ((FighterAmmo*) b)->getPenetration() > 0 ) {
@@ -196,7 +199,8 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 		// Penetration weapons do more damage.
 		float remainder = ((Shield*) a)->damage(
 			((FighterAmmo*) b)->getDamage() *
-			( ((FighterAmmo*) b)->getPenetration() + 1 )
+			( ((FighterAmmo*) b)->getPenetration() + 1 ),
+			p
 		);
 
 		if( remainder == 0 ) {
