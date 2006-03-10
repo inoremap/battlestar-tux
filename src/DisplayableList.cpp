@@ -128,10 +128,32 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 				// Collision detected.
 				if( dist < minDist ) {
 					// Calculate collision point.
-					// This assumes the circles touch at only one point.
-					float r1 = sizeA[0] / 2;
-					point[0] = posA[0] + r1 * (posB[0] - posA[0]) / dist;
-					point[1] = posA[1] + r1 * (posB[1] - posA[1]) / dist;
+					// http://astronomy.swin.edu.au/~pbourke/geometry/2circle/
+					float* p0 = posA;
+					float* p1 = posB;
+					float r0 = sizeA[0] / 2;
+					float r1 = sizeB[0] / 2;
+					float a = (r0*r0 - r1*r1 + dist*dist) / (2 * dist);
+					float h = sqrtf( r0*r0 - a*a );
+					float p2[2] = { 0, 0 };
+
+					// Location of first collision.
+					float p3[2] = { 0, 0 };
+					// Location of second collision.
+					float p4[2] = { 0, 0 };
+
+					p2[0] = p0[0] + a * (p1[0] - p0[0]) / dist;
+					p2[1] = p0[1] + a * (p1[1] - p0[1]) / dist;
+					p3[0] = p2[0] + h * (p1[1] - p0[1]) / dist;
+					p4[0] = p2[0] - h * (p1[1] - p0[1]) / dist;
+					p3[1] = p2[1] + h * (p1[0] - p0[0]) / dist;
+					p4[1] = p2[1] - h * (p1[0] - p0[0]) / dist;
+
+					// Count collision as the midpoint between the two collisions.
+					// If the circles are perfectly next to each other, the two
+					// collision points will be identical.
+					point[0] = (p3[0] + p4[0]) / 2;
+					point[1] = (p3[1] + p4[1]) / 2;
 
 					collision = true;
 				}
