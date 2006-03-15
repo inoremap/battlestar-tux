@@ -56,11 +56,18 @@ Displayable::Displayable( DisplayableType t, Game* g ) {
 
 	circular = true;
 
+	polygon = 0;
+	numPolygonPoints = 0;
+
 	stayOnScreen = false;
 }
 
 
-Displayable::~Displayable() {}
+Displayable::~Displayable() {
+	for( int i=0; i < numPolygonPoints; i++ )
+		delete[] polygon[i];
+	delete[] polygon;
+}
 
 
 void Displayable::Update() {
@@ -151,6 +158,17 @@ void Displayable::setType( int t ) { type = t; }
 
 void Displayable::setCircular( bool circle ) { circular = circle; }
 
+void Displayable::setPolygon( int numPoints, float points[][2] ) {
+	polygon = new float*[numPoints];
+	numPolygonPoints = numPoints;
+
+	for( int i=0; i < numPolygonPoints; i++ ) {
+		polygon[i] = new float[2];
+		polygon[i][0] = points[i][0];
+		polygon[i][1] = points[i][1];
+	}
+}
+
 void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 
 
@@ -163,4 +181,6 @@ float* Displayable::getColor() { return color; }
 unsigned int Displayable::getAge() { return age; }
 int Displayable::getType() { return type; }
 bool Displayable::getCircular() { return circular; }
+float** Displayable::getPolygon() { return polygon; }
+int Displayable::getNumPolygonPoints() { return numPolygonPoints; }
 bool Displayable::getStayOnScreen() { return stayOnScreen; }

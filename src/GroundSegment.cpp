@@ -73,26 +73,25 @@ void GroundSegment::Draw() {
 		}
 	glEnd();
 
-/*	Draw a line grid over the ground.
-	for( int i=0; i < 3; i++ ) {
-		offset = i * size[0];
+	// Draw a 10x10 line grid over the ground.
+	/*glBindTexture( GL_TEXTURE_2D, 0 );
+	for( int i=0; i < 50; i+=10 ) {
+		for( int n=0; n < 50; n+=10 ) {
+			glBegin( GL_LINE_LOOP );
+				glColor3f( 1.0, 1.0, 1.0 );
+	
+				glVertex3f( i, n, pos[2] );
+				glVertex3f( i + 10, n, pos[2] );
+				glVertex3f( i + 10, n + 10, pos[2] );
+				glVertex3f( i, n + 10, pos[2] );
+			glEnd();
 
-		glBegin( GL_LINE_LOOP );
-			glColor3f( 0.0, 0.0, 0.0 );
-
-			glVertex3f( pos[0] - offset - size[0], pos[1] - my, pos[2] );
-			glVertex3f( pos[0] - offset, pos[1] - my, pos[2] );
-			glVertex3f( pos[0] - offset, pos[1] + my, pos[2] );
-			glVertex3f( pos[0] - offset - size[0], pos[1] + my, pos[2] );
-		glEnd();
-
-		glBegin( GL_LINE_LOOP );
-			glColor3f( 0.0, 0.0, 0.0 );
-
-			glVertex3f( pos[0] + offset, pos[1] - my, pos[2] );
-			glVertex3f( pos[0] + offset + size[0], pos[1] - my, pos[2] );
-			glVertex3f( pos[0] + offset + size[0], pos[1] + my, pos[2] );
-			glVertex3f( pos[0] + offset, pos[1] + my, pos[2] );
-		glEnd();
+			glBegin( GL_LINE_LOOP );
+				glVertex3f( -i, -n, pos[2] );
+				glVertex3f( -i - 10, -n, pos[2] );
+				glVertex3f( -i - 10, -n - 10, pos[2] );
+				glVertex3f( -i, -n - 10, pos[2] );
+			glEnd();
+		}
 	}*/
 }

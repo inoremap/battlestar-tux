@@ -33,6 +33,13 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 
 	pos[2] = zPos;
 
+	float points[4][2] = {
+		{0.0, 0.0},
+		{0.0, 0.0},
+		{0.0, 0.0},
+		{0.0, 0.0}
+	};
+
 	switch( ammoType ) {
 		default:
 		case LIGHT_LASER:
@@ -53,6 +60,17 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 			color[1] = 1.0;
 			color[2] = 0.2;
 			color[3] = 0.6;
+
+			points[0][0] = -size[0]/2;
+			points[0][1] = size[1]/2;
+			points[1][0] = -size[0]/2;
+			points[1][1] = -size[1]/2;
+			points[2][0] = size[0]/2;
+			points[2][1] = -size[1]/2;
+			points[3][0] = size[0]/2;
+			points[3][1] = size[1]/2;
+			setPolygon( 4, points );
+			circular = false;
 			break;
 
 		case HEAVY_LASER:

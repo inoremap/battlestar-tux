@@ -77,6 +77,8 @@ class Displayable : public ListItem {
 
 				void setCircular( bool circle );
 
+				void setPolygon( int numPoints, float points[][2] );
+
 				void setStayOnScreen( bool stay );
 
 				float* getSize();
@@ -88,6 +90,8 @@ class Displayable : public ListItem {
 				unsigned int getAge();
 				int getType();
 				bool getCircular();
+				float** getPolygon();
+				int getNumPolygonPoints();
 				bool getStayOnScreen();
 
 	protected:
@@ -123,6 +127,13 @@ class Displayable : public ListItem {
 				// Is the object a circle or a polygon?
 				// Needed for collision detection.
 				bool circular;
+
+				// If the object is a polygon, the points (X, Y)
+				// of the polygon must be defined. Points must be
+				// specified in counter-clockwise order.
+				// These points will be offsets from the object's current position.
+				float** polygon;
+				int numPolygonPoints;
 
 				// Must the object remain on the screen at all times?
 				bool stayOnScreen;

@@ -159,9 +159,141 @@ void DisplayableList::CheckCollisions( Displayable* object ) {
 				}
 			}
 
+			// Polygon/Circle collision detection.
+			else if( cur->getCircular() || object->getCircular() ) {
+				Displayable* circle;
+				Displayable* polygon;
+
+				// Determine which object is a circle and which is a polygon.
+				if( cur->getCircular() ) {
+					circle = cur;
+					polygon = object;
+				}
+				else {
+					circle = object;
+					polygon = cur;
+				}
+
+				// Check for a collision.
+				// We might need to first ensure the circle isn't inside the polygon.
+				// http://astronomy.swin.edu.au/~pbourke/geometry/sphereline/
+				int numSegments = polygon->getNumPolygonPoints();
+				float** constPoints = polygon->getPolygon();
+				float** polygonPoints = new float*[numSegments];
+				float* polygonPos = polygon->getPos();
+				float rotation = polygon->getRot() * (M_PI / 180);
+
+				float cosRot = cosf( rotation );
+				float sinRot = sinf( rotation );
+
+				// Calculate position and rotation of polygon.
+				for( int i=0; i < numSegments; i++ ) {
+					polygonPoints[i] = new float[2];
+					polygonPoints[i][0] = polygonPos[0] +
+					                      cosRot * constPoints[i][0] + sinRot * constPoints[i][1];
+					polygonPoints[i][1] = polygonPos[1] -
+					                      sinRot * constPoints[i][0] + cosRot * constPoints[i][1];
+				}
+
+				float* p1 = 0;
+				float* p2 = 0;
+				float* p3 = circle->getPos();
+				float r = circle->getSize()[0] / 2;
+				for( int i=0; i < numSegments; i++ ) {
+					// Retrieve the line to collide.
+					if( i == (numSegments - 1) ) {
+						p1 = polygonPoints[i];
+						p2 = polygonPoints[0];
+					}
+					else {
+						p1 = polygonPoints[i];
+						p2 = polygonPoints[i+1];
+					}
+
+					float a = (p2[0] - p1[0]) * (p2[0] - p1[0]) + (p2[1] - p1[1]) * (p2[1] - p1[1]);
+					float b = 2 * ( (p2[0] - p1[0]) * (p1[0] - p3[0]) + (p2[1] - p1[1]) * (p1[1] - p3[1]) );
+					float c =	p3[0]*p3[0] + p3[1]*p3[1] + p1[0]*p1[0] + p1[1]*p1[1] -
+								2 * (p3[0] * p1[0] + p3[1] * p1[1] ) - r*r;
+					float uroot = b * b - 4 * a * c;
+					float u1 = 0;
+					float u2 = 0;
+
+					// No collision
+					if( uroot < 0 )
+						continue;
+					else if( uroot == 0 )
+						u1 = u2 = -b / (2 * a);
+					else {
+						u1 = (-b + sqrtf( uroot )) / (2 * a);
+						u2 = (-b - sqrtf( uroot )) / (2 * a);
+					}
+
+					// Location of first collision.
+					float coll1[2] = { 0, 0 };
+					// Location of second collision.
+					float coll2[2] = { 0, 0 };
+
+					coll1[0] = p1[0] + u1 * (p2[0] - p1[0]);
+					coll1[1] = p1[1] + u1 * (p2[1] - p1[1]);
+					coll2[0] = p1[0] + u2 * (p2[0] - p1[0]);
+					coll2[1] = p1[1] + u2 * (p2[1] - p1[1]);
+
+					// The two collision points are along the line through p1 and p2.
+					// The collisions might not be in the line segment from p1 to p2, though.
+					//
+					// If the circle and line are perfectly next to each other, the two
+					// collision points will be identical.
+					//
+					bool valid1 = false;
+					bool valid2 = false;
+					// Check first collision.
+					if( p1[0] <= coll1[0] && coll1[0] <= p2[0] ||
+					    p2[0] <= coll1[0] && coll1[0] <= p1[0] ) {
+						if( p1[1] <= coll1[1] && coll1[1] <= p2[1] ||
+						    p2[1] <= coll1[1] && coll1[1] <= p1[1] )
+							valid1 = true;
+					}
+					// Check second collision.
+					if( p1[0] <= coll2[0] && coll2[0] <= p2[0] ||
+					    p2[0] <= coll2[0] && coll2[0] <= p1[0] ) {
+						if( p1[1] <= coll2[1] && coll2[1] <= p2[1] ||
+						    p2[1] <= coll2[1] && coll2[1] <= p1[1] )
+							valid2 = true;
+					}
+
+					// Both collisions are on segment.
+					if( valid1 && valid2 ) {
+					    	point[0] = ( coll1[0] + coll2[0] ) / 2;
+					    	point[1] = ( coll1[1] + coll2[1] ) / 2;
+					}
+					// First collision is on segment.
+					else if( valid1 ) {
+						point[0] = coll1[0];
+						point[1] = coll1[1];
+					}
+					// Second collision is on segment
+					else if( valid2 ) {
+						point[0] = coll2[0];
+						point[1] = coll2[1];
+					}
+					// Neither collision is on segment!
+					// Execution reaches here when the bounding boxes
+					// are colliding but the line segment and circle aren't.
+					else
+						continue;
+
+					collision = true;
+					break;
+				}
+
+				for( int i=0; i < numSegments; i++ )
+					delete[] polygonPoints[i];
+				delete[] polygonPoints;
+			}
+
 			// Polygon collision detection.
 			else {
-				collision = true;
+				collision = false;
 			}
 
 			// Handle collision.

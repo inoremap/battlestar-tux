@@ -91,19 +91,13 @@ int main(int argc, char* argv[])
 		// If not paused, update all positions/states.
 		if( !game->isPaused() ) {
 			if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
-				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-				enemyFighter->setPos( 0, 40 );
-				enemyFighter->setVel( 0, -0.2, 0 );
-				enemies->addObject( enemyFighter );
-				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-				enemyFighter->setPos( 10, 45 );
-				enemyFighter->setVel( 0, -0.2, 0 );
-				enemyFighter->startFiring();
-				enemies->addObject( enemyFighter );
-				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-				enemyFighter->setPos( -10, 45 );
-				enemyFighter->setVel( 0, -0.2, 0 );
-				enemies->addObject( enemyFighter );
+				for( int n=0; n < 200; n++ ) {
+					enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
+					enemyFighter->setPos( -40 + n/2, 40 );
+					enemyFighter->setVel( 0, -0.2, 0 );
+					enemyFighter->startFiring();
+					enemies->addObject( enemyFighter );
+				}
 			}
 
 			// Get cursor position and then set fighter position.
