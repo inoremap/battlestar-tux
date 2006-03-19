@@ -10,9 +10,9 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-INCLUDES = -I/usr/include -I/usr/include/SDL
+INCLUDES = -I/usr/include -I/usr/include/SDL -I/usr/include/freetype2 -I/usr/include/FTGL
 AM_LDFLAGS = -L/usr/lib
-LDADD = -lSDL -lSDL_image -lGL -lGLU
+LDADD = -lSDL -lSDL_image -lGL -lGLU -lfreetype -lftgl
 
 bin_PROGRAMS = battlestarTUX
 noinst_PROGRAMS = testTUX

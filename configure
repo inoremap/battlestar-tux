@@ -4903,7 +4903,7 @@ else
 fi
 
 
-                                                                      ac_config_files="$ac_config_files Makefile README doc/Makefile m4/Makefile src/Makefile src/data/Makefile src/data/gfx/Makefile"
+                                                                                ac_config_files="$ac_config_files Makefile README doc/Makefile m4/Makefile src/Makefile src/data/Makefile src/data/fonts/Makefile src/data/gfx/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5468,6 +5468,7 @@ do
   "m4/Makefile" ) CONFIG_FILES="$CONFIG_FILES m4/Makefile" ;;
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "src/data/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/data/Makefile" ;;
+  "src/data/fonts/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/data/fonts/Makefile" ;;
   "src/data/gfx/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/data/gfx/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;

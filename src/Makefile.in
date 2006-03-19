@@ -217,9 +217,9 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = subdir-objects
-INCLUDES = -I/usr/include -I/usr/include/SDL
+INCLUDES = -I/usr/include -I/usr/include/SDL -I/usr/include/freetype2 -I/usr/include/FTGL
 AM_LDFLAGS = -L/usr/lib
-LDADD = -lSDL -lSDL_image -lGL -lGLU
+LDADD = -lSDL -lSDL_image -lGL -lGLU -lfreetype -lftgl
 battlestarTUX_SOURCES = Config.cpp \
 			Config.h \
 			Displayable.cpp \

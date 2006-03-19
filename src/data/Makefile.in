@@ -155,7 +155,9 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = gfx/
+SUBDIRS = gfx/ \
+		fonts/
+
 all: all-recursive
 
 .SUFFIXES:
