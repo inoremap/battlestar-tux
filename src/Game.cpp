@@ -22,8 +22,8 @@
  */
 
 
-#include "math.h"
-#include "SDL.h"
+#include <math.h>
+#include <SDL.h>
 
 #include "Config.h"
 #include "Fighter/Fighter.h"

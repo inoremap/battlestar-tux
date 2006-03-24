@@ -25,7 +25,7 @@
 #ifndef SHIELDIMPACT_H_
 #define SHIELDIMPACT_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Shield.h"
 #include "../Game.h"

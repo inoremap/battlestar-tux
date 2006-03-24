@@ -22,10 +22,7 @@
  */
 
 
-#include <stdio.h>
-
 #include "Label.h"
-
 
 Label::Label( GUI* gui, char* s ) : Widget( gui ) {
 	string = s;

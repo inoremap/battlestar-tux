@@ -24,7 +24,6 @@
 
 #include "TextureManager.h"
 
-
 TextureManager::TextureManager() {
 	textures = new StringArray();
 }

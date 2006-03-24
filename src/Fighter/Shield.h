@@ -25,7 +25,7 @@
 #ifndef SHIELD_H_
 #define SHIELD_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "../Displayable.h"
 #include "../Game.h"

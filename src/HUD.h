@@ -25,7 +25,7 @@
 #ifndef HUD_H_
 #define HUD_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Game.h"
 

@@ -25,8 +25,8 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 
-#include "SDL.h"
-#include "SDL_opengl.h"
+#include <SDL.h>
+#include <SDL_opengl.h>
 
 #include "Game.h"
 

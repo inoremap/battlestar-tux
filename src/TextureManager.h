@@ -25,8 +25,8 @@
 #ifndef TEXTUREMANAGER_H_
 #define TEXTUREMANAGER_H_
 
-#include "SDL_image.h"
-#include "SDL_opengl.h"
+#include <SDL_image.h>
+#include <SDL_opengl.h>
 
 #include "Structures/StringArray.h"
 

@@ -22,10 +22,7 @@
  */
 
 
-#include <stdio.h>
-
 #include "Widget.h"
-
 
 Widget::Widget( GUI* gui ) {
 	font = gui->getBoldFont();

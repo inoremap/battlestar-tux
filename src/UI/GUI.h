@@ -25,7 +25,7 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-#include "FTGLTextureFont.h"
+#include <FTGLTextureFont.h>
 
 #include "../Structures/List.h"
 

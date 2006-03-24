@@ -25,7 +25,7 @@
 #ifndef GROUND_H_
 #define GROUND_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Game.h"
 

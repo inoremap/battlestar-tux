@@ -25,7 +25,7 @@
 #ifndef DISPLAYABLE_H_
 #define DISPLAYABLE_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Game.h"
 #include "Structures/ListItem.h"

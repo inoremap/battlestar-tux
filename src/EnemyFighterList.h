@@ -25,7 +25,7 @@
 #ifndef ENEMYFIGHTERLIST_H_
 #define ENEMYFIGHTERLIST_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Displayable.h"
 #include "DisplayableList.h"

@@ -25,7 +25,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "time.h"
+#include <time.h>
 
 class Config;
 class EnemyFighterList;

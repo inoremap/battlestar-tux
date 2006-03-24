@@ -25,7 +25,7 @@
 #ifndef FIGHTERAMMO_H_
 #define FIGHTERAMMO_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Displayable.h"
 #include "FighterAmmoList.h"

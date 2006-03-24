@@ -25,7 +25,7 @@
 #ifndef GROUNDSEGMENT_H_
 #define GROUNDSEGMENT_H_
 
-#include "SDL_opengl.h"
+#include <SDL_opengl.h>
 
 #include "Displayable.h"
 #include "Game.h"
