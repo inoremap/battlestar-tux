@@ -78,6 +78,7 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
+	UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) UI/Widget.$(OBJEXT) \
 	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
@@ -99,6 +100,7 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
+	UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) UI/Widget.$(OBJEXT) \
 	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
@@ -278,6 +280,12 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/GUI.cpp \
+			UI/GUI.h \
+			UI/Label.cpp \
+			UI/Label.h \
+			UI/Widget.cpp \
+			UI/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -340,6 +348,12 @@ testTUX_SOURCES = Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/GUI.cpp \
+			UI/GUI.h \
+			UI/Label.cpp \
+			UI/Label.h \
+			UI/Widget.cpp \
+			UI/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp
@@ -460,6 +474,15 @@ Structures/ListItem.$(OBJEXT): Structures/$(am__dirstamp) \
 	Structures/$(DEPDIR)/$(am__dirstamp)
 Structures/StringArray.$(OBJEXT): Structures/$(am__dirstamp) \
 	Structures/$(DEPDIR)/$(am__dirstamp)
+UI/$(am__dirstamp):
+	@$(mkdir_p) UI
+	@: > UI/$(am__dirstamp)
+UI/$(DEPDIR)/$(am__dirstamp):
+	@$(mkdir_p) UI/$(DEPDIR)
+	@: > UI/$(DEPDIR)/$(am__dirstamp)
+UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/Label.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/Widget.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
@@ -486,6 +509,9 @@ mostlyclean-compile:
 	-rm -f Structures/List.$(OBJEXT)
 	-rm -f Structures/ListItem.$(OBJEXT)
 	-rm -f Structures/StringArray.$(OBJEXT)
+	-rm -f UI/GUI.$(OBJEXT)
+	-rm -f UI/Label.$(OBJEXT)
+	-rm -f UI/Widget.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -522,6 +548,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Label.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Widget.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`; \
@@ -748,6 +777,8 @@ distclean-generic:
 	-rm -f Fighter/Weapons/$(am__dirstamp)
 	-rm -f Structures/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Structures/$(am__dirstamp)
+	-rm -f UI/$(DEPDIR)/$(am__dirstamp)
+	-rm -f UI/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -758,7 +789,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -784,7 +815,7 @@ install-man:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

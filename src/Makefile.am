@@ -74,6 +74,12 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/GUI.cpp \
+			UI/GUI.h \
+			UI/Label.cpp \
+			UI/Label.h \
+			UI/Widget.cpp \
+			UI/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -136,6 +142,12 @@ testTUX_SOURCES =	Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/GUI.cpp \
+			UI/GUI.h \
+			UI/Label.cpp \
+			UI/Label.h \
+			UI/Widget.cpp \
+			UI/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp

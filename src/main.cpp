@@ -43,6 +43,7 @@
 #include "HUD.h"
 #include "Screen.h"
 #include "TextureManager.h"
+#include "UI/Label.h"
 
 using namespace std;
 
@@ -66,6 +67,10 @@ int main(int argc, char* argv[])
 		game->exitBT();
 		return 1;
 	}
+
+	GUI* gui = new GUI();
+	Label* label = new Label( gui, "Battlestar TUX|Test the ugly puppy." );
+	gui->addObject( label );
 
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );
@@ -91,9 +96,9 @@ int main(int argc, char* argv[])
 		// If not paused, update all positions/states.
 		if( !game->isPaused() ) {
 			if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
-				for( int n=0; n < 200; n++ ) {
+				for( int n=0; n < 20; n++ ) {
 					enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-					enemyFighter->setPos( -40 + n/2, 40 );
+					enemyFighter->setPos( -40 + 4 * n, 40 );
 					enemyFighter->setVel( 0, -0.2, 0 );
 					enemyFighter->startFiring();
 					enemies->addObject( enemyFighter );
@@ -140,6 +145,9 @@ int main(int argc, char* argv[])
 		hero->Draw();
 		//draw power ups
 		hud->Draw();
+
+		gui->Update();
+		gui->Draw();
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();
