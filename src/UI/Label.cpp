@@ -33,7 +33,9 @@ Label::~Label() {}
 
 
 void Label::Draw() {
-	glTranslatef( 10.0, -descender, 0.0 );
+	float descender = font->Descender();
+
+	glTranslatef( 0.0, -descender, 0.0 );
 	glColor4f( 1.0, 1.0, 1.0, 1.0 );
 	glBindTexture( GL_TEXTURE_2D, 0 );
 	font->Render( string );
