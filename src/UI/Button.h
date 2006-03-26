@@ -1,4 +1,4 @@
-/* Widget.cpp
+/* Button.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,51 +22,27 @@
  */
 
 
+#ifndef BUTTON_H_
+#define BUTTON_H_
+
 #include "Widget.h"
 
-Widget::Widget( GUI* gui ) {
-	font = gui->getFont();
+/* Clickable widget that displays a text string. */
+class Button : public Widget {
+	public:
+				Button( GUI* gui, char* s );
+				~Button();
 
-	pos[0] = 0;
-	pos[1] = 0;
-	size[0] = 10;
-	size[1] = 10;
+				void Draw();
 
-	hover = false;
-	clicked = false;
-}
+				void Update( int x, int y, int state );
 
+	private:
+				Button( const Button &button );
+				const Button & operator= ( const Button &button );
 
-Widget::~Widget() {}
-
-
-void Widget::Draw() {}
-
-
-void Widget::Update( int x, int y, int state ) {}
+				char* string;
+};
 
 
-void Widget::setPos( int p[2] ) {
-	pos[0] = p[0];
-	pos[1] = p[1];
-}
-
-void Widget::setPos( int x, int y ) {
-	pos[0] = x;
-	pos[1] = y;
-}
-
-int* Widget::getPos() { return pos; }
-
-
-void Widget::setSize( int s[2] ) {
-	size[0] = s[0];
-	size[1] = s[1];
-}
-
-void Widget::setSize( int w, int h ) {
-	size[0] = w;
-	size[1] = h;
-}
-
-int* Widget::getSize() { return size; }
+#endif /*BUTTON_H_*/

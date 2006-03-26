@@ -74,6 +74,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/Button.cpp \
+			UI/Button.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \
@@ -142,6 +144,8 @@ testTUX_SOURCES =	Config.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
+			UI/Button.cpp \
+			UI/Button.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \

@@ -27,7 +27,10 @@
 #include "GUI.h"
 #include "Widget.h"
 
-GUI::GUI() {
+GUI::GUI( int w, int h ) {
+	screenW = w;
+	screenH = h;
+
 	// Load normal font.
 	char* normalFontFile = "data/fonts/forgottenfuturist.ttf";
 	normalFont = new FTGLTextureFont( normalFontFile );
@@ -72,7 +75,7 @@ void GUI::Draw() {
 	glMatrixMode( GL_PROJECTION );
 	glPushMatrix();
 		glLoadIdentity();
-		glOrtho( 0, 1024, 0, 768, -10, 10 );
+		glOrtho( 0, screenW, 0, screenH, -10, 10 );
 
 		glMatrixMode( GL_MODELVIEW );
 		glPushMatrix();
@@ -101,6 +104,9 @@ void GUI::Update() {
 	int state;
 	state = SDL_GetMouseState( &x, &y );
 	Widget* cur = (Widget*) rootObj;
+
+	// Re-arrange y coordinate.
+	y = screenH - y;
 
 	while( cur ) {
 		cur->Update( x, y, state );

@@ -43,7 +43,7 @@
 #include "HUD.h"
 #include "Screen.h"
 #include "TextureManager.h"
-#include "UI/Label.h"
+#include "UI/Button.h"
 
 using namespace std;
 
@@ -68,9 +68,16 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	GUI* gui = new GUI();
-	Label* label = new Label( gui, "Battlestar TUX|Test the ugly puppy." );
-	gui->addObject( label );
+	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
+	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
+	button->setPos( 400, 400 );
+	gui->addObject( button );
+	button = new Button( gui, "Examine Inventory" );
+	button->setPos( 400, 350 );
+	gui->addObject( button );
+	button = new Button( gui, "Resume Game" );
+	button->setPos( 400, 300 );
+	gui->addObject( button );
 
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );

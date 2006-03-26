@@ -29,12 +29,25 @@
 
 #include "../Structures/List.h"
 
+
+/* Default color/alpha for widgets/objects. */
+static const float BACKGROUND[4] = { 0.0, 0.0, 0.0, 0.2 };
+static const float FOREGROUND[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float EDGE[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float BACKGROUND_HOVER[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float FOREGROUND_HOVER[4] = { 0.0, 0.0, 0.0, 1.0 };
+static const float EDGE_HOVER[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float BACKGROUND_CLICKED[4] = { 0.282, 0.431, 0.588, 0.9 };
+static const float FOREGROUND_CLICKED[4] = { 0.0, 0.0, 0.0, 1.0 };
+static const float EDGE_CLICKED[4] = { 0.396, 0.607, 0.831, 0.9 };
+
+
 /* Top level Graphic User Interface class.
  * 
  * All widgets are controlled from here. */
 class GUI : public List {
 	public:
-				GUI();
+				GUI( int w, int h );
 				~GUI();
 
 				// Draw all GUI widgets.
@@ -50,6 +63,11 @@ class GUI : public List {
 	private:
 				GUI( const GUI &gui );
 				const GUI & operator= ( const GUI &gui );
+
+				// Screen width
+				int screenW;
+				// Screen height
+				int screenH;
 
 				FTFont* normalFont;
 				FTFont* italicFont;

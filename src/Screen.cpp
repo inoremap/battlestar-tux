@@ -1,6 +1,6 @@
 /* Screen.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -45,7 +45,7 @@ Screen::Screen( Game* g ) {
 	// reasonable state.
 	atexit( SDL_Quit );
 
-	// Request 8 bits per channel, alpha and double buffering.
+	// Request 8 bits per channel and double buffering.
 	SDL_GL_SetAttribute( SDL_GL_RED_SIZE,     8 );
 	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE,   8 );
 	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE,    8 );
@@ -71,9 +71,7 @@ Screen::Screen( Game* g ) {
 	}
 
 	// Setup window at current size.
-	width  = screen->w;
-	height = screen->h;
-	Resize( width, height );
+	Resize( screen->w, screen->h );
 
 	// The background color is black.
 	glClearColor( 0.0, 0.0, 0.0, 1.0 );

@@ -28,6 +28,10 @@
 #include "../Structures/ListItem.h"
 #include "GUI.h"
 
+static const int EDGE_OFFSET = 6;
+static const int HORIZ_PAD = 6;
+static const int VERTI_PAD = 2;
+
 /* Basic UI Widget. */
 class Widget : public ListItem {
 	public:
@@ -40,13 +44,22 @@ class Widget : public ListItem {
 				// and the state of the mouse buttons.
 				virtual void Update( int x, int y, int state );
 
-				virtual void setSize( float s[2] );
+				void setPos( int p[2] );
+				void setPos( int x, int y );
+				int* getPos();
+
+				void setSize( int s[2] );
+				void setSize( int w, int h );
+				int* getSize();
 
 	protected:
 				FTFont* font;
 
+				// Position of widget.
+				int pos[2];
+
 				// Size of widget.
-				float size[2];
+				int size[2];
 
 				// Mouse cursor is over widget.
 				bool hover;
