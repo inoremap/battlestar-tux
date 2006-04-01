@@ -1,4 +1,4 @@
-/* Button.h
+/* Event.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,28 +22,18 @@
  */
 
 
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef EVENT_H_
+#define EVENT_H_
 
-#include "EventGenerator.h"
-#include "Widget.h"
-
-/* Clickable widget that displays a text string. */
-class Button : public Widget, EventGenerator {
+/* Every widget event generates an object inherited from this event. */
+class Event {
 	public:
-				Button( GUI* gui, char* s );
-				~Button();
-
-				void Draw();
-
-				void Update( int x, int y, int state );
+				Event() {}
+				virtual ~Event() {}
 
 	private:
-				Button( const Button &button );
-				const Button & operator= ( const Button &button );
-
-				char* string;
+				Event( const Event &e );
+				const Event & operator= ( const Event &e );
 };
 
-
-#endif /*BUTTON_H_*/
+#endif /*EVENT_H_*/

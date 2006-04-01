@@ -76,6 +76,10 @@ battlestarTUX_SOURCES = Config.cpp \
 			Structures/StringArray.h \
 			UI/Button.cpp \
 			UI/Button.h \
+			UI/ButtonClickEvent.h \
+			UI/Event.h \
+			UI/EventGenerator.h \
+			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \
@@ -146,6 +150,10 @@ testTUX_SOURCES =	Config.cpp \
 			Structures/StringArray.h \
 			UI/Button.cpp \
 			UI/Button.h \
+			UI/ButtonClickEvent.h \
+			UI/Event.h \
+			UI/EventGenerator.h \
+			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \

@@ -1,4 +1,4 @@
-/* Button.h
+/* EventListener.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,28 +22,26 @@
  */
 
 
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef EVENTLISTENER_H_
+#define EVENTLISTENER_H_
 
-#include "EventGenerator.h"
-#include "Widget.h"
+#include "../Structures/ListItem.h"
+#include "Event.h"
 
-/* Clickable widget that displays a text string. */
-class Button : public Widget, EventGenerator {
+/* All objects which listen for widget events inherit this listener. */
+class EventListener : public ListItem {
 	public:
-				Button( GUI* gui, char* s );
-				~Button();
+				EventListener::EventListener() {}
 
-				void Draw();
+				virtual EventListener::~EventListener() {}
 
-				void Update( int x, int y, int state );
+				virtual void EventListener::EventGenerated( Event* e ) {
+					printf( "Unhandled event generated...\n" );
+				}
 
 	private:
-				Button( const Button &button );
-				const Button & operator= ( const Button &button );
-
-				char* string;
+				EventListener( const EventListener &l );
+				const EventListener & operator= ( const EventListener &l );
 };
 
-
-#endif /*BUTTON_H_*/
+#endif /*EVENTLISTENER_H_*/

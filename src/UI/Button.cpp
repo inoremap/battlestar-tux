@@ -25,6 +25,7 @@
 #include <SDL.h>
 
 #include "Button.h"
+#include "ButtonClickEvent.h"
 
 Button::Button( GUI* gui, char* s ) : Widget( gui ) {
 	string = s;
@@ -129,7 +130,12 @@ void Button::Update( int x, int y, int state ) {
 				// Mouse was released while over button.
 				if( hover ) {
 					clicked = false;
-					printf( "Click %s\n", string );
+
+					//// BUTTON CLICKED ////
+					ButtonClickEvent* event = new ButtonClickEvent( string );
+					GenerateEvent( event );
+					delete event;
+					//// BUTTON CLICKED ////
 				}
 				// Mouse was released while outside button.
 				else

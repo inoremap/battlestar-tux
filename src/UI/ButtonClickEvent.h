@@ -1,4 +1,4 @@
-/* Button.h
+/* ButtonClickEvent.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,28 +22,23 @@
  */
 
 
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef BUTTONCLICKEVENT_H_
+#define BUTTONCLICKEVENT_H_
 
-#include "EventGenerator.h"
-#include "Widget.h"
+#include "Event.h"
 
-/* Clickable widget that displays a text string. */
-class Button : public Widget, EventGenerator {
+class ButtonClickEvent : public Event {
 	public:
-				Button( GUI* gui, char* s );
-				~Button();
+				ButtonClickEvent::ButtonClickEvent( char* value ) {
+					buttonValue = value;
+				}
 
-				void Draw();
+				ButtonClickEvent::~ButtonClickEvent() {}
 
-				void Update( int x, int y, int state );
+				char* ButtonClickEvent::getButtonValue() { return buttonValue; }
 
 	private:
-				Button( const Button &button );
-				const Button & operator= ( const Button &button );
-
-				char* string;
+				char* buttonValue;
 };
 
-
-#endif /*BUTTON_H_*/
+#endif /*BUTTONCLICKEVENT_H_*/

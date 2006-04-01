@@ -64,6 +64,15 @@ GUI::GUI( int w, int h ) {
 
 
 GUI::~GUI() {
+	Widget* cur = (Widget*) rootObj;
+	Widget* next = 0;
+
+	while( cur ) {
+		next = (Widget*) cur->getNext();
+		delete cur;
+		cur = next;
+	}
+
 	delete normalFont;
 	delete italicFont;
 	delete boldFont;
