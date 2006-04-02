@@ -40,8 +40,8 @@ Button::Button( GUI* gui, char* s ) : Widget( gui ) {
 	float ascender = font->Ascender();
 	font->BBox( string, llx, lly, llz, urx, ury, urz );
 
-	size[0] = (int) urx - llx + HORIZ_PAD * 2;
-	size[1] = (int) ascender + (-descender) + VERTI_PAD;
+	size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
+	size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
 }
 
 
@@ -55,49 +55,49 @@ void Button::Draw() {
 	// Draw background.
 	glPushMatrix();
 		if( hover && clicked )
-			glColor4fv( BACKGROUND_CLICKED );
+			glColor4fv( W_BG_CLICKED );
 		else if( hover )
-			glColor4fv( BACKGROUND_HOVER );
+			glColor4fv( W_BG_HOVER );
 		else
-			glColor4fv( BACKGROUND );
+			glColor4fv( W_BG );
 		glBindTexture( GL_TEXTURE_2D, 0 );
 		glBegin( GL_POLYGON );
-			glVertex3f( EDGE_OFFSET, 0.0, 0.0 );
+			glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
 			glVertex3f( size[0], 0.0, 0.0 );
-			glVertex3f( size[0], size[1] - EDGE_OFFSET, 0.0 );
-			glVertex3f( size[0] - EDGE_OFFSET, size[1], 0.0 );
+			glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
+			glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
 			glVertex3f( 0.0, size[1], 0.0 );
-			glVertex3f( 0.0, EDGE_OFFSET, 0.0 );
+			glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
 		glEnd();
 	glPopMatrix();
 
 	// Draw text.
 	glPushMatrix();
-		glTranslatef( HORIZ_PAD, -font->Descender(), 0.0 );
+		glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
 		if( hover && clicked )
-			glColor4fv( FOREGROUND_CLICKED );
+			glColor4fv( W_FG_CLICKED );
 		else if( hover )
-			glColor4fv( FOREGROUND_HOVER );
+			glColor4fv( W_FG_HOVER );
 		else
-			glColor4fv( FOREGROUND );
+			glColor4fv( W_FG );
 		font->Render( string );
 	glPopMatrix();
 
 	// Draw edge.
 	if( hover && clicked )
-		glColor4fv( EDGE_CLICKED );
+		glColor4fv( W_EDGE_CLICKED );
 	else if( hover )
-		glColor4fv( EDGE_HOVER );
+		glColor4fv( W_EDGE_HOVER );
 	else
-		glColor4fv( EDGE );
+		glColor4fv( W_EDGE );
 	glBindTexture( GL_TEXTURE_2D, 0 );
 	glBegin( GL_LINE_LOOP );
-		glVertex3f( EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
 		glVertex3f( size[0], 0.0, 0.0 );
-		glVertex3f( size[0], size[1] - EDGE_OFFSET, 0.0 );
-		glVertex3f( size[0] - EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
 		glVertex3f( 0.0, size[1], 0.0 );
-		glVertex3f( 0.0, EDGE_OFFSET, 0.0 );
+		glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
 	glEnd();
 }
 

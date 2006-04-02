@@ -28,9 +28,21 @@
 #include "../Structures/ListItem.h"
 #include "GUI.h"
 
-static const int EDGE_OFFSET = 6;
-static const int HORIZ_PAD = 6;
-static const int VERTI_PAD = 2;
+/* Default color/alpha for widgets. */
+static const float W_BG[4] = { 0.0, 0.0, 0.0, 0.2 };
+static const float W_FG[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float W_EDGE[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float W_BG_HOVER[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float W_FG_HOVER[4] = { 0.0, 0.0, 0.0, 1.0 };
+static const float W_EDGE_HOVER[4] = { 0.396, 0.607, 0.831, 0.9 };
+static const float W_BG_CLICKED[4] = { 0.282, 0.431, 0.588, 0.9 };
+static const float W_FG_CLICKED[4] = { 0.0, 0.0, 0.0, 1.0 };
+static const float W_EDGE_CLICKED[4] = { 0.396, 0.607, 0.831, 0.9 };
+
+/* Default padding for widgets. */
+static const int W_EDGE_OFFSET = 6;
+static const int W_HORIZ_PAD = 6;
+static const int W_VERTI_PAD = 2;
 
 /* Basic UI Widget. */
 class Widget : public ListItem {
