@@ -79,7 +79,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) \
-	UI/Widget.$(OBJEXT) TextureManager.$(OBJEXT) main.$(OBJEXT)
+	UI/Widget.$(OBJEXT) UI/VerticalContainer.$(OBJEXT) \
+	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -101,7 +102,8 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) \
-	UI/Widget.$(OBJEXT) TextureManager.$(OBJEXT) test.$(OBJEXT)
+	UI/VerticalContainer.$(OBJEXT) UI/Widget.$(OBJEXT) \
+	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -283,6 +285,7 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/Button.cpp \
 			UI/Button.h \
 			UI/ButtonClickEvent.h \
+			UI/Container.h \
 			UI/Event.h \
 			UI/EventGenerator.h \
 			UI/EventListener.h \
@@ -292,6 +295,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
+			UI/VerticalContainer.cpp \
+			UI/VerticalContainer.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -357,6 +362,7 @@ testTUX_SOURCES = Config.cpp \
 			UI/Button.cpp \
 			UI/Button.h \
 			UI/ButtonClickEvent.h \
+			UI/Container.h \
 			UI/Event.h \
 			UI/EventGenerator.h \
 			UI/EventListener.h \
@@ -364,6 +370,8 @@ testTUX_SOURCES = Config.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \
 			UI/Label.h \
+			UI/VerticalContainer.cpp \
+			UI/VerticalContainer.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			TextureManager.cpp \
@@ -496,6 +504,8 @@ UI/Button.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/Label.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/Widget.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/VerticalContainer.$(OBJEXT): UI/$(am__dirstamp) \
+	UI/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
@@ -525,6 +535,7 @@ mostlyclean-compile:
 	-rm -f UI/Button.$(OBJEXT)
 	-rm -f UI/GUI.$(OBJEXT)
 	-rm -f UI/Label.$(OBJEXT)
+	-rm -f UI/VerticalContainer.$(OBJEXT)
 	-rm -f UI/Widget.$(OBJEXT)
 
 distclean-compile:
@@ -565,6 +576,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Button.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Label.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalContainer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Widget.Po@am__quote@
 
 .cpp.o:

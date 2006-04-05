@@ -30,7 +30,7 @@
 #include "EventListener.h"
 
 /* All widgets which generate events inherit this generator. */
-class EventGenerator : public List {
+class EventGenerator : protected List {
 	public:
 				EventGenerator::EventGenerator() {}
 				EventGenerator::~EventGenerator() {}

@@ -44,6 +44,7 @@
 #include "Screen.h"
 #include "TextureManager.h"
 #include "UI/Button.h"
+#include "UI/VerticalContainer.h"
 
 using namespace std;
 
@@ -69,15 +70,17 @@ int main(int argc, char* argv[])
 	}
 
 	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
+	VerticalContainer* container = new VerticalContainer( gui, HORIZ_CENTER );
+	container->setPos( 350, 300 );
 	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
-	button->setPos( 400, 400 );
-	gui->addObject( button );
-	button = new Button( gui, "Examine Inventory" );
-	button->setPos( 400, 350 );
-	gui->addObject( button );
+	container->AddWidget( button );
 	button = new Button( gui, "Resume Game" );
-	button->setPos( 400, 300 );
-	gui->addObject( button );
+	container->AddWidget( button );
+	button = new Button( gui, "Examine Inventory" );
+	container->AddWidget( button );
+	button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
+	container->AddWidget( button );
+	gui->addObject( container );
 
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );

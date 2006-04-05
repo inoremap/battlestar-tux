@@ -40,8 +40,8 @@ Button::Button( GUI* gui, char* s ) : Widget( gui ) {
 	float ascender = font->Ascender();
 	font->BBox( string, llx, lly, llz, urx, ury, urz );
 
-	size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
-	size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
+	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
+	preferredSize[1] = size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
 }
 
 
@@ -53,23 +53,21 @@ void Button::Draw() {
 	glTranslatef( pos[0], pos[1], 0.0 );
 
 	// Draw background.
-	glPushMatrix();
-		if( hover && clicked )
-			glColor4fv( W_BG_CLICKED );
-		else if( hover )
-			glColor4fv( W_BG_HOVER );
-		else
-			glColor4fv( W_BG );
-		glBindTexture( GL_TEXTURE_2D, 0 );
-		glBegin( GL_POLYGON );
-			glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
-			glVertex3f( size[0], 0.0, 0.0 );
-			glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
-			glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
-			glVertex3f( 0.0, size[1], 0.0 );
-			glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
-		glEnd();
-	glPopMatrix();
+	if( hover && clicked )
+		glColor4fv( W_BG_CLICKED );
+	else if( hover )
+		glColor4fv( W_BG_HOVER );
+	else
+		glColor4fv( W_BG );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBegin( GL_POLYGON );
+		glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], 0.0, 0.0 );
+		glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1], 0.0 );
+		glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
+	glEnd();
 
 	// Draw text.
 	glPushMatrix();

@@ -29,8 +29,8 @@ Widget::Widget( GUI* gui ) {
 
 	pos[0] = 0;
 	pos[1] = 0;
-	size[0] = 10;
-	size[1] = 10;
+	preferredSize[0] = size[0] = 10;
+	preferredSize[1] = size[1] = 10;
 
 	hover = false;
 	clicked = false;
@@ -57,6 +57,9 @@ void Widget::setPos( int x, int y ) {
 }
 
 int* Widget::getPos() { return pos; }
+
+
+int* Widget::getPreferredSize() { return preferredSize; }
 
 
 void Widget::setSize( int s[2] ) {

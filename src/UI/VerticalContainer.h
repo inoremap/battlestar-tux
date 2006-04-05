@@ -1,4 +1,4 @@
-/* Button.h
+/* VerticalContainer.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,28 +22,33 @@
  */
 
 
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef VERTICALCONTAINER_H_
+#define VERTICALCONTAINER_H_
 
-#include "EventGenerator.h"
-#include "Widget.h"
+#include "Container.h"
 
-/* Clickable widget that displays a text string. */
-class Button : public Widget, private EventGenerator {
+/* A column of vertical widgets. */
+class VerticalContainer : public Container {
 	public:
-				Button( GUI* gui, char* s );
-				~Button();
+				VerticalContainer( GUI* g, W_Alignment h );
+				~VerticalContainer();
 
 				void Draw();
 
+				// Update container given the (x, y) position of the mouse cursor
+				// and the state of the mouse buttons.
 				void Update( int x, int y, int state );
 
-	private:
-				Button( const Button &button );
-				const Button & operator= ( const Button &button );
+	protected:
+				// Re-Align elements in container.
+				void ReevaluateElements();
 
-				char* string;
+				// Horizontal alignment of widgets (right, center, left).
+				W_Alignment hAlign;
+
+	private:
+				VerticalContainer( const VerticalContainer &vc );
+				const VerticalContainer & operator= ( const VerticalContainer &vc );
 };
 
-
-#endif /*BUTTON_H_*/
+#endif /*VERTICALCONTAINER_H_*/

@@ -77,6 +77,7 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/Button.cpp \
 			UI/Button.h \
 			UI/ButtonClickEvent.h \
+			UI/Container.h \
 			UI/Event.h \
 			UI/EventGenerator.h \
 			UI/EventListener.h \
@@ -86,6 +87,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
+			UI/VerticalContainer.cpp \
+			UI/VerticalContainer.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -151,6 +154,7 @@ testTUX_SOURCES =	Config.cpp \
 			UI/Button.cpp \
 			UI/Button.h \
 			UI/ButtonClickEvent.h \
+			UI/Container.h \
 			UI/Event.h \
 			UI/EventGenerator.h \
 			UI/EventListener.h \
@@ -158,6 +162,8 @@ testTUX_SOURCES =	Config.cpp \
 			UI/GUI.h \
 			UI/Label.cpp \
 			UI/Label.h \
+			UI/VerticalContainer.cpp \
+			UI/VerticalContainer.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			TextureManager.cpp \

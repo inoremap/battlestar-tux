@@ -29,7 +29,7 @@
 #include "GUI.h"
 
 /* Default color/alpha for widgets. */
-static const float W_BG[4] = { 0.0, 0.0, 0.0, 0.2 };
+static const float W_BG[4] = { 0.0, 0.0, 0.0, 0.6 };
 static const float W_FG[4] = { 0.396, 0.607, 0.831, 0.9 };
 static const float W_EDGE[4] = { 0.396, 0.607, 0.831, 0.9 };
 static const float W_BG_HOVER[4] = { 0.396, 0.607, 0.831, 0.9 };
@@ -43,6 +43,16 @@ static const float W_EDGE_CLICKED[4] = { 0.396, 0.607, 0.831, 0.9 };
 static const int W_EDGE_OFFSET = 6;
 static const int W_HORIZ_PAD = 6;
 static const int W_VERTI_PAD = 2;
+
+// Widget Alignments
+enum W_Alignment {
+	HORIZ_RIGHT,
+	HORIZ_CENTER,
+	HORIZ_LEFT,
+	VERTI_RIGHT,
+	VERTI_CENTER,
+	VERTI_LEFT
+};
 
 /* Basic UI Widget. */
 class Widget : public ListItem {
@@ -60,6 +70,8 @@ class Widget : public ListItem {
 				void setPos( int x, int y );
 				int* getPos();
 
+				int* getPreferredSize();
+
 				void setSize( int s[2] );
 				void setSize( int w, int h );
 				int* getSize();
@@ -69,6 +81,9 @@ class Widget : public ListItem {
 
 				// Position of widget.
 				int pos[2];
+
+				// Preferred (minimum) size of widget.
+				int preferredSize[2];
 
 				// Size of widget.
 				int size[2];
