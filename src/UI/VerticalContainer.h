@@ -30,7 +30,7 @@
 /* A column of vertical widgets. */
 class VerticalContainer : public Container {
 	public:
-				VerticalContainer( GUI* g, W_Alignment h );
+				VerticalContainer( GUI* g, bool resize, W_Alignment h );
 				~VerticalContainer();
 
 				void Draw();
@@ -42,6 +42,9 @@ class VerticalContainer : public Container {
 	protected:
 				// Re-Align elements in container.
 				void ReevaluateElements();
+
+				// Resize widgets to fill container
+				bool resizeWidgets;
 
 				// Horizontal alignment of widgets (right, center, left).
 				W_Alignment hAlign;

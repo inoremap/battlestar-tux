@@ -85,7 +85,7 @@ class Widget : public ListItem {
 				// Preferred (minimum) size of widget.
 				int preferredSize[2];
 
-				// Size of widget.
+				// Actual drawn size of widget.
 				int size[2];
 
 				// Mouse cursor is over widget.

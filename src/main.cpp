@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 	}
 
 	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
-	VerticalContainer* container = new VerticalContainer( gui, HORIZ_CENTER );
+	VerticalContainer* container = new VerticalContainer( gui, true, HORIZ_LEFT );
 	container->setPos( 350, 300 );
 	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
 	container->AddWidget( button );

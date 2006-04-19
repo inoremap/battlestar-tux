@@ -25,7 +25,9 @@
 #include "VerticalContainer.h"
 #include "Widget.h"
 
-VerticalContainer::VerticalContainer( GUI* g, W_Alignment h ) : Container( g ) {
+VerticalContainer::VerticalContainer( GUI* g, bool resize, W_Alignment h ) : Container( g ) {
+	resizeWidgets = resize;
+
 	hAlign = h;
 
 	preferredSize[0] = size[0] = 50;
@@ -90,6 +92,8 @@ void VerticalContainer::ReevaluateElements() {
 	preferredSize[0] = 0;
 	preferredSize[1] = - C_WIDGET_PAD;
 	int offset[2] = { 0, 0 };
+	int maxWidgetWidth = 0;
+	int containerWidth = 0;
 	int* wSize;
 
 	Widget* cur = (Widget*) rootObj;
@@ -97,24 +101,45 @@ void VerticalContainer::ReevaluateElements() {
 	while( cur ) {
 		wSize = cur->getPreferredSize();
 
-		if( preferredSize[0] < wSize[0] )
+		if( maxWidgetWidth < wSize[0] ) {
+			maxWidgetWidth = wSize[0];
 			preferredSize[0] = wSize[0];
+		}
 		preferredSize[1] += wSize[1] + C_WIDGET_PAD;
 
 		cur = (Widget*) cur->getNext();
 	}
 
+	containerWidth = preferredSize[0];
 	preferredSize[0] += C_HORIZ_PAD * 2;
 	preferredSize[1] += C_VERTI_PAD * 2;
 	offset[0] = C_HORIZ_PAD;
 	offset[1] = preferredSize[1] - C_VERTI_PAD;
+
 	cur = (Widget*) rootObj;
 	// Loop through widgets - setting size and position.
 	while( cur ) {
 		wSize = cur->getPreferredSize();
 		offset[1] -= wSize[1];
 
-		cur->setPos( offset[0] + pos[0], offset[1] + pos[1] );
+		// Horizontally align widgets.
+		switch( hAlign ) {
+			case HORIZ_LEFT:
+				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] );
+				break;
+
+			case HORIZ_CENTER:
+				cur->setPos( offset[0] + pos[0] + (containerWidth - cur->getSize()[0])/2, offset[1] + pos[1] );
+				break;
+
+			case HORIZ_RIGHT:
+			default:
+				cur->setPos( offset[0] + pos[0] + containerWidth - cur->getSize()[0], offset[1] + pos[1] );
+				break;
+		}
+
+		if( resizeWidgets )
+			cur->setSize( maxWidgetWidth, cur->getSize()[1] );
 
 		cur = (Widget*) cur->getNext();
 		offset[1] -= C_WIDGET_PAD;
