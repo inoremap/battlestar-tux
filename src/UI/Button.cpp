@@ -61,12 +61,12 @@ void Button::Draw() {
 		glColor4fv( W_BG );
 	glBindTexture( GL_TEXTURE_2D, 0 );
 	glBegin( GL_POLYGON );
-		glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
-		glVertex3f( size[0], 0.0, 0.0 );
-		glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
-		glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
-		glVertex3f( 0.0, size[1], 0.0 );
-		glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( W_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - W_EDGE_OFFSET, 0.0 );
 	glEnd();
 
 	// Draw text.
@@ -90,12 +90,12 @@ void Button::Draw() {
 		glColor4fv( W_EDGE );
 	glBindTexture( GL_TEXTURE_2D, 0 );
 	glBegin( GL_LINE_LOOP );
-		glVertex3f( W_EDGE_OFFSET, 0.0, 0.0 );
-		glVertex3f( size[0], 0.0, 0.0 );
-		glVertex3f( size[0], size[1] - W_EDGE_OFFSET, 0.0 );
-		glVertex3f( size[0] - W_EDGE_OFFSET, size[1], 0.0 );
-		glVertex3f( 0.0, size[1], 0.0 );
-		glVertex3f( 0.0, W_EDGE_OFFSET, 0.0 );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( W_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - W_EDGE_OFFSET, 0.0 );
 	glEnd();
 }
 
