@@ -27,8 +27,9 @@
 #include "Button.h"
 #include "ButtonClickEvent.h"
 
-Button::Button( GUI* gui, char* s ) : Widget( gui ) {
+Button::Button( GUI* gui, char* s, W_Alignment h ) : Widget( gui ) {
 	string = s;
+	hAlign = h;
 
 	float llx = 0.0;
 	float lly = 0.0;
@@ -40,6 +41,7 @@ Button::Button( GUI* gui, char* s ) : Widget( gui ) {
 	float ascender = font->Ascender();
 	font->BBox( string, llx, lly, llz, urx, ury, urz );
 
+	textWidth = urx - llx;
 	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
 	preferredSize[1] = size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
 }
@@ -71,7 +73,21 @@ void Button::Draw() {
 
 	// Draw text.
 	glPushMatrix();
-		glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+		switch( hAlign ) {
+			case HORIZ_LEFT:
+				glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+				break;
+
+			case HORIZ_CENTER:
+				glTranslatef( (size[0] - textWidth)/2, -font->Descender(), 0.0 );
+				break;
+
+			case HORIZ_RIGHT:
+			default:
+				glTranslatef( size[0] - textWidth - W_HORIZ_PAD, -font->Descender(), 0.0 );
+				break;
+		}
+
 		if( hover && clicked )
 			glColor4fv( W_FG_CLICKED );
 		else if( hover )

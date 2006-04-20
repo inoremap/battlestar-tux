@@ -70,15 +70,15 @@ int main(int argc, char* argv[])
 	}
 
 	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
-	VerticalContainer* container = new VerticalContainer( gui, true, HORIZ_LEFT );
+	VerticalContainer* container = new VerticalContainer( gui, true, HORIZ_CENTER );
 	container->setPos( 350, 300 );
-	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
+	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
 	container->AddWidget( button );
-	button = new Button( gui, "Resume Game" );
+	button = new Button( gui, "Resume Game", HORIZ_CENTER );
 	container->AddWidget( button );
-	button = new Button( gui, "Examine Inventory" );
+	button = new Button( gui, "Examine Inventory", HORIZ_CENTER );
 	container->AddWidget( button );
-	button = new Button( gui, "Battlestar TUX|Test the ugly puppy." );
+	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
 	container->AddWidget( button );
 	gui->addObject( container );
 

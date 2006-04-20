@@ -31,7 +31,7 @@
 /* Clickable widget that displays a text string. */
 class Button : public Widget, private EventGenerator {
 	public:
-				Button( GUI* gui, char* s );
+				Button( GUI* gui, char* s, W_Alignment h );
 				~Button();
 
 				void Draw();
@@ -43,6 +43,12 @@ class Button : public Widget, private EventGenerator {
 				const Button & operator= ( const Button &button );
 
 				char* string;
+
+				// Horizontal alignment of the text in the button.
+				W_Alignment hAlign;
+
+				// Width of the text in the button.
+				int textWidth;
 };
 
 
