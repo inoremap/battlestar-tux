@@ -44,6 +44,7 @@
 #include "Screen.h"
 #include "TextureManager.h"
 #include "UI/Button.h"
+#include "UI/HorizontalContainer.h"
 #include "UI/VerticalContainer.h"
 
 using namespace std;
@@ -70,17 +71,23 @@ int main(int argc, char* argv[])
 	}
 
 	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
-	VerticalContainer* container = new VerticalContainer( gui, true, HORIZ_CENTER );
-	container->setPos( 350, 300 );
+	VerticalContainer* vContainer = new VerticalContainer( gui, true, HORIZ_CENTER );
 	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
-	container->AddWidget( button );
+	vContainer->AddWidget( button );
 	button = new Button( gui, "Resume Game", HORIZ_CENTER );
-	container->AddWidget( button );
+	vContainer->AddWidget( button );
 	button = new Button( gui, "Examine Inventory", HORIZ_CENTER );
-	container->AddWidget( button );
+	vContainer->AddWidget( button );
 	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
-	container->AddWidget( button );
-	gui->addObject( container );
+	vContainer->AddWidget( button );
+	HorizontalContainer* hContainer = new HorizontalContainer( gui, false, VERTI_CENTER );
+	hContainer->AddWidget( vContainer );
+	button = new Button( gui, "Examine Inventory", HORIZ_CENTER );
+	hContainer->AddWidget( button );
+	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
+	hContainer->AddWidget( button );
+	hContainer->setPos( 50, 400 );
+	gui->addObject( hContainer );
 
 	HUD* hud = new HUD( game );
 	Ground* ground = new Ground( SOLID_GROUND, game );

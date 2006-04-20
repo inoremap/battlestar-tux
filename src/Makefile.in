@@ -78,7 +78,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) \
+	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
+	UI/HorizontalContainer.$(OBJEXT) UI/Label.$(OBJEXT) \
 	UI/Widget.$(OBJEXT) UI/VerticalContainer.$(OBJEXT) \
 	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
@@ -101,7 +102,8 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) UI/Label.$(OBJEXT) \
+	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
+	UI/HorizontalContainer.$(OBJEXT) UI/Label.$(OBJEXT) \
 	UI/VerticalContainer.$(OBJEXT) UI/Widget.$(OBJEXT) \
 	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
@@ -291,6 +293,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/HorizontalContainer.cpp \
+			UI/HorizontalContainer.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
@@ -368,6 +372,8 @@ testTUX_SOURCES = Config.cpp \
 			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/HorizontalContainer.cpp \
+			UI/HorizontalContainer.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/VerticalContainer.cpp \
@@ -502,6 +508,8 @@ UI/$(DEPDIR)/$(am__dirstamp):
 	@: > UI/$(DEPDIR)/$(am__dirstamp)
 UI/Button.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/HorizontalContainer.$(OBJEXT): UI/$(am__dirstamp) \
+	UI/$(DEPDIR)/$(am__dirstamp)
 UI/Label.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/Widget.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/VerticalContainer.$(OBJEXT): UI/$(am__dirstamp) \
@@ -534,6 +542,7 @@ mostlyclean-compile:
 	-rm -f Structures/StringArray.$(OBJEXT)
 	-rm -f UI/Button.$(OBJEXT)
 	-rm -f UI/GUI.$(OBJEXT)
+	-rm -f UI/HorizontalContainer.$(OBJEXT)
 	-rm -f UI/Label.$(OBJEXT)
 	-rm -f UI/VerticalContainer.$(OBJEXT)
 	-rm -f UI/Widget.$(OBJEXT)
@@ -575,6 +584,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Button.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/HorizontalContainer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Label.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalContainer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Widget.Po@am__quote@

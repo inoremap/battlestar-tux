@@ -56,6 +56,26 @@ class Container : protected List, public Widget {
 					ReevaluateElements();
 				}
 
+				void setPos( int p[2] ) {
+					Widget::setPos( p );
+					ReevaluateElements();
+				}
+
+				void setPos( int x, int y ) {
+					Widget::setPos( x, y );
+					ReevaluateElements();
+				}
+
+				void setSize( int s[2] ) {
+					Widget::setSize( s );
+					ReevaluateElements();
+				}
+
+				void setSize( int w, int h ) {
+					Widget::setSize( w, h );
+					ReevaluateElements();
+				}
+
 	protected:
 				// Re-align elements in container.
 				virtual void ReevaluateElements() {}

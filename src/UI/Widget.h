@@ -49,9 +49,9 @@ enum W_Alignment {
 	HORIZ_RIGHT,
 	HORIZ_CENTER,
 	HORIZ_LEFT,
-	VERTI_RIGHT,
+	VERTI_TOP,
 	VERTI_CENTER,
-	VERTI_LEFT
+	VERTI_BOTTOM
 };
 
 /* Basic UI Widget. */
@@ -66,14 +66,14 @@ class Widget : public ListItem {
 				// and the state of the mouse buttons.
 				virtual void Update( int x, int y, int state );
 
-				void setPos( int p[2] );
-				void setPos( int x, int y );
+				virtual void setPos( int p[2] );
+				virtual void setPos( int x, int y );
 				int* getPos();
 
 				int* getPreferredSize();
 
-				void setSize( int s[2] );
-				void setSize( int w, int h );
+				virtual void setSize( int s[2] );
+				virtual void setSize( int w, int h );
 				int* getSize();
 
 	protected:

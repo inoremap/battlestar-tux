@@ -83,6 +83,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/HorizontalContainer.cpp \
+			UI/HorizontalContainer.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
@@ -160,6 +162,8 @@ testTUX_SOURCES =	Config.cpp \
 			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/HorizontalContainer.cpp \
+			UI/HorizontalContainer.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/VerticalContainer.cpp \
