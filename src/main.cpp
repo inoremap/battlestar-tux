@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 	hContainer->AddWidget( button );
 	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
 	hContainer->AddWidget( button );
-	hContainer->setPos( 50, 400 );
+	hContainer->setPos( 50, 350 );
 	gui->addObject( hContainer );
 
 	HUD* hud = new HUD( game );
