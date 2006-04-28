@@ -1,4 +1,4 @@
-/* HorizontalContainer.cpp
+/* HorizontalPane.cpp
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,10 +22,10 @@
  */
 
 
-#include "HorizontalContainer.h"
+#include "HorizontalPane.h"
 #include "Widget.h"
 
-HorizontalContainer::HorizontalContainer( GUI* g, bool resize, W_Alignment v ) : Container( g ) {
+HorizontalPane::HorizontalPane( GUI* g, bool resize, W_Alignment v ) : Container( g ) {
 	resizeWidgets = resize;
 
 	vAlign = v;
@@ -34,11 +34,39 @@ HorizontalContainer::HorizontalContainer( GUI* g, bool resize, W_Alignment v ) :
 	preferredSize[1] = size[1] = 100;
 }
 
-HorizontalContainer::~HorizontalContainer() {}
+HorizontalPane::~HorizontalPane() {}
 
 
-void HorizontalContainer::Draw() {
-	// Draw all elements in container.
+void HorizontalPane::Draw() {
+	// Draw pane.
+	// Translate to pane position.
+	glTranslatef( pos[0], pos[1], 0.0 );
+
+	// Draw background.
+	glColor4fv( C_BG );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBegin( GL_POLYGON );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - C_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], C_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( C_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - C_EDGE_OFFSET, 0.0 );
+	glEnd();
+
+	// Draw edge.
+	glColor4fv( C_EDGE );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBegin( GL_LINE_LOOP );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - C_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], C_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( C_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - C_EDGE_OFFSET, 0.0 );
+	glEnd();
+
+	// Draw all elements in pane.
 	Widget* cur = (Widget*) rootObj;
 
 	while( cur ) {
@@ -49,8 +77,8 @@ void HorizontalContainer::Draw() {
 }
 
 
-void HorizontalContainer::Update( int x, int y, int state ) {
-	// Update all elements in container.
+void HorizontalPane::Update( int x, int y, int state ) {
+	// Update all elements in pane.
 	Widget* cur = (Widget*) rootObj;
 
 	while( cur ) {
@@ -60,16 +88,16 @@ void HorizontalContainer::Update( int x, int y, int state ) {
 }
 
 
-void HorizontalContainer::ReevaluateElements() {
+void HorizontalPane::ReevaluateElements() {
 	preferredSize[0] = - C_WIDGET_PAD;
 	preferredSize[1] = 0;
 	int offset[2] = { 0, 0 };
 	int maxWidgetHeight = 0;
-	int containerHeight = 0;
+	int paneHeight = 0;
 	int* wSize;
 
 	Widget* cur = (Widget*) rootObj;
-	// Loop through widgets - determining container size.
+	// Loop through widgets - determining pane size.
 	while( cur ) {
 		wSize = cur->getPreferredSize();
 
@@ -82,9 +110,11 @@ void HorizontalContainer::ReevaluateElements() {
 		cur = (Widget*) cur->getNext();
 	}
 
-	containerHeight = preferredSize[1];
-	offset[0] = preferredSize[0];
-	offset[1] = 0;
+	paneHeight = preferredSize[1];
+	preferredSize[0] += C_HORIZ_PAD * 2;
+	preferredSize[1] += C_VERTI_PAD * 2;
+	offset[0] = preferredSize[0] - C_HORIZ_PAD;
+	offset[1] = C_VERTI_PAD;
 
 	cur = (Widget*) rootObj;
 	// Loop through widgets - setting size and position.
@@ -95,11 +125,11 @@ void HorizontalContainer::ReevaluateElements() {
 		// Vertically align widgets.
 		switch( vAlign ) {
 			case VERTI_TOP:
-				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + containerHeight - cur->getSize()[1] );
+				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + paneHeight - cur->getSize()[1] );
 				break;
 
 			case VERTI_CENTER:
-				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + (containerHeight - cur->getSize()[1])/2 );
+				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + (paneHeight - cur->getSize()[1])/2 );
 				break;
 
 			case VERTI_BOTTOM:

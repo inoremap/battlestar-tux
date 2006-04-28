@@ -79,8 +79,9 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
-	UI/HorizontalContainer.$(OBJEXT) UI/Label.$(OBJEXT) \
-	UI/Widget.$(OBJEXT) UI/VerticalContainer.$(OBJEXT) \
+	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
+	UI/Label.$(OBJEXT) UI/Widget.$(OBJEXT) \
+	UI/VerticalContainer.$(OBJEXT) UI/VerticalPane.$(OBJEXT) \
 	TextureManager.$(OBJEXT) main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
@@ -103,8 +104,9 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
-	UI/HorizontalContainer.$(OBJEXT) UI/Label.$(OBJEXT) \
-	UI/VerticalContainer.$(OBJEXT) UI/Widget.$(OBJEXT) \
+	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
+	UI/Label.$(OBJEXT) UI/VerticalContainer.$(OBJEXT) \
+	UI/VerticalPane.$(OBJEXT) UI/Widget.$(OBJEXT) \
 	TextureManager.$(OBJEXT) test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
@@ -295,12 +297,16 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/GUI.h \
 			UI/HorizontalContainer.cpp \
 			UI/HorizontalContainer.h \
+			UI/HorizontalPane.cpp \
+			UI/HorizontalPane.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			UI/VerticalContainer.cpp \
 			UI/VerticalContainer.h \
+			UI/VerticalPane.cpp \
+			UI/VerticalPane.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -374,10 +380,14 @@ testTUX_SOURCES = Config.cpp \
 			UI/GUI.h \
 			UI/HorizontalContainer.cpp \
 			UI/HorizontalContainer.h \
+			UI/HorizontalPane.cpp \
+			UI/HorizontalPane.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/VerticalContainer.cpp \
 			UI/VerticalContainer.h \
+			UI/VerticalPane.cpp \
+			UI/VerticalPane.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			TextureManager.cpp \
@@ -510,9 +520,13 @@ UI/Button.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/HorizontalContainer.$(OBJEXT): UI/$(am__dirstamp) \
 	UI/$(DEPDIR)/$(am__dirstamp)
+UI/HorizontalPane.$(OBJEXT): UI/$(am__dirstamp) \
+	UI/$(DEPDIR)/$(am__dirstamp)
 UI/Label.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/Widget.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/VerticalContainer.$(OBJEXT): UI/$(am__dirstamp) \
+	UI/$(DEPDIR)/$(am__dirstamp)
+UI/VerticalPane.$(OBJEXT): UI/$(am__dirstamp) \
 	UI/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
@@ -543,8 +557,10 @@ mostlyclean-compile:
 	-rm -f UI/Button.$(OBJEXT)
 	-rm -f UI/GUI.$(OBJEXT)
 	-rm -f UI/HorizontalContainer.$(OBJEXT)
+	-rm -f UI/HorizontalPane.$(OBJEXT)
 	-rm -f UI/Label.$(OBJEXT)
 	-rm -f UI/VerticalContainer.$(OBJEXT)
+	-rm -f UI/VerticalPane.$(OBJEXT)
 	-rm -f UI/Widget.$(OBJEXT)
 
 distclean-compile:
@@ -585,8 +601,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Button.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/HorizontalContainer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/HorizontalPane.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Label.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalContainer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalPane.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Widget.Po@am__quote@
 
 .cpp.o:

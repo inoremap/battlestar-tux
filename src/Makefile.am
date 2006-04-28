@@ -85,12 +85,16 @@ battlestarTUX_SOURCES = Config.cpp \
 			UI/GUI.h \
 			UI/HorizontalContainer.cpp \
 			UI/HorizontalContainer.h \
+			UI/HorizontalPane.cpp \
+			UI/HorizontalPane.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			UI/VerticalContainer.cpp \
 			UI/VerticalContainer.h \
+			UI/VerticalPane.cpp \
+			UI/VerticalPane.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -164,10 +168,14 @@ testTUX_SOURCES =	Config.cpp \
 			UI/GUI.h \
 			UI/HorizontalContainer.cpp \
 			UI/HorizontalContainer.h \
+			UI/HorizontalPane.cpp \
+			UI/HorizontalPane.h \
 			UI/Label.cpp \
 			UI/Label.h \
 			UI/VerticalContainer.cpp \
 			UI/VerticalContainer.h \
+			UI/VerticalPane.cpp \
+			UI/VerticalPane.h \
 			UI/Widget.cpp \
 			UI/Widget.h \
 			TextureManager.cpp \
