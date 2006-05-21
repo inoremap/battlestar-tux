@@ -31,11 +31,11 @@
 /* All objects which listen for widget events inherit this listener. */
 class EventListener : public ListItem {
 	public:
-				EventListener::EventListener() {}
+				EventListener() {}
 
-				virtual EventListener::~EventListener() {}
+				virtual ~EventListener() {}
 
-				virtual void EventListener::EventGenerated( Event* e ) {
+				virtual void EventGenerated( Event* e ) {
 					printf( "Unhandled event generated...\n" );
 				}
 

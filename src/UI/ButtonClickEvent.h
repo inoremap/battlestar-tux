@@ -29,13 +29,13 @@
 
 class ButtonClickEvent : public Event {
 	public:
-				ButtonClickEvent::ButtonClickEvent( char* value ) {
+				ButtonClickEvent( char* value ) {
 					buttonValue = value;
 				}
 
-				ButtonClickEvent::~ButtonClickEvent() {}
+				~ButtonClickEvent() {}
 
-				char* ButtonClickEvent::getButtonValue() { return buttonValue; }
+				char* getButtonValue() { return buttonValue; }
 
 	private:
 				char* buttonValue;

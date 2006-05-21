@@ -32,14 +32,14 @@
 /* All widgets which generate events inherit this generator. */
 class EventGenerator : protected List {
 	public:
-				EventGenerator::EventGenerator() {}
-				EventGenerator::~EventGenerator() {}
+				EventGenerator() {}
+				~EventGenerator() {}
 
 	protected:
-				void EventGenerator::AddListener( EventListener* l ) { addObject( l ); }
-				void EventGenerator::RemListener( EventListener* l ) { remObject( l ); }
+				void AddListener( EventListener* l ) { addObject( l ); }
+				void RemListener( EventListener* l ) { remObject( l ); }
 
-				void EventGenerator::GenerateEvent( Event* e ) {
+				void GenerateEvent( Event* e ) {
 					EventListener* cur = (EventListener*) rootObj;
 
 					while( cur ) {
