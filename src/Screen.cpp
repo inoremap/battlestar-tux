@@ -53,7 +53,10 @@ Screen::Screen( Game* g ) {
 
 	// Open a window 1024x768.
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
-	screen = SDL_SetVideoMode( 1024, 768, 0, SDL_OPENGL );
+	width = 1024;
+	height = 768;
+	fovy = 110;
+	screen = SDL_SetVideoMode( width, height, 0, SDL_OPENGL );
 
 	if( g->getConfig()->getGrabInput() ) {
 		// Grab the Keyboard and Mouse
@@ -86,10 +89,6 @@ Screen::Screen( Game* g ) {
 	// Don't need normalization.
 	glDisable( GL_NORMALIZE );
 
-	// With Orthographic projection, we don't need fancy
-	// coordinate interpolation.
-	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST );
-
 	// Enable blending.
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -116,12 +115,21 @@ void Screen::Resize( int w, int h ) {
 	//
 	// The coordinate system is configured so that ( 0, 0, 0 ) is at the center of the screen.
 	glViewport( 0, 0, width, height );
+	setFOVY( fovy );
+}
+
+
+void Screen::setFOVY( float fov ) {
+	fovy = fov;
+
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	glOrtho( -40, 40, -30, 30, 1, 2 );
+	gluPerspective( fovy, (float) width/height, 0, 5 );
+	glTranslatef( 0, 0, -15 );
 	glMatrixMode( GL_MODELVIEW );
 }
 
 
 int Screen::getWidth() { return width; }
 int Screen::getHeight() { return height; }
+float Screen::getFOVY() { return fovy; }

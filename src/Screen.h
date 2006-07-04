@@ -42,8 +42,12 @@ class Screen {
 				// Call when the window size changes to resize the viewport
 				void Resize( int width, int height );
 
+				// Change the field-of-view (FOV).  Essentially, the zoom.
+				void setFOVY( float fov );
+
 				int getWidth();
 				int getHeight();
+				float getFOVY();
 
 	private:
 				Screen( const Screen &screen );
@@ -52,6 +56,7 @@ class Screen {
 				SDL_Surface* screen;
 				int height;
 				int width;
+				float fovy;
 };
 
 

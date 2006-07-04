@@ -192,6 +192,20 @@ int main(int argc, char* argv[])
 					}
 					break;
 
+				case SDL_MOUSEBUTTONDOWN:
+					if( event.button.button == SDL_BUTTON_LEFT )
+						hero->startFiring();
+					break;
+
+				case SDL_MOUSEBUTTONUP:
+					if( event.button.button == SDL_BUTTON_LEFT )
+						hero->stopFiring();
+					else if( event.button.button == SDL_BUTTON_WHEELUP )
+						screen->setFOVY( screen->getFOVY() - 2 );
+					else if( event.button.button == SDL_BUTTON_WHEELDOWN )
+						screen->setFOVY( screen->getFOVY() + 2 );
+					break;
+
 				case SDL_QUIT:
 					game->exitBT();
 					break;
@@ -200,11 +214,6 @@ int main(int argc, char* argv[])
 					break;
 			}
 		}
-		if( SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(1) )
-			hero->startFiring();
-		else
-			hero->stopFiring();
-
 
 		// Check for OpenGL errors.
 
