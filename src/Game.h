@@ -59,7 +59,7 @@ class Game {
 				// Mark time when done drawing frame.
 				void stopFrame();
 
-				int getGameFrame();
+				unsigned int getGameFrame();
 				int getGameSpeed();
 				float* getBounds();
 				float getScrollSpeed();

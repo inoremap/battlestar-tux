@@ -102,7 +102,7 @@ void Game::startFrame() {
 	frame++;
 	if( config->getDebug() && frame%200 == 0 ) {
 		fps = ((float) frame) / (((float) curTime - (float) startTime) / 1000);
-		printf( "Frame: %8i   ---   Game Frame: %8i   ---   Last Frame: %8i   ---   Time: %f   ---   FPS: %f   ---   Sleep: %3i\n", frame, gameFrame, lastGameFrame, (float) (curTime - startTime) / 1000, fps, syncSleep );
+		printf( "Frame: %8u   ---   Game Frame: %8u   ---   Last Frame: %8u   ---   Time: %f   ---   FPS: %f   ---   Sleep: %3i\n", frame, gameFrame, lastGameFrame, (float) (curTime - startTime) / 1000, fps, syncSleep );
 	}
 
 	// Calculate how many frames we should have drawn up to now.
@@ -131,7 +131,7 @@ void Game::stopFrame() {
 }
 
 
-int Game::getGameFrame() { return gameFrame; }
+unsigned int Game::getGameFrame() { return gameFrame; }
 int Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 float Game::getScrollSpeed() { return scrollSpeed; }
