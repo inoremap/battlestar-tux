@@ -93,15 +93,16 @@ void Displayable::Draw() {
 	glTranslatef( pos[0], pos[1], pos[2] );
 	glRotatef( rot, 0.0, 0.0, 1.0 );
 
+	// Why does this need to be flipped vertically?
 	glBegin( GL_TRIANGLE_STRIP );
 		glColor4f( color[0], color[1], color[2], color[3] );
-		glTexCoord2f( 0, 1 );
-		glVertex3f( -mx, my, 0.0 );
 		glTexCoord2f( 0, 0 );
+		glVertex3f( -mx, my, 0.0 );
+		glTexCoord2f( 0, 1 );
 		glVertex3f( -mx, -my, 0.0 );
-		glTexCoord2f( 1, 1 );
-		glVertex3f( mx, my, 0.0 );
 		glTexCoord2f( 1, 0 );
+		glVertex3f( mx, my, 0.0 );
+		glTexCoord2f( 1, 1 );
 		glVertex3f( mx, -my, 0.0 );
 	glEnd();
 
