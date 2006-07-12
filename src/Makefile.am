@@ -60,8 +60,6 @@ battlestarTUX_SOURCES = Config.cpp \
 			Game.h \
 			Ground.cpp \
 			Ground.h \
-			GroundSegment.cpp \
-			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
 			Pulse.cpp \
@@ -143,8 +141,6 @@ testTUX_SOURCES =	Config.cpp \
 			Game.h \
 			Ground.cpp \
 			Ground.h \
-			GroundSegment.cpp \
-			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
 			Pulse.cpp \

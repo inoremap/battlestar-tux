@@ -73,8 +73,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/LightPlasma.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
-	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
+	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
 	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
@@ -98,8 +98,8 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/Weapons/LightPlasma.$(OBJEXT) \
 	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
 	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
-	Ground.$(OBJEXT) GroundSegment.$(OBJEXT) HUD.$(OBJEXT) \
-	Pulse.$(OBJEXT) Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
+	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
+	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
 	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
 	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
@@ -252,8 +252,6 @@ battlestarTUX_SOURCES = Config.cpp \
 			Game.h \
 			Ground.cpp \
 			Ground.h \
-			GroundSegment.cpp \
-			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
 			Pulse.cpp \
@@ -335,8 +333,6 @@ testTUX_SOURCES = Config.cpp \
 			Game.h \
 			Ground.cpp \
 			Ground.h \
-			GroundSegment.cpp \
-			GroundSegment.h \
 			HUD.cpp \
 			HUD.h \
 			Pulse.cpp \
@@ -554,7 +550,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmoList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Game.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ground.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GroundSegment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HUD.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Pulse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Screen.Po@am__quote@

@@ -79,9 +79,15 @@ Screen::Screen( Game* g ) {
 	// The background color is black.
 	glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
-	// Points and lines 1 pixel wide
+	// Points and lines 1 pixel wide.
 	glPointSize( 1.0 );
 	glLineWidth( 1.0 );
+
+	// High quality perspective calculations.
+	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	// High quality point smoothing.
+	glHint( GL_POINT_SMOOTH_HINT, GL_NICEST );
 
 	// Enable 2D textures.
 	glEnable( GL_TEXTURE_2D );

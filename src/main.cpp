@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 		// If not paused, update all positions/states.
 		if( !game->isPaused() ) {
 			if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
-				for( int n=0; n < 20; n++ ) {
+				for( int n=0; n < 20; n+=4 ) {
 					enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 					enemyFighter->setPos( -40 + 4 * n, 40 );
 					enemyFighter->setVel( 0, -0.2, 0 );
@@ -147,6 +147,8 @@ int main(int argc, char* argv[])
 			enemies->CheckCollisions( heroAmmoList );
 			enemyAmmoList->CheckCollisions( hero );
 			enemies->CheckCollisions( hero );
+
+			ground->Update();
 		}
 
 

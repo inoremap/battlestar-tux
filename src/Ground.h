@@ -1,6 +1,6 @@
 /* Ground.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -29,8 +29,6 @@
 
 #include "Game.h"
 
-class GroundSegment;
-
 
 enum GroundType {
 	MENU_GROUND,		// Display while in menus
@@ -44,6 +42,8 @@ class Ground {
 				Ground( GroundType type, Game* g );
 				~Ground();
 
+				void Update();
+
 				void Draw();
 
 				GroundType getType();
@@ -52,28 +52,29 @@ class Ground {
 				// Constant Z position for the ground.
 				static const float zPos = -2.0;
 
-				// Number of ground segments necessary to fill the screen.
-				static const int numSegX = 2;
-				static const int numSegY = 2;
-
-				// Size of each segment.
-				static const float segSize = 40;
-
 	private:
 				Ground( const Ground &ground );
 				const Ground & operator= ( const Ground &ground );
 
-				// Take the bottom segment and move it to the top.
-				void rotateSegments();
+				// Scroll (y-axis) position of the ground.
+				// This is not the actual position where the elements will be drawn,
+				// it is primarily for procedural generation of the ground.
+				float position;
+
+				// Position (y-axis) where the ground should be drawn.
+				float offset;
+
+				// Velocity of the ground moving.
+				float velocity;
+
+				// Size of each ground segment (the subdivision level).
+				float segmentSize;
 
 				// Particular variation of ground texturing.
 				GroundType groundType;
 
 				// Ground texture for the segments.
 				GLuint texture;
-
-				// The first in the list of ground pieces.
-				GroundSegment* rootSeg;
 
 				Game* game;
 };

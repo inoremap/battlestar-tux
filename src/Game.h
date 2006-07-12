@@ -125,6 +125,7 @@ class Game {
 				//
 				//  (-40, -30)            (40, -30)
 				//
+				// Bounds are always centered on (0, 0).
 				float bounds[2];
 
 				// Base scroll speed.  Objects on the ground will move at this speed.

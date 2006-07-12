@@ -1,6 +1,6 @@
 /* Ground.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,8 +22,9 @@
  */
 
 
+#include <math.h>
+
 #include "Ground.h"
-#include "GroundSegment.h"
 #include "TextureManager.h"
 
 Ground::Ground( GroundType type, Game* g ) {
@@ -31,82 +32,66 @@ Ground::Ground( GroundType type, Game* g ) {
 	game = g;
 	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0001-256.png" );
 
-	float baseY = game->getBounds()[1] + segSize / 2;
-
-	rootSeg = new GroundSegment( groundType, this, game );
-	rootSeg->setPos( 0.0, baseY );
-
-	GroundSegment* last = rootSeg;
-	GroundSegment* seg = 0;
-
-	for( int i=1; i < (numSegY + 1); i++ ) {
-		seg = new GroundSegment( type, this, game );
-		seg->setPos( 0.0, baseY - (i * segSize) );
-		seg->setPrev( (GroundSegment*) last );
-
-		last->setNext( (GroundSegment*) seg );
-		last = seg;
-	}
+	position = 0.0;
+	offset = 0.0;
+	velocity = -0.05;
+	segmentSize = 10;
 }
 
 
 Ground::~Ground() {
-	GroundSegment* cur = rootSeg;
-	GroundSegment* prev = cur;
-
-	while( cur ) {
-		prev = (GroundSegment*) cur->getPrev();
-		if( prev )
-			delete prev;
-		prev = cur;
-
-		cur = (GroundSegment*) cur->getNext();
-	}
-
-	if( prev )
-		delete prev;
-
 	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 
-void Ground::Draw() {
-	GroundSegment* seg = rootSeg;
-
-	while( seg ) {
-		// Determine if this segment is off screen.
-		float* pos = seg->getPos();
-		if( pos[1] < (0.0 - game->getBounds()[1] - segSize/2) )
-			rotateSegments();
-
-		seg->Update();
-		seg->Draw();
-
-		seg = (GroundSegment*) seg->getNext();
-	}
+void Ground::Update() {
+	int speed = game->getGameSpeed();
+	position += velocity * speed;
+	offset += velocity * speed;
+	offset = fmodf( offset, segmentSize );
 }
 
 
-void Ground::rotateSegments() {
-	GroundSegment* first = rootSeg;
-	GroundSegment* cur = rootSeg;
-	GroundSegment* last = 0;
+void Ground::Draw() {
+	float* bounds = game->getBounds();
+	int numSegmentsX = (int) ceil( bounds[0]/segmentSize );
+	int numSegmentsY = (int) ceil( bounds[1]/segmentSize );
+	float texCoords[4][2] = {
+		{ 0, 1 },
+		{ 0, 0 },
+		{ 1, 1 },
+		{ 1, 0 }
+	};
 
-	// Find the very last segment.
-	while( (cur = (GroundSegment*) cur->getNext()) ) {
-		last = cur;
+	glPushMatrix();
+	glLoadIdentity();
+
+	glTranslatef( 0, offset, 0 );
+
+	// Draw horizontal strips across the screen, starting at the bottom.
+	glBindTexture( GL_TEXTURE_2D, texture );
+	for( int y=-numSegmentsY; y < numSegmentsY; y++ ) {
+		int tex = 0;
+
+		glBegin( GL_TRIANGLE_STRIP );
+			glColor4f( 1.0, 1.0, 1.0, 1.0 );
+
+			// Draw one horizontal strip at given y position.
+			for( int x=-numSegmentsX; x < numSegmentsX; x++ ) {
+				if( tex >= 4 )
+					tex = 0;
+
+				glTexCoord2fv( texCoords[tex] );
+				glVertex3f( x * segmentSize, (y + 1) * segmentSize, sinf(offset + (y + 1) * segmentSize)/2 );
+				tex++;
+				glTexCoord2fv( texCoords[tex] );
+				glVertex3f( x * segmentSize, y * segmentSize, sinf(offset + y * segmentSize)/2 );
+				tex++;
+			}
+		glEnd();
 	}
 
-	// Move the last segment to the front of the list.
-	last->getPrev()->setNext( 0 );
-	last->setPrev( 0 );
-	last->setNext( (GroundSegment*) first );
-	first->setPrev( (GroundSegment*) last );
-	rootSeg = last;
-
-	// Move the last segment to the proper Y position.
-	float baseY = (float) first->getPos()[1] + segSize;
-	last->setPos( 0.0, baseY );
+	glPopMatrix();
 }
 
 
