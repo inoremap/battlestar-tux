@@ -22,8 +22,6 @@
  */
 
 
-#include <math.h>
-
 #include "Fighter/EnemyFighter.h"
 #include "EnemyFighterList.h"
 #include "TextureManager.h"
