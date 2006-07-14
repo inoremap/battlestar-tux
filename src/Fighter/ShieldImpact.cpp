@@ -55,5 +55,5 @@ ShieldImpact::~ShieldImpact() {
 
 void ShieldImpact::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
-	Displayable::Draw();
+	Pulse::Draw();
 }
