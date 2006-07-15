@@ -25,19 +25,10 @@
 #ifndef PULSE_H_
 #define PULSE_H_
 
-#include "Displayable.h"
 #include "Game.h"
 
 
 static const int CYCLE_SIZE = 50;
-
-/* List of channels to pulse. */
-enum PULSE_CHANNELS {
-	RED		=		0x0001,
-	GREEN	=		0x0002,
-	BLUE	=		0x0004,
-	ALPHA	=		0x0008
-};
 
 /* List of possible functions. */
 enum PULSE_FUNCTION {
@@ -50,24 +41,30 @@ enum PULSE_FUNCTION {
  * Each function has 50 values per cycle, but some functions
  * span more than one cycle (for example, transitioning from 1
  * to 0 and then back to 1 in two cycles). */
-class Pulse : public Displayable {
+class Pulse {
 	public:
-				Pulse( PULSE_CHANNELS chan, PULSE_FUNCTION func, int reps, int s, DisplayableType t, Game* g );
+				Pulse( PULSE_FUNCTION func, int reps, int s );
 				~Pulse();
 
-				// Update the pulse channels.
+				// Update the pulse value.
 				void Update();
+
+				// Retrieve the current pulse value.
+				float GetPulse();
+
+				// Update and return the pulse value.
+				float GetNextPulse();
 
 				// Returns true when all pulse cycles have finished.
 				// Never returns true if cycles is 0 (infinite).
 				bool done();
 
-	protected:
-				// Color channels to pulse.
-				PULSE_CHANNELS channels;
-
+	private:
 				// What pulse function to use.
 				const float* function;
+
+				// Current pulse value.
+				float pulseValue;
 
 				// Number of values in the function.
 				int functionSize;

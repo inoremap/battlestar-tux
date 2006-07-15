@@ -26,8 +26,9 @@
 
 #include "ShieldImpact.h"
 
-ShieldImpact::ShieldImpact( Shield* s, float angle, GLuint t, Game* g ) :
-		Pulse( ALPHA, DOUBLE_ONE_PULSE, 1, 1, EFFECT, g ) {
+ShieldImpact::ShieldImpact( Shield* s, float angle, GLuint t, Game* g ) : Displayable( EFFECT, g ) {
+
+	impactPulse = new Pulse( DOUBLE_ONE_PULSE, 1, 1 );
 
 	rot = angle;
 	texture = t;
@@ -53,7 +54,17 @@ ShieldImpact::~ShieldImpact() {
 }
 
 
+void ShieldImpact::Update() {
+	color[3] = impactPulse->GetNextPulse();
+
+	Displayable::Update();
+}
+
+
 void ShieldImpact::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
-	Pulse::Draw();
+	Displayable::Draw();
 }
+
+
+bool ShieldImpact::done() { return impactPulse->done(); }

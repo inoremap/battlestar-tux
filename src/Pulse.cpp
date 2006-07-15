@@ -24,9 +24,7 @@
 
 #include "Pulse.h"
 
-Pulse::Pulse( PULSE_CHANNELS chan, PULSE_FUNCTION func, int reps, int s, DisplayableType t, Game* g ) : Displayable( t, g ) {
-	channels = chan;
-
+Pulse::Pulse( PULSE_FUNCTION func, int reps, int s ) {
 	switch( func ) {
 		case DOUBLE_ONE_PULSE:
 			function = DOUBLE_ONE_PULSE_FUNC;
@@ -39,6 +37,7 @@ Pulse::Pulse( PULSE_CHANNELS chan, PULSE_FUNCTION func, int reps, int s, Display
 			break;
 	}
 
+	pulseValue = 0.0;
 	cycles = reps;
 	cycleNum = 0;
 	position = 0;
@@ -50,10 +49,6 @@ Pulse::~Pulse() {}
 
 
 void Pulse::Update() {
-	float newValue = 0.0;
-
-	Displayable::Update();
-
 	// Reached the end of a cycle.
 	if( position > 0 && (position % CYCLE_SIZE) == 0 ) {
 		cycleNum++;
@@ -62,10 +57,10 @@ void Pulse::Update() {
 		if( position == functionSize ) {
 			// If the pulse is done, return last value in function.
 			if( done() )
-				newValue = function[position - 1];
+				pulseValue = function[position - 1];
 			// Start again at the beginning of the function.
 			else {
-				newValue = function[0];
+				pulseValue = function[0];
 				position = 1;
 			}
 		}
@@ -73,27 +68,27 @@ void Pulse::Update() {
 		else {
 			// If the pulse is done, return last value in cycle.
 			if( done() )
-				newValue = function[position - 1];
+				pulseValue = function[position - 1];
 			else {
-				newValue = function[position];
+				pulseValue = function[position];
 				position++;
 			}
 		}
 	}
 	// Continue existing cycle.
 	else {
-		newValue = function[position];
+		pulseValue = function[position];
 		position++;
 	}
+}
 
-	if( channels & RED )
-		color[0] = newValue;
-	if( channels & GREEN )
-		color[1] = newValue;
-	if( channels & BLUE )
-		color[2] = newValue;
-	if( channels & ALPHA )
-		color[3] = newValue;
+
+float Pulse::GetPulse() { return pulseValue; }
+
+
+float Pulse::GetNextPulse() {
+	Update();
+	return GetPulse();
 }
 
 

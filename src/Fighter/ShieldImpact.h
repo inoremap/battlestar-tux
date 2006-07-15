@@ -28,17 +28,25 @@
 #include <SDL_opengl.h>
 
 #include "Shield.h"
+#include "../Displayable.h"
 #include "../Game.h"
 #include "../Pulse.h"
 
-class ShieldImpact : public Pulse {
+class ShieldImpact : public Displayable {
 	public:
 				ShieldImpact( Shield* s, float angle, GLuint t, Game* g );
 				~ShieldImpact();
 
+				void Update();
+
 				void Draw();
 
+				// Returns true when the impact has faded.
+				bool done();
+
 	private:
+				Pulse* impactPulse;
+
 				GLuint texture;
 };
 
