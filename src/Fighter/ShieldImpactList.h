@@ -27,7 +27,6 @@
 
 #include <SDL_opengl.h>
 
-#include "../Displayable.h"
 #include "../Game.h"
 #include "../Structures/List.h"
 
