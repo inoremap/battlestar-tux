@@ -59,6 +59,7 @@ Game::Game() {
 	textureManager = 0;
 
 	enemyFighterList = 0;
+	explosionList = 0;
 	enemyAmmoList = 0;
 	heroAmmoList = 0;
 	fighter = 0;
@@ -144,6 +145,9 @@ void Game::setTextureManager( TextureManager* t ) { textureManager = t; }
 
 EnemyFighterList* Game::getEnemyFighterList() { return enemyFighterList; }
 void Game::setEnemyFighterList( EnemyFighterList* l ) { enemyFighterList = l; }
+
+ExplosionList* Game::getExplosionList() { return explosionList; }
+void Game::setExplosionList( ExplosionList* l ) { explosionList = l; }
 
 FighterAmmoList* Game::getEnemyAmmoList() { return enemyAmmoList; }
 void Game::setEnemyAmmoList( FighterAmmoList* l ) { enemyAmmoList = l; }

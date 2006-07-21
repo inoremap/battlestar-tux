@@ -34,6 +34,7 @@
 
 #include "Config.h"
 #include "EnemyFighterList.h"
+#include "ExplosionList.h"
 #include "Fighter/EnemyFighter.h"
 #include "Fighter/HeroFighter.h"
 #include "FighterAmmo.h"
@@ -105,6 +106,9 @@ int main(int argc, char* argv[])
 	EnemyFighterList* enemies = new EnemyFighterList( game );
 	game->setEnemyFighterList( enemies );
 
+	ExplosionList* explosionList = new ExplosionList( game );
+	game->setExplosionList( explosionList );
+
 	FighterAmmoList* enemyAmmoList = new FighterAmmoList( game );
 	game->setEnemyAmmoList( enemyAmmoList );
 
@@ -148,6 +152,8 @@ int main(int argc, char* argv[])
 			enemyAmmoList->CheckCollisions( hero );
 			enemies->CheckCollisions( hero );
 
+			explosionList->Update();
+
 			ground->Update();
 		}
 
@@ -166,6 +172,7 @@ int main(int argc, char* argv[])
 		heroAmmoList->DrawObjects();
 		enemies->DrawObjects();
 		hero->Draw();
+		explosionList->Draw();
 		//draw power ups
 		hud->Draw();
 

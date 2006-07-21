@@ -24,6 +24,10 @@ battlestarTUX_SOURCES = Config.cpp \
 			DisplayableList.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
+			Explosion.cpp \
+			Explosion.h \
+			ExplosionList.cpp \
+			ExplosionList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \
@@ -105,6 +109,10 @@ testTUX_SOURCES =	Config.cpp \
 			DisplayableList.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
+			Explosion.cpp \
+			Explosion.h \
+			ExplosionList.cpp \
+			ExplosionList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \

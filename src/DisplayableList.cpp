@@ -29,6 +29,7 @@
 #include "Displayable.h"
 #include "DisplayableList.h"
 #include "EnemyFighterList.h"
+#include "ExplosionList.h"
 #include "FighterAmmo.h"
 #include "Fighter/Fighter.h"
 
@@ -322,6 +323,8 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 			// Let ammo pass - some ships should probably stop it.
 		}
 		else {
+			game->getExplosionList()->AddExplosion( p );
+
 			if( b->getType() == HEROS_AMMO ) {
 				game->getHeroAmmoList()->remObject( b );
 			}
@@ -335,6 +338,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 		// Is the airframe dead?
 		if( ((Fighter*) a)->getHealth() <= 0 ) {
 			if( ((Fighter*) a)->getAlignment() == ENEMY_FIGHTER ) {
+				game->getExplosionList()->AddExplosion( p );
 				game->getEnemyFighterList()->remObject( a );
 				a = 0;
 			}
@@ -349,6 +353,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 	// An ammo and a shield are colliding.
 	else if( a->getType() & SHIELD && b->getType() & AMMO ) {
 		// We know that a is the shield and b is the ammo.
+		game->getExplosionList()->AddExplosion( p );
 
 		// Penetration weapons do more damage.
 		float remainder = ((Shield*) a)->damage(

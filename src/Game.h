@@ -29,6 +29,7 @@
 
 class Config;
 class EnemyFighterList;
+class ExplosionList;
 class FighterAmmoList;
 class Fighter;
 class TextureManager;
@@ -71,9 +72,11 @@ class Game {
 				void setTextureManager( TextureManager* t );
 
 				EnemyFighterList* getEnemyFighterList();
+				ExplosionList* getExplosionList();
 				FighterAmmoList* getEnemyAmmoList();
 				FighterAmmoList* getHeroAmmoList();
 				void setEnemyFighterList( EnemyFighterList* l );
+				void setExplosionList( ExplosionList* l );
 				void setEnemyAmmoList( FighterAmmoList* l );
 				void setHeroAmmoList( FighterAmmoList* l );
 				Fighter* getFighter();
@@ -139,6 +142,7 @@ class Game {
 				TextureManager* textureManager;
 
 				EnemyFighterList* enemyFighterList;
+				ExplosionList* explosionList;
 				FighterAmmoList* enemyAmmoList;
 				FighterAmmoList* heroAmmoList;
 				Fighter* fighter;

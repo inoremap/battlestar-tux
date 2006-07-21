@@ -61,6 +61,7 @@ PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
+	Explosion.$(OBJEXT) ExplosionList.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
@@ -86,6 +87,7 @@ battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
 am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
+	Explosion.$(OBJEXT) ExplosionList.$(OBJEXT) \
 	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
 	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
@@ -216,6 +218,10 @@ battlestarTUX_SOURCES = Config.cpp \
 			DisplayableList.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
+			Explosion.cpp \
+			Explosion.h \
+			ExplosionList.cpp \
+			ExplosionList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \
@@ -297,6 +303,10 @@ testTUX_SOURCES = Config.cpp \
 			DisplayableList.h \
 			EnemyFighterList.cpp \
 			EnemyFighterList.h \
+			Explosion.cpp \
+			Explosion.h \
+			ExplosionList.cpp \
+			ExplosionList.h \
 			FighterAmmo.cpp \
 			FighterAmmo.h \
 			FighterAmmoList.cpp \
@@ -546,6 +556,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DisplayableList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EnemyFighterList.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Explosion.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ExplosionList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FighterAmmoList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Game.Po@am__quote@
