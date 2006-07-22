@@ -1,4 +1,4 @@
-/* HeavyPlasma.cpp
+/* Plasma.h
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,19 +22,25 @@
  */
 
 
-#include "HeavyPlasma.h"
-#include "../../FighterAmmo.h"
+#ifndef PLASMA_H_
+#define PLASMA_H_
 
-HeavyPlasma::HeavyPlasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
-	mount = PRIMARY_WEAPON;
+#include "../../Game.h"
+#include "../../FighterAmmoList.h"
+#include "../Weapon.h"
+#include "../WeaponSystem.h"
 
-	type = HEAVY_PLASMA;
+/*  plasma weapon. */
+class Plasma : public Weapon {
+	public:
+				Plasma( WeaponSystem* w, Game* g );
 
-	rechargeTime = 50.0;
+				char* getName();
 
-	velocity = 0.3;
-	damage = 800.0;
-	penetration = 0.0;
-}
+	private:
+				Plasma( const Plasma &plasma );
+				const Plasma & operator= ( const Plasma &plasma );
+};
 
-char* HeavyPlasma::getName() { return "Heavy Plasma"; }
+
+#endif /*PLASMA_H_*/

@@ -40,9 +40,9 @@ EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g ) :
 				{ 0.75, 1.0 }
 			};
 			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
-			MediumLaser* primary = new MediumLaser( weaponSystem, game );
-			LightPlasma* left = new LightPlasma( weaponSystem, game );
-			LightPlasma* right = new LightPlasma( weaponSystem, game );
+			Laser* primary = new Laser( weaponSystem, game );
+			Plasma* left = new Plasma( weaponSystem, game );
+			Plasma* right = new Plasma( weaponSystem, game );
 			weaponSystem->Equip( primary, PRIMARY_WEAPON );
 			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
 			weaponSystem->Equip( right, SECONDARY_WEAPON_R );

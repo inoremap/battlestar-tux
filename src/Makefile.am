@@ -48,18 +48,10 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
 			Fighter/WeaponSystem.h \
-			Fighter/Weapons/LightLaser.cpp \
-			Fighter/Weapons/LightLaser.h \
-			Fighter/Weapons/MediumLaser.cpp \
-			Fighter/Weapons/MediumLaser.h \
-			Fighter/Weapons/HeavyLaser.cpp \
-			Fighter/Weapons/HeavyLaser.h \
-			Fighter/Weapons/LightPlasma.cpp \
-			Fighter/Weapons/LightPlasma.h \
-			Fighter/Weapons/MediumPlasma.cpp \
-			Fighter/Weapons/MediumPlasma.h \
-			Fighter/Weapons/HeavyPlasma.cpp \
-			Fighter/Weapons/HeavyPlasma.h \
+			Fighter/Weapons/Laser.cpp \
+			Fighter/Weapons/Laser.h \
+			Fighter/Weapons/Plasma.cpp \
+			Fighter/Weapons/Plasma.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \
@@ -133,18 +125,10 @@ testTUX_SOURCES =	Config.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
 			Fighter/WeaponSystem.h \
-			Fighter/Weapons/LightLaser.cpp \
-			Fighter/Weapons/LightLaser.h \
-			Fighter/Weapons/MediumLaser.cpp \
-			Fighter/Weapons/MediumLaser.h \
-			Fighter/Weapons/HeavyLaser.cpp \
-			Fighter/Weapons/HeavyLaser.h \
-			Fighter/Weapons/LightPlasma.cpp \
-			Fighter/Weapons/LightPlasma.h \
-			Fighter/Weapons/MediumPlasma.cpp \
-			Fighter/Weapons/MediumPlasma.h \
-			Fighter/Weapons/HeavyPlasma.cpp \
-			Fighter/Weapons/HeavyPlasma.h \
+			Fighter/Weapons/Laser.cpp \
+			Fighter/Weapons/Laser.h \
+			Fighter/Weapons/Plasma.cpp \
+			Fighter/Weapons/Plasma.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \

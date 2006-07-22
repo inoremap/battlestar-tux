@@ -1,4 +1,4 @@
-/* MediumLaser.cpp
+/* Plasma.cpp
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,19 +22,19 @@
  */
 
 
-#include "MediumLaser.h"
+#include "Plasma.h"
 #include "../../FighterAmmo.h"
 
-MediumLaser::MediumLaser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
+Plasma::Plasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
 
-	type = MEDIUM_LASER;
+	type = PLASMA;
 
-	rechargeTime = 14.0;
+	rechargeTime = 10.0;
 
-	velocity = 1.3;
-	damage = 12.0;
-	penetration = 0.25;
+	velocity = 0.7;
+	damage = 100.0;
+	penetration = 0.0;
 }
 
-char* MediumLaser::getName() { return "Medium Laser"; }
+char* Plasma::getName() { return "Plasma"; }

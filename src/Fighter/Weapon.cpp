@@ -33,7 +33,7 @@ Weapon::Weapon( WeaponSystem* w, Game* g ) {
 
 	mount = PRIMARY_WEAPON;
 
-	type = LIGHT_LASER;
+	type = LASER;
 
 	rechargeTime = 10.0;
 	chargingTime = 0.0;

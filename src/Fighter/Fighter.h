@@ -32,12 +32,8 @@
 #include "Shield.h"
 #include "Weapon.h"
 #include "WeaponSystem.h"
-#include "Weapons/LightLaser.h"
-#include "Weapons/MediumLaser.h"
-#include "Weapons/HeavyLaser.h"
-#include "Weapons/LightPlasma.h"
-#include "Weapons/MediumPlasma.h"
-#include "Weapons/HeavyPlasma.h"
+#include "Weapons/Laser.h"
+#include "Weapons/Plasma.h"
 
 
 enum FighterAlignment {

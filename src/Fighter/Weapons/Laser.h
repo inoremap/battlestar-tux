@@ -1,6 +1,6 @@
-/* HeavyPlasma.h
+/* Laser.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005 Eliot Eshelman
  * eliot@6by9.net
  *
  *
@@ -22,25 +22,25 @@
  */
 
 
-#ifndef HEAVYPLASMA_H_
-#define HEAVYPLASMA_H_
+#ifndef LASER_H_
+#define LASER_H_
 
 #include "../../Game.h"
 #include "../../FighterAmmoList.h"
 #include "../Weapon.h"
 #include "../WeaponSystem.h"
 
-/* Heavy plasma weapon. */
-class HeavyPlasma : public Weapon {
+/*  laser weapon. */
+class Laser : public Weapon {
 	public:
-				HeavyPlasma( WeaponSystem* w, Game* g );
+				Laser( WeaponSystem* w, Game* g );
 
 				char* getName();
 
 	private:
-				HeavyPlasma( const HeavyPlasma &plasma );
-				const HeavyPlasma & operator= ( const HeavyPlasma &plasma );
+				Laser( const Laser &laser );
+				const Laser & operator= ( const Laser &laser );
 };
 
 
-#endif /*HEAVYPLASMA_H_*/
+#endif /*LASER_H_*/

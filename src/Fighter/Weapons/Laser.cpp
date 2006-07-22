@@ -1,4 +1,4 @@
-/* HeavyLaser.h
+/* Laser.cpp
  *
  * Copyright 2005-2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,25 +22,19 @@
  */
 
 
-#ifndef HEAVYLASER_H_
-#define HEAVYLASER_H_
+#include "Laser.h"
+#include "../../FighterAmmo.h"
 
-#include "../../Game.h"
-#include "../../FighterAmmoList.h"
-#include "../Weapon.h"
-#include "../WeaponSystem.h"
+Laser::Laser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
+	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
 
-/* Heavy laser weapon. */
-class HeavyLaser : public Weapon {
-	public:
-				HeavyLaser( WeaponSystem* w, Game* g );
+	type = LASER;
 
-				char* getName();
+	rechargeTime = 6.0;
 
-	private:
-				HeavyLaser( const HeavyLaser &laser );
-				const HeavyLaser & operator= ( const HeavyLaser &laser );
-};
+	velocity = 1.3;
+	damage = 50.0;
+	penetration = 0.0;
+}
 
-
-#endif /*HEAVYLASER_H_*/
+char* Laser::getName() { return "Laser"; }

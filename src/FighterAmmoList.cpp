@@ -32,12 +32,8 @@ FighterAmmoList::FighterAmmoList( Game* g ) : DisplayableList( g ) {
 	TextureManager* t = game->getTextureManager();
 
 	// Load all ammo textures.
-	textures[0] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// LIGHT_LASER
-	textures[1] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// MEDIUM_LASER
-	textures[2] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// HEAVY_LASER
-	textures[3] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// LIGHT_PLASMA
-	textures[4] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// MEDIUM_PLASMA
-	textures[5] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// HEAVY_PLASMA
+	textures[0] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// LASER
+	textures[1] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// PLASMA
 }
 
 
