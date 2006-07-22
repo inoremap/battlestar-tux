@@ -67,13 +67,8 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
 	Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
-	Fighter/WeaponSystem.$(OBJEXT) \
-	Fighter/Weapons/LightLaser.$(OBJEXT) \
-	Fighter/Weapons/MediumLaser.$(OBJEXT) \
-	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
-	Fighter/Weapons/LightPlasma.$(OBJEXT) \
-	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
-	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) Fighter/Weapons/Laser.$(OBJEXT) \
+	Fighter/Weapons/Plasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
@@ -93,13 +88,8 @@ am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
 	Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
-	Fighter/WeaponSystem.$(OBJEXT) \
-	Fighter/Weapons/LightLaser.$(OBJEXT) \
-	Fighter/Weapons/MediumLaser.$(OBJEXT) \
-	Fighter/Weapons/HeavyLaser.$(OBJEXT) \
-	Fighter/Weapons/LightPlasma.$(OBJEXT) \
-	Fighter/Weapons/MediumPlasma.$(OBJEXT) \
-	Fighter/Weapons/HeavyPlasma.$(OBJEXT) Game.$(OBJEXT) \
+	Fighter/WeaponSystem.$(OBJEXT) Fighter/Weapons/Laser.$(OBJEXT) \
+	Fighter/Weapons/Plasma.$(OBJEXT) Game.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
@@ -242,18 +232,10 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
 			Fighter/WeaponSystem.h \
-			Fighter/Weapons/LightLaser.cpp \
-			Fighter/Weapons/LightLaser.h \
-			Fighter/Weapons/MediumLaser.cpp \
-			Fighter/Weapons/MediumLaser.h \
-			Fighter/Weapons/HeavyLaser.cpp \
-			Fighter/Weapons/HeavyLaser.h \
-			Fighter/Weapons/LightPlasma.cpp \
-			Fighter/Weapons/LightPlasma.h \
-			Fighter/Weapons/MediumPlasma.cpp \
-			Fighter/Weapons/MediumPlasma.h \
-			Fighter/Weapons/HeavyPlasma.cpp \
-			Fighter/Weapons/HeavyPlasma.h \
+			Fighter/Weapons/Laser.cpp \
+			Fighter/Weapons/Laser.h \
+			Fighter/Weapons/Plasma.cpp \
+			Fighter/Weapons/Plasma.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \
@@ -327,18 +309,10 @@ testTUX_SOURCES = Config.cpp \
 			Fighter/Weapon.h \
 			Fighter/WeaponSystem.cpp \
 			Fighter/WeaponSystem.h \
-			Fighter/Weapons/LightLaser.cpp \
-			Fighter/Weapons/LightLaser.h \
-			Fighter/Weapons/MediumLaser.cpp \
-			Fighter/Weapons/MediumLaser.h \
-			Fighter/Weapons/HeavyLaser.cpp \
-			Fighter/Weapons/HeavyLaser.h \
-			Fighter/Weapons/LightPlasma.cpp \
-			Fighter/Weapons/LightPlasma.h \
-			Fighter/Weapons/MediumPlasma.cpp \
-			Fighter/Weapons/MediumPlasma.h \
-			Fighter/Weapons/HeavyPlasma.cpp \
-			Fighter/Weapons/HeavyPlasma.h \
+			Fighter/Weapons/Laser.cpp \
+			Fighter/Weapons/Laser.h \
+			Fighter/Weapons/Plasma.cpp \
+			Fighter/Weapons/Plasma.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \
@@ -468,21 +442,9 @@ Fighter/Weapons/$(am__dirstamp):
 Fighter/Weapons/$(DEPDIR)/$(am__dirstamp):
 	@$(mkdir_p) Fighter/Weapons/$(DEPDIR)
 	@: > Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/LightLaser.$(OBJEXT): Fighter/Weapons/$(am__dirstamp) \
+Fighter/Weapons/Laser.$(OBJEXT): Fighter/Weapons/$(am__dirstamp) \
 	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/MediumLaser.$(OBJEXT):  \
-	Fighter/Weapons/$(am__dirstamp) \
-	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/HeavyLaser.$(OBJEXT): Fighter/Weapons/$(am__dirstamp) \
-	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/LightPlasma.$(OBJEXT):  \
-	Fighter/Weapons/$(am__dirstamp) \
-	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/MediumPlasma.$(OBJEXT):  \
-	Fighter/Weapons/$(am__dirstamp) \
-	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
-Fighter/Weapons/HeavyPlasma.$(OBJEXT):  \
-	Fighter/Weapons/$(am__dirstamp) \
+Fighter/Weapons/Plasma.$(OBJEXT): Fighter/Weapons/$(am__dirstamp) \
 	Fighter/Weapons/$(DEPDIR)/$(am__dirstamp)
 Structures/$(am__dirstamp):
 	@$(mkdir_p) Structures
@@ -531,12 +493,8 @@ mostlyclean-compile:
 	-rm -f Fighter/ShieldImpactList.$(OBJEXT)
 	-rm -f Fighter/Weapon.$(OBJEXT)
 	-rm -f Fighter/WeaponSystem.$(OBJEXT)
-	-rm -f Fighter/Weapons/HeavyLaser.$(OBJEXT)
-	-rm -f Fighter/Weapons/HeavyPlasma.$(OBJEXT)
-	-rm -f Fighter/Weapons/LightLaser.$(OBJEXT)
-	-rm -f Fighter/Weapons/LightPlasma.$(OBJEXT)
-	-rm -f Fighter/Weapons/MediumLaser.$(OBJEXT)
-	-rm -f Fighter/Weapons/MediumPlasma.$(OBJEXT)
+	-rm -f Fighter/Weapons/Laser.$(OBJEXT)
+	-rm -f Fighter/Weapons/Plasma.$(OBJEXT)
 	-rm -f Structures/List.$(OBJEXT)
 	-rm -f Structures/ListItem.$(OBJEXT)
 	-rm -f Structures/StringArray.$(OBJEXT)
@@ -576,12 +534,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/ShieldImpactList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/Weapon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Fighter/$(DEPDIR)/WeaponSystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/HeavyLaser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/HeavyPlasma.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/LightLaser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/LightPlasma.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumLaser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/MediumPlasma.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/Laser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Fighter/Weapons/$(DEPDIR)/Plasma.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@

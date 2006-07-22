@@ -130,6 +130,9 @@ int WeaponSystem::getMounts() { return mount_points; }
 float* WeaponSystem::getPos() { return fighter->getPos(); }
 
 
+float WeaponSystem::getRot() { return fighter->getRot(); }
+
+
 int WeaponSystem::getAlign() { return fighter->getAlignment(); }
 
 

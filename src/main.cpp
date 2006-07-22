@@ -125,6 +125,7 @@ int main(int argc, char* argv[])
 					enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 					enemyFighter->setPos( -40 + 4 * n, 40 );
 					enemyFighter->setVel( 0, -0.2, 0 );
+					enemyFighter->setRot( 180 );
 					enemyFighter->startFiring();
 					enemies->addObject( enemyFighter );
 				}

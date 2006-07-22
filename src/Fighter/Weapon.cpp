@@ -22,6 +22,8 @@
  */
 
 
+#include <math.h>
+
 #include "Weapon.h"
 #include "Fighter.h"
 #include "../FighterAmmo.h"
@@ -77,34 +79,41 @@ bool Weapon::Recharged() {
 }
 
 
+FighterAmmo* Weapon::NewAmmo() {
+	FighterAmmo* ammo = new FighterAmmo( type, damage, penetration, game->getHeroAmmoList()->getTexture(type), game );
+
+	// Set position, rotation and velocity of ammo.
+	float* fighterPos = weaponSystem->getPos();
+	float fighterRot = weaponSystem->getRot();
+	ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
+	ammo->setRot( fighterRot );
+
+	float velx = 0.0;
+	float vely = 0.0;
+	velx = sinf( fighterRot * (M_PI/180) ) * velocity;
+	vely = cosf( fighterRot * (M_PI/180) ) * velocity;
+	ammo->setVel( velx, vely, 0.0 );
+
+	// Specify a hero or enemy ammo.
+	if( align == HEROS_FIGHTER )
+		ammo->setType( HEROS_AMMO );
+	else
+		ammo->setType( ENEMY_AMMO );
+
+	return ammo;
+}
+
+
 void Weapon::Fire( bool firing ) {
 	if( ! Recharged() )
 		return;
 
 	if( firing ) {
 		// Create ammo object and add to the list of ammo.
-		FighterAmmo* ammo;
-		if( align == HEROS_FIGHTER )  {
-			ammo = new FighterAmmo( type, damage, penetration, game->getHeroAmmoList()->getTexture(type), game );
-			ammo->setType( HEROS_AMMO );
-
-			float* fighterPos = weaponSystem->getPos();
-			ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
-			ammo->setVel( 0.0, velocity, 0.0 );
-
-			game->getHeroAmmoList()->addObject( ammo );
-		}
-		else {
-			ammo = new FighterAmmo( type, damage, penetration, game->getEnemyAmmoList()->getTexture(type), game );
-			ammo->setType( ENEMY_AMMO );
-
-			float* fighterPos = weaponSystem->getPos();
-			ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
-			ammo->setVel( 0.0, -velocity, 0.0 );
-			ammo->setRot( 180 );
-
-			game->getEnemyAmmoList()->addObject( ammo );
-		}
+		if( align == HEROS_FIGHTER )
+			game->getHeroAmmoList()->addObject( NewAmmo() );
+		else
+			game->getEnemyAmmoList()->addObject( NewAmmo() );
 
 		// Weapon will need to recharge.
 		chargingTime = rechargeTime;

@@ -36,6 +36,9 @@ class Weapon {
 				Weapon( WeaponSystem* w, Game* g );
 				virtual ~Weapon();
 
+				// Create a new ammo object.
+				virtual FighterAmmo* NewAmmo();
+
 				// Fire weapon.
 				virtual void Fire( bool firing );
 
@@ -74,7 +77,7 @@ class Weapon {
 				// Amount of penetration by one piece of ammo.
 				// Penetration varies from 0.0 to 1.0;
 				// 0.0 means the ammo stops after the first collision.
-				// 1.0 means the ammo will pass through the collision.
+				// 1.0 means the ammo will pass through any object with resistance less than 1.0.
 				float penetration;
 
 				// Position of weapon relative to fighter position.
