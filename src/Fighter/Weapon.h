@@ -36,6 +36,9 @@ class Weapon {
 				Weapon( WeaponSystem* w, Game* g );
 				virtual ~Weapon();
 
+				// Is weapon recharged and ready to fire?
+				bool Recharged();
+
 				// Create a new ammo object.
 				virtual FighterAmmo* NewAmmo();
 
@@ -45,6 +48,7 @@ class Weapon {
 				void setOffset( float o[] );
 
 				int getMount();
+				float getVelocity();
 				float getDamage();
 				float getPenetration();
 				virtual char* getName();
@@ -52,9 +56,6 @@ class Weapon {
 	protected:
 				Weapon( const Weapon &weapon );
 				const Weapon & operator= ( const Weapon &weapon );
-
-				// Is weapon recharged and ready to fire?
-				bool Recharged();
 
 				// Where the weapon can be mounted.
 				int mount;

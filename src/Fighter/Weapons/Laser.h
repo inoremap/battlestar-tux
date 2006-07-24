@@ -30,7 +30,7 @@
 #include "../Weapon.h"
 #include "../WeaponSystem.h"
 
-/*  laser weapon. */
+/* Laser weapon. */
 class Laser : public Weapon {
 	public:
 				Laser( WeaponSystem* w, Game* g );

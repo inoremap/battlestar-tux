@@ -48,7 +48,10 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 			Laser* primary = new Laser( weaponSystem, game );
 			Plasma* left = new Plasma( weaponSystem, game );
 			Plasma* right = new Plasma( weaponSystem, game );
-			weaponSystem->Equip( primary, PRIMARY_WEAPON );
+			Turret* turret = new Turret( weaponSystem, game );
+			turret->Equip( primary );
+			turret->SetTarget( 10 );
+			weaponSystem->Equip( turret, PRIMARY_WEAPON );
 			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
 			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
 			break;

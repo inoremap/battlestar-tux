@@ -81,18 +81,41 @@ bool Weapon::Recharged() {
 
 FighterAmmo* Weapon::NewAmmo() {
 	FighterAmmo* ammo = new FighterAmmo( type, damage, penetration, game->getHeroAmmoList()->getTexture(type), game );
-
-	// Set position, rotation and velocity of ammo.
 	float* fighterPos = weaponSystem->getPos();
+	float* fighterVel = weaponSystem->getVel();
 	float fighterRot = weaponSystem->getRot();
-	ammo->setPos( offset[0] + fighterPos[0], offset[1] + fighterPos[1] );
+
+	// Set position of ammo - offset depends on rotation of fighter.
+	// OpenGL Rotations are counter-clockwise.
+	float angle = 0.0;
+	float length = 0.0;
+	float offsetx = 0.0;
+	float offsety = 0.0;
+	if( offset[0] != 0 ) {
+		angle = -atanf( offset[1] / offset[0] ) * (180/M_PI);
+		length = sqrtf( offset[0]*offset[0] + offset[1]*offset[1] );
+	}
+	else {
+		if( offset[1] > 0 )
+			angle = 0;
+		else
+			angle = 180;
+		length = offset[1];
+	}
+	offsetx = -sinf( (fighterRot + angle) * (M_PI/180) ) * length;
+	offsety = cosf( (fighterRot + angle) * (M_PI/180) ) * length;
+	ammo->setPos( offsetx + fighterPos[0], offsety + fighterPos[1] );
+
+	// Set rotation of ammo.
 	ammo->setRot( fighterRot );
 
+	// Set velocity of ammo - heading depends on rotation of fighter.
+	// OpenGL Rotations are counter-clockwise.
 	float velx = 0.0;
 	float vely = 0.0;
-	velx = sinf( fighterRot * (M_PI/180) ) * velocity;
+	velx = -sinf( fighterRot * (M_PI/180) ) * velocity;
 	vely = cosf( fighterRot * (M_PI/180) ) * velocity;
-	ammo->setVel( velx, vely, 0.0 );
+	ammo->setVel( velx + fighterVel[0], vely + fighterVel[1], 0.0 );
 
 	// Specify a hero or enemy ammo.
 	if( align == HEROS_FIGHTER )
@@ -128,6 +151,7 @@ void Weapon::setOffset( float o[] ) {
 
 
 int Weapon::getMount() { return mount; }
+float Weapon::getVelocity() { return velocity; }
 float Weapon::getDamage() { return damage; }
 float Weapon::getPenetration() { return penetration; }
 char* Weapon::getName() { return "::Weapon::"; }

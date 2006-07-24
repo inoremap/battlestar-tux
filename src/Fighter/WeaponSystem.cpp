@@ -125,14 +125,9 @@ bool WeaponSystem::UnEquip( Weapon* weapon ) {
 
 
 int WeaponSystem::getMounts() { return mount_points; }
-
-
 float* WeaponSystem::getPos() { return fighter->getPos(); }
-
-
+float* WeaponSystem::getVel() { return fighter->getVel(); }
 float WeaponSystem::getRot() { return fighter->getRot(); }
-
-
 int WeaponSystem::getAlign() { return fighter->getAlignment(); }
 
 

@@ -52,6 +52,8 @@ battlestarTUX_SOURCES = Config.cpp \
 			Fighter/Weapons/Laser.h \
 			Fighter/Weapons/Plasma.cpp \
 			Fighter/Weapons/Plasma.h \
+			Fighter/Weapons/Turret.cpp \
+			Fighter/Weapons/Turret.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \
@@ -129,6 +131,8 @@ testTUX_SOURCES =	Config.cpp \
 			Fighter/Weapons/Laser.h \
 			Fighter/Weapons/Plasma.cpp \
 			Fighter/Weapons/Plasma.h \
+			Fighter/Weapons/Turret.cpp \
+			Fighter/Weapons/Turret.h \
 			Game.cpp \
 			Game.h \
 			Ground.cpp \

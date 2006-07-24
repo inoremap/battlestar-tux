@@ -34,6 +34,7 @@
 #include "WeaponSystem.h"
 #include "Weapons/Laser.h"
 #include "Weapons/Plasma.h"
+#include "Weapons/Turret.h"
 
 
 enum FighterAlignment {
