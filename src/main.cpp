@@ -193,6 +193,14 @@ int main(int argc, char* argv[])
 							game->exitBT();
 							break;
 
+						case SDLK_a:
+							hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() + 10 );
+							break;
+
+						case SDLK_u:
+							hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() - 10 );
+							break;
+
 						case SDLK_p:
 							game->pause();
 							break;

@@ -34,8 +34,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Displayable( FIGHTER, g ) {
 	size[0] = 3;
 	size[1] = 3;
 
-	firing = false;
-
 	shield = 0;
 	weaponSystem = 0;
 }
@@ -57,7 +55,7 @@ void Fighter::Draw() {
 
 
 void Fighter::Update() {
-	weaponSystem->Fire( firing );
+	weaponSystem->Update();
 
 	if( shield )
 		shield->Update();
@@ -66,8 +64,8 @@ void Fighter::Update() {
 }
 
 
-void Fighter::startFiring() { firing = true; }
-void Fighter::stopFiring() { firing = false; }
+void Fighter::startFiring() { weaponSystem->Fire( true ); }
+void Fighter::stopFiring() { weaponSystem->Fire( false ); }
 
 
 void Fighter::damage( float damage, float* point ) {
@@ -81,7 +79,12 @@ void Fighter::damage( float damage, float* point ) {
 float Fighter::getHealth() { return health; }
 float Fighter::getHealthFull() { return healthFull; }
 
+
 Shield* Fighter::getShield() { return shield; }
+
+
+WeaponSystem* Fighter::getWeaponSystem() { return weaponSystem; }
+
 
 float Fighter::getShields() {
 	if( shield )
@@ -90,11 +93,13 @@ float Fighter::getShields() {
 		return 0;
 }
 
+
 float Fighter::getShieldsFull() {
 	if( shield )
 		return shield->getShieldsFull();
 	else
 		return 0;
 }
+
 
 int Fighter::getAlignment() { return align; }

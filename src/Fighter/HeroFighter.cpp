@@ -50,10 +50,13 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 			Plasma* right = new Plasma( weaponSystem, game );
 			Turret* turret = new Turret( weaponSystem, game );
 			turret->Equip( primary );
-			turret->SetTarget( 10 );
 			weaponSystem->Equip( turret, PRIMARY_WEAPON );
-			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
-			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
+			turret = new Turret( weaponSystem, game );
+			turret->Equip( left );
+			weaponSystem->Equip( turret, SECONDARY_WEAPON_L );
+			turret = new Turret( weaponSystem, game );
+			turret->Equip( right );
+			weaponSystem->Equip( turret, SECONDARY_WEAPON_R );
 			break;
 	}
 }

@@ -38,20 +38,19 @@ class Turret : public Weapon {
 				// UnEquip weapon from slot.
 				bool UnEquip();
 
-				// Rotate turrent clockwise.
-				void RotateCW();
-
-				// Rotate turrent counter-clockwise.
-				void RotateCCW();
-
-				// Target a particular direction.
-				void SetTarget( float angle );
+				// Charge the weapon - it was just fired.
+				void Charge();
 
 				// Is weapon recharged and ready to fire?
 				bool Recharged();
 
 				// Create a new ammo object.
 				FighterAmmo* NewAmmo();
+
+				// Update turret status.
+				void Update();
+
+				void setOffset( float o[] );
 
 				virtual char* getName();
 
@@ -60,7 +59,10 @@ class Turret : public Weapon {
 				const Turret & operator= ( const Turret &turret );
 
 				// Current turret position.
-				float heading;
+				float turretHeading;
+
+				// Tracking speed - how quickly the turret can lock on a target.
+				float trackingSpeed;
 
 				// Weapon mounted on turret.
 				Weapon* weapon;

@@ -74,6 +74,14 @@ WeaponSystem::~WeaponSystem() {
 }
 
 
+void WeaponSystem::Update() {
+	for( int i=0; i < numMounts; i++ ) {
+		if( weapons[i] )
+			weapons[i]->Update();
+	}
+}
+
+
 void WeaponSystem::Fire( bool firing ) {
 	for( int i=0; i < numMounts; i++ ) {
 		if( weapons[i] )
@@ -124,7 +132,16 @@ bool WeaponSystem::UnEquip( Weapon* weapon ) {
 }
 
 
+void WeaponSystem::SetTarget( float angle ) { targetHeading = angle; }
+
+
+// OpenGL rotations are counter-clockwise.
+void WeaponSystem::TargetCW() { targetHeading -= 1; }
+void WeaponSystem::TargetCCW() { targetHeading += 1; }
+
+
 int WeaponSystem::getMounts() { return mount_points; }
+float WeaponSystem::getTarget() { return targetHeading; }
 float* WeaponSystem::getPos() { return fighter->getPos(); }
 float* WeaponSystem::getVel() { return fighter->getVel(); }
 float WeaponSystem::getRot() { return fighter->getRot(); }

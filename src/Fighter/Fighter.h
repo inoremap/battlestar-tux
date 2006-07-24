@@ -71,6 +71,7 @@ class Fighter : public Displayable {
 				float getHealth();
 				float getHealthFull();
 				Shield* getShield();
+				WeaponSystem* getWeaponSystem();
 				float getShields();
 				float getShieldsFull();
 				int getAlignment();
@@ -84,9 +85,6 @@ class Fighter : public Displayable {
 
 				// Maximum ship armor
 				float healthFull;
-
-				// Is fighter currently firing?
-				bool firing;
 
 				Shield* shield;
 

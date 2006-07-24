@@ -28,7 +28,8 @@
 #include "../../FighterAmmo.h"
 
 Turret::Turret( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
-	heading = 0.0;
+	turretHeading = 0.0;
+	trackingSpeed = 1.0;
 	weapon = NULL;
 
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R | UNDERBELLY_WEAPON_F | UNDERBELLY_WEAPON_R;
@@ -39,6 +40,7 @@ Turret::Turret( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 bool Turret::Equip( Weapon* w ) {
 	if( ! weapon ) {
 		weapon = w;
+		weapon->setOffset( offset );
 		velocity = weapon->getVelocity();
 		return true;
 	}
@@ -58,10 +60,18 @@ bool Turret::UnEquip() {
 }
 
 
-// OpenGL Rotations are counter-clockwise.
-void Turret::RotateCW() { heading -= 1; }
-void Turret::RotateCCW() { heading += 1; }
-void Turret::SetTarget( float angle ) { heading = angle; }
+void Turret::Charge() {
+	if( weapon )
+		weapon->Charge();
+}
+
+
+bool Turret::Recharged() {
+	if( weapon )
+		return weapon->Recharged();
+	else
+		return false;
+}
 
 
 FighterAmmo* Turret::NewAmmo() {
@@ -69,7 +79,7 @@ FighterAmmo* Turret::NewAmmo() {
 	float* fighterVel = weaponSystem->getVel();
 
 	// Update rotation of ammo to include turret rotation.
-	float fighterRot = weaponSystem->getRot() + heading;
+	float fighterRot = weaponSystem->getRot() + turretHeading;
 	ammo->setRot( fighterRot );
 
 	// Update heading of ammo to include turret rotation.
@@ -84,11 +94,31 @@ FighterAmmo* Turret::NewAmmo() {
 }
 
 
-bool Turret::Recharged() {
+void Turret::Update() {
+	float targetHeading = weaponSystem->getTarget();
+	float trackAmount = game->getGameSpeed() * trackingSpeed;
+
+	if( targetHeading != turretHeading ) {
+		if( fabsf(targetHeading - turretHeading) < trackAmount )
+			turretHeading = targetHeading;
+		else {
+			if( targetHeading > turretHeading )
+				turretHeading += trackAmount;
+			else
+				turretHeading -= trackAmount;
+		}
+	}
+
+	Weapon::Update();
+}
+
+
+void Turret::setOffset( float o[] ) {
+	offset[0] = o[0];
+	offset[1] = o[1];
+
 	if( weapon )
-		return weapon->Recharged();
-	else
-		return false;
+		weapon->setOffset( offset );
 }
 
 

@@ -33,6 +33,8 @@ Weapon::Weapon( WeaponSystem* w, Game* g ) {
 	align = w->getAlign();
 	game = g;
 
+	firing = false;
+
 	mount = PRIMARY_WEAPON;
 
 	type = LASER;
@@ -54,6 +56,9 @@ Weapon::Weapon( WeaponSystem* w, Game* g ) {
 Weapon::~Weapon() {
 	delete[] offset;
 }
+
+
+void Weapon::Charge() { chargingTime = rechargeTime; }
 
 
 bool Weapon::Recharged() {
@@ -127,7 +132,7 @@ FighterAmmo* Weapon::NewAmmo() {
 }
 
 
-void Weapon::Fire( bool firing ) {
+void Weapon::Update() {
 	if( ! Recharged() )
 		return;
 
@@ -139,9 +144,12 @@ void Weapon::Fire( bool firing ) {
 			game->getEnemyAmmoList()->addObject( NewAmmo() );
 
 		// Weapon will need to recharge.
-		chargingTime = rechargeTime;
+		Charge();
 	}
 }
+
+
+void Weapon::Fire( bool f ) { firing = f; }
 
 
 void Weapon::setOffset( float o[] ) {

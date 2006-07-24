@@ -46,6 +46,9 @@ class WeaponSystem {
 				WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f );
 				~WeaponSystem();
 
+				// Update system status.
+				void Update();
+
 				// Fire weapons.
 				void Fire( bool firing );
 
@@ -55,7 +58,15 @@ class WeaponSystem {
 				// UnEquip weapon from slot.
 				bool UnEquip( Weapon* weapon );
 
+				// Target a particular direction.
+				void SetTarget( float angle );
+
+				// Change target direction.
+				void TargetCW();
+				void TargetCCW();
+
 				int getMounts();
+				float getTarget();
 				float* getPos();
 				float* getVel();
 				float getRot();
@@ -80,6 +91,9 @@ class WeaponSystem {
 
 				// Weapons mounted on the system.
 				Weapon** weapons;
+
+				// Current turret position.
+				float targetHeading;
 
 				// Fighter the weapon system is on.
 				Fighter* fighter;
