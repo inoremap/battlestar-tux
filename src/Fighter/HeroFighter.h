@@ -39,6 +39,8 @@ class HeroFighter : public Fighter {
 				HeroFighter( HeroFighterType f, Game* g );
 				~HeroFighter();
 
+				void Draw();
+
 				int getFighterType();
 
 	private:

@@ -24,13 +24,15 @@
 
 #include <stdio.h>
 
+#include "../TextureManager.h"
 #include "WeaponSystem.h"
 #include "Fighter.h"
 #include "Weapon.h"
 
-WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
+WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f, Game* g ) {
 	mount_points = allMounts;
 	fighter = f;
+	game = g;
 
 	// Determine number of mounts.
 	numMounts = 0;
@@ -61,6 +63,8 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f ) {
 		}
 		n *= 2;
 	}
+
+	texture = game->getTextureManager()->loadTexture( "data/gfx/crosshairs_0001-32.png" );
 }
 
 
@@ -79,6 +83,36 @@ void WeaponSystem::Update() {
 		if( weapons[i] )
 			weapons[i]->Update();
 	}
+}
+
+
+void WeaponSystem::Draw() {
+	glPushMatrix();
+	glLoadIdentity();
+
+	float mx = 1.2;
+	float my = 1.2;
+	float* pos = fighter->getPos();
+
+	glTranslatef( pos[0], pos[1], pos[2] );
+	glRotatef( targetHeading, 0.0, 0.0, 1.0 );
+	glTranslatef( 0.0, 10.0, 0.0 );
+
+	// Why does this need to be flipped vertically?
+	glBindTexture( GL_TEXTURE_2D, texture );
+	glBegin( GL_TRIANGLE_STRIP );
+		glColor4f( 1.0, 1.0, 1.0, 0.5 );
+		glTexCoord2f( 0, 0 );
+		glVertex3f( -mx, my, 0.0 );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( -mx, -my, 0.0 );
+		glTexCoord2f( 1, 0 );
+		glVertex3f( mx, my, 0.0 );
+		glTexCoord2f( 1, 1 );
+		glVertex3f( mx, -my, 0.0 );
+	glEnd();
+
+	glPopMatrix();
 }
 
 

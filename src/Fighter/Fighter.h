@@ -53,7 +53,7 @@ class Fighter : public Displayable {
 				Fighter( FighterAlignment a, Game* g );
 				virtual ~Fighter();
 
-				void Draw();
+				virtual void Draw();
 
 				// Update fighter systems.
 				void Update();

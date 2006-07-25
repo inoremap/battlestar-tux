@@ -25,6 +25,10 @@
 #ifndef WEAPONSYSTEM_H_
 #define WEAPONSYSTEM_H_
 
+#include <SDL_opengl.h>
+
+#include "../Game.h"
+
 class Fighter;
 class Weapon;
 
@@ -43,11 +47,14 @@ enum WeaponMount {
 /* Weapons systems on the fighter. */
 class WeaponSystem {
 	public:
-				WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f );
+				WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f, Game* g );
 				~WeaponSystem();
 
 				// Update system status.
 				void Update();
+
+				// Draw crosshairs.
+				void Draw();
 
 				// Fire weapons.
 				void Fire( bool firing );
@@ -97,6 +104,10 @@ class WeaponSystem {
 
 				// Fighter the weapon system is on.
 				Fighter* fighter;
+
+				GLuint texture;
+
+				Game* game;
 };
 
 

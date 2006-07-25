@@ -44,7 +44,7 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 				{ -1.0, 1.0 },
 				{ 1.0, 1.0 }
 			};
-			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
+			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this, g );
 			Laser* primary = new Laser( weaponSystem, game );
 			Plasma* left = new Plasma( weaponSystem, game );
 			Plasma* right = new Plasma( weaponSystem, game );
@@ -64,6 +64,12 @@ HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER,
 
 HeroFighter::~HeroFighter() {
 	game->getTextureManager()->freeTextures( 1, &texture );
+}
+
+
+void HeroFighter::Draw() {
+	weaponSystem->Draw();
+	Fighter::Draw();
 }
 
 

@@ -39,7 +39,7 @@ EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g ) :
 				{ -0.75, 1.0 },
 				{ 0.75, 1.0 }
 			};
-			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this );
+			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this, g );
 			Laser* primary = new Laser( weaponSystem, game );
 			Plasma* left = new Plasma( weaponSystem, game );
 			Plasma* right = new Plasma( weaponSystem, game );
