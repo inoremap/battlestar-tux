@@ -58,6 +58,8 @@ int main(int argc, char* argv[])
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
+	bool aDown = false;
+	bool uDown = false;
 	Game* game = new Game();
 	Config* config = new Config( game );
 	config->parseCommandline( argc, argv );
@@ -185,6 +187,10 @@ int main(int argc, char* argv[])
 
 
 		// Read all events off the queue.
+		if( aDown )
+			hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() + 0.5 );
+		if( uDown )
+			hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() - 0.5 );
 		while( !game->isFinished() && SDL_PollEvent(&event) ) {
 			switch( event.type ) {
 				case SDL_KEYDOWN:
@@ -194,15 +200,30 @@ int main(int argc, char* argv[])
 							break;
 
 						case SDLK_a:
-							hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() + 10 );
+							aDown = true;
 							break;
 
 						case SDLK_u:
-							hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() - 10 );
+							uDown = true;
 							break;
 
 						case SDLK_p:
 							game->pause();
+							break;
+
+						default:
+							break;
+					}
+					break;
+
+				case SDL_KEYUP:
+					switch( event.key.keysym.sym ) {
+						case SDLK_a:
+							aDown = false;
+							break;
+
+						case SDLK_u:
+							uDown = false;
 							break;
 
 						default:
