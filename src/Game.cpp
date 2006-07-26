@@ -63,6 +63,7 @@ Game::Game() {
 	enemyAmmoList = 0;
 	heroAmmoList = 0;
 	fighter = 0;
+	screen = 0;
 }
 
 
@@ -157,3 +158,6 @@ void Game::setHeroAmmoList( FighterAmmoList* l ) { heroAmmoList = l; }
 
 Fighter* Game::getFighter() { return fighter; }
 void Game::setFighter( Fighter* f ) { fighter = f; }
+
+Screen* Game::getScreen() { return screen; }
+void Game::setScreen( Screen* s ) { screen = s; }

@@ -59,13 +59,13 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
-	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
-	Explosion.$(OBJEXT) ExplosionList.$(OBJEXT) \
-	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
-	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
-	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
-	Fighter/ShieldImpact.$(OBJEXT) \
+am_battlestarTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
+	Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
+	EnemyFighterList.$(OBJEXT) Explosion.$(OBJEXT) \
+	ExplosionList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
+	FighterAmmoList.$(OBJEXT) Fighter/EnemyFighter.$(OBJEXT) \
+	Fighter/Fighter.$(OBJEXT) Fighter/HeroFighter.$(OBJEXT) \
+	Fighter/Shield.$(OBJEXT) Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
 	Fighter/WeaponSystem.$(OBJEXT) Fighter/Weapons/Laser.$(OBJEXT) \
 	Fighter/Weapons/Plasma.$(OBJEXT) \
@@ -81,13 +81,13 @@ am_battlestarTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
-am_testTUX_OBJECTS = Config.$(OBJEXT) Displayable.$(OBJEXT) \
-	DisplayableList.$(OBJEXT) EnemyFighterList.$(OBJEXT) \
-	Explosion.$(OBJEXT) ExplosionList.$(OBJEXT) \
-	FighterAmmo.$(OBJEXT) FighterAmmoList.$(OBJEXT) \
-	Fighter/EnemyFighter.$(OBJEXT) Fighter/Fighter.$(OBJEXT) \
-	Fighter/HeroFighter.$(OBJEXT) Fighter/Shield.$(OBJEXT) \
-	Fighter/ShieldImpact.$(OBJEXT) \
+am_testTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
+	Displayable.$(OBJEXT) DisplayableList.$(OBJEXT) \
+	EnemyFighterList.$(OBJEXT) Explosion.$(OBJEXT) \
+	ExplosionList.$(OBJEXT) FighterAmmo.$(OBJEXT) \
+	FighterAmmoList.$(OBJEXT) Fighter/EnemyFighter.$(OBJEXT) \
+	Fighter/Fighter.$(OBJEXT) Fighter/HeroFighter.$(OBJEXT) \
+	Fighter/Shield.$(OBJEXT) Fighter/ShieldImpact.$(OBJEXT) \
 	Fighter/ShieldImpactList.$(OBJEXT) Fighter/Weapon.$(OBJEXT) \
 	Fighter/WeaponSystem.$(OBJEXT) Fighter/Weapons/Laser.$(OBJEXT) \
 	Fighter/Weapons/Plasma.$(OBJEXT) \
@@ -202,7 +202,9 @@ AUTOMAKE_OPTIONS = subdir-objects
 INCLUDES = -I/usr/include -I/usr/include/SDL -I/usr/include/freetype2 -I/usr/include/FTGL
 AM_LDFLAGS = -L/usr/lib
 LDADD = -lSDL -lSDL_image -lGL -lGLU -lfreetype -lftgl
-battlestarTUX_SOURCES = Config.cpp \
+battlestarTUX_SOURCES = Battle.cpp \
+			Battle.h \
+			Config.cpp \
 			Config.h \
 			Displayable.cpp \
 			Displayable.h \
@@ -281,7 +283,9 @@ battlestarTUX_SOURCES = Config.cpp \
 			TextureManager.h \
 			main.cpp
 
-testTUX_SOURCES = Config.cpp \
+testTUX_SOURCES = Battle.cpp \
+			Battle.h \
+			Config.cpp \
 			Config.h \
 			Displayable.cpp \
 			Displayable.h \
@@ -519,6 +523,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Battle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Config.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Displayable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DisplayableList.Po@am__quote@

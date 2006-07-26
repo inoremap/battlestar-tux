@@ -16,7 +16,9 @@ LDADD = -lSDL -lSDL_image -lGL -lGLU -lfreetype -lftgl
 
 bin_PROGRAMS = battlestarTUX
 noinst_PROGRAMS = testTUX
-battlestarTUX_SOURCES = Config.cpp \
+battlestarTUX_SOURCES = Battle.cpp \
+			Battle.h \
+			Config.cpp \
 			Config.h \
 			Displayable.cpp \
 			Displayable.h \
@@ -95,7 +97,9 @@ battlestarTUX_SOURCES = Config.cpp \
 			TextureManager.h \
 			main.cpp
 
-testTUX_SOURCES =	Config.cpp \
+testTUX_SOURCES =	Battle.cpp \
+			Battle.h \
+			Config.cpp \
 			Config.h \
 			Displayable.cpp \
 			Displayable.h \

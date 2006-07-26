@@ -32,6 +32,7 @@ class EnemyFighterList;
 class ExplosionList;
 class FighterAmmoList;
 class Fighter;
+class Screen;
 class TextureManager;
 
 
@@ -75,12 +76,14 @@ class Game {
 				ExplosionList* getExplosionList();
 				FighterAmmoList* getEnemyAmmoList();
 				FighterAmmoList* getHeroAmmoList();
+				Fighter* getFighter();
+				Screen* getScreen();
 				void setEnemyFighterList( EnemyFighterList* l );
 				void setExplosionList( ExplosionList* l );
 				void setEnemyAmmoList( FighterAmmoList* l );
 				void setHeroAmmoList( FighterAmmoList* l );
-				Fighter* getFighter();
 				void setFighter( Fighter* f );
+				void setScreen( Screen* s );
 
 	private:
 				Game( const Game &game );
@@ -146,6 +149,7 @@ class Game {
 				FighterAmmoList* enemyAmmoList;
 				FighterAmmoList* heroAmmoList;
 				Fighter* fighter;
+				Screen* screen;
 };
 
 
