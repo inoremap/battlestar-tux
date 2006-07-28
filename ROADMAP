@@ -1,0 +1,52 @@
+It seems to be easy to get off track when brainstorming improvements.  Keep in mind that while the game may have RPG, strategy, and 4X elements, it is primarily a 2.5D scrolling shooter.
+
+The goal is a fairly immersive game with exciting action and decent 4X (eXplore, eXpand, eXploit and eXterminate) elements.  The scrolling shooter aspect dominates the initial gameplay, but as play progresses the player will have to participate in 4X activities to remain competitive.  This is where the addiction can come in: an unlimited universe to explore and conquer.  Of course, the enemy have already conquered most of it, so the player has a deal of work to do.
+
+
+----------- Errata ------------
+
+- GPU shaders may be added during any phase of the roadmap.  Stunning visuals have always been a goal of the project - it's just debatable what level of visuals will be possible given the current manpower.
+
+- Production quality textures/sound effects/soundtracks will be accepted as soon as they are available.  The "development" textures and sounds may actually detract a lot from the game.  Potential players might be so turned off by the lousy screenshots that they never even try the game.
+
+-------- End of Errata --------
+
+
+
+------- Release Roadmap -------
+
+0.0.X Series:
+- Mostly unplayable game.  Basic elements (2.5D scrolling shooter, universe overview, simple menus) taking shape.  These releases may not even be tagged in subversion.
+
+0.1.0:
+- First playable release.  Although much of the richer gameplay experience will be missing, players can at least shoot a few enemies and possibly even run a small campaign.
+  > Robust Build System
+    - Library dependencies checked
+    - No ridiculously non-portable code
+  > GUI Established and Stable
+    - Splash screen
+    - Credits screen
+    - Pause menu
+  > Basic 2.5D Stable Game Engine
+    - Robust collision detection
+    - Stable physics that fit gameplay
+    - Basic fighter and weapon entities
+  > Simple Control Interface
+    - Initial key bindings can be static
+    - Key customization needs to be an end goal
+
+0.2.0:
+- Expansion of shooter.  Game elements such as fighters, weapons, ammo and explosions are no longer defined at compile time.  Other game elements moved out of code, as well.
+  > Integration with TinyXML
+  > Save/Load elements to/from XML files
+  > Modular Units
+    - Eventually, everything needs to be procedural.  Units, weapons and ammo need to be designed with this in mind.  We need clearly defined orthogonality between game objects - this facilitates computer generated content being dropped into the game.  Even if each "class" or "genre" of unit has to be hand written, the player needs to have freedom to expand the units.
+    - Planets, systems and enemy(s) also need to be expandable.
+
+0.3.0:
+- Expansion of universe.  A well crafted, dynamic, entirely procedurally generated universe is not an easy task.  Now build one...
+  > Resources need to be gathered by the player (4X element)
+  > Player must vie for control of systems and galaxies
+
+---- End of Release Roadmap ---
+
