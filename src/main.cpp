@@ -37,6 +37,7 @@
 #include "Game.h"
 #include "Screen.h"
 #include "TextureManager.h"
+#include "UI/MainMenu.h"
 
 using namespace std;
 
@@ -59,9 +60,13 @@ int main(int argc, char* argv[])
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
-		Battle* battle = new Battle( game );
-		battle->Start();
-		delete battle;
+		//Battle* battle = new Battle( game );
+		//battle->Start();
+		//delete battle;
+
+		MainMenu* menu = new MainMenu( OPENING_MENU, game );
+		menu->ShowMenu();
+		delete menu;
 	}
 
 	SDL_Quit();

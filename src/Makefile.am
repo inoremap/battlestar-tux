@@ -74,6 +74,10 @@ battlestarTUX_SOURCES = Battle.cpp \
 			Structures/StringArray.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/MainMenu.cpp \
+			UI/MainMenu.h \
+			UI/OpeningMenu.cpp \
+			UI/OpeningMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \
@@ -159,6 +163,10 @@ testTUX_SOURCES =	Battle.cpp \
 			Structures/StringArray.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/MainMenu.cpp \
+			UI/MainMenu.h \
+			UI/OpeningMenu.cpp \
+			UI/OpeningMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \

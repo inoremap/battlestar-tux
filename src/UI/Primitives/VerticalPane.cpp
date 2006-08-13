@@ -116,6 +116,15 @@ void VerticalPane::ReevaluateElements() {
 	offset[0] = C_HORIZ_PAD;
 	offset[1] = preferredSize[1] - C_VERTI_PAD;
 
+	// Set size of container.
+	if( size[0] < preferredSize[0] )
+		size[0] = preferredSize[0];
+	if( size[1] < preferredSize[1] )
+		size[1] = preferredSize[1];
+
+	// Set position of container.
+	setContainerPos();
+
 	cur = (Widget*) rootObj;
 	// Loop through widgets - setting size and position.
 	while( cur ) {
@@ -144,9 +153,4 @@ void VerticalPane::ReevaluateElements() {
 		cur = (Widget*) cur->getNext();
 		offset[1] -= C_WIDGET_PAD;
 	}
-
-	if( size[0] < preferredSize[0] )
-		size[0] = preferredSize[0];
-	if( size[1] < preferredSize[1] )
-		size[1] = preferredSize[1];
 }

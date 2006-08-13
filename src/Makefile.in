@@ -73,7 +73,8 @@ am_battlestarTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/GUI.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
+	UI/GUI.$(OBJEXT) UI/MainMenu.$(OBJEXT) \
+	UI/OpeningMenu.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
 	UI/Primitives/Button.$(OBJEXT) \
 	UI/Primitives/HorizontalContainer.$(OBJEXT) \
 	UI/Primitives/HorizontalPane.$(OBJEXT) \
@@ -100,7 +101,8 @@ am_testTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/GUI.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
+	UI/GUI.$(OBJEXT) UI/MainMenu.$(OBJEXT) \
+	UI/OpeningMenu.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
 	UI/Primitives/Button.$(OBJEXT) \
 	UI/Primitives/HorizontalContainer.$(OBJEXT) \
 	UI/Primitives/HorizontalPane.$(OBJEXT) \
@@ -270,6 +272,10 @@ battlestarTUX_SOURCES = Battle.cpp \
 			Structures/StringArray.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/MainMenu.cpp \
+			UI/MainMenu.h \
+			UI/OpeningMenu.cpp \
+			UI/OpeningMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \
@@ -355,6 +361,10 @@ testTUX_SOURCES = Battle.cpp \
 			Structures/StringArray.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
+			UI/MainMenu.cpp \
+			UI/MainMenu.h \
+			UI/OpeningMenu.cpp \
+			UI/OpeningMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \
@@ -495,6 +505,9 @@ UI/$(DEPDIR)/$(am__dirstamp):
 	@$(mkdir_p) UI/$(DEPDIR)
 	@: > UI/$(DEPDIR)/$(am__dirstamp)
 UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/MainMenu.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
+UI/OpeningMenu.$(OBJEXT): UI/$(am__dirstamp) \
+	UI/$(DEPDIR)/$(am__dirstamp)
 UI/SystemMenu.$(OBJEXT): UI/$(am__dirstamp) \
 	UI/$(DEPDIR)/$(am__dirstamp)
 UI/Primitives/$(am__dirstamp):
@@ -545,6 +558,8 @@ mostlyclean-compile:
 	-rm -f Structures/ListItem.$(OBJEXT)
 	-rm -f Structures/StringArray.$(OBJEXT)
 	-rm -f UI/GUI.$(OBJEXT)
+	-rm -f UI/MainMenu.$(OBJEXT)
+	-rm -f UI/OpeningMenu.$(OBJEXT)
 	-rm -f UI/Primitives/Button.$(OBJEXT)
 	-rm -f UI/Primitives/HorizontalContainer.$(OBJEXT)
 	-rm -f UI/Primitives/HorizontalPane.$(OBJEXT)
@@ -590,6 +605,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/MainMenu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/OpeningMenu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/SystemMenu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/Button.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/HorizontalContainer.Po@am__quote@

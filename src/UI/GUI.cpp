@@ -79,6 +79,9 @@ GUI::~GUI() {
 }
 
 
+void GUI::CreateWidgets() {}
+
+
 void GUI::Draw() {
 	// Use orthographic projection for GUI
 	glMatrixMode( GL_PROJECTION );
@@ -123,6 +126,9 @@ void GUI::Update() {
 	}
 }
 
+
+int GUI::getScreenWidth() { return screenW; }
+int GUI::getScreenHeight() { return screenH; }
 
 FTFont* GUI::getFont() { return normalFont; }
 FTFont* GUI::getItalicFont() { return italicFont; }

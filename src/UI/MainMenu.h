@@ -1,4 +1,4 @@
-/* PlanetButton.h
+/* MainMenu.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,49 +22,44 @@
  */
 
 
-#ifndef PLANETBUTTON_H_
-#define PLANETBUTTON_H_
+#ifndef MAINMENU_H_
+#define MAINMENU_H_
 
-#include <SDL_opengl.h>
+#include "GUI.h"
+#include "../Game.h"
 
-#include "../../Game.h"
+// Possible menu screens.
+enum MenuType {
+	OPENING_MENU		=	0,	// Menu shown at startup.
+	SETTINGS_MENU	=	1,	// Game settings and options.
+	CREDITS_MENU		=	2,	// Game credits.
+	SYSTEM_MENU		=	3	// Show solar system the ship is currently in.
+};
 
-/* Button containing a rotating planet. */
-class PlanetButton {
+/* Parent menu.  All other menus are spawned here. */
+class MainMenu {
 	public:
-				PlanetButton( float r, int p, float t, float rotX, float rotZ, Game* g );
+				MainMenu( MenuType t, Game* g );
+				~MainMenu();
 
-				// Update planet button.
-				void Update();
+				// Show current menu.
+				void ShowMenu();
 
-				// Draw planet button.
-				void Draw();
+				// Change the menu being displayed.
+				void ChangeMenu( MenuType t );
 
 	private:
-				PlanetButton( const PlanetButton &planet );
-				const PlanetButton & operator= ( const PlanetButton &planet );
+				MainMenu( const MainMenu &menu );
+				const MainMenu & operator= ( const MainMenu &menu );
 
-				// Size of planet.
-				float radius;
+				// Current menu type.
+				MenuType currentType;
 
-				// Subdivision of sphere.
-				// Values 35 to 100 seem reasonable.
-				int precision;
-
-				// Current planet angle.
-				float rotation;
-
-				// Speed of planet rotation.
-				float torque;
-
-				// Planet's deviation from straight up.
-				float offAxisX;
-				float offAxisZ;
-
-				GLuint texture;
+				// Menu that is currently being displayed.
+				GUI* currentMenu;
 
 				Game* game;
 };
 
 
-#endif /*PLANETBUTTON_H_*/
+#endif /*MAINMENU_H_*/

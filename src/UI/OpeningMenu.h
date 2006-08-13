@@ -1,4 +1,4 @@
-/* GUI.h
+/* OpeningMenu.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,48 +22,23 @@
  */
 
 
-#ifndef GUI_H_
-#define GUI_H_
+#ifndef OPENINGMENU_H_
+#define OPENINGMENU_H_
 
-#include <FTGLTextureFont.h>
+#include "GUI.h"
 
-#include "../Structures/List.h"
-
-/* Set of widgets and containers to be drawn. */
-class GUI : public List {
+/* First menu drawn - game first starting. */
+class OpeningMenu : public GUI {
 	public:
-				GUI( int w, int h );
-				virtual ~GUI();
+				OpeningMenu( int w, int h );
+				~OpeningMenu();
 
 				// Create all widgets and bind listeners.
-				virtual void CreateWidgets();
-
-				// Draw all GUI widgets.
-				void Draw();
-
-				// Update all GUI widgets.
-				void Update();
-
-				int getScreenWidth();
-				int getScreenHeight();
-
-				FTFont* getFont();
-				FTFont* getItalicFont();
-				FTFont* getBoldFont();
-
-	protected:
-				// Screen width
-				int screenW;
-				// Screen height
-				int screenH;
-
-				FTFont* normalFont;
-				FTFont* italicFont;
-				FTFont* boldFont;
+				void CreateWidgets();
 
 	private:
-				GUI( const GUI &gui );
-				const GUI & operator= ( const GUI &gui );
+				OpeningMenu( const OpeningMenu &menu );
+				const OpeningMenu & operator= ( const OpeningMenu &menu );
 };
 
-#endif /*GUI_H_*/
+#endif /*OPENINGMENU_H_*/
