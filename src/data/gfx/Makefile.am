@@ -16,6 +16,7 @@ dist_data_DATA =	crosshairs_0001-32.png \
 			ground_0001-512.png \
 			hud_shields-64.png \
 			laser_0001-64.png \
+			planet_0001-256.png \
 			plasma_0001-32.png \
 			shield_impact_0001-64.png \
 			shields_0001-64.png

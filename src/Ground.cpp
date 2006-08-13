@@ -64,8 +64,6 @@ void Ground::Draw() {
 	};
 
 	glPushMatrix();
-	glLoadIdentity();
-
 	glTranslatef( 0, offset, 0 );
 
 	// Draw horizontal strips across the screen, starting at the bottom.

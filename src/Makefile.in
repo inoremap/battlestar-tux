@@ -73,11 +73,16 @@ am_battlestarTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
-	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
-	UI/Label.$(OBJEXT) UI/Widget.$(OBJEXT) \
-	UI/VerticalContainer.$(OBJEXT) UI/VerticalPane.$(OBJEXT) \
-	TextureManager.$(OBJEXT) main.$(OBJEXT)
+	UI/GUI.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
+	UI/Primitives/Button.$(OBJEXT) \
+	UI/Primitives/HorizontalContainer.$(OBJEXT) \
+	UI/Primitives/HorizontalPane.$(OBJEXT) \
+	UI/Primitives/Label.$(OBJEXT) \
+	UI/Primitives/PlanetButton.$(OBJEXT) \
+	UI/Primitives/Widget.$(OBJEXT) \
+	UI/Primitives/VerticalContainer.$(OBJEXT) \
+	UI/Primitives/VerticalPane.$(OBJEXT) TextureManager.$(OBJEXT) \
+	main.$(OBJEXT)
 battlestarTUX_OBJECTS = $(am_battlestarTUX_OBJECTS)
 battlestarTUX_LDADD = $(LDADD)
 battlestarTUX_DEPENDENCIES =
@@ -95,11 +100,16 @@ am_testTUX_OBJECTS = Battle.$(OBJEXT) Config.$(OBJEXT) \
 	Ground.$(OBJEXT) HUD.$(OBJEXT) Pulse.$(OBJEXT) \
 	Screen.$(OBJEXT) Structures/List.$(OBJEXT) \
 	Structures/ListItem.$(OBJEXT) Structures/StringArray.$(OBJEXT) \
-	UI/Button.$(OBJEXT) UI/GUI.$(OBJEXT) \
-	UI/HorizontalContainer.$(OBJEXT) UI/HorizontalPane.$(OBJEXT) \
-	UI/Label.$(OBJEXT) UI/VerticalContainer.$(OBJEXT) \
-	UI/VerticalPane.$(OBJEXT) UI/Widget.$(OBJEXT) \
-	TextureManager.$(OBJEXT) test.$(OBJEXT)
+	UI/GUI.$(OBJEXT) UI/SystemMenu.$(OBJEXT) \
+	UI/Primitives/Button.$(OBJEXT) \
+	UI/Primitives/HorizontalContainer.$(OBJEXT) \
+	UI/Primitives/HorizontalPane.$(OBJEXT) \
+	UI/Primitives/Label.$(OBJEXT) \
+	UI/Primitives/PlanetButton.$(OBJEXT) \
+	UI/Primitives/VerticalContainer.$(OBJEXT) \
+	UI/Primitives/VerticalPane.$(OBJEXT) \
+	UI/Primitives/Widget.$(OBJEXT) TextureManager.$(OBJEXT) \
+	test.$(OBJEXT)
 testTUX_OBJECTS = $(am_testTUX_OBJECTS)
 testTUX_LDADD = $(LDADD)
 testTUX_DEPENDENCIES =
@@ -258,27 +268,31 @@ battlestarTUX_SOURCES = Battle.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
-			UI/Button.cpp \
-			UI/Button.h \
-			UI/ButtonClickEvent.h \
-			UI/Container.h \
-			UI/Event.h \
-			UI/EventGenerator.h \
-			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
-			UI/HorizontalContainer.cpp \
-			UI/HorizontalContainer.h \
-			UI/HorizontalPane.cpp \
-			UI/HorizontalPane.h \
-			UI/Label.cpp \
-			UI/Label.h \
-			UI/Widget.cpp \
-			UI/Widget.h \
-			UI/VerticalContainer.cpp \
-			UI/VerticalContainer.h \
-			UI/VerticalPane.cpp \
-			UI/VerticalPane.h \
+			UI/SystemMenu.cpp \
+			UI/SystemMenu.h \
+			UI/Primitives/Button.cpp \
+			UI/Primitives/Button.h \
+			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/Container.h \
+			UI/Primitives/Event.h \
+			UI/Primitives/EventGenerator.h \
+			UI/Primitives/EventListener.h \
+			UI/Primitives/HorizontalContainer.cpp \
+			UI/Primitives/HorizontalContainer.h \
+			UI/Primitives/HorizontalPane.cpp \
+			UI/Primitives/HorizontalPane.h \
+			UI/Primitives/Label.cpp \
+			UI/Primitives/Label.h \
+			UI/Primitives/PlanetButton.cpp \
+			UI/Primitives/PlanetButton.h \
+			UI/Primitives/Widget.cpp \
+			UI/Primitives/Widget.h \
+			UI/Primitives/VerticalContainer.cpp \
+			UI/Primitives/VerticalContainer.h \
+			UI/Primitives/VerticalPane.cpp \
+			UI/Primitives/VerticalPane.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -339,27 +353,31 @@ testTUX_SOURCES = Battle.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
-			UI/Button.cpp \
-			UI/Button.h \
-			UI/ButtonClickEvent.h \
-			UI/Container.h \
-			UI/Event.h \
-			UI/EventGenerator.h \
-			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
-			UI/HorizontalContainer.cpp \
-			UI/HorizontalContainer.h \
-			UI/HorizontalPane.cpp \
-			UI/HorizontalPane.h \
-			UI/Label.cpp \
-			UI/Label.h \
-			UI/VerticalContainer.cpp \
-			UI/VerticalContainer.h \
-			UI/VerticalPane.cpp \
-			UI/VerticalPane.h \
-			UI/Widget.cpp \
-			UI/Widget.h \
+			UI/SystemMenu.cpp \
+			UI/SystemMenu.h \
+			UI/Primitives/Button.cpp \
+			UI/Primitives/Button.h \
+			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/Container.h \
+			UI/Primitives/Event.h \
+			UI/Primitives/EventGenerator.h \
+			UI/Primitives/EventListener.h \
+			UI/Primitives/HorizontalContainer.cpp \
+			UI/Primitives/HorizontalContainer.h \
+			UI/Primitives/HorizontalPane.cpp \
+			UI/Primitives/HorizontalPane.h \
+			UI/Primitives/Label.cpp \
+			UI/Primitives/Label.h \
+			UI/Primitives/PlanetButton.cpp \
+			UI/Primitives/PlanetButton.h \
+			UI/Primitives/VerticalContainer.cpp \
+			UI/Primitives/VerticalContainer.h \
+			UI/Primitives/VerticalPane.cpp \
+			UI/Primitives/VerticalPane.h \
+			UI/Primitives/Widget.cpp \
+			UI/Primitives/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp
@@ -476,18 +494,33 @@ UI/$(am__dirstamp):
 UI/$(DEPDIR)/$(am__dirstamp):
 	@$(mkdir_p) UI/$(DEPDIR)
 	@: > UI/$(DEPDIR)/$(am__dirstamp)
-UI/Button.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
 UI/GUI.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
-UI/HorizontalContainer.$(OBJEXT): UI/$(am__dirstamp) \
+UI/SystemMenu.$(OBJEXT): UI/$(am__dirstamp) \
 	UI/$(DEPDIR)/$(am__dirstamp)
-UI/HorizontalPane.$(OBJEXT): UI/$(am__dirstamp) \
-	UI/$(DEPDIR)/$(am__dirstamp)
-UI/Label.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
-UI/Widget.$(OBJEXT): UI/$(am__dirstamp) UI/$(DEPDIR)/$(am__dirstamp)
-UI/VerticalContainer.$(OBJEXT): UI/$(am__dirstamp) \
-	UI/$(DEPDIR)/$(am__dirstamp)
-UI/VerticalPane.$(OBJEXT): UI/$(am__dirstamp) \
-	UI/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/$(am__dirstamp):
+	@$(mkdir_p) UI/Primitives
+	@: > UI/Primitives/$(am__dirstamp)
+UI/Primitives/$(DEPDIR)/$(am__dirstamp):
+	@$(mkdir_p) UI/Primitives/$(DEPDIR)
+	@: > UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/Button.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/HorizontalContainer.$(OBJEXT):  \
+	UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/HorizontalPane.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/Label.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/PlanetButton.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/Widget.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/VerticalContainer.$(OBJEXT):  \
+	UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+UI/Primitives/VerticalPane.$(OBJEXT): UI/Primitives/$(am__dirstamp) \
+	UI/Primitives/$(DEPDIR)/$(am__dirstamp)
 battlestarTUX$(EXEEXT): $(battlestarTUX_OBJECTS) $(battlestarTUX_DEPENDENCIES) 
 	@rm -f battlestarTUX$(EXEEXT)
 	$(CXXLINK) $(battlestarTUX_LDFLAGS) $(battlestarTUX_OBJECTS) $(battlestarTUX_LDADD) $(LIBS)
@@ -511,14 +544,16 @@ mostlyclean-compile:
 	-rm -f Structures/List.$(OBJEXT)
 	-rm -f Structures/ListItem.$(OBJEXT)
 	-rm -f Structures/StringArray.$(OBJEXT)
-	-rm -f UI/Button.$(OBJEXT)
 	-rm -f UI/GUI.$(OBJEXT)
-	-rm -f UI/HorizontalContainer.$(OBJEXT)
-	-rm -f UI/HorizontalPane.$(OBJEXT)
-	-rm -f UI/Label.$(OBJEXT)
-	-rm -f UI/VerticalContainer.$(OBJEXT)
-	-rm -f UI/VerticalPane.$(OBJEXT)
-	-rm -f UI/Widget.$(OBJEXT)
+	-rm -f UI/Primitives/Button.$(OBJEXT)
+	-rm -f UI/Primitives/HorizontalContainer.$(OBJEXT)
+	-rm -f UI/Primitives/HorizontalPane.$(OBJEXT)
+	-rm -f UI/Primitives/Label.$(OBJEXT)
+	-rm -f UI/Primitives/PlanetButton.$(OBJEXT)
+	-rm -f UI/Primitives/VerticalContainer.$(OBJEXT)
+	-rm -f UI/Primitives/VerticalPane.$(OBJEXT)
+	-rm -f UI/Primitives/Widget.$(OBJEXT)
+	-rm -f UI/SystemMenu.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -554,14 +589,16 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/List.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/ListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Structures/$(DEPDIR)/StringArray.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Button.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/GUI.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/HorizontalContainer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/HorizontalPane.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Label.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalContainer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/VerticalPane.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/Widget.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/$(DEPDIR)/SystemMenu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/Button.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/HorizontalContainer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/HorizontalPane.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/Label.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/PlanetButton.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/VerticalContainer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/VerticalPane.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@UI/Primitives/$(DEPDIR)/Widget.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`; \
@@ -790,6 +827,8 @@ distclean-generic:
 	-rm -f Structures/$(am__dirstamp)
 	-rm -f UI/$(DEPDIR)/$(am__dirstamp)
 	-rm -f UI/$(am__dirstamp)
+	-rm -f UI/Primitives/$(DEPDIR)/$(am__dirstamp)
+	-rm -f UI/Primitives/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -800,7 +839,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR) UI/Primitives/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -826,7 +865,7 @@ install-man:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) Fighter/$(DEPDIR) Fighter/Weapons/$(DEPDIR) Structures/$(DEPDIR) UI/$(DEPDIR) UI/Primitives/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

@@ -37,11 +37,6 @@
 #include "Game.h"
 #include "Screen.h"
 #include "TextureManager.h"
-#include "UI/Button.h"
-#include "UI/HorizontalContainer.h"
-#include "UI/HorizontalPane.h"
-#include "UI/VerticalContainer.h"
-#include "UI/VerticalPane.h"
 
 using namespace std;
 
@@ -62,44 +57,11 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	GUI* gui = new GUI( screen->getWidth(), screen->getHeight() );
-	VerticalPane* vPane = new VerticalPane( gui, true, HORIZ_CENTER );
-	VerticalContainer* vContainer = new VerticalContainer( gui, true, HORIZ_CENTER );
-	Button* button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
-	vContainer->AddWidget( button );
-	button = new Button( gui, "Resume Game", HORIZ_CENTER );
-	vContainer->AddWidget( button );
-	button = new Button( gui, "Examine Inventory", HORIZ_CENTER );
-	vContainer->AddWidget( button );
-	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
-	vContainer->AddWidget( button );
-	HorizontalContainer* hContainer = new HorizontalContainer( gui, false, VERTI_TOP );
-	hContainer->AddWidget( vContainer );
-	button = new Button( gui, "Examine Inventory", HORIZ_CENTER );
-	hContainer->AddWidget( button );
-	button = new Button( gui, "Battlestar TUX|Test the ugly puppy.", HORIZ_CENTER );
-	hContainer->AddWidget( button );
-	vPane->AddWidget( hContainer );
-	vPane->setPos( 50, 300 );
-	gui->addObject( vPane );
-
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
 		Battle* battle = new Battle( game );
 		battle->Start();
-
-		/* Do something with the GUI?
-		game->startFrame();
-
-		gui->Update();
-		gui->Draw();
-
-		// Swap buffers - the newly drawn items will appear.
-		SDL_GL_SwapBuffers();
-
-		// Check for OpenGL errors.
-
-		game->stopFrame();*/
+		delete battle;
 	}
 
 	SDL_Quit();

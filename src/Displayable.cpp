@@ -85,7 +85,6 @@ void Displayable::Update() {
 
 void Displayable::Draw() {
 	glPushMatrix();
-	glLoadIdentity();
 
 	float mx = size[0] / 2;
 	float my = size[1] / 2;

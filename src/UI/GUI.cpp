@@ -25,7 +25,7 @@
 #include <SDL.h>
 
 #include "GUI.h"
-#include "Widget.h"
+#include "Primitives/Widget.h"
 
 GUI::GUI( int w, int h ) {
 	screenW = w;

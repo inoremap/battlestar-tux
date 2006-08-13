@@ -88,7 +88,6 @@ void WeaponSystem::Update() {
 
 void WeaponSystem::Draw() {
 	glPushMatrix();
-	glLoadIdentity();
 
 	float mx = 1.2;
 	float my = 1.2;

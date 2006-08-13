@@ -32,6 +32,7 @@ Config::Config( Game* g ) {
 	game = g;
 
 	debug = false;
+	wireframe = false;
 	grabInput = true;
 }
 
@@ -51,6 +52,8 @@ void Config::parseCommandline( int argc, char* argv[] ) {
 			debug = true;
 		else if( argument == "--no-grab" )
 			grabInput = false;
+		else if( argument == "--wireframe" )
+			wireframe = true;
 		else
 			usage = true;
 	}
@@ -78,11 +81,14 @@ void Config::printUsage() {
 	printf( "Usage: battlestarTUX [options]" );
 	printf( "\n    Options:" );
 	printf( "\n       --debug       Enable debugging.  Extra game-state messages will be printed." );
+	printf( "\n       --wireframe   Draw all polygons in wireframe.  For debugging." );
 	printf( "\n       --no-grab     Do not grab mouse input - the cursor will not stay inside the window." );
 	printf( "\n\n" );
 }
 
 
 bool Config::getDebug() { return debug; }
+
+bool Config::getWireframe() { return wireframe; }
 
 bool Config::getGrabInput() { return grabInput; }

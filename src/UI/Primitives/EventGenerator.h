@@ -1,4 +1,4 @@
-/* EventListener.h
+/* EventGenerator.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,26 +22,36 @@
  */
 
 
-#ifndef EVENTLISTENER_H_
-#define EVENTLISTENER_H_
+#ifndef EVENTGENERATOR_H_
+#define EVENTGENERATOR_H_
 
-#include "../Structures/ListItem.h"
+#include "../../Structures/List.h"
 #include "Event.h"
+#include "EventListener.h"
 
-/* All objects which listen for widget events inherit this listener. */
-class EventListener : public ListItem {
+/* All widgets which generate events inherit this generator. */
+class EventGenerator : protected List {
 	public:
-				EventListener() {}
+				EventGenerator() {}
+				~EventGenerator() {}
 
-				virtual ~EventListener() {}
+	protected:
+				void AddListener( EventListener* l ) { addObject( l ); }
+				void RemListener( EventListener* l ) { remObject( l ); }
 
-				virtual void EventGenerated( Event* e ) {
-					printf( "Unhandled event generated...\n" );
+				void GenerateEvent( Event* e ) {
+					EventListener* cur = (EventListener*) rootObj;
+
+					while( cur ) {
+						cur->EventGenerated( e );
+						cur = (EventListener*) cur->getNext();
+					}	
 				}
 
 	private:
-				EventListener( const EventListener &l );
-				const EventListener & operator= ( const EventListener &l );
+				EventGenerator( const EventGenerator &gen );
+				const EventGenerator & operator= ( const EventGenerator &gen );
 };
 
-#endif /*EVENTLISTENER_H_*/
+
+#endif /*EVENTGENERATOR_H_*/

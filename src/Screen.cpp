@@ -66,6 +66,11 @@ Screen::Screen( Game* g ) {
 		SDL_ShowCursor( SDL_DISABLE );
 	}
 
+	if( g->getConfig()->getWireframe() ) {
+		// Draw all polygons in wireframe mode.
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+	}
+
 	// If the window couldn't be created at all, we're done.
 	if( screen == NULL )
 	{
@@ -130,8 +135,7 @@ void Screen::setFOVY( float fov ) {
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	gluPerspective( fovy, (float) width/height, 0, 5 );
-	glTranslatef( 0, 0, -15 );
+	gluPerspective( fovy, (float) width/height, 1, 30 );
 	glMatrixMode( GL_MODELVIEW );
 }
 

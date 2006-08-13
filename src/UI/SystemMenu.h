@@ -1,4 +1,4 @@
-/* EventGenerator.h
+/* SystemMenu.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,36 +22,27 @@
  */
 
 
-#ifndef EVENTGENERATOR_H_
-#define EVENTGENERATOR_H_
+#ifndef SYSTEMMENU_H_
+#define SYSTEMMENU_H_
 
-#include "../Structures/List.h"
-#include "Event.h"
-#include "EventListener.h"
+#include "../Game.h"
 
-/* All widgets which generate events inherit this generator. */
-class EventGenerator : protected List {
+/* Display a solar system and its properties. */
+class SystemMenu {
 	public:
-				EventGenerator() {}
-				~EventGenerator() {}
+				SystemMenu( Game* g );
+				~SystemMenu();
 
-	protected:
-				void AddListener( EventListener* l ) { addObject( l ); }
-				void RemListener( EventListener* l ) { remObject( l ); }
+				// Show Solar System menu.
+				void ShowMenu();
 
-				void GenerateEvent( Event* e ) {
-					EventListener* cur = (EventListener*) rootObj;
-
-					while( cur ) {
-						cur->EventGenerated( e );
-						cur = (EventListener*) cur->getNext();
-					}	
-				}
 
 	private:
-				EventGenerator( const EventGenerator &gen );
-				const EventGenerator & operator= ( const EventGenerator &gen );
+				SystemMenu( const SystemMenu &menu );
+				const SystemMenu & operator= ( const SystemMenu &menu );
+
+				Game* game;
 };
 
 
-#endif /*EVENTGENERATOR_H_*/
+#endif /*SYSTEMMENU_H_*/

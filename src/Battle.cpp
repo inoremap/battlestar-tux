@@ -75,6 +75,9 @@ void Battle::Start() {
 
 	EnemyFighter* enemyFighter = 0;
 
+	// Depth testing isn't needed for the 2.5D drawing.
+	glDisable( GL_DEPTH_TEST );
+
 	// Continue battle until the battle is aborted or the game is exited.
 	while( !game->isFinished() && !isFinished && !isAborted ) {
 		game->startFrame();
@@ -126,8 +129,9 @@ void Battle::Start() {
 		// entire area will be drawn again.  +20fps
 		// glClear( GL_COLOR_BUFFER_BIT );
 
-		// Draw stuff...
+		// Set camera position and draw stuff...
 		glLoadIdentity();
+		glTranslatef( 0, 0, -15 );
 
 		// As long as we draw in order, we don't need depth testing.
 		ground->Draw();

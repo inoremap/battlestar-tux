@@ -72,27 +72,31 @@ battlestarTUX_SOURCES = Battle.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
-			UI/Button.cpp \
-			UI/Button.h \
-			UI/ButtonClickEvent.h \
-			UI/Container.h \
-			UI/Event.h \
-			UI/EventGenerator.h \
-			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
-			UI/HorizontalContainer.cpp \
-			UI/HorizontalContainer.h \
-			UI/HorizontalPane.cpp \
-			UI/HorizontalPane.h \
-			UI/Label.cpp \
-			UI/Label.h \
-			UI/Widget.cpp \
-			UI/Widget.h \
-			UI/VerticalContainer.cpp \
-			UI/VerticalContainer.h \
-			UI/VerticalPane.cpp \
-			UI/VerticalPane.h \
+			UI/SystemMenu.cpp \
+			UI/SystemMenu.h \
+			UI/Primitives/Button.cpp \
+			UI/Primitives/Button.h \
+			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/Container.h \
+			UI/Primitives/Event.h \
+			UI/Primitives/EventGenerator.h \
+			UI/Primitives/EventListener.h \
+			UI/Primitives/HorizontalContainer.cpp \
+			UI/Primitives/HorizontalContainer.h \
+			UI/Primitives/HorizontalPane.cpp \
+			UI/Primitives/HorizontalPane.h \
+			UI/Primitives/Label.cpp \
+			UI/Primitives/Label.h \
+			UI/Primitives/PlanetButton.cpp \
+			UI/Primitives/PlanetButton.h \
+			UI/Primitives/Widget.cpp \
+			UI/Primitives/Widget.h \
+			UI/Primitives/VerticalContainer.cpp \
+			UI/Primitives/VerticalContainer.h \
+			UI/Primitives/VerticalPane.cpp \
+			UI/Primitives/VerticalPane.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			main.cpp
@@ -153,27 +157,31 @@ testTUX_SOURCES =	Battle.cpp \
 			Structures/ListItem.h \
 			Structures/StringArray.cpp \
 			Structures/StringArray.h \
-			UI/Button.cpp \
-			UI/Button.h \
-			UI/ButtonClickEvent.h \
-			UI/Container.h \
-			UI/Event.h \
-			UI/EventGenerator.h \
-			UI/EventListener.h \
 			UI/GUI.cpp \
 			UI/GUI.h \
-			UI/HorizontalContainer.cpp \
-			UI/HorizontalContainer.h \
-			UI/HorizontalPane.cpp \
-			UI/HorizontalPane.h \
-			UI/Label.cpp \
-			UI/Label.h \
-			UI/VerticalContainer.cpp \
-			UI/VerticalContainer.h \
-			UI/VerticalPane.cpp \
-			UI/VerticalPane.h \
-			UI/Widget.cpp \
-			UI/Widget.h \
+			UI/SystemMenu.cpp \
+			UI/SystemMenu.h \
+			UI/Primitives/Button.cpp \
+			UI/Primitives/Button.h \
+			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/Container.h \
+			UI/Primitives/Event.h \
+			UI/Primitives/EventGenerator.h \
+			UI/Primitives/EventListener.h \
+			UI/Primitives/HorizontalContainer.cpp \
+			UI/Primitives/HorizontalContainer.h \
+			UI/Primitives/HorizontalPane.cpp \
+			UI/Primitives/HorizontalPane.h \
+			UI/Primitives/Label.cpp \
+			UI/Primitives/Label.h \
+			UI/Primitives/PlanetButton.cpp \
+			UI/Primitives/PlanetButton.h \
+			UI/Primitives/VerticalContainer.cpp \
+			UI/Primitives/VerticalContainer.h \
+			UI/Primitives/VerticalPane.cpp \
+			UI/Primitives/VerticalPane.h \
+			UI/Primitives/Widget.cpp \
+			UI/Primitives/Widget.h \
 			TextureManager.cpp \
 			TextureManager.h \
 			test.cpp

@@ -47,6 +47,8 @@ class Config {
 
 				bool getDebug();
 
+				bool getWireframe();
+
 				bool getGrabInput();
 
 	private:
@@ -55,6 +57,9 @@ class Config {
 
 				// True when debugging application.
 				bool debug;
+
+				// True when polygons are drawn as wireframe.
+				bool wireframe;
 
 				// Capturing the keyboard and mouse means the
 				// user can't user either until the application

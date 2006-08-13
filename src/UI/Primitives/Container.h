@@ -25,8 +25,8 @@
 #ifndef CONTAINER_H_
 #define CONTAINER_H_
 
-#include "../Structures/List.h"
-#include "../Structures/ListItem.h"
+#include "../../Structures/List.h"
+#include "../../Structures/ListItem.h"
 #include "Widget.h"
 
 /* Default color/alpha for containers. */
