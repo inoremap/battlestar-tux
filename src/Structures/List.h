@@ -31,6 +31,7 @@
 class List {
 	public:
 				List();
+				List( bool atEnd );
 				virtual ~List();
 
 				// Add a new object.
@@ -52,6 +53,9 @@ class List {
 
 	protected:
 				ListItem* rootObj;
+
+				// Add items at beginning or end of list?
+				bool addAtEnd;
 
 	private:
 				List( const List &list );

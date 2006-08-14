@@ -29,6 +29,13 @@
 
 List::List() {
 	rootObj = 0;
+	addAtEnd = false;
+}
+
+
+List::List( bool atEnd ) {
+	rootObj = 0;
+	addAtEnd = atEnd;
 }
 
 
@@ -39,9 +46,27 @@ void List::addObject( ListItem* obj ) {
 	if( !rootObj )
 		rootObj = obj;
 	else {
-		rootObj->setPrev( obj );
-		obj->setNext( rootObj );
-		rootObj = obj;
+		// Add object to end of list.
+		if( addAtEnd ) {
+			ListItem* cur = rootObj;
+			ListItem* last = NULL;
+
+			// Find last object in list.
+			while( cur ) {
+				last = cur;
+				cur = cur->getNext();
+			}
+
+			last->setNext( obj );
+			obj->setPrev( last );
+		}
+
+		// Add object to beginning of list.
+		else {
+			rootObj->setPrev( obj );
+			obj->setNext( rootObj );
+			rootObj = obj;
+		}
 	}
 }
 

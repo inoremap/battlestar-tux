@@ -57,7 +57,7 @@ enum ContainerPosition {
 /* Object for containing and placing sets of widgets. */
 class Container : protected List, public Widget {
 	public:
-				Container( GUI* g ) : Widget( g ) {
+				Container( GUI* g ) : List( true ), Widget( g ) {
 					containerPosition = CONTAINER_NONE;
 					gui = g;
 				}
