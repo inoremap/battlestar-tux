@@ -25,6 +25,8 @@
 #ifndef LASER_H_
 #define LASER_H_
 
+#include <string>
+
 #include "../../Game.h"
 #include "../../FighterAmmoList.h"
 #include "../Weapon.h"
@@ -35,7 +37,7 @@ class Laser : public Weapon {
 	public:
 				Laser( WeaponSystem* w, Game* g );
 
-				char* getName();
+				std::string getName();
 
 	private:
 				Laser( const Laser &laser );

@@ -25,15 +25,27 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
+// Possible event types.
+enum EventType {
+	NULL_EVENT,				// Event that does nothing.
+	BUTTONHOVER_EVENT,		// Mouse is hovering over button.
+	BUTTONCLICK_EVENT		// Button was clicked.
+};
+
 /* Every widget event generates an object inherited from this event. */
 class Event {
 	public:
-				Event() {}
+				Event( EventType t ) { type = t; }
 				virtual ~Event() {}
+
+				EventType getType() { return type; }
 
 	private:
 				Event( const Event &e );
 				const Event & operator= ( const Event &e );
+
+				// Type of event.
+				EventType type;
 };
 
 #endif /*EVENT_H_*/

@@ -35,8 +35,8 @@ TextureManager::~TextureManager() {
 }
 
 
-GLuint TextureManager::loadTexture( char* filename ) { return loadTexture( filename, GL_LINEAR ); }
-GLuint TextureManager::loadTexture( char* filename, int texture_quality ) {
+GLuint TextureManager::loadTexture( std::string filename ) { return loadTexture( filename, GL_LINEAR ); }
+GLuint TextureManager::loadTexture( std::string filename, int texture_quality ) {
 	// Check for existing texture.
 	GLuint textureID = textures->getID( filename );
 
@@ -53,7 +53,7 @@ GLuint TextureManager::loadTexture( char* filename, int texture_quality ) {
 }
 
 
-void TextureManager::freeTexture( char* filename ) {
+void TextureManager::freeTexture( std::string filename ) {
 	GLuint id = textures->getID( filename );
 
 	if( id )
@@ -75,7 +75,9 @@ void TextureManager::freeAllTextures() {
 }
 
 
-GLuint TextureManager::loadTextureFile( char* filename, int texture_quality ) {
+// Adapted from example SDL code:
+// http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example
+GLuint TextureManager::loadTextureFile( std::string filename, int texture_quality ) {
 	SDL_Surface* surface = 0;
 	GLuint textureid;
 	int mode;

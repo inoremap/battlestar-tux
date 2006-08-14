@@ -25,6 +25,8 @@
 #ifndef PLASMA_H_
 #define PLASMA_H_
 
+#include <string>
+
 #include "../../Game.h"
 #include "../../FighterAmmoList.h"
 #include "../Weapon.h"
@@ -35,7 +37,7 @@ class Plasma : public Weapon {
 	public:
 				Plasma( WeaponSystem* w, Game* g );
 
-				char* getName();
+				std::sting getName();
 
 	private:
 				Plasma( const Plasma &plasma );

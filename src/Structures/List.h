@@ -25,8 +25,9 @@
 #ifndef LIST_H_
 #define LIST_H_
 
-#include "ListItem.h"
+#include <string>
 
+#include "ListItem.h"
 
 class List {
 	public:
@@ -45,11 +46,11 @@ class List {
 
 				// Print list of objects, starting at root.
 				void printList();
-				void printList( char* desc );
+				void printList( std::string desc );
 
 				// Print list of objects, starting at obj.
 				void printList( ListItem* obj );
-				void printList( ListItem* obj, char* desc );
+				void printList( ListItem* obj, std::string desc );
 
 	protected:
 				ListItem* rootObj;

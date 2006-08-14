@@ -49,3 +49,7 @@ void OpeningMenu::CreateWidgets() {
 	vPane->setPos( CONTAINER_MC );
 	addObject( vPane );
 }
+
+
+void OpeningMenu::EventGenerated( Event* e ) {
+}

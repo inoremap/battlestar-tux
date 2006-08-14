@@ -27,6 +27,7 @@
 
 #include <SDL_image.h>
 #include <SDL_opengl.h>
+#include <string>
 
 #include "Structures/StringArray.h"
 
@@ -38,13 +39,13 @@ class TextureManager {
 				~TextureManager();
 
 				// Get the texture ID for the specified image.
-				GLuint loadTexture( char* filename );
-				GLuint loadTexture( char* filename, int texture_quality );
+				GLuint loadTexture( std::string filename );
+				GLuint loadTexture( std::string filename, int texture_quality );
 
 				// Free the texture for the specified image.
 				// If other instances of this texture are in use,
 				// the texture won't be freed.
-				void freeTexture( char* filename );
+				void freeTexture( std::string filename );
 				void freeTexture( GLuint id );
 				void freeTextures( int num, GLuint* ids );
 
@@ -57,10 +58,8 @@ class TextureManager {
 
 				StringArray* textures;
 
-				/* Adapted from example SDL code:
-				 * http://www.libsdl.org/cgi/docwiki.cgi/OpenGL_20Texture_20Example
-				 */
-				GLuint loadTextureFile( char* filename, int texture_quality );
+				// Load texture into memory.
+				GLuint loadTextureFile( std::string filename, int texture_quality );
 
 };
 

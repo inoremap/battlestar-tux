@@ -37,4 +37,4 @@ Laser::Laser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	penetration = 0.0;
 }
 
-char* Laser::getName() { return "Laser"; }
+std::string Laser::getName() { return "Laser"; }

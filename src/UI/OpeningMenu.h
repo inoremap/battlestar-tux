@@ -26,15 +26,20 @@
 #define OPENINGMENU_H_
 
 #include "GUI.h"
+#include "Primitives/ButtonClickEvent.h"
+#include "Primitives/EventListener.h"
 
 /* First menu drawn - game first starting. */
-class OpeningMenu : public GUI {
+class OpeningMenu : public GUI, EventListener {
 	public:
 				OpeningMenu( int w, int h );
 				~OpeningMenu();
 
 				// Create all widgets and bind listeners.
 				void CreateWidgets();
+
+				// Button click event.
+				void EventGenerated( Event* e );
 
 	private:
 				OpeningMenu( const OpeningMenu &menu );

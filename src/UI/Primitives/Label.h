@@ -25,12 +25,14 @@
 #ifndef LABEL_H_
 #define LABEL_H_
 
+#include <string>
+
 #include "Widget.h"
 
 /* Widget that displays a text string. */
 class Label : public Widget {
 	public:
-				Label( GUI* gui, char* s );
+				Label( GUI* gui, std::string s );
 				~Label();
 
 				void Draw();
@@ -39,7 +41,7 @@ class Label : public Widget {
 				Label( const Label &label );
 				const Label & operator= ( const Label &label );
 
-				char* string;
+				std::string labelText;
 };
 
 

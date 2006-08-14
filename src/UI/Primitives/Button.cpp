@@ -27,8 +27,8 @@
 #include "Button.h"
 #include "ButtonClickEvent.h"
 
-Button::Button( GUI* gui, char* s, W_Alignment h ) : Widget( gui ) {
-	string = s;
+Button::Button( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
+	buttonText = s;
 	hAlign = h;
 
 	float llx = 0.0;
@@ -39,7 +39,7 @@ Button::Button( GUI* gui, char* s, W_Alignment h ) : Widget( gui ) {
 	float urz = 0.0;
 	float descender = font->Descender();
 	float ascender = font->Ascender();
-	font->BBox( string, llx, lly, llz, urx, ury, urz );
+	font->BBox( buttonText, llx, lly, llz, urx, ury, urz );
 
 	textWidth = urx - llx;
 	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
@@ -94,7 +94,7 @@ void Button::Draw() {
 			glColor4fv( W_FG_HOVER );
 		else
 			glColor4fv( W_FG );
-		font->Render( string );
+		font->Render( buttonText );
 	glPopMatrix();
 
 	// Draw edge.
@@ -146,7 +146,7 @@ void Button::Update( int x, int y, int state ) {
 					clicked = false;
 
 					//// BUTTON CLICKED ////
-					ButtonClickEvent* event = new ButtonClickEvent( string );
+					ButtonClickEvent* event = new ButtonClickEvent( buttonText );
 					GenerateEvent( event );
 					delete event;
 					//// BUTTON CLICKED ////

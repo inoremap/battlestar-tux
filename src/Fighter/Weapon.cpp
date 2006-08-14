@@ -162,4 +162,4 @@ int Weapon::getMount() { return mount; }
 float Weapon::getVelocity() { return velocity; }
 float Weapon::getDamage() { return damage; }
 float Weapon::getPenetration() { return penetration; }
-char* Weapon::getName() { return "::Weapon::"; }
+std::string Weapon::getName() { return "::Weapon::"; }

@@ -25,6 +25,8 @@
 #ifndef TURRET_H_
 #define TURRET_H_
 
+#include <string>
+
 #include "../Weapon.h"
 
 /* Turret for mounting/targetting weapons. */
@@ -52,7 +54,7 @@ class Turret : public Weapon {
 
 				void setOffset( float o[] );
 
-				virtual char* getName();
+				virtual std::string getName();
 
 	private:
 				Turret( const Turret &turret );

@@ -37,4 +37,4 @@ Plasma::Plasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	penetration = 0.0;
 }
 
-char* Plasma::getName() { return "Plasma"; }
+std::string Plasma::getName() { return "Plasma"; }

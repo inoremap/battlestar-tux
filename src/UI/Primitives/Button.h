@@ -25,13 +25,15 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
+#include <string>
+
 #include "EventGenerator.h"
 #include "Widget.h"
 
 /* Clickable widget that displays a text string. */
 class Button : public Widget, private EventGenerator {
 	public:
-				Button( GUI* gui, char* s, W_Alignment h );
+				Button( GUI* gui, std::string s, W_Alignment h );
 				~Button();
 
 				void Draw();
@@ -42,7 +44,7 @@ class Button : public Widget, private EventGenerator {
 				Button( const Button &button );
 				const Button & operator= ( const Button &button );
 
-				char* string;
+				std::string buttonText;
 
 				// Horizontal alignment of the text in the button.
 				W_Alignment hAlign;

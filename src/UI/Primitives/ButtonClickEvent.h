@@ -25,20 +25,22 @@
 #ifndef BUTTONCLICKEVENT_H_
 #define BUTTONCLICKEVENT_H_
 
+#include <string>
+
 #include "Event.h"
 
 class ButtonClickEvent : public Event {
 	public:
-				ButtonClickEvent( char* value ) {
-					buttonValue = value;
+				ButtonClickEvent( std::string value ) : Event( BUTTONCLICK_EVENT ) {
+					buttonText = value;
 				}
 
 				~ButtonClickEvent() {}
 
-				char* getButtonValue() { return buttonValue; }
+				std::string getButtonValue() { return buttonText; }
 
 	private:
-				char* buttonValue;
+				std::string buttonText;
 };
 
 #endif /*BUTTONCLICKEVENT_H_*/

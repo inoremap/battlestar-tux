@@ -25,6 +25,8 @@
 #ifndef WEAPON_H_
 #define WEAPON_H_
 
+#include <string>
+
 #include "../Game.h"
 #include "../FighterAmmoList.h"
 #include "WeaponSystem.h"
@@ -57,7 +59,7 @@ class Weapon {
 				float getVelocity();
 				float getDamage();
 				float getPenetration();
-				virtual char* getName();
+				virtual std::string getName();
 
 	protected:
 				Weapon( const Weapon &weapon );

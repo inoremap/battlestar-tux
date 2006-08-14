@@ -122,4 +122,4 @@ void Turret::setOffset( float o[] ) {
 }
 
 
-char* Turret::getName() { return "::Turret::"; }
+std::string Turret::getName() { return "::Turret::"; }

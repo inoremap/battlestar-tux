@@ -24,8 +24,8 @@
 
 #include "Label.h"
 
-Label::Label( GUI* gui, char* s ) : Widget( gui ) {
-	string = s;
+Label::Label( GUI* gui, std::string s ) : Widget( gui ) {
+	labelText = s;
 }
 
 
@@ -38,5 +38,5 @@ void Label::Draw() {
 	glTranslatef( 0.0, -descender, 0.0 );
 	glColor4f( 1.0, 1.0, 1.0, 1.0 );
 	glBindTexture( GL_TEXTURE_2D, 0 );
-	font->Render( string );
+	font->Render( labelText );
 }

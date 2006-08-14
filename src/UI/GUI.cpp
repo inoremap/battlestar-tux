@@ -23,6 +23,7 @@
 
 
 #include <SDL.h>
+#include <string>
 
 #include "GUI.h"
 #include "Primitives/Widget.h"
@@ -32,7 +33,7 @@ GUI::GUI( int w, int h ) {
 	screenH = h;
 
 	// Load normal font.
-	char* normalFontFile = "data/fonts/forgottenfuturist.ttf";
+	std::string normalFontFile = "data/fonts/forgottenfuturist.ttf";
 	normalFont = new FTGLTextureFont( normalFontFile );
 	if( normalFont->Error() )
 		printf( "Unable to open font file: %s\n", normalFontFile );
@@ -42,7 +43,7 @@ GUI::GUI( int w, int h ) {
 		printf( "Unable to set font parameters: %s\n", normalFontFile );
 
 	// Load italic font.
-	char* italicFontFile = "data/fonts/forgottenfuturist_i.ttf";
+	std::string italicFontFile = "data/fonts/forgottenfuturist_i.ttf";
 	italicFont = new FTGLTextureFont( italicFontFile );
 	if( italicFont->Error() )
 		printf( "Unable to open font file: %s\n", italicFontFile );
@@ -52,7 +53,7 @@ GUI::GUI( int w, int h ) {
 		printf( "Unable to set font parameters: %s\n", italicFontFile );
 
 	// Load bold font.
-	char* boldFontFile = "data/fonts/forgottenfuturist_b.ttf";
+	std::string boldFontFile = "data/fonts/forgottenfuturist_b.ttf";
 	boldFont = new FTGLTextureFont( boldFontFile );
 	if( boldFont->Error() )
 		printf( "Unable to open font file: %s\n", boldFontFile );
