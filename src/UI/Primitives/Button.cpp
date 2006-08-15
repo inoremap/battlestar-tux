@@ -39,7 +39,7 @@ Button::Button( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
 	float urz = 0.0;
 	float descender = font->Descender();
 	float ascender = font->Ascender();
-	font->BBox( buttonText, llx, lly, llz, urx, ury, urz );
+	font->BBox( buttonText.c_str(), llx, lly, llz, urx, ury, urz );
 
 	textWidth = urx - llx;
 	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
@@ -94,7 +94,7 @@ void Button::Draw() {
 			glColor4fv( W_FG_HOVER );
 		else
 			glColor4fv( W_FG );
-		font->Render( buttonText );
+		font->Render( buttonText.c_str() );
 	glPopMatrix();
 
 	// Draw edge.

@@ -83,6 +83,8 @@ battlestarTUX_SOURCES = Battle.cpp \
 			UI/Primitives/Button.cpp \
 			UI/Primitives/Button.h \
 			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/ButtonClickGenerator.h \
+			UI/Primitives/ButtonClickListener.h \
 			UI/Primitives/Container.h \
 			UI/Primitives/Event.h \
 			UI/Primitives/EventGenerator.h \
@@ -172,6 +174,8 @@ testTUX_SOURCES =	Battle.cpp \
 			UI/Primitives/Button.cpp \
 			UI/Primitives/Button.h \
 			UI/Primitives/ButtonClickEvent.h \
+			UI/Primitives/ButtonClickGenerator.h \
+			UI/Primitives/ButtonClickListener.h \
 			UI/Primitives/Container.h \
 			UI/Primitives/Event.h \
 			UI/Primitives/EventGenerator.h \

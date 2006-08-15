@@ -37,7 +37,7 @@ class ButtonClickEvent : public Event {
 
 				~ButtonClickEvent() {}
 
-				std::string getButtonValue() { return buttonText; }
+				std::string getButtonText() { return buttonText; }
 
 	private:
 				std::string buttonText;

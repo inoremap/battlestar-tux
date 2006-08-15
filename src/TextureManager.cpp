@@ -82,10 +82,10 @@ GLuint TextureManager::loadTextureFile( std::string filename, int texture_qualit
 	GLuint textureid;
 	int mode;
 
-	surface = IMG_Load( filename );
+	surface = IMG_Load( filename.c_str() );
 
 	if( !surface ) {
-		printf( "TextureManager: Couldn't load texture: %s\n", filename );
+		std::cout << "TextureManager: Couldn't load texture: " << filename << "\n";
 		return 0;
 	}
 
@@ -99,7 +99,7 @@ GLuint TextureManager::loadTextureFile( std::string filename, int texture_qualit
 	}
 	/* Unable to find suitable mode. */
 	else {
-		printf( "TextureManager: Couldn't find 24/32-bit texture: %s\n", filename );
+		std::cout << "TextureManager: Couldn't find 24/32-bit texture: " << filename << "\n";
 		SDL_FreeSurface( surface );
 		return 0;
 	}
@@ -115,7 +115,7 @@ GLuint TextureManager::loadTextureFile( std::string filename, int texture_qualit
 	SDL_FreeSurface(surface);
 
 	// We need to know when textures are being loaded.
-	printf( "TextureManager: Texture loaded:  %s\n", filename );
+	std::cout << "TextureManager: Texture loaded: " << filename << "\n";
 
 	return textureid;
 }

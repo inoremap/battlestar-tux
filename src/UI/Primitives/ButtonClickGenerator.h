@@ -1,4 +1,4 @@
-/* EventGenerator.h
+/* ButtonClickGenerator.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,36 +22,36 @@
  */
 
 
-#ifndef EVENTGENERATOR_H_
-#define EVENTGENERATOR_H_
+#ifndef BUTTONCLICKGENERATOR_H_
+#define BUTTONCLICKGENERATOR_H_
 
-#include "../../Structures/List.h"
-#include "Event.h"
-#include "EventListener.h"
+#include "ButtonClickEvent.h"
+#include "ButtonClickListener.h"
+#include "EventGenerator.h"
 
-/* All widgets which generate events inherit this generator. */
-class EventGenerator : protected List {
+/* Generates button click events. */
+class ButtonClickGenerator : public EventGenerator {
 	public:
-				EventGenerator() {}
-				~EventGenerator() {}
+				ButtonClickGenerator() {}
+				~ButtonClickGenerator() {}
 
-				virtual void AddListener( EventListener* l ) { addObject( l ); }
-				virtual void RemListener( EventListener* l ) { remObject( l ); }
+				void AddListener( ButtonClickListener* l ) { addObject( l ); }
+				void RemListener( ButtonClickListener* l ) { remObject( l ); }
 
 	protected:
-				virtual void GenerateEvent( Event* e ) {
-					EventListener* cur = (EventListener*) rootObj;
+				virtual void GenerateEvent( ButtonClickEvent* e ) {
+					ButtonClickListener* cur = (ButtonClickListener*) rootObj;
 
 					while( cur ) {
 						cur->EventGenerated( e );
-						cur = (EventListener*) cur->getNext();
+						cur = (ButtonClickListener*) cur->getNext();
 					}	
 				}
 
 	private:
-				EventGenerator( const EventGenerator &gen );
-				const EventGenerator & operator= ( const EventGenerator &gen );
+				ButtonClickGenerator( const ButtonClickGenerator &gen );
+				const ButtonClickGenerator & operator= ( const ButtonClickGenerator &gen );
 };
 
 
-#endif /*EVENTGENERATOR_H_*/
+#endif /*BUTTONCLICKGENERATOR_H_*/

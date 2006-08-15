@@ -27,6 +27,7 @@
 
 #include <SDL_image.h>
 #include <SDL_opengl.h>
+#include <iostream>
 #include <string>
 
 #include "Structures/StringArray.h"

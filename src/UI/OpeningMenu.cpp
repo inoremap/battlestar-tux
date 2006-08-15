@@ -22,11 +22,16 @@
  */
 
 
+#include <string>
+#include <iostream>
+
 #include "OpeningMenu.h"
 #include "Primitives/VerticalPane.h"
 #include "Primitives/Button.h"
 
-OpeningMenu::OpeningMenu( int w, int h ) : GUI( w, h ) {
+OpeningMenu::OpeningMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+	mainMenu = menu;
+	game = g;
 }
 
 
@@ -37,19 +42,33 @@ void OpeningMenu::CreateWidgets() {
 	// Create widgets for Opening Menu.
 	VerticalPane* vPane = new VerticalPane( this, true, HORIZ_CENTER );
 	Button* button = new Button( this, " New Campaign ", HORIZ_CENTER );
+	button->AddListener( this );
 	vPane->AddWidget( button );
 	button = new Button( this, " Load Campaign ", HORIZ_CENTER );
+	button->AddListener( this );
 	vPane->AddWidget( button );
 	button = new Button( this, "Settings", HORIZ_CENTER );
+	button->AddListener( this );
 	vPane->AddWidget( button );
 	button = new Button( this, "Credits", HORIZ_CENTER );
+	button->AddListener( this );
 	vPane->AddWidget( button );
 	button = new Button( this, "Exit", HORIZ_CENTER );
+	button->AddListener( this );
 	vPane->AddWidget( button );
 	vPane->setPos( CONTAINER_MC );
 	addObject( vPane );
 }
 
 
-void OpeningMenu::EventGenerated( Event* e ) {
+void OpeningMenu::EventGenerated( ButtonClickEvent* e ) {
+	std::string text = e->getButtonText();
+
+	if( text == " New Campaign " ) {}
+	else if( text == " Load Campaign " ) {}
+	else if( text == "Settings" ) {}
+	else if( text == "Credits" ) {}
+	else if( text == "Exit" ) {
+		game->exitBT();
+	}
 }

@@ -27,11 +27,11 @@
 
 #include <string>
 
-#include "EventGenerator.h"
+#include "ButtonClickGenerator.h"
 #include "Widget.h"
 
 /* Clickable widget that displays a text string. */
-class Button : public Widget, private EventGenerator {
+class Button : public Widget, public ButtonClickGenerator {
 	public:
 				Button( GUI* gui, std::string s, W_Alignment h );
 				~Button();

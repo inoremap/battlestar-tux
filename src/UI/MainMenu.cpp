@@ -99,7 +99,7 @@ void MainMenu::ChangeMenu( MenuType t ) {
 	switch( t ) {
 		case OPENING_MENU:
 		default:
-			currentMenu = new OpeningMenu( game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new OpeningMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 	}
 

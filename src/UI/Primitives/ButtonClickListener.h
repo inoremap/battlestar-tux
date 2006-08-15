@@ -1,4 +1,4 @@
-/* Label.cpp
+/* ButtonClickListener.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,21 +22,26 @@
  */
 
 
-#include "Label.h"
+#ifndef BUTTONCLICKLISTENER_H_
+#define BUTTONCLICKLISTENER_H_
 
-Label::Label( GUI* gui, std::string s ) : Widget( gui ) {
-	labelText = s;
-}
+#include "Event.h"
+#include "EventListener.h"
 
+/* Listens for button clicks. */
+class ButtonClickListener : public EventListener {
+	public:
+				ButtonClickListener() {}
 
-Label::~Label() {}
+				virtual ~ButtonClickListener() {}
 
+				virtual void EventGenerated( ButtonClickEvent* e ) {
+					printf( "Unhandled button click event generated...\n" );
+				}
 
-void Label::Draw() {
-	float descender = font->Descender();
+	private:
+				ButtonClickListener( const ButtonClickListener &l );
+				const ButtonClickListener & operator= ( const ButtonClickListener &l );
+};
 
-	glTranslatef( 0.0, -descender, 0.0 );
-	glColor4f( 1.0, 1.0, 1.0, 1.0 );
-	glBindTexture( GL_TEXTURE_2D, 0 );
-	font->Render( labelText.c_str() );
-}
+#endif /*BUTTONCLICKLISTENER_H_*/

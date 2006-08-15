@@ -91,7 +91,7 @@ ListItem* List::getRoot() { return rootObj; }
 void List::printList() { printList( rootObj, "List" ); }
 void List::printList( std::string desc ) { printList( rootObj, desc ); }
 void List::printList( ListItem* obj ) { printList( obj, "List" ); }
-void List::printList( ListItem* obj, std::string ) {
+void List::printList( ListItem* obj, std::string desc ) {
 	ListItem* cur = obj;
 	int count = 0;
 

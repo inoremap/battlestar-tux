@@ -23,6 +23,7 @@
 
 
 #include <SDL.h>
+#include <iostream>
 #include <string>
 
 #include "GUI.h"
@@ -34,33 +35,33 @@ GUI::GUI( int w, int h ) {
 
 	// Load normal font.
 	std::string normalFontFile = "data/fonts/forgottenfuturist.ttf";
-	normalFont = new FTGLTextureFont( normalFontFile );
+	normalFont = new FTGLTextureFont( normalFontFile.c_str() );
 	if( normalFont->Error() )
-		printf( "Unable to open font file: %s\n", normalFontFile );
+		std::cout << "Unable to open font file: " << normalFontFile << "\n";
 	normalFont->FaceSize( 30 );
 	normalFont->CharMap( ft_encoding_unicode );
 	if( normalFont->Error() )
-		printf( "Unable to set font parameters: %s\n", normalFontFile );
+		std::cout << "Unable to set font parameters: " << normalFontFile << "\n";
 
 	// Load italic font.
 	std::string italicFontFile = "data/fonts/forgottenfuturist_i.ttf";
-	italicFont = new FTGLTextureFont( italicFontFile );
+	italicFont = new FTGLTextureFont( italicFontFile.c_str() );
 	if( italicFont->Error() )
-		printf( "Unable to open font file: %s\n", italicFontFile );
+		std::cout << "Unable to open font file: " << italicFontFile << "\n";
 	italicFont->FaceSize( 30 );
 	italicFont->CharMap( ft_encoding_unicode );
 	if( italicFont->Error() )
-		printf( "Unable to set font parameters: %s\n", italicFontFile );
+		std::cout << "Unable to set font parameters: " << italicFontFile << "\n";
 
 	// Load bold font.
 	std::string boldFontFile = "data/fonts/forgottenfuturist_b.ttf";
-	boldFont = new FTGLTextureFont( boldFontFile );
+	boldFont = new FTGLTextureFont( boldFontFile.c_str() );
 	if( boldFont->Error() )
-		printf( "Unable to open font file: %s\n", boldFontFile );
+		std::cout << "Unable to open font file: " << boldFontFile << "\n";
 	boldFont->FaceSize( 30 );
 	boldFont->CharMap( ft_encoding_unicode );
 	if( boldFont->Error() )
-		printf( "Unable to set font parameters: %s\n", boldFontFile );
+		std::cout << "Unable to set font parameters: " << boldFontFile << "\n";
 }
 
 
