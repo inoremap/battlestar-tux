@@ -37,7 +37,7 @@ class Plasma : public Weapon {
 	public:
 				Plasma( WeaponSystem* w, Game* g );
 
-				std::sting getName();
+				std::string getName();
 
 	private:
 				Plasma( const Plasma &plasma );
