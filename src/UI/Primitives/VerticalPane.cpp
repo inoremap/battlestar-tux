@@ -30,8 +30,8 @@ VerticalPane::VerticalPane( GUI* g, bool resize, W_Alignment h ) : Container( g 
 
 	hAlign = h;
 
-	preferredSize[0] = size[0] = 50;
-	preferredSize[1] = size[1] = 100;
+	preferredSize[0] = size[0] = 10;
+	preferredSize[1] = size[1] = 10;
 }
 
 VerticalPane::~VerticalPane() {}

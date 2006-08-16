@@ -30,8 +30,8 @@ HorizontalPane::HorizontalPane( GUI* g, bool resize, W_Alignment v ) : Container
 
 	vAlign = v;
 
-	preferredSize[0] = size[0] = 50;
-	preferredSize[1] = size[1] = 100;
+	preferredSize[0] = size[0] = 10;
+	preferredSize[1] = size[1] = 10;
 }
 
 HorizontalPane::~HorizontalPane() {}

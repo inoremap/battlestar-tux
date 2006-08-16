@@ -30,6 +30,7 @@
 #include "MainMenu.h"
 #include "Primitives/ButtonClickEvent.h"
 #include "Primitives/ButtonClickListener.h"
+#include "Primitives/VerticalPane.h"
 
 /* First menu drawn - game first starting. */
 class OpeningMenu : public GUI, ButtonClickListener {
@@ -49,6 +50,24 @@ class OpeningMenu : public GUI, ButtonClickListener {
 
 				// Main menu selects what menu is currently visible.
 				MainMenu* mainMenu;
+
+				// Current pane being displayed.
+				Container* currentPane;
+
+				// Initial menu options.
+				VerticalPane* initial;
+
+				// New campaign options.
+				VerticalPane* newCampaign;
+
+				// Load campaign options.
+				VerticalPane* loadCampaign;
+
+				// Settings
+				VerticalPane* settings;
+
+				// Credits
+				VerticalPane* credits;
 
 				Game* game;
 };

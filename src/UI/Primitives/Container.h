@@ -30,7 +30,7 @@
 #include "Widget.h"
 
 // Default color/alpha for containers.
-static const float C_BG[4] = { 0.0, 0.0, 0.0, 0.4 };
+static const float C_BG[4] = { 0.0, 0.0, 0.0, 0.75 };
 static const float C_FG[4] = { 0.396, 0.607, 0.831, 0.9 };
 static const float C_EDGE[4] = { 0.396, 0.607, 0.831, 0.9 };
 

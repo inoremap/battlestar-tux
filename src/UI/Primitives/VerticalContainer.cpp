@@ -30,8 +30,8 @@ VerticalContainer::VerticalContainer( GUI* g, bool resize, W_Alignment h ) : Con
 
 	hAlign = h;
 
-	preferredSize[0] = size[0] = 50;
-	preferredSize[1] = size[1] = 100;
+	preferredSize[0] = size[0] = 10;
+	preferredSize[1] = size[1] = 10;
 }
 
 VerticalContainer::~VerticalContainer() {}

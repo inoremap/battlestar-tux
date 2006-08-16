@@ -24,8 +24,23 @@
 
 #include "Label.h"
 
-Label::Label( GUI* gui, std::string s ) : Widget( gui ) {
+Label::Label( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
 	labelText = s;
+	hAlign = h;
+
+	float llx = 0.0;
+	float lly = 0.0;
+	float llz = 0.0;
+	float urx = 0.0;
+	float ury = 0.0;
+	float urz = 0.0;
+	float descender = font->Descender();
+	float ascender = font->Ascender();
+	font->BBox( labelText.c_str(), llx, lly, llz, urx, ury, urz );
+
+	textWidth = urx - llx;
+	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
+	preferredSize[1] = size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
 }
 
 
@@ -33,10 +48,25 @@ Label::~Label() {}
 
 
 void Label::Draw() {
-	float descender = font->Descender();
+	// Translate to object position.
+	glTranslatef( pos[0], pos[1], 0.0 );
 
-	glTranslatef( 0.0, -descender, 0.0 );
-	glColor4f( 1.0, 1.0, 1.0, 1.0 );
-	glBindTexture( GL_TEXTURE_2D, 0 );
+	// Draw text.
+	switch( hAlign ) {
+		case HORIZ_LEFT:
+			glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+			break;
+
+		case HORIZ_CENTER:
+			glTranslatef( (size[0] - textWidth)/2, -font->Descender(), 0.0 );
+			break;
+
+		case HORIZ_RIGHT:
+		default:
+			glTranslatef( size[0] - textWidth - W_HORIZ_PAD, -font->Descender(), 0.0 );
+			break;
+	}
+
+	glColor4fv( W_FG );
 	font->Render( labelText.c_str() );
 }
