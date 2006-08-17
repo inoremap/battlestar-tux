@@ -23,7 +23,7 @@
 
 
 #include <math.h>
-#include <stdio.h>
+#include <iostream>
 
 #include "Config.h"
 #include "Displayable.h"
@@ -345,7 +345,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 			else {
 				// Game over!!!
 				if( game->getConfig()->getDebug() )
-					printf( "Game over!!!!  Player is dead.\n" );
+					cout << "Game over!!!!  Player is dead.\n";
 			}
 		}
 	}
@@ -378,19 +378,19 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 	// Two ammos are colliding
 	else if( a->getType() & AMMO && b->getType() & AMMO ) {
 		if( game->getConfig()->getDebug() )
-			printf( "Ammo collision.\n" );
+			cout << "Ammo collision.\n";
 	}
 
 	// Two shields are colliding.
 	else if( a->getType() & SHIELD && b->getType() & SHIELD ) {
 		if( game->getConfig()->getDebug() )
-			printf( "Aircraft shield collision.\n" );
+			cout << "Aircraft shield collision.\n";
 	}
 
 	// Two airframes are colliding.
 	else {
 		if( game->getConfig()->getDebug() )
-			printf( "Aircraft collision.\n" );
+			cout << "Aircraft collision.\n";
 	}
 }
 

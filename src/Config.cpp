@@ -22,8 +22,8 @@
  */
 
 
-#include <stdio.h>
 #include <string>
+#include <iostream>
 
 #include "Config.h"
 
@@ -65,25 +65,25 @@ void Config::parseCommandline( int argc, char* argv[] ) {
 
 
 void Config::printGreeting() {
-	printf( "Battlestar T.U.X." );
-	printf( "\n  Copyright (C) 2005-2006 Eliot Eshelman <eliot@6by9.net>" );
-	printf( "\n" );
-	printf( "\n  Battlestar Tux is free software; you can redistribute it and/or modify" );
-	printf( "\n  it under the terms of the GNU General Public License as published by" );
-	printf( "\n  the Free Software Foundation; version 2 of the License." );
-	printf( "\n" );
-	printf( "\n  See http://6by9.net/code/battlestar/ for the latest updates." );
-	printf( "\n\n" );
+	cout << "Battlestar T.U.X.";
+	cout << "\n  Copyright (C) 2005-2006 Eliot Eshelman <eliot@6by9.net>";
+	cout << "\n";
+	cout << "\n  Battlestar Tux is free software; you can redistribute it and/or modify";
+	cout << "\n  it under the terms of the GNU General Public License as published by";
+	cout << "\n  the Free Software Foundation; version 2 of the License.";
+	cout << "\n";
+	cout << "\n  See http://6by9.net/code/battlestar/ for the latest updates.";
+	cout << "\n\n";
 }
 
 
 void Config::printUsage() {
-	printf( "Usage: battlestarTUX [options]" );
-	printf( "\n    Options:" );
-	printf( "\n       --debug       Enable debugging.  Extra game-state messages will be printed." );
-	printf( "\n       --wireframe   Draw all polygons in wireframe.  For debugging." );
-	printf( "\n       --no-grab     Do not grab mouse input - the cursor will not stay inside the window." );
-	printf( "\n\n" );
+	cout << "Usage: battlestarTUX [options]";
+	cout << "\n    Options:";
+	cout << "\n       --debug       Enable debugging.  Extra game-state messages will be printed.";
+	cout << "\n       --wireframe   Draw all polygons in wireframe.  For debugging.";
+	cout << "\n       --no-grab     Do not grab mouse input - the cursor will not stay inside the window.";
+	cout << "\n\n";
 }
 
 

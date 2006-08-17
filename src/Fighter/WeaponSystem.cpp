@@ -126,7 +126,8 @@ void WeaponSystem::Fire( bool firing ) {
 bool WeaponSystem::Equip( Weapon* weapon, WeaponMount point ) {
 	// Ensure weapon can be mounted at this point.
 	if( (weapon->getMount() & point) == 0 ) {
-		printf( "Unable to mount weapon (%i) on this mount point (%i): %i.\n", weapon->getMount(), point, weapon->getMount() & point );
+		cout		<< "Unable to mount weapon (" << weapon->getMount() << ") on this mount point (" << point
+				<< "): " << weapon->getMount() & point << ".\n"
 		return false;
 	}
 
@@ -135,7 +136,7 @@ bool WeaponSystem::Equip( Weapon* weapon, WeaponMount point ) {
 		if( mountTypes[i] == point ) {
 			// A weapon is already equiped here.
 			if( weapons[i] ) {
-				printf( "There is already a weapon mounted here.\n" );
+				cout << "There is already a weapon mounted here.\n";
 				return false;
 			}
 			// Equip the weapon.

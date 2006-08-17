@@ -102,8 +102,8 @@ void ShieldImpactList::Impact( float* point ) {
 		angle = (90 - angle) + 270;
 
 	if( angle < 270 && angle > 90 )
-		printf( "Angle: %f\tShield: (%f, %f)\tImpact: (%f, %f)\n",
-			angle, shieldPosition[0], shieldPosition[1], point[0], point[1] );
+		cout		<< "Angle: " << angle << "\tShield: (" << shieldPosition[0] << ", " << shieldPosition[1]
+				<< ")\tImpact: (" << point[0] << ", " << point[1] << ")\n";
 
 	ShieldImpact* impact = new ShieldImpact( shield, angle, texture, game );
 	addObject( impact );

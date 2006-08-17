@@ -24,6 +24,7 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <iostream>
 #include <stdlib.h>
 
 #include "Screen.h"
@@ -35,7 +36,7 @@ Screen::Screen( Game* g ) {
 	// Try to initialize SDL. If it fails, then give up.
 	if( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
 	{
-		printf( "Can't initialize SDL: %s\n", SDL_GetError() );
+		cout << "Can't initialize SDL: " << SDL_GetError() << "\n";
 		return;
 	}
 
@@ -74,7 +75,7 @@ Screen::Screen( Game* g ) {
 	// If the window couldn't be created at all, we're done.
 	if( screen == NULL )
 	{
-		printf( "Can't create SDL screen: %s\n", SDL_GetError() );
+		cout << "Can't create SDL screen: " << SDL_GetError() << "\n";
 		return;
 	}
 

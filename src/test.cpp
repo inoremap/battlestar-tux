@@ -28,7 +28,7 @@
 
 
 #include <SDL.h>
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <math.h>
 
@@ -83,11 +83,11 @@ int main(int argc, char* argv[])
 	game->setEnemyAmmoList( enemyAmmoList );
 
 
-	printf( "Testing Battlestar TUX...\n\n" );
+	cout << "Testing Battlestar TUX...\n\n";
 ////// Test suite.
 
 	/*//// Test Displaylist:
-	printf( "\nAdding 1000 enemies...\n" );
+	cout << "\nAdding 1000 enemies...\n";
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 		f->setPos( 0, n );
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "Removing all enemies...\n" );
+	cout << "Removing all enemies...\n";
 	EnemyFighter* root = (EnemyFighter*) enemies->getRoot();
 	while( root ) {
 		EnemyFighter* next = (EnemyFighter*) root->getNext();
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "\nAdding 1000 enemies...\n" );
+	cout << "\nAdding 1000 enemies...\n";
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 		f->setPos( 0, n );
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "Removing all enemies in reverse order...\n" );
+	cout << "Removing all enemies in reverse order...\n";
 	root = (EnemyFighter*) enemies->getRoot();
 	EnemyFighter* last = 0;
 	while( root ) {
@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "\nAdding 1000 enemies...\n" );
+	cout << "\nAdding 1000 enemies...\n";
 	for( int n=0; n < 1000; n++ ) {
 		EnemyFighter* f = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 		f->setPos( 0, n );
@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
 	}
 	enemies->printList();
 
-	printf( "Removing all enemies in random order...\n" );
+	cout << "Removing all enemies in random order...\n";
 	root = 0;
 	last = 0;
 	unsigned int rand = 0;
@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
 	//// Done testing DisplayList*/
 
 	/*//// Test culling:
-	printf( "\nTesting culling...\n" );
+	cout << "\nTesting culling...\n";
 	EnemyFighter* top = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
 	top->setPos( 0, 100 );
 	enemies->addObject( top );
@@ -197,19 +197,19 @@ int main(int argc, char* argv[])
 
 	enemies->printList();
 
-	printf( "Culling top...\n" );
+	cout << "Culling top...\n";
 	enemies->CullObjects( CULL_TOP );
 	enemies->printList();
 
-	printf( "Culling right...\n" );
+	cout << "Culling right...\n";
 	enemies->CullObjects( CULL_RIGHT );
 	enemies->printList();
 
-	printf( "Culling bottom...\n" );
+	cout << "Culling bottom...\n";
 	enemies->CullObjects( CULL_BOTTOM );
 	enemies->printList();
 
-	printf( "Culling left...\n" );
+	cout << "Culling left...\n";
 	enemies->CullObjects( CULL_LEFT );
 	enemies->printList();
 	//// Done testing culling.*/
@@ -255,14 +255,14 @@ int main(int argc, char* argv[])
 	array->insert( "Y", 25 );
 	array->insert( "Z", 26 );
 	array->print();
-	printf( "Find A: %i\n", array->getID("A") );
-	printf( "Find D: %i\n", array->getID("D") );
-	printf( "Find H: %i\n", array->getID("H") );
-	printf( "Find J: %i\n", array->getID("J") );
-	printf( "Find P: %i\n", array->getID("P") );
-	printf( "Find Q: %i\n", array->getID("Q") );
-	printf( "Find Z: %i\n", array->getID("Z") );
-	printf( "Find BAD: %i\n", array->getID("BAD") );
+	cout << "Find A: " << array->getID("A") << "\n";
+	cout << "Find D: " << array->getID("D") << "\n";
+	cout << "Find H: " << array->getID("H") << "\n";
+	cout << "Find J: " << array->getID("J") << "\n";
+	cout << "Find P: " << array->getID("P") << "\n";
+	cout << "Find Q: " << array->getID("Q") << "\n";
+	cout << "Find Z: " << array->getID("Z") << "\n";
+	cout << "Find BAD: " << array->getID("BAD") << "\n";
 	//// Done testing Stringarray.*/
 
 ////// End Test suite.

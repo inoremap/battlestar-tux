@@ -22,7 +22,7 @@
  */
 
 
-#include <stdio.h>
+#include <iostream>
 
 #include "List.h"
 
@@ -95,17 +95,17 @@ void List::printList( ListItem* obj, std::string desc ) {
 	ListItem* cur = obj;
 	int count = 0;
 
-	printf( "---%s------------------\n", desc );
-	printf( " obj: %8x\trootObj: %8x", obj, rootObj );
+	cout << "---" << desc << "------------------\n";
+	cout << " obj: " << obj << "\trootObj: " << rootObj;
 	if( obj )
-		printf( "\tprev: %8x\tnext: %8x\n", obj->getPrev(), obj->getNext() );
+		cout << "\tprev: " obj->getPrev() << "\tnext: " << obj->getNext() << "\n";
 	else
-		printf( "\n" );
+		cout << "\n";
 
 	while( cur ) {
 		if( count < 20 ) {
-			printf( " Object: 0x%x", cur );
-			printf( "\tprev: %8x\tnext: %8x\n", cur->getPrev(), cur->getNext() );
+			cout << " Object: 0x" << cur;
+			cout << "\tprev: " << cur->getPrev() << "\tnext: " << cur->getNext() << "\n";
 		}
 
 		count++;
@@ -113,7 +113,7 @@ void List::printList( ListItem* obj, std::string desc ) {
 	}
 
 	if( count >= 20 )
-		printf( " more...%i total\n", count );
+		cout << " more..." << count << " total\n";
 
-	printf( "---%s------------------\n\n", desc );
+	cout << "---" << desc << "------------------\n\n";
 }

@@ -22,8 +22,9 @@
  */
 
 
-#include "StringArray.h"
+#include <iostream>
 
+#include "StringArray.h"
 
 StringArray::StringArray() {
 	used = 0;
@@ -55,7 +56,7 @@ void StringArray::insert( std::string value, int id ) {
 	// Find the sorted position of the new value.
 	for( int i = 0; i < used; i++ ) {
 		if( value == values[i] ) {
-			printf( "StringArray: Duplicate load attempted: %s\n", value.c_str() );
+			cout << "StringArray: Duplicate load attempted: " << value << "\n";
 			return;
 		}
 		else if( value < values[i] ) {
@@ -124,7 +125,7 @@ void StringArray::remove( std::string value ) {
 		used--;
 	}
 	else
-		printf( "StringArray: Unable to remove value %s\n", value.c_str() );
+		cout << "StringArray: Unable to remove value " << value << "\n";
 }
 
 
@@ -151,7 +152,7 @@ void StringArray::remove( int id ) {
 		used--;
 	}
 	else
-		printf( "StringArray: Unable to remove id %i\n", id );
+		cout << "StringArray: Unable to remove id " << id << "\n";
 }
 
 
@@ -219,10 +220,10 @@ const int StringArray::getSize() { return used; }
 
 
 void StringArray::print() {
-	printf( "---String Array (%i / %i) ---\n", used, size );
+	cout << "---String Array (" << used << " / " << size << ") ---\n";
 
 	for( int i = 0; i < size; i++ )
-		printf( "Value (%2i):  %10s\tID:  %3i\n", i, values[i].c_str(), ids[i] );
+		cout << "Value (" << i << "):  " << values[i] << "\tID:  " << ids[i] << "\n";
 
-	printf( "---String Array---\n" );
+	cout << "---String Array---\n";
 }

@@ -25,6 +25,8 @@
 #ifndef BUTTONCLICKLISTENER_H_
 #define BUTTONCLICKLISTENER_H_
 
+#include <iostream>
+
 #include "Event.h"
 #include "EventListener.h"
 
@@ -36,7 +38,7 @@ class ButtonClickListener : public EventListener {
 				virtual ~ButtonClickListener() {}
 
 				virtual void EventGenerated( ButtonClickEvent* e ) {
-					printf( "Unhandled button click event generated...\n" );
+					cout << "Unhandled button click event generated...\n";
 				}
 
 	private:

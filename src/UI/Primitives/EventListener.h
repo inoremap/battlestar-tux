@@ -25,6 +25,8 @@
 #ifndef EVENTLISTENER_H_
 #define EVENTLISTENER_H_
 
+#include <iostream>
+
 #include "../../Structures/ListItem.h"
 #include "Event.h"
 
@@ -36,7 +38,7 @@ class EventListener : public ListItem {
 				virtual ~EventListener() {}
 
 				virtual void EventGenerated( Event* e ) {
-					printf( "Unhandled event generated...\n" );
+					cout << "Unhandled event generated...\n";
 				}
 
 	private:
