@@ -95,17 +95,17 @@ void List::printList( ListItem* obj, std::string desc ) {
 	ListItem* cur = obj;
 	int count = 0;
 
-	cout << "---" << desc << "------------------\n";
-	cout << " obj: " << obj << "\trootObj: " << rootObj;
+	std::cout << "---" << desc << "------------------\n";
+	std::cout << " obj: " << obj << "\trootObj: " << rootObj;
 	if( obj )
-		cout << "\tprev: " obj->getPrev() << "\tnext: " << obj->getNext() << "\n";
+		std::cout << "\tprev: " << obj->getPrev() << "\tnext: " << obj->getNext() << "\n";
 	else
-		cout << "\n";
+		std::cout << "\n";
 
 	while( cur ) {
 		if( count < 20 ) {
-			cout << " Object: 0x" << cur;
-			cout << "\tprev: " << cur->getPrev() << "\tnext: " << cur->getNext() << "\n";
+			std::cout << " Object: 0x" << cur;
+			std::cout << "\tprev: " << cur->getPrev() << "\tnext: " << cur->getNext() << "\n";
 		}
 
 		count++;
@@ -113,7 +113,7 @@ void List::printList( ListItem* obj, std::string desc ) {
 	}
 
 	if( count >= 20 )
-		cout << " more..." << count << " total\n";
+		std::cout << " more..." << count << " total\n";
 
-	cout << "---" << desc << "------------------\n\n";
+	std::cout << "---" << desc << "------------------\n\n";
 }

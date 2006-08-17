@@ -22,8 +22,6 @@
  */
 
 
-#include <stdio.h>
-
 #include "../TextureManager.h"
 #include "WeaponSystem.h"
 #include "Fighter.h"
@@ -126,8 +124,8 @@ void WeaponSystem::Fire( bool firing ) {
 bool WeaponSystem::Equip( Weapon* weapon, WeaponMount point ) {
 	// Ensure weapon can be mounted at this point.
 	if( (weapon->getMount() & point) == 0 ) {
-		cout		<< "Unable to mount weapon (" << weapon->getMount() << ") on this mount point (" << point
-				<< "): " << weapon->getMount() & point << ".\n"
+		std::cout	<< "Unable to mount weapon (" << weapon->getMount() << ") on this mount point ("
+					<< point << "): " << (weapon->getMount() & point) << ".\n";
 		return false;
 	}
 
@@ -136,7 +134,7 @@ bool WeaponSystem::Equip( Weapon* weapon, WeaponMount point ) {
 		if( mountTypes[i] == point ) {
 			// A weapon is already equiped here.
 			if( weapons[i] ) {
-				cout << "There is already a weapon mounted here.\n";
+				std::cout << "There is already a weapon mounted here.\n";
 				return false;
 			}
 			// Equip the weapon.

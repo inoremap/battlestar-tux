@@ -22,8 +22,6 @@
  */
 
 
-#include <stdio.h>
-
 #include "ShieldImpact.h"
 
 ShieldImpact::ShieldImpact( Shield* s, float angle, GLuint t, Game* g ) : Displayable( EFFECT, g ) {

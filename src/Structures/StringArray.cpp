@@ -56,7 +56,7 @@ void StringArray::insert( std::string value, int id ) {
 	// Find the sorted position of the new value.
 	for( int i = 0; i < used; i++ ) {
 		if( value == values[i] ) {
-			cout << "StringArray: Duplicate load attempted: " << value << "\n";
+			std::cout << "StringArray: Duplicate load attempted: " << value << "\n";
 			return;
 		}
 		else if( value < values[i] ) {
@@ -125,7 +125,7 @@ void StringArray::remove( std::string value ) {
 		used--;
 	}
 	else
-		cout << "StringArray: Unable to remove value " << value << "\n";
+		std::cout << "StringArray: Unable to remove value " << value << "\n";
 }
 
 
@@ -152,7 +152,7 @@ void StringArray::remove( int id ) {
 		used--;
 	}
 	else
-		cout << "StringArray: Unable to remove id " << id << "\n";
+		std::cout << "StringArray: Unable to remove id " << id << "\n";
 }
 
 
@@ -220,10 +220,10 @@ const int StringArray::getSize() { return used; }
 
 
 void StringArray::print() {
-	cout << "---String Array (" << used << " / " << size << ") ---\n";
+	std::cout << "---String Array (" << used << " / " << size << ") ---\n";
 
 	for( int i = 0; i < size; i++ )
-		cout << "Value (" << i << "):  " << values[i] << "\tID:  " << ids[i] << "\n";
+		std::cout << "Value (" << i << "):  " << values[i] << "\tID:  " << ids[i] << "\n";
 
-	cout << "---String Array---\n";
+	std::cout << "---String Array---\n";
 }

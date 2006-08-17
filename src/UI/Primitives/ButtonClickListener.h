@@ -38,7 +38,7 @@ class ButtonClickListener : public EventListener {
 				virtual ~ButtonClickListener() {}
 
 				virtual void EventGenerated( ButtonClickEvent* e ) {
-					cout << "Unhandled button click event generated...\n";
+					std::cout << "Unhandled button click event generated...\n";
 				}
 
 	private:

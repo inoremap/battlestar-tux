@@ -38,7 +38,7 @@ class EventListener : public ListItem {
 				virtual ~EventListener() {}
 
 				virtual void EventGenerated( Event* e ) {
-					cout << "Unhandled event generated...\n";
+					std::cout << "Unhandled event generated...\n";
 				}
 
 	private:

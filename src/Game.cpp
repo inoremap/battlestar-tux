@@ -105,13 +105,13 @@ void Game::startFrame() {
 	frame++;
 	if( config->getDebug() && frame%200 == 0 ) {
 		fps = ((float) frame) / (((float) curTime - (float) startTime) / 1000);
-		cout		<< "Frame: " << frame
-				<< "   ---   Game Frame: " << gameFrame
-				<< "   ---   Last Frame: " << lastGameFrame
-				<< "   ---   Time: " << (float) (curTime - startTime) / 1000
-				<< "   ---   FPS: " << fps
-				<< "   ---   Sleep: " << syncSleep
-				<< "\n";
+		std::cout	<< "Frame: " << frame
+					<< "   ---   Game Frame: " << gameFrame
+					<< "   ---   Last Frame: " << lastGameFrame
+					<< "   ---   Time: " << (float) (curTime - startTime) / 1000
+					<< "   ---   FPS: " << fps
+					<< "   ---   Sleep: " << syncSleep
+					<< "\n";
 	}
 
 	// Calculate how many frames we should have drawn up to now.

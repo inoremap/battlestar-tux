@@ -345,7 +345,7 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 			else {
 				// Game over!!!
 				if( game->getConfig()->getDebug() )
-					cout << "Game over!!!!  Player is dead.\n";
+					std::cout << "Game over!!!!  Player is dead.\n";
 			}
 		}
 	}
@@ -378,19 +378,19 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 	// Two ammos are colliding
 	else if( a->getType() & AMMO && b->getType() & AMMO ) {
 		if( game->getConfig()->getDebug() )
-			cout << "Ammo collision.\n";
+			std::cout << "Ammo collision.\n";
 	}
 
 	// Two shields are colliding.
 	else if( a->getType() & SHIELD && b->getType() & SHIELD ) {
 		if( game->getConfig()->getDebug() )
-			cout << "Aircraft shield collision.\n";
+			std::cout << "Aircraft shield collision.\n";
 	}
 
 	// Two airframes are colliding.
 	else {
 		if( game->getConfig()->getDebug() )
-			cout << "Aircraft collision.\n";
+			std::cout << "Aircraft collision.\n";
 	}
 }
 
