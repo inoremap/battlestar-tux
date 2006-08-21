@@ -39,7 +39,10 @@ class GUI : public List {
 				virtual void CreateWidgets();
 
 				// Draw all GUI widgets.
-				void Draw();
+				virtual void Draw();
+
+				// Some GUI widgets need to be drawn twice - usually for lighting reasons.
+				virtual void SecondDraw();
 
 				// Update all GUI widgets.
 				void Update();
@@ -64,6 +67,12 @@ class GUI : public List {
 	private:
 				GUI( const GUI &gui );
 				const GUI & operator= ( const GUI &gui );
+
+				// Called right before drawing widgets.
+				void beforeDraw();
+
+				// Called right after drawing widgets.
+				void afterDraw();
 };
 
 #endif /*GUI_H_*/

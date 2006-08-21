@@ -25,7 +25,7 @@
 #include "VerticalContainer.h"
 #include "Widget.h"
 
-VerticalContainer::VerticalContainer( GUI* g, bool resize, W_Alignment h ) : Container( g ) {
+VerticalContainer::VerticalContainer( GUI* g, bool resize, W_Alignment h ) : Container( g, true ) {
 	resizeWidgets = resize;
 
 	hAlign = h;

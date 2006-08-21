@@ -25,7 +25,7 @@
 #include "VerticalPane.h"
 #include "Widget.h"
 
-VerticalPane::VerticalPane( GUI* g, bool resize, W_Alignment h ) : Container( g ) {
+VerticalPane::VerticalPane( GUI* g, bool resize, W_Alignment h ) : Container( g, true ) {
 	resizeWidgets = resize;
 
 	hAlign = h;

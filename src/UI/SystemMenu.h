@@ -25,21 +25,32 @@
 #ifndef SYSTEMMENU_H_
 #define SYSTEMMENU_H_
 
+#include "GUI.h"
 #include "../Game.h"
+#include "MainMenu.h"
+#include "Primitives/ButtonClickEvent.h"
+#include "Primitives/ButtonClickListener.h"
 
-/* Display a solar system and its properties. */
-class SystemMenu {
+/* Display a star system and its properties. */
+class SystemMenu : public GUI, ButtonClickListener {
 	public:
-				SystemMenu( Game* g );
+				SystemMenu( MainMenu* menu, Game* g, int w, int h );
 				~SystemMenu();
 
-				// Show Solar System menu.
-				void ShowMenu();
+				// Create all widgets and bind listeners.
+				void CreateWidgets();
 
+				// Button click event.
+				void EventGenerated( ButtonClickEvent* e );
+
+				void Draw();
 
 	private:
 				SystemMenu( const SystemMenu &menu );
 				const SystemMenu & operator= ( const SystemMenu &menu );
+
+				// Main menu selects what menu is currently visible.
+				MainMenu* mainMenu;
 
 				Game* game;
 };

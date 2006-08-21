@@ -25,7 +25,7 @@
 #include "HorizontalPane.h"
 #include "Widget.h"
 
-HorizontalPane::HorizontalPane( GUI* g, bool resize, W_Alignment v ) : Container( g ) {
+HorizontalPane::HorizontalPane( GUI* g, bool resize, W_Alignment v ) : Container( g, false ) {
 	resizeWidgets = resize;
 
 	vAlign = v;

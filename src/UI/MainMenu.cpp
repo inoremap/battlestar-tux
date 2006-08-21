@@ -27,6 +27,7 @@
 
 #include "MainMenu.h"
 #include "OpeningMenu.h"
+#include "SystemMenu.h"
 #include "../Screen.h"
 
 MainMenu::MainMenu( MenuType t, Game* g ) {
@@ -100,6 +101,10 @@ void MainMenu::ChangeMenu( MenuType t ) {
 		case OPENING_MENU:
 		default:
 			currentMenu = new OpeningMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			break;
+
+		case SYSTEM_MENU:
+			currentMenu = new SystemMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 	}
 

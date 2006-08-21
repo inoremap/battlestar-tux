@@ -25,10 +25,11 @@
 #include <SDL_opengl.h>
 
 #include "SystemMenu.h"
+#include "Primitives/HorizontalPane.h"
 #include "Primitives/PlanetButton.h"
-#include "../TextureManager.h"
 
-SystemMenu::SystemMenu( Game* g ) {
+SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+	mainMenu = menu;
 	game = g;
 }
 
@@ -36,77 +37,46 @@ SystemMenu::SystemMenu( Game* g ) {
 SystemMenu::~SystemMenu() {}
 
 
-void SystemMenu::ShowMenu() {
-	SDL_Event event;
+void SystemMenu::CreateWidgets() {
+	// Create widgets for System Menu.
+	PlanetButton* planet1 = new PlanetButton( game, this, "System I", HORIZ_CENTER, 40, 35, 2.0, 30.0, 10.0 );
+	PlanetButton* planet2 = new PlanetButton( game, this, "System II", HORIZ_CENTER, 60, 35, 1.3, 270.0, 30.0 );
+	PlanetButton* planet3 = new PlanetButton( game, this, "System III", HORIZ_CENTER, 140, 35, 1.0, 80.0, -80.0 );
+	PlanetButton* planet4 = new PlanetButton( game, this, "System IV", HORIZ_CENTER, 80, 35, 0.5, 120.0, 70.0 );
 
-	PlanetButton* p1 = new PlanetButton( 3, 35, 1.0, 30.0, 0.0, game );
-	PlanetButton* p2 = new PlanetButton( 2.5, 35, 2.0, -70.0, 0.0, game );
+	HorizontalPane* system = new HorizontalPane( this, true, VERTI_BOTTOM );
+	system->setPos( CONTAINER_BC );
+	system->AddWidget( planet1 );
+	system->AddWidget( planet2 );
+	system->AddWidget( planet3 );
+	system->AddWidget( planet4 );
+	addObject( system );
+}
 
-	// Enable lighting.
-	glShadeModel( GL_SMOOTH );
+
+void SystemMenu::EventGenerated( ButtonClickEvent* e ) {
+	std::string text = e->getButtonText();
+}
+
+
+void SystemMenu::Draw() {
+	// Draw GUI objects that don't need lighting.
+	GUI::Draw();
+
+	// Set star system OpenGL lighting requirements.
+	glEnable( GL_DEPTH_TEST );
 	glEnable( GL_LIGHTING );
 	glEnable( GL_LIGHT0 );
-	float lightPos[] = { 100, 0.0, 40.0, 0.0 };
+	float lightPos[] = { -1000, 0.0, 100.0, 0.0 };
 	float lightAmb[] = { 0.0, 0.0, 0.0, 1.0 };
 	float lightDif[] = { 1.0, 1.0, 1.0, 1.0 };
 	glLightfv( GL_LIGHT0, GL_POSITION, lightPos );
 
-	// Depth testing is needed for 3D spheres.
-	glEnable( GL_DEPTH_TEST );
+	// Draw GUI objects that need lighting.
+	GUI::SecondDraw();
 
-	// Continue displaying menu until the menu is closed or the game is exited.
-	while( !game->isFinished() ) {
-		game->startFrame();
-
-		// Update information.
-		p1->Update();
-		p2->Update();
-
-		// Don't need to clear the screen, because the
-		// entire area will be drawn again.  +20fps
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-		// Set camera position and draw stuff...
-		glLoadIdentity();
-		glTranslatef( 0, 0, -15 );
-
-		// As long as we draw in order, we don't need depth testing.
-		glPushMatrix();
-			glTranslatef( 0.0, 8.0, 0.0 );
-			p1->Draw();
-		glPopMatrix();
-		p2->Draw();
-
-		// Swap buffers - the newly drawn items will appear.
-		SDL_GL_SwapBuffers();
-
-		// Read all events off the queue.
-		while( !game->isFinished() && SDL_PollEvent(&event) ) {
-			switch( event.type ) {
-				case SDL_KEYDOWN:
-					switch( event.key.keysym.sym ) {
-						case SDLK_ESCAPE:
-							game->exitBT();
-							break;
-
-						default:
-							break;
-					}
-					break;
-
-				case SDL_QUIT:
-					game->exitBT();
-					break;
-
-				default:
-					break;
-			}
-		}
-
-		// Check for OpenGL errors.
-
-		game->stopFrame();
-	}
-
-	// SystemMenu is finished or was aborted.
+	// Return to standard OpenGL settings.
+	glDisable( GL_LIGHT0 );
+	glDisable( GL_LIGHTING );
+	glDisable( GL_DEPTH_TEST );
 }

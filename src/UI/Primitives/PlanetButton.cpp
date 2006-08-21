@@ -27,7 +27,12 @@
 #include "PlanetButton.h"
 #include "../../TextureManager.h"
 
-PlanetButton::PlanetButton( float r, int p, float t, float rotX, float rotZ, Game* g ) {
+PlanetButton::PlanetButton( Game* g, GUI* gui, std::string s, W_Alignment h, float r, int p, float t, float rotX, float rotZ ) : Widget( gui ) {
+	// Button needs to be drawn twice.
+	secondDraw = true;
+
+	game = g;
+
 	radius = r;
 	precision = p;
 	rotation = 0.0;
@@ -35,32 +40,132 @@ PlanetButton::PlanetButton( float r, int p, float t, float rotX, float rotZ, Gam
 	offAxisX = rotX;
 	offAxisZ = rotZ;
 
-	game = g;
-
 	texture = game->getTextureManager()->loadTexture( "data/gfx/planet_0001-256.png" );
+
+
+	buttonText = s;
+	hAlign = h;
+
+	float llx = 0.0;
+	float lly = 0.0;
+	float llz = 0.0;
+	float urx = 0.0;
+	float ury = 0.0;
+	float urz = 0.0;
+	float descender = font->Descender();
+	float ascender = font->Ascender();
+	font->BBox( buttonText.c_str(), llx, lly, llz, urx, ury, urz );
+
+	textWidth = urx - llx;
+	textHeight = ascender + (-descender);
+
+	if( radius * 2 > textWidth )
+		preferredSize[0] = size[0] = ceilf( radius * 2 + W_HORIZ_PAD * 2 );
+	else
+		preferredSize[0] = size[0] = ceilf( textWidth + W_HORIZ_PAD * 2 );
+	preferredSize[1] = size[1] = ceilf( textHeight + radius * 2 + W_VERTI_PAD );
 }
 
 
-void PlanetButton::Update() {
+void PlanetButton::Update( int x, int y, int state ) {
 	rotation += torque * game->getGameSpeed();
 
 	// Avoid accumulation errors.
 	if( rotation >= 360 )
 		rotation -= 360;
+
+	Widget::Update( x, y, state );
 }
 
 
 void PlanetButton::Draw() {
+	// Translate to object position.
+	glTranslatef( pos[0], pos[1], 0.0 );
+
+	// Draw background.
+/*	if( hover && clicked )
+		glColor4fv( W_BG_CLICKED );
+	else if( hover )
+		glColor4fv( W_BG_HOVER );
+	else
+		glColor4fv( W_BG );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBegin( GL_POLYGON );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( W_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - W_EDGE_OFFSET, 0.0 );
+	glEnd();*/
+
+	// Draw text.
+	glPushMatrix();
+		switch( hAlign ) {
+			case HORIZ_LEFT:
+				glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+				break;
+
+			case HORIZ_CENTER:
+				glTranslatef( (size[0] - textWidth)/2, -font->Descender(), 0.0 );
+				break;
+
+			case HORIZ_RIGHT:
+			default:
+				glTranslatef( size[0] - textWidth - W_HORIZ_PAD, -font->Descender(), 0.0 );
+				break;
+		}
+
+/*		if( hover && clicked )
+			glColor4fv( W_FG_CLICKED );
+		else if( hover )
+			glColor4fv( W_FG_HOVER );
+		else*/
+			glColor4fv( W_FG );
+		font->Render( buttonText.c_str() );
+	glPopMatrix();
+
+	// Draw edge.
+/*	if( hover && clicked )
+		glColor4fv( W_EDGE_CLICKED );
+	else if( hover )
+		glColor4fv( W_EDGE_HOVER );
+	else
+		glColor4fv( W_EDGE );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBegin( GL_LINE_LOOP );
+		glVertex3f( 0.0, 0.0, 0.0 );
+		glVertex3f( size[0] - W_EDGE_OFFSET, 0.0, 0.0 );
+		glVertex3f( size[0], W_EDGE_OFFSET, 0.0 );
+		glVertex3f( size[0], size[1], 0.0 );
+		glVertex3f( W_EDGE_OFFSET, size[1], 0.0 );
+		glVertex3f( 0.0, size[1] - W_EDGE_OFFSET, 0.0 );
+	glEnd();*/
+}
+
+
+void PlanetButton::SecondDraw() {
+	// Draw planet.
 	glBindTexture( GL_TEXTURE_2D, texture );
+
+	// Translate to center of planet.
+	glTranslatef( pos[0] + radius + W_HORIZ_PAD, pos[1] + radius + textHeight + (size[1] - preferredSize[1])/2, 0.0 );
 
 	glRotatef( offAxisX, 1.0, 0.0, 0.0 );
 	glRotatef( offAxisZ, 0.0, 0.0, 1.0 );
 	glRotatef( rotation, 0.0, 1.0, 0.0 );
 
 	float matAmb[] = { 0.1, 0.1, 0.1, 1.0 };
-	float matDif[] = { 0.95, 0.95, 0.95, 1.0 };
+	float matDif[] = { 0.90, 0.90, 0.90, 1.0 };
+
+	if( hover ) {
+		matAmb[0] = matAmb[1] = matAmb[2] = 0.9;
+		matDif[0] = matDif[1] = matDif[2] = 1.0;
+	}
+
 	glMaterialfv( GL_FRONT, GL_AMBIENT, matAmb );
 	glMaterialfv( GL_FRONT, GL_DIFFUSE, matDif );
+	glColor4f( 1.0, 1.0, 1.0, 1.0 );
 
 	// Draw planet as sphere.
 	// http://local.wasp.uwa.edu.au/~pbourke/modelling/openglsphere/

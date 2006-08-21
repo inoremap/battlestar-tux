@@ -26,23 +26,39 @@
 #define PLANETBUTTON_H_
 
 #include <SDL_opengl.h>
+#include <string>
 
+#include "ButtonClickGenerator.h"
+#include "Widget.h"
 #include "../../Game.h"
 
 /* Button containing a rotating planet. */
-class PlanetButton {
+class PlanetButton : public Widget, public ButtonClickGenerator {
 	public:
-				PlanetButton( float r, int p, float t, float rotX, float rotZ, Game* g );
+				PlanetButton( Game* g, GUI* gui, std::string s, W_Alignment h, float r, int p, float t, float rotX, float rotZ );
 
-				// Update planet button.
-				void Update();
-
-				// Draw planet button.
+				// Draw GUI objects that don't want lighting.
 				void Draw();
+
+				// Draw GUI objects that require lighting.
+				void SecondDraw();
+
+				void Update( int x, int y, int state );
 
 	private:
 				PlanetButton( const PlanetButton &planet );
 				const PlanetButton & operator= ( const PlanetButton &planet );
+
+				std::string buttonText;
+
+				// Horizontal alignment of the text in the button.
+				W_Alignment hAlign;
+
+				// Width of the text in the button.
+				int textWidth;
+
+				// Height of the text in the button.
+				int textHeight;
 
 				// Size of planet.
 				float radius;

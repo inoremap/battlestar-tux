@@ -38,7 +38,8 @@ class Button : public Widget, public ButtonClickGenerator {
 
 				void Draw();
 
-				void Update( int x, int y, int state );
+				// Button was clicked.
+				void ClickEvent();
 
 	private:
 				Button( const Button &button );

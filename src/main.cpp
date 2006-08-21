@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 		//battle->Start();
 		//delete battle;
 
-		MainMenu* menu = new MainMenu( OPENING_MENU, game );
+		MainMenu* menu = new MainMenu( SYSTEM_MENU, game );
 		menu->ShowMenu();
 		delete menu;
 	}

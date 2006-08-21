@@ -22,7 +22,7 @@
  */
 
 
-#include <SDL.h>
+#include <math.h>
 
 #include "Button.h"
 #include "ButtonClickEvent.h"
@@ -42,8 +42,8 @@ Button::Button( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
 	font->BBox( buttonText.c_str(), llx, lly, llz, urx, ury, urz );
 
 	textWidth = urx - llx;
-	preferredSize[0] = size[0] = (int) urx - llx + W_HORIZ_PAD * 2;
-	preferredSize[1] = size[1] = (int) ascender + (-descender) + W_VERTI_PAD;
+	preferredSize[0] = size[0] = ceilf( urx - llx + W_HORIZ_PAD * 2 );
+	preferredSize[1] = size[1] = ceilf( ascender + (-descender) + W_VERTI_PAD );
 }
 
 
@@ -116,55 +116,8 @@ void Button::Draw() {
 }
 
 
-void Button::Update( int x, int y, int state ) {
-	// Mouse wasn't clicked previously.
-	if( !clicked ) {
-		// Mouse is over button.
-		if( pos[0] < x && x < (pos[0] + size[0]) && pos[1] < y && y < (pos[1] + size[1]) ) {
-			// Mouse is clicked.
-			if( state & SDL_BUTTON(1) ) {
-				// Mouse was clicked while over button.
-				if( hover )
-					clicked = true;
-			}
-			// Mouse isn't clicked.
-			else
-				hover = true;
-		}
-		// Mouse is outside of button.
-		else
-			hover = false;
-	}
-	// Mouse was clicked previously.
-	else {
-		// Mouse is over button.
-		if( pos[0] < x && x < (pos[0] + size[0]) && pos[1] < y && y < (pos[1] + size[1]) ) {
-			// Mouse was released.
-			if( ! state & SDL_BUTTON(1) ) {
-				// Mouse was released while over button.
-				if( hover ) {
-					clicked = false;
-
-					//// BUTTON CLICKED ////
-					ButtonClickEvent* event = new ButtonClickEvent( buttonText );
-					GenerateEvent( event );
-					delete event;
-					//// BUTTON CLICKED ////
-				}
-				// Mouse was released while outside button.
-				else
-					clicked = false;
-			}
-
-			hover = true;
-		}
-		// Mouse is outside of button.
-		else {
-			// Mouse was released.
-			if( ! state & SDL_BUTTON(1) )
-				clicked = false;
-
-			hover = false;
-		}
-	}
+void Button::ClickEvent() {
+	ButtonClickEvent* event = new ButtonClickEvent( buttonText );
+	GenerateEvent( event );
+	delete event;
 }

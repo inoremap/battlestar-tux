@@ -22,6 +22,8 @@
  */
 
 
+#include <SDL.h>
+
 #include "Widget.h"
 
 Widget::Widget( GUI* gui ) {
@@ -34,16 +36,70 @@ Widget::Widget( GUI* gui ) {
 
 	hover = false;
 	clicked = false;
+
+	secondDraw = false;
 }
 
 
 Widget::~Widget() {}
 
 
-void Widget::Draw() {}
+void Widget::Update( int x, int y, int state ) {
+	// Mouse wasn't clicked previously.
+	if( !clicked ) {
+		// Mouse is over widget.
+		if( pos[0] < x && x < (pos[0] + size[0]) && pos[1] < y && y < (pos[1] + size[1]) ) {
+			// Mouse is clicked.
+			if( state & SDL_BUTTON(1) ) {
+				// Mouse was clicked while over widget.
+				if( hover )
+					clicked = true;
+			}
+			// Mouse isn't clicked.
+			else
+				hover = true;
+		}
+		// Mouse is outside of widget.
+		else
+			hover = false;
+	}
+	// Mouse was clicked previously.
+	else {
+		// Mouse is over widget.
+		if( pos[0] < x && x < (pos[0] + size[0]) && pos[1] < y && y < (pos[1] + size[1]) ) {
+			// Mouse was released.
+			if( ! state & SDL_BUTTON(1) ) {
+				// Mouse was released while over widget.
+				if( hover ) {
+					clicked = false;
 
+					//// WIDGET CLICKED ////
+					ClickEvent();
+					//// WIDGET CLICKED ////
+				}
+				// Mouse was released while outside widget.
+				else
+					clicked = false;
+			}
 
-void Widget::Update( int x, int y, int state ) {}
+			hover = true;
+		}
+		// Mouse is outside of widget.
+		else {
+			// Mouse was released.
+			if( ! state & SDL_BUTTON(1) )
+				clicked = false;
+
+			hover = false;
+		}
+	}
+
+	if( hover ) {
+		//// HOVER OVER WIDGET ////
+		HoverEvent();
+		//// HOVER OVER WIDGET ////
+	}
+}
 
 
 void Widget::setPos( int p[2] ) {
@@ -73,3 +129,7 @@ void Widget::setSize( int w, int h ) {
 }
 
 int* Widget::getSize() { return size; }
+
+void Widget::setSecondDraw( bool d ) { secondDraw = d; }
+
+bool Widget::getSecondDraw() { return secondDraw; }

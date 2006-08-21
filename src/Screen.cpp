@@ -93,6 +93,7 @@ Screen::Screen( Game* g ) {
 
 	// High quality point smoothing.
 	glHint( GL_POINT_SMOOTH_HINT, GL_NICEST );
+	glShadeModel( GL_SMOOTH );
 
 	// Enable 2D textures.
 	glEnable( GL_TEXTURE_2D );

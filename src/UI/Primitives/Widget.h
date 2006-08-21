@@ -60,11 +60,20 @@ class Widget : public ListItem {
 				Widget( GUI* gui );
 				virtual ~Widget();
 
-				virtual void Draw();
+				virtual void Draw() {}
+
+				// Second draw function - usually for lighting reasons.
+				virtual void SecondDraw() {}
 
 				// Update widget given the (x, y) position of the mouse cursor
 				// and the state of the mouse buttons.
 				virtual void Update( int x, int y, int state );
+
+				// The mouse is hovering over the widget.
+				virtual void HoverEvent() {}
+
+				// The widget was clicked.
+				virtual void ClickEvent() {}
 
 				virtual void setPos( int p[2] );
 				virtual void setPos( int x, int y );
@@ -75,6 +84,9 @@ class Widget : public ListItem {
 				virtual void setSize( int s[2] );
 				virtual void setSize( int w, int h );
 				int* getSize();
+
+				void setSecondDraw( bool d );
+				bool getSecondDraw();
 
 	protected:
 				FTFont* font;
@@ -93,6 +105,10 @@ class Widget : public ListItem {
 
 				// Mouse cursor is over widget with button down.
 				bool clicked;
+
+				// Needs to be drawn in two sections - usually for lighting reasons.
+				bool secondDraw;
+				
 
 	private:
 				Widget( const Widget &widget );

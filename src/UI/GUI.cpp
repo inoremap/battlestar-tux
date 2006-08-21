@@ -84,31 +84,57 @@ GUI::~GUI() {
 void GUI::CreateWidgets() {}
 
 
-void GUI::Draw() {
+void GUI::beforeDraw() {
 	// Use orthographic projection for GUI
 	glMatrixMode( GL_PROJECTION );
 	glPushMatrix();
 		glLoadIdentity();
-		glOrtho( 0, screenW, 0, screenH, -10, 10 );
+		glOrtho( 0, screenW, 0, screenH, -screenW, screenW );
 
 		glMatrixMode( GL_MODELVIEW );
 		glPushMatrix();
-			// Begin drawing GUI elements.
-			Widget* cur = (Widget*) rootObj;
+}
 
-			while( cur ) {
-				glLoadIdentity();
-				cur->Draw();
-				cur = (Widget*) cur->getNext();
-			}
-			// Stop drawing GUI elements.
 
-			// Return projection and modelview matrices to their in-game states.
+void GUI::afterDraw() {
+		// Return projection and modelview matrices to their in-game states.
 		glPopMatrix();
 
 	glMatrixMode( GL_PROJECTION );
 	glPopMatrix();
 	glMatrixMode( GL_MODELVIEW );
+}
+
+
+void GUI::Draw() {
+	beforeDraw();
+
+	Widget* cur = (Widget*) rootObj;
+
+	while( cur ) {
+		glLoadIdentity();
+		cur->Draw();
+		cur = (Widget*) cur->getNext();
+	}
+
+	afterDraw();
+}
+
+
+void GUI::SecondDraw() {
+	beforeDraw();
+
+	Widget* cur = (Widget*) rootObj;
+
+	while( cur ) {
+		if( cur->getSecondDraw() ) {
+			glLoadIdentity();
+			cur->SecondDraw();
+		}
+		cur = (Widget*) cur->getNext();
+	}
+
+	afterDraw();
 }
 
 
