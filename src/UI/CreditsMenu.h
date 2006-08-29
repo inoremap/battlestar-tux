@@ -1,4 +1,4 @@
-/* OpeningMenu.h
+/* CreditsMenu.h
  *
  * Copyright 2006 Eliot Eshelman
  * eliot@6by9.net
@@ -22,8 +22,8 @@
  */
 
 
-#ifndef OPENINGMENU_H_
-#define OPENINGMENU_H_
+#ifndef CREDITSMENU_H_
+#define CREDITSMENU_H_
 
 #include "GUI.h"
 #include "../Game.h"
@@ -31,11 +31,11 @@
 #include "Primitives/ButtonClickEvent.h"
 #include "Primitives/ButtonClickListener.h"
 
-/* First menu drawn - game first starting. */
-class OpeningMenu : public GUI, ButtonClickListener {
+/* Display list of credits. */
+class CreditsMenu : public GUI, ButtonClickListener {
 	public:
-				OpeningMenu( MainMenu* menu, Game* g, int w, int h );
-				~OpeningMenu();
+				CreditsMenu( MainMenu* menu, Game* g, int w, int h );
+				~CreditsMenu();
 
 				// Create all widgets and bind listeners.
 				void CreateWidgets();
@@ -44,8 +44,8 @@ class OpeningMenu : public GUI, ButtonClickListener {
 				void EventGenerated( ButtonClickEvent* e );
 
 	private:
-				OpeningMenu( const OpeningMenu &menu );
-				const OpeningMenu & operator= ( const OpeningMenu &menu );
+				CreditsMenu( const CreditsMenu &menu );
+				const CreditsMenu & operator= ( const CreditsMenu &menu );
 
 				// Main menu selects what menu is currently visible.
 				MainMenu* mainMenu;
@@ -54,4 +54,4 @@ class OpeningMenu : public GUI, ButtonClickListener {
 };
 
 
-#endif /*OPENINGMENU_H_*/
+#endif /*CREDITSMENU_H_*/

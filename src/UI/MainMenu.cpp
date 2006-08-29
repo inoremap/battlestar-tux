@@ -26,12 +26,14 @@
 #include <SDL_opengl.h>
 
 #include "MainMenu.h"
+#include "CreditsMenu.h"
 #include "OpeningMenu.h"
 #include "SystemMenu.h"
 #include "../Screen.h"
 
 MainMenu::MainMenu( MenuType t, Game* g ) {
 	currentType = t;
+	nextType = NULL_MENU;
 	game = g;
 	currentMenu = NULL;
 }
@@ -41,7 +43,7 @@ MainMenu::~MainMenu() {}
 
 
 void MainMenu::ShowMenu() {
-	ChangeMenu( currentType );
+	GenerateMenu();
 
 	SDL_Event event;
 
@@ -55,6 +57,10 @@ void MainMenu::ShowMenu() {
 		// Update menu.
 		currentMenu->Update();
 
+		// Event listeners are called during Update().  The current menu may have changed.
+		if( nextType != NULL_MENU )
+			GenerateMenu();
+
 		// Draw menu.
 		currentMenu->Draw();
 
@@ -67,7 +73,10 @@ void MainMenu::ShowMenu() {
 				case SDL_KEYDOWN:
 					switch( event.key.keysym.sym ) {
 						case SDLK_ESCAPE:
-							game->exitBT();
+							if( currentType == OPENING_MENU )
+								game->exitBT();
+							else
+								ChangeMenu( OPENING_MENU );
 							break;
 
 						default:
@@ -88,19 +97,38 @@ void MainMenu::ShowMenu() {
 
 		game->stopFrame();
 	}
-
 	// Menu is finished or was aborted.
 }
 
 
-void MainMenu::ChangeMenu( MenuType t ) {
+void MainMenu::ChangeMenu( MenuType t ) { nextType = t; }
+
+
+void MainMenu::GenerateMenu() {
 	if( currentMenu )
 		delete currentMenu;
 
-	switch( t ) {
+	currentType = nextType;
+	nextType = NULL_MENU;
+
+	switch( currentType ) {
 		case OPENING_MENU:
+		case NULL_MENU:
 		default:
 			currentMenu = new OpeningMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			break;
+
+		case NEW_CAMPAIGN_MENU:
+			break;
+
+		case LOAD_CAMPAIGN_MENU:
+			break;
+
+		case SETTINGS_MENU:
+			break;
+
+		case CREDITS_MENU:
+			currentMenu = new CreditsMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case SYSTEM_MENU:

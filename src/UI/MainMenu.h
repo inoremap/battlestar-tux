@@ -30,10 +30,13 @@
 
 // Possible menu screens.
 enum MenuType {
-	OPENING_MENU		=	0,	// Menu shown at startup.
-	SETTINGS_MENU	=	1,	// Game settings and options.
-	CREDITS_MENU		=	2,	// Game credits.
-	SYSTEM_MENU		=	3	// Show solar system the ship is currently in.
+	NULL_MENU,				// No menu.
+	OPENING_MENU,			// Menu shown at startup.
+	NEW_CAMPAIGN_MENU,		// Start a new game.
+	LOAD_CAMPAIGN_MENU,		// Load an existing game.
+	SETTINGS_MENU,			// Game settings and options.
+	CREDITS_MENU	,			// Game credits.
+	SYSTEM_MENU				// Show solar system the ship is currently in.
 };
 
 /* Parent menu.  All other menus are spawned here. */
@@ -52,8 +55,14 @@ class MainMenu {
 				MainMenu( const MainMenu &menu );
 				const MainMenu & operator= ( const MainMenu &menu );
 
+				// Generate a new menu.
+				void GenerateMenu();
+
 				// Current menu type.
 				MenuType currentType;
+
+				// Menu type to change to.
+				MenuType nextType;
 
 				// Menu that is currently being displayed.
 				GUI* currentMenu;
