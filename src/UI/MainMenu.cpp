@@ -25,9 +25,12 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
+#include "LoadCampaignMenu.h"
 #include "MainMenu.h"
+#include "NewCampaignMenu.h"
 #include "CreditsMenu.h"
 #include "OpeningMenu.h"
+#include "SettingsMenu.h"
 #include "SystemMenu.h"
 #include "../Screen.h"
 
@@ -119,12 +122,15 @@ void MainMenu::GenerateMenu() {
 			break;
 
 		case NEW_CAMPAIGN_MENU:
+			currentMenu = new NewCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case LOAD_CAMPAIGN_MENU:
+			currentMenu = new LoadCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case SETTINGS_MENU:
+			currentMenu = new SettingsMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case CREDITS_MENU:

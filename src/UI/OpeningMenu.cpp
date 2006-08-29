@@ -66,14 +66,14 @@ void OpeningMenu::CreateWidgets() {
 void OpeningMenu::EventGenerated( ButtonClickEvent* e ) {
 	std::string text = e->getButtonText();
 
-	if( text == " New Campaign " ) {
-	}
+	if( text == " New Campaign " )
+		mainMenu->ChangeMenu( NEW_CAMPAIGN_MENU );
 
-	else if( text == " Load Campaign " ) {
-	}
+	else if( text == " Load Campaign " )
+		mainMenu->ChangeMenu( LOAD_CAMPAIGN_MENU );
 
-	else if( text == "Settings" ) {
-	}
+	else if( text == "Settings" )
+		mainMenu->ChangeMenu( SETTINGS_MENU );
 
 	else if( text == "Credits" )
 		mainMenu->ChangeMenu( CREDITS_MENU );

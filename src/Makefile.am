@@ -76,10 +76,16 @@ battlestarTUX_SOURCES = Battle.cpp \
 			UI/GUI.h \
 			UI/CreditsMenu.cpp \
 			UI/CreditsMenu.h \
+			UI/LoadCampaignMenu.cpp \
+			UI/LoadCampaignMenu.h \
 			UI/MainMenu.cpp \
 			UI/MainMenu.h \
+			UI/NewCampaignMenu.cpp \
+			UI/NewCampaignMenu.h \
 			UI/OpeningMenu.cpp \
 			UI/OpeningMenu.h \
+			UI/SettingsMenu.cpp \
+			UI/SettingsMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \
@@ -169,10 +175,16 @@ testTUX_SOURCES =	Battle.cpp \
 			UI/GUI.h \
 			UI/CreditsMenu.cpp \
 			UI/CreditsMenu.h \
+			UI/LoadCampaignMenu.cpp \
+			UI/LoadCampaignMenu.h \
 			UI/MainMenu.cpp \
 			UI/MainMenu.h \
+			UI/NewCampaignMenu.cpp \
+			UI/NewCampaignMenu.h \
 			UI/OpeningMenu.cpp \
 			UI/OpeningMenu.h \
+			UI/SettingsMenu.cpp \
+			UI/SettingsMenu.h \
 			UI/SystemMenu.cpp \
 			UI/SystemMenu.h \
 			UI/Primitives/Button.cpp \
