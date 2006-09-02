@@ -33,7 +33,7 @@
 /* Clickable widget that displays a text string. */
 class Button : public Widget, public ButtonClickGenerator {
 	public:
-				Button( GUI* gui, std::string s, W_Alignment h );
+				Button( GUI* gui, std::string s, W_HAlignment h, W_VAlignment v );
 				~Button();
 
 				void Draw();
@@ -46,9 +46,6 @@ class Button : public Widget, public ButtonClickGenerator {
 				const Button & operator= ( const Button &button );
 
 				std::string buttonText;
-
-				// Horizontal alignment of the text in the button.
-				W_Alignment hAlign;
 
 				// Width of the text in the button.
 				int textWidth;

@@ -32,7 +32,7 @@
 /* Widget that displays a text string. */
 class Label : public Widget {
 	public:
-				Label( GUI* gui, std::string s, W_Alignment h );
+				Label( GUI* gui, std::string s, W_HAlignment h, W_VAlignment v );
 				~Label();
 
 				void Draw();
@@ -42,9 +42,6 @@ class Label : public Widget {
 				const Label & operator= ( const Label &label );
 
 				std::string labelText;
-
-				// Horizontal alignment of the text in the label.
-				W_Alignment hAlign;
 
 				// Width of the text in the label.
 				int textWidth;

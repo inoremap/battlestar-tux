@@ -30,24 +30,12 @@
 /* A row of horizontal widgets. */
 class HorizontalContainer : public Container {
 	public:
-				HorizontalContainer( GUI* g, bool resize, W_Alignment v );
+				HorizontalContainer( GUI* g, bool resize, W_HAlignment h, W_VAlignment v );
 				~HorizontalContainer();
-
-				void Draw();
-
-				// Update container given the (x, y) position of the mouse cursor
-				// and the state of the mouse buttons.
-				void Update( int x, int y, int state );
 
 	protected:
 				// Re-Align elements in container.
 				void ReevaluateElements();
-
-				// Resize widgets to fill container
-				bool resizeWidgets;
-
-				// Vertical alignment of widgets (top, center, bottom).
-				W_Alignment vAlign;
 
 	private:
 				HorizontalContainer( const HorizontalContainer &hc );

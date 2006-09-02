@@ -42,17 +42,17 @@ LoadCampaignMenu::~LoadCampaignMenu() {}
 
 void LoadCampaignMenu::CreateWidgets() {
 	// Display load campaign options.
-	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER );
-	Label* label = new Label( this, "Load Campaign", HORIZ_CENTER );
+	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER, VERTI_CENTER );
+	Label* label = new Label( this, "Load Campaign", HORIZ_CENTER, VERTI_CENTER );
 	credits->AddWidget( label );
-	label = new Label( this, " ", HORIZ_LEFT );
-	credits->AddWidget( label );
-
-	label = new Label( this, "None Currently Available", HORIZ_LEFT );
+	label = new Label( this, " ", HORIZ_CENTER, VERTI_CENTER );
 	credits->AddWidget( label );
 
-	HorizontalContainer* closePanel = new HorizontalContainer( this, false, VERTI_CENTER );
-	Button* button = new Button( this, "Cancel", HORIZ_RIGHT );
+	label = new Label( this, "None Currently Available", HORIZ_CENTER, VERTI_CENTER );
+	credits->AddWidget( label );
+
+	HorizontalContainer* closePanel = new HorizontalContainer( this, false, HORIZ_RIGHT, VERTI_CENTER );
+	Button* button = new Button( this, "Cancel", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	closePanel->AddWidget( button );
 	credits->AddWidget( closePanel );

@@ -30,24 +30,14 @@
 /* A column of vertical widgets placed inside a bordered area. */
 class VerticalPane : public Container {
 	public:
-				VerticalPane( GUI* g, bool resize, W_Alignment h );
+				VerticalPane( GUI* g, bool resize, W_HAlignment h, W_VAlignment v );
 				~VerticalPane();
 
 				void Draw();
 
-				// Update pane given the (x, y) position of the mouse cursor
-				// and the state of the mouse buttons.
-				void Update( int x, int y, int state );
-
 	protected:
 				// Re-Align elements in pane.
 				void ReevaluateElements();
-
-				// Resize widgets to fill pane.
-				bool resizeWidgets;
-
-				// Horizontal alignment of widgets (right, center, left).
-				W_Alignment hAlign;
 
 	private:
 				VerticalPane( const VerticalPane &vc );

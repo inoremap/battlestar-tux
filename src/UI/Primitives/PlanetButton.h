@@ -35,7 +35,7 @@
 /* Button containing a rotating planet. */
 class PlanetButton : public Widget, public ButtonClickGenerator {
 	public:
-				PlanetButton( Game* g, GUI* gui, std::string s, W_Alignment h, float r, int p, float t, float rotX, float rotZ );
+				PlanetButton( Game* g, GUI* gui, std::string s, W_HAlignment h, W_VAlignment v, float r, int p, float t, float rotX, float rotZ );
 
 				// Draw GUI objects that don't want lighting.
 				void Draw();
@@ -50,9 +50,6 @@ class PlanetButton : public Widget, public ButtonClickGenerator {
 				const PlanetButton & operator= ( const PlanetButton &planet );
 
 				std::string buttonText;
-
-				// Horizontal alignment of the text in the button.
-				W_Alignment hAlign;
 
 				// Width of the text in the button.
 				int textWidth;

@@ -30,24 +30,12 @@
 /* A column of vertical widgets. */
 class VerticalContainer : public Container {
 	public:
-				VerticalContainer( GUI* g, bool resize, W_Alignment h );
+				VerticalContainer( GUI* g, bool resize, W_HAlignment h, W_VAlignment v );
 				~VerticalContainer();
-
-				void Draw();
-
-				// Update container given the (x, y) position of the mouse cursor
-				// and the state of the mouse buttons.
-				void Update( int x, int y, int state );
 
 	protected:
 				// Re-Align elements in container.
 				void ReevaluateElements();
-
-				// Resize widgets to fill container
-				bool resizeWidgets;
-
-				// Horizontal alignment of widgets (right, center, left).
-				W_Alignment hAlign;
 
 	private:
 				VerticalContainer( const VerticalContainer &vc );

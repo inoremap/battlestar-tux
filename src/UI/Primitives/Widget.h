@@ -44,11 +44,13 @@ static const int W_EDGE_OFFSET = 6;
 static const int W_HORIZ_PAD = 6;
 static const int W_VERTI_PAD = 2;
 
-// Widget Alignments
-enum W_Alignment {
+// Widget Alignments - Horizontal and Vertical
+enum W_HAlignment {
 	HORIZ_RIGHT,
 	HORIZ_CENTER,
-	HORIZ_LEFT,
+	HORIZ_LEFT
+};
+enum W_VAlignment {
 	VERTI_TOP,
 	VERTI_CENTER,
 	VERTI_BOTTOM
@@ -57,7 +59,7 @@ enum W_Alignment {
 /* Basic UI Widget. */
 class Widget : public ListItem {
 	public:
-				Widget( GUI* gui );
+				Widget( GUI* gui, W_HAlignment h, W_VAlignment v );
 				virtual ~Widget();
 
 				virtual void Draw() {}
@@ -108,7 +110,12 @@ class Widget : public ListItem {
 
 				// Needs to be drawn in two sections - usually for lighting reasons.
 				bool secondDraw;
-				
+
+				// Horizontal alignment of widget's contents (left, center, right).
+				W_HAlignment hAlign; 
+
+				// Vertical alignment of widget's contents (top, center, bottom).
+				W_VAlignment vAlign;
 
 	private:
 				Widget( const Widget &widget );

@@ -27,7 +27,7 @@
 #include "PlanetButton.h"
 #include "../../TextureManager.h"
 
-PlanetButton::PlanetButton( Game* g, GUI* gui, std::string s, W_Alignment h, float r, int p, float t, float rotX, float rotZ ) : Widget( gui ) {
+PlanetButton::PlanetButton( Game* g, GUI* gui, std::string s, W_HAlignment h, W_VAlignment v, float r, int p, float t, float rotX, float rotZ ) : Widget( gui, h, v ) {
 	// Button needs to be drawn twice.
 	secondDraw = true;
 
@@ -44,7 +44,6 @@ PlanetButton::PlanetButton( Game* g, GUI* gui, std::string s, W_Alignment h, flo
 
 
 	buttonText = s;
-	hAlign = h;
 
 	float llx = 0.0;
 	float lly = 0.0;

@@ -22,14 +22,12 @@
  */
 
 
+#include <math.h>
+
 #include "HorizontalPane.h"
 #include "Widget.h"
 
-HorizontalPane::HorizontalPane( GUI* g, bool resize, W_Alignment v ) : Container( g, false ) {
-	resizeWidgets = resize;
-
-	vAlign = v;
-
+HorizontalPane::HorizontalPane( GUI* g, bool resize, W_HAlignment h, W_VAlignment v ) : Container( g, resize, h, v, false ) {
 	preferredSize[0] = size[0] = 10;
 	preferredSize[1] = size[1] = 10;
 }
@@ -66,57 +64,34 @@ void HorizontalPane::Draw() {
 		glVertex3f( 0.0, size[1] - C_EDGE_OFFSET, 0.0 );
 	glEnd();
 
-	// Draw all elements in pane.
-	Widget* cur = (Widget*) rootObj;
-
-	while( cur ) {
-		glLoadIdentity();
-		cur->Draw();
-		cur = (Widget*) cur->getNext();
-	}
-}
-
-
-void HorizontalPane::Update( int x, int y, int state ) {
-	// Update all elements in pane.
-	Widget* cur = (Widget*) rootObj;
-
-	while( cur ) {
-		cur->Update( x, y, state );
-		cur = (Widget*) cur->getNext();
-	}
+	Container::Draw();
 }
 
 
 void HorizontalPane::ReevaluateElements() {
 	preferredSize[0] = - C_WIDGET_PAD;
 	preferredSize[1] = 0;
-	int offset[2] = { 0, 0 };
-	int maxWidgetHeight = 0;
-	int paneHeight = 0;
+	int xOffset = 0;
+	int xCorrection = 0;
 	int* wSize;
+	int numWidgets = 0;
 
 	Widget* cur = (Widget*) rootObj;
-	// Loop through widgets - determining pane size.
+	// Loop through widgets - determining container size.
 	while( cur ) {
 		wSize = cur->getPreferredSize();
+		++numWidgets;
 
-		if( maxWidgetHeight < wSize[1] ) {
-			maxWidgetHeight = wSize[1];
+		if( preferredSize[1] < wSize[1] )
 			preferredSize[1] = wSize[1];
-		}
 		preferredSize[0] += wSize[0] + C_WIDGET_PAD;
 
 		cur = (Widget*) cur->getNext();
 	}
-
-	paneHeight = preferredSize[1];
 	preferredSize[0] += C_HORIZ_PAD * 2;
 	preferredSize[1] += C_VERTI_PAD * 2;
-	offset[0] = preferredSize[0] - C_HORIZ_PAD;
-	offset[1] = C_VERTI_PAD;
 
-	// Set size of container.
+	// Enlarge container, if it is currently too small.
 	if( size[0] < preferredSize[0] )
 		size[0] = preferredSize[0];
 	if( size[1] < preferredSize[1] )
@@ -127,30 +102,54 @@ void HorizontalPane::ReevaluateElements() {
 
 	cur = (Widget*) rootObj;
 	// Loop through widgets - setting size and position.
-	while( cur ) {
+	for( int i = 0; i < numWidgets && cur; ++i ) {
 		wSize = cur->getPreferredSize();
-		offset[0] -= wSize[0];
 
-		// Vertically align widgets.
-		switch( vAlign ) {
-			case VERTI_TOP:
-				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + paneHeight - cur->getSize()[1] );
-				break;
+		if( resizeWidgets ) {
+			int widgetSpacing = (int) floorf( (size[0] - preferredSize[0] - xCorrection)/(numWidgets - i) );
+			cur->setSize( wSize[0] + widgetSpacing, size[1] - C_VERTI_PAD * 2 );
 
-			case VERTI_CENTER:
-				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] + (paneHeight - cur->getSize()[1])/2 );
-				break;
+			cur->setPos( xOffset + pos[0] + C_HORIZ_PAD, pos[1] + C_VERTI_PAD );
 
-			case VERTI_BOTTOM:
-			default: 
-				cur->setPos( offset[0] + pos[0], offset[1] + pos[1] );
-				break;
+			xOffset += C_WIDGET_PAD + widgetSpacing + cur->getSize()[0];
+			xCorrection += cur->getSize()[0] - wSize[0];
+		}
+		else {
+			// Horizontally align widgets.
+			switch( hAlign ) {
+				case HORIZ_LEFT:
+				default:
+					cur->setPos( xOffset + pos[0] + C_HORIZ_PAD, cur->getPos()[1] );
+					break;
+
+				case HORIZ_CENTER:
+					cur->setPos( xOffset + pos[0] + C_HORIZ_PAD + (size[0] - preferredSize[0])/2 , cur->getPos()[1] );
+					break;
+
+				case HORIZ_RIGHT:
+					cur->setPos( xOffset + pos[0] + C_HORIZ_PAD + size[0] - preferredSize[0], cur->getPos()[1] );
+					break;
+			}
+
+			// Vertically align widgets.
+			switch( vAlign ) {
+				case VERTI_TOP:
+					cur->setPos( cur->getPos()[0], pos[1] - C_VERTI_PAD + size[1] - wSize[1] );
+					break;
+
+				case VERTI_CENTER:
+					cur->setPos( cur->getPos()[0], pos[1] + (size[1] - wSize[1])/2 );
+					break;
+
+				case VERTI_BOTTOM:
+				default: 
+					cur->setPos( cur->getPos()[0], pos[1] + C_VERTI_PAD );
+					break;
+			}
+
+			xOffset += C_WIDGET_PAD + wSize[0];
 		}
 
-		if( resizeWidgets )
-			cur->setSize( cur->getSize()[0], maxWidgetHeight );
-
 		cur = (Widget*) cur->getNext();
-		offset[0] -= C_WIDGET_PAD;
 	}
 }

@@ -27,9 +27,8 @@
 #include "Button.h"
 #include "ButtonClickEvent.h"
 
-Button::Button( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
+Button::Button( GUI* gui, std::string s, W_HAlignment h, W_VAlignment v ) : Widget( gui, h, v ) {
 	buttonText = s;
-	hAlign = h;
 
 	float llx = 0.0;
 	float lly = 0.0;
@@ -73,20 +72,41 @@ void Button::Draw() {
 
 	// Draw text.
 	glPushMatrix();
+		float xTrans = 0;
+		float yTrans = 0;
+
 		switch( hAlign ) {
 			case HORIZ_LEFT:
-				glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+				xTrans = W_HORIZ_PAD;
 				break;
 
 			case HORIZ_CENTER:
-				glTranslatef( (size[0] - textWidth)/2, -font->Descender(), 0.0 );
+			default:
+				xTrans = W_HORIZ_PAD + ( size[0] - preferredSize[0] ) / 2;
 				break;
 
 			case HORIZ_RIGHT:
-			default:
-				glTranslatef( size[0] - textWidth - W_HORIZ_PAD, -font->Descender(), 0.0 );
+				xTrans = W_HORIZ_PAD + size[0] - preferredSize[0];
 				break;
 		}
+
+		switch( vAlign ) {
+			case VERTI_TOP:
+				yTrans = size[1] - preferredSize[1] + W_VERTI_PAD;
+				break;
+
+			case VERTI_CENTER:
+			default:
+				yTrans = -font->Descender() + ( size[1] - preferredSize[1] ) / 2;
+				break;
+
+			case VERTI_BOTTOM:
+				yTrans = -font->Descender() + W_VERTI_PAD;
+				break;
+		}
+
+		// Translate to text position.
+		glTranslatef( xTrans, yTrans, 0.0 );
 
 		if( hover && clicked )
 			glColor4fv( W_FG_CLICKED );

@@ -57,14 +57,36 @@ enum ContainerPosition {
 /* Object for containing and placing sets of widgets. */
 class Container : protected List, public Widget {
 	public:
-				Container( GUI* g, bool reverseList ) : List( reverseList ), Widget( g ) {
+				Container( GUI* g, bool resize, W_HAlignment h, W_VAlignment v, bool reverseList ) : List( reverseList ), Widget( g, h, v ) {
 					containerPosition = CONTAINER_NONE;
 					gui = g;
 
+					resizeWidgets = resize;
 					secondDraw = true;
 				}
 
 				virtual ~Container() {}
+
+				virtual void Draw() {
+					// Draw all elements in container.
+					Widget* cur = (Widget*) rootObj;
+
+					while( cur ) {
+						glLoadIdentity();
+						cur->Draw();
+						cur = (Widget*) cur->getNext();
+					}
+				}
+
+				virtual void Update( int x, int y, int state ) {
+					// Update all elements in container.
+					Widget* cur = (Widget*) rootObj;
+
+					while( cur ) {
+						cur->Update( x, y, state );
+						cur = (Widget*) cur->getNext();
+					}
+				}
 
 				// Some elements may need to be drawn twice - usually for lighting reasons.
 				virtual void SecondDraw() {
@@ -170,6 +192,9 @@ class Container : protected List, public Widget {
 
 				// Preset container position.
 				ContainerPosition containerPosition;
+
+				// Resize widgets to fill container
+				bool resizeWidgets;
 
 				// GUI which contains the container.
 				GUI* gui;

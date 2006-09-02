@@ -42,20 +42,20 @@ CreditsMenu::~CreditsMenu() {}
 
 void CreditsMenu::CreateWidgets() {
 	// Display Credits.
-	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER );
-	Label* label = new Label( this, "Battlestar TUX", HORIZ_CENTER );
+	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER, VERTI_CENTER );
+	Label* label = new Label( this, "Battlestar TUX", HORIZ_CENTER, VERTI_CENTER );
 	credits->AddWidget( label );
-	label = new Label( this, " ", HORIZ_LEFT );
+	label = new Label( this, " ", HORIZ_CENTER, VERTI_CENTER );
 	credits->AddWidget( label );
-	label = new Label( this, "created by: Eliot Eshelman", HORIZ_LEFT );
+	label = new Label( this, "created by: Eliot Eshelman", HORIZ_LEFT, VERTI_CENTER );
 	credits->AddWidget( label );
-	label = new Label( this, "Copyright 2005-2006 by Eliot Eshelman", HORIZ_LEFT );
+	label = new Label( this, "Copyright 2005-2006 by Eliot Eshelman", HORIZ_LEFT, VERTI_CENTER );
 	credits->AddWidget( label );
-	label = new Label( this, "Released under the GPL, version 2", HORIZ_LEFT );
+	label = new Label( this, "Released under the GPL, version 2", HORIZ_LEFT, VERTI_CENTER );
 	credits->AddWidget( label );
 
-	HorizontalContainer* closePanel = new HorizontalContainer( this, false, VERTI_CENTER );
-	Button* button = new Button( this, "Close", HORIZ_RIGHT );
+	HorizontalContainer* closePanel = new HorizontalContainer( this, false, HORIZ_RIGHT, VERTI_CENTER );
+	Button* button = new Button( this, "Close", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	closePanel->AddWidget( button );
 	credits->AddWidget( closePanel );

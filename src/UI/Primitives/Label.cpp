@@ -24,9 +24,8 @@
 
 #include "Label.h"
 
-Label::Label( GUI* gui, std::string s, W_Alignment h ) : Widget( gui ) {
+Label::Label( GUI* gui, std::string s, W_HAlignment h, W_VAlignment v ) : Widget( gui, h, v ) {
 	labelText = s;
-	hAlign = h;
 
 	float llx = 0.0;
 	float lly = 0.0;
@@ -51,21 +50,41 @@ void Label::Draw() {
 	// Translate to object position.
 	glTranslatef( pos[0], pos[1], 0.0 );
 
-	// Draw text.
+	float xTrans = 0;
+	float yTrans = 0;
+
 	switch( hAlign ) {
 		case HORIZ_LEFT:
-			glTranslatef( W_HORIZ_PAD, -font->Descender(), 0.0 );
+			xTrans = W_HORIZ_PAD;
 			break;
 
 		case HORIZ_CENTER:
-			glTranslatef( (size[0] - textWidth)/2, -font->Descender(), 0.0 );
+		default:
+			xTrans = W_HORIZ_PAD + ( size[0] - preferredSize[0] ) / 2;
 			break;
 
 		case HORIZ_RIGHT:
-		default:
-			glTranslatef( size[0] - textWidth - W_HORIZ_PAD, -font->Descender(), 0.0 );
+			xTrans = W_HORIZ_PAD + size[0] - preferredSize[0];
 			break;
 	}
+
+	switch( vAlign ) {
+		case VERTI_TOP:
+			yTrans = size[1] - preferredSize[1] + W_VERTI_PAD;
+			break;
+
+		case VERTI_CENTER:
+		default:
+			yTrans = -font->Descender() + ( size[1] - preferredSize[1] ) / 2;
+			break;
+
+		case VERTI_BOTTOM:
+			yTrans = -font->Descender() + W_VERTI_PAD;
+			break;
+	}
+
+	// Translate to text position.
+	glTranslatef( xTrans, yTrans, 0.0 );
 
 	glColor4fv( W_FG );
 	font->Render( labelText.c_str() );

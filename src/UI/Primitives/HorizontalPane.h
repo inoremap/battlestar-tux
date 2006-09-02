@@ -30,24 +30,14 @@
 /* A row of horizontal widgets placed inside a bordered area. */
 class HorizontalPane : public Container {
 	public:
-				HorizontalPane( GUI* g, bool resize, W_Alignment v );
+				HorizontalPane( GUI* g, bool resize, W_HAlignment h, W_VAlignment v );
 				~HorizontalPane();
 
 				void Draw();
 
-				// Update pane given the (x, y) position of the mouse cursor
-				// and the state of the mouse buttons.
-				void Update( int x, int y, int state );
-
 	protected:
 				// Re-Align elements in pane.
 				void ReevaluateElements();
-
-				// Resize widgets to fill pane.
-				bool resizeWidgets;
-
-				// Vertical alignment of widgets (top, center, bottom).
-				W_Alignment vAlign;
 
 	private:
 				HorizontalPane( const HorizontalPane &hc );

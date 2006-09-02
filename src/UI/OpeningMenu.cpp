@@ -41,20 +41,20 @@ OpeningMenu::~OpeningMenu() {}
 
 void OpeningMenu::CreateWidgets() {
 	// Create widgets for Opening Menu.
-	VerticalPane* initial = new VerticalPane( this, true, HORIZ_CENTER );
-	Button* button = new Button( this, " New Campaign ", HORIZ_CENTER );
+	VerticalPane* initial = new VerticalPane( this, true, HORIZ_CENTER, VERTI_CENTER );
+	Button* button = new Button( this, " New Campaign ", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	initial->AddWidget( button );
-	button = new Button( this, " Load Campaign ", HORIZ_CENTER );
+	button = new Button( this, " Load Campaign ", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	initial->AddWidget( button );
-	button = new Button( this, "Settings", HORIZ_CENTER );
+	button = new Button( this, "Settings", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	initial->AddWidget( button );
-	button = new Button( this, "Credits", HORIZ_CENTER );
+	button = new Button( this, "Credits", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	initial->AddWidget( button );
-	button = new Button( this, "Exit", HORIZ_CENTER );
+	button = new Button( this, "Exit", HORIZ_CENTER, VERTI_CENTER );
 	button->AddListener( this );
 	initial->AddWidget( button );
 

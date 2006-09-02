@@ -26,7 +26,7 @@
 
 #include "Widget.h"
 
-Widget::Widget( GUI* gui ) {
+Widget::Widget( GUI* gui, W_HAlignment h, W_VAlignment v ) {
 	font = gui->getFont();
 
 	pos[0] = 0;
@@ -38,6 +38,9 @@ Widget::Widget( GUI* gui ) {
 	clicked = false;
 
 	secondDraw = false;
+
+	hAlign = h;
+	vAlign = v;
 }
 
 
