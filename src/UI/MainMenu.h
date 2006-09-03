@@ -25,8 +25,11 @@
 #ifndef MAINMENU_H_
 #define MAINMENU_H_
 
-#include "GUI.h"
+#include <FTGLTextureFont.h>
+
 #include "../Game.h"
+
+class GUI;
 
 // Possible menu screens.
 enum MenuType {
@@ -51,6 +54,10 @@ class MainMenu {
 				// Change the menu being displayed.
 				void ChangeMenu( MenuType t );
 
+				FTFont* getFont();
+				FTFont* getItalicFont();
+				FTFont* getBoldFont();
+
 	private:
 				MainMenu( const MainMenu &menu );
 				const MainMenu & operator= ( const MainMenu &menu );
@@ -66,6 +73,10 @@ class MainMenu {
 
 				// Menu that is currently being displayed.
 				GUI* currentMenu;
+
+				FTFont* normalFont;
+				FTFont* italicFont;
+				FTFont* boldFont;
 
 				Game* game;
 };

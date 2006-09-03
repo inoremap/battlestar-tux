@@ -27,12 +27,13 @@
 
 #include <FTGLTextureFont.h>
 
+#include "MainMenu.h"
 #include "../Structures/List.h"
 
 /* Set of widgets and containers to be drawn. */
 class GUI : public List {
 	public:
-				GUI( int w, int h );
+				GUI( int w, int h, MainMenu* menu );
 				virtual ~GUI();
 
 				// Create all widgets and bind listeners.

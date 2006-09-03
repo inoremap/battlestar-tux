@@ -77,6 +77,8 @@ class Widget : public ListItem {
 				// The widget was clicked.
 				virtual void ClickEvent() {}
 
+				void setFont( FTFont* f );
+
 				virtual void setPos( int p[2] );
 				virtual void setPos( int x, int y );
 				int* getPos();

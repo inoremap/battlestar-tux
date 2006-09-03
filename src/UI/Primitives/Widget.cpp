@@ -105,6 +105,9 @@ void Widget::Update( int x, int y, int state ) {
 }
 
 
+void Widget::setFont( FTFont* f ) { font = f; }
+
+
 void Widget::setPos( int p[2] ) {
 	pos[0] = p[0];
 	pos[1] = p[1];

@@ -31,7 +31,7 @@
 #include "Primitives/Label.h"
 #include "Primitives/VerticalPane.h"
 
-CreditsMenu::CreditsMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+CreditsMenu::CreditsMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
 	game = g;
 }
@@ -44,8 +44,7 @@ void CreditsMenu::CreateWidgets() {
 	// Display Credits.
 	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER, VERTI_CENTER );
 	Label* label = new Label( this, "Battlestar TUX", HORIZ_CENTER, VERTI_CENTER );
-	credits->AddWidget( label );
-	label = new Label( this, " ", HORIZ_CENTER, VERTI_CENTER );
+	label->setFont( boldFont );
 	credits->AddWidget( label );
 	label = new Label( this, "created by: Eliot Eshelman", HORIZ_LEFT, VERTI_CENTER );
 	credits->AddWidget( label );

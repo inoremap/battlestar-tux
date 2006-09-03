@@ -31,7 +31,7 @@
 #include "Primitives/Label.h"
 #include "Primitives/VerticalPane.h"
 
-NewCampaignMenu::NewCampaignMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+NewCampaignMenu::NewCampaignMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
 	game = g;
 }
@@ -44,8 +44,7 @@ void NewCampaignMenu::CreateWidgets() {
 	// Display new campaign options.
 	VerticalPane* credits = new VerticalPane( this, true, HORIZ_CENTER, VERTI_CENTER );
 	Label* label = new Label( this, "New Campaign", HORIZ_CENTER, VERTI_CENTER );
-	credits->AddWidget( label );
-	label = new Label( this, " ", HORIZ_CENTER, VERTI_CENTER );
+	label->setFont( boldFont );
 	credits->AddWidget( label );
 
 	label = new Label( this, "None Currently Available", HORIZ_CENTER, VERTI_CENTER );

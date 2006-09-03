@@ -29,39 +29,13 @@
 #include "GUI.h"
 #include "Primitives/Widget.h"
 
-GUI::GUI( int w, int h ) {
+GUI::GUI( int w, int h, MainMenu* menu ) {
 	screenW = w;
 	screenH = h;
 
-	// Load normal font.
-	std::string normalFontFile = "data/fonts/forgottenfuturist.ttf";
-	normalFont = new FTGLTextureFont( normalFontFile.c_str() );
-	if( normalFont->Error() )
-		std::cout << "Unable to open font file: " << normalFontFile << "\n";
-	normalFont->FaceSize( 30 );
-	normalFont->CharMap( ft_encoding_unicode );
-	if( normalFont->Error() )
-		std::cout << "Unable to set font parameters: " << normalFontFile << "\n";
-
-	// Load italic font.
-	std::string italicFontFile = "data/fonts/forgottenfuturist_i.ttf";
-	italicFont = new FTGLTextureFont( italicFontFile.c_str() );
-	if( italicFont->Error() )
-		std::cout << "Unable to open font file: " << italicFontFile << "\n";
-	italicFont->FaceSize( 30 );
-	italicFont->CharMap( ft_encoding_unicode );
-	if( italicFont->Error() )
-		std::cout << "Unable to set font parameters: " << italicFontFile << "\n";
-
-	// Load bold font.
-	std::string boldFontFile = "data/fonts/forgottenfuturist_b.ttf";
-	boldFont = new FTGLTextureFont( boldFontFile.c_str() );
-	if( boldFont->Error() )
-		std::cout << "Unable to open font file: " << boldFontFile << "\n";
-	boldFont->FaceSize( 30 );
-	boldFont->CharMap( ft_encoding_unicode );
-	if( boldFont->Error() )
-		std::cout << "Unable to set font parameters: " << boldFontFile << "\n";
+	normalFont = menu->getFont();
+	italicFont = menu->getItalicFont();
+	boldFont = menu->getBoldFont();
 }
 
 
@@ -74,10 +48,6 @@ GUI::~GUI() {
 		delete cur;
 		cur = next;
 	}
-
-	delete normalFont;
-	delete italicFont;
-	delete boldFont;
 }
 
 

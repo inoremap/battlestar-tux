@@ -28,7 +28,7 @@
 #include "Primitives/HorizontalPane.h"
 #include "Primitives/PlanetButton.h"
 
-SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
 	game = g;
 }

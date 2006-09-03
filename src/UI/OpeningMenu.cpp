@@ -30,7 +30,7 @@
 #include "Primitives/Label.h"
 #include "Primitives/VerticalPane.h"
 
-OpeningMenu::OpeningMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h ) {
+OpeningMenu::OpeningMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
 	game = g;
 }
