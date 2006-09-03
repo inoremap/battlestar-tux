@@ -35,8 +35,7 @@
 #include "../Screen.h"
 
 MainMenu::MainMenu( MenuType t, Game* g ) {
-	currentType = t;
-	nextType = NULL_MENU;
+	currentType = nextType = t;
 	game = g;
 	currentMenu = NULL;
 }
