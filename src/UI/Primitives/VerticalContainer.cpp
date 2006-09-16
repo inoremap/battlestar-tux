@@ -1,7 +1,7 @@
 /* VerticalContainer.cpp
  *
  * Copyright 2006 Eliot Eshelman
- * eliot@6by9.net
+ * battlestartux@6by9.net
  *
  *
  *  This file is part of Battlestar Tux.

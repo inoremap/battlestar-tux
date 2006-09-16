@@ -1,7 +1,7 @@
 /* Config.cpp
  *
  * Copyright 2005-2006 Eliot Eshelman
- * eliot@6by9.net
+ * battlestartux@6by9.net
  *
  *
  *  This file is part of Battlestar Tux.
@@ -66,7 +66,7 @@ void Config::parseCommandline( int argc, char* argv[] ) {
 
 void Config::printGreeting() {
 	std::cout << "Battlestar T.U.X.";
-	std::cout << "\n  Copyright (C) 2005-2006 Eliot Eshelman <eliot@6by9.net>";
+	std::cout << "\n  Copyright (C) 2005-2006 Eliot Eshelman <battlestartux@6by9.net>";
 	std::cout << "\n";
 	std::cout << "\n  Battlestar Tux is free software; you can redistribute it and/or modify";
 	std::cout << "\n  it under the terms of the GNU General Public License as published by";
