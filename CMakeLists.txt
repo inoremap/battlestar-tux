@@ -12,6 +12,9 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
+#
+## YOU DO NOT NEED TO MODIFY THIS FILE ##
+
 PROJECT(BATTLESTAR_TUX)
 
 # Include custom cmake modules.
