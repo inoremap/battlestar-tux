@@ -22,20 +22,15 @@
  */
 
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-
 #include <SDL.h>
 #include <math.h>
 
 #include "Battle.h"
 #include "Config.h"
 #include "Game.h"
+#include "MainMenu.h"
 #include "Screen.h"
 #include "TextureManager.h"
-#include "UI/MainMenu.h"
 
 using namespace std;
 
