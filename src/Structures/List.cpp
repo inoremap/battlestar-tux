@@ -26,7 +26,6 @@
 
 #include "List.h"
 
-
 List::List() {
 	rootObj = 0;
 	addAtEnd = false;

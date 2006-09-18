@@ -35,7 +35,6 @@ class Fighter;
 class Screen;
 class TextureManager;
 
-
 /* Stores game states and information. */
 class Game {
 	public:

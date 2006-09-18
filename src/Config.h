@@ -27,7 +27,6 @@
 
 #include "Game.h"
 
-
 /* Stores game configuration. */
 class Config {
 	public:

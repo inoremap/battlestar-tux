@@ -22,8 +22,8 @@
  */
 
 
+#include "FighterAmmo.h"
 #include "Laser.h"
-#include "../../FighterAmmo.h"
 
 Laser::Laser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;

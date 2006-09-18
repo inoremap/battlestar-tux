@@ -25,8 +25,8 @@
 #ifndef ENEMYFIGHTER_H_
 #define ENEMYFIGHTER_H_
 
+#include "EnemyFighterList.h"
 #include "Fighter.h"
-#include "../EnemyFighterList.h"
 
 /* An enemy fighter aircraft - NPC. */
 class EnemyFighter : public Fighter {

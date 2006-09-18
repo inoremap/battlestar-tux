@@ -22,8 +22,8 @@
  */
 
 
+#include "FighterAmmo.h"
 #include "Plasma.h"
-#include "../../FighterAmmo.h"
 
 Plasma::Plasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;

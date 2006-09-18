@@ -26,8 +26,8 @@
 #include <SDL_opengl.h>
 #include <iostream>
 
-#include "Screen.h"
 #include "Config.h"
+#include "Screen.h"
 
 Screen::Screen( Game* g ) {
 	screen = NULL;

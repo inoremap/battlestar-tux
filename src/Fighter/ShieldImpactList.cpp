@@ -27,7 +27,7 @@
 #include "Shield.h"
 #include "ShieldImpact.h"
 #include "ShieldImpactList.h"
-#include "../TextureManager.h"
+#include "TextureManager.h"
 
 ShieldImpactList::ShieldImpactList( Shield* s, Game* g ) {
 	texture = g->getTextureManager()->loadTexture( "data/gfx/shield_impact_0001-64.png" );

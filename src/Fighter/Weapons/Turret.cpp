@@ -24,8 +24,8 @@
 
 #include <math.h>
 
+#include "FighterAmmo.h"
 #include "Turret.h"
-#include "../../FighterAmmo.h"
 
 Turret::Turret( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	turretHeading = 0.0;

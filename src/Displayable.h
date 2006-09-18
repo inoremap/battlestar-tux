@@ -28,8 +28,7 @@
 #include <SDL_opengl.h>
 
 #include "Game.h"
-#include "Structures/ListItem.h"
-
+#include "ListItem.h"
 
 enum DisplayableType {
 	GROUND		=	0x0001,				// Ground segment

@@ -24,9 +24,9 @@
 
 #include <SDL_opengl.h>
 
+#include "HorizontalPane.h"
+#include "PlanetButton.h"
 #include "SystemMenu.h"
-#include "Primitives/HorizontalPane.h"
-#include "Primitives/PlanetButton.h"
 
 SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;

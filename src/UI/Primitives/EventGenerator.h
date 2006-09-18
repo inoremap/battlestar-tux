@@ -25,9 +25,9 @@
 #ifndef EVENTGENERATOR_H_
 #define EVENTGENERATOR_H_
 
-#include "../../Structures/List.h"
 #include "Event.h"
 #include "EventListener.h"
+#include "List.h"
 
 /* All widgets which generate events inherit this generator. */
 class EventGenerator : protected List {

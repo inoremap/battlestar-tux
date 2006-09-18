@@ -27,11 +27,10 @@
 #include <iostream>
 
 #include "Config.h"
-#include "Fighter/Fighter.h"
+#include "Fighter.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
 #include "TextureManager.h"
-
 
 Game::Game() {
 	startTime = SDL_GetTicks();

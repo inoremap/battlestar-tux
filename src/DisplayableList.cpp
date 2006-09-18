@@ -30,8 +30,8 @@
 #include "DisplayableList.h"
 #include "EnemyFighterList.h"
 #include "ExplosionList.h"
+#include "Fighter.h"
 #include "FighterAmmo.h"
-#include "Fighter/Fighter.h"
 
 DisplayableList::DisplayableList( Game* g ) {
 	game = g;

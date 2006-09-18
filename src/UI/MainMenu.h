@@ -27,7 +27,7 @@
 
 #include <FTGLTextureFont.h>
 
-#include "../Game.h"
+#include "Game.h"
 
 class GUI;
 
@@ -38,7 +38,7 @@ enum MenuType {
 	NEW_CAMPAIGN_MENU,		// Start a new game.
 	LOAD_CAMPAIGN_MENU,		// Load an existing game.
 	SETTINGS_MENU,			// Game settings and options.
-	CREDITS_MENU	,			// Game credits.
+	CREDITS_MENU,			// Game credits.
 	SYSTEM_MENU				// Show solar system the ship is currently in.
 };
 

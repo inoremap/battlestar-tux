@@ -30,8 +30,7 @@
 #include <iostream>
 #include <string>
 
-#include "Structures/StringArray.h"
-
+#include "StringArray.h"
 
 /* Manages all image textures. */
 class TextureManager {

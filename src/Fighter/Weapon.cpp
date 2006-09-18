@@ -24,9 +24,9 @@
 
 #include <math.h>
 
-#include "Weapon.h"
 #include "Fighter.h"
-#include "../FighterAmmo.h"
+#include "FighterAmmo.h"
+#include "Weapon.h"
 
 Weapon::Weapon( WeaponSystem* w, Game* g ) {
 	weaponSystem = w;

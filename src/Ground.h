@@ -29,7 +29,6 @@
 
 #include "Game.h"
 
-
 enum GroundType {
 	MENU_GROUND,		// Display while in menus
 	SOLID_GROUND		// Solid earth below

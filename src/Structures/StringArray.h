@@ -27,7 +27,6 @@
 
 #include <string>
 
-
 /* Holds a sorted array of strings with an associated
  * array of integer IDs.  Perfect for storing texture IDs.
  */

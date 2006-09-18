@@ -25,11 +25,11 @@
 #include <string>
 #include <iostream>
 
+#include "Button.h"
 #include "CreditsMenu.h"
-#include "Primitives/Button.h"
-#include "Primitives/HorizontalContainer.h"
-#include "Primitives/Label.h"
-#include "Primitives/VerticalPane.h"
+#include "HorizontalContainer.h"
+#include "Label.h"
+#include "VerticalPane.h"
 
 CreditsMenu::CreditsMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;

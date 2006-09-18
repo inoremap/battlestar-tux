@@ -26,15 +26,15 @@
 #include <SDL_opengl.h>
 #include <iostream>
 
+#include "CreditsMenu.h"
 #include "GUI.h"
 #include "LoadCampaignMenu.h"
 #include "MainMenu.h"
 #include "NewCampaignMenu.h"
-#include "CreditsMenu.h"
 #include "OpeningMenu.h"
+#include "Screen.h"
 #include "SettingsMenu.h"
 #include "SystemMenu.h"
-#include "../Screen.h"
 
 MainMenu::MainMenu( MenuType t, Game* g ) {
 	currentType = nextType = t;

@@ -27,8 +27,8 @@
 
 #include <iostream>
 
-#include "../../Structures/ListItem.h"
 #include "Event.h"
+#include "ListItem.h"
 
 /* All objects which listen for widget events inherit this listener. */
 class EventListener : public ListItem {

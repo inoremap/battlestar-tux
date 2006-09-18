@@ -27,7 +27,6 @@
 
 #include "Config.h"
 
-
 Config::Config( Game* g ) {
 	game = g;
 

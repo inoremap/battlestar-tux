@@ -22,23 +22,18 @@
  */
 
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-
 #include <SDL.h>
 #include <iostream>
 #include <math.h>
 
 #include "Config.h"
+#include "EnemyFighter.h"
 #include "EnemyFighterList.h"
-#include "Fighter/EnemyFighter.h"
-#include "Fighter/HeroFighter.h"
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
 #include "Ground.h"
+#include "HeroFighter.h"
 #include "HUD.h"
 #include "Screen.h"
 #include "TextureManager.h"

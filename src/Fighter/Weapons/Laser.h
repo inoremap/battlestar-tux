@@ -27,10 +27,10 @@
 
 #include <string>
 
-#include "../../Game.h"
-#include "../../FighterAmmoList.h"
-#include "../Weapon.h"
-#include "../WeaponSystem.h"
+#include "FighterAmmoList.h"
+#include "Game.h"
+#include "Weapon.h"
+#include "WeaponSystem.h"
 
 /* Laser weapon. */
 class Laser : public Weapon {

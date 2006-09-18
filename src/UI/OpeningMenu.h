@@ -25,11 +25,11 @@
 #ifndef OPENINGMENU_H_
 #define OPENINGMENU_H_
 
+#include "ButtonClickEvent.h"
+#include "ButtonClickListener.h"
+#include "Game.h"
 #include "GUI.h"
-#include "../Game.h"
 #include "MainMenu.h"
-#include "Primitives/ButtonClickEvent.h"
-#include "Primitives/ButtonClickListener.h"
 
 /* First menu drawn - game first starting. */
 class OpeningMenu : public GUI, ButtonClickListener {

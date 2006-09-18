@@ -22,7 +22,7 @@
  */
 
 
-#include "Fighter/EnemyFighter.h"
+#include "EnemyFighter.h"
 #include "EnemyFighterList.h"
 #include "TextureManager.h"
 

@@ -27,15 +27,14 @@
 
 #include <SDL_opengl.h>
 
-#include "../Displayable.h"
-#include "../Game.h"
+#include "Displayable.h"
+#include "Game.h"
+#include "Laser.h"
+#include "Plasma.h"
 #include "Shield.h"
+#include "Turret.h"
 #include "Weapon.h"
 #include "WeaponSystem.h"
-#include "Weapons/Laser.h"
-#include "Weapons/Plasma.h"
-#include "Weapons/Turret.h"
-
 
 enum FighterAlignment {
 	HEROS_FIGHTER,		// Fighter flown by player

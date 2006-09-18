@@ -22,9 +22,9 @@
  */
 
 
-#include "Shield.h"
 #include "Fighter.h"
-#include "../TextureManager.h"
+#include "Shield.h"
+#include "TextureManager.h"
 
 Shield::Shield( Fighter* f, float full, Game* g ) : Displayable( SHIELD, g ) {
 	fighter = f;

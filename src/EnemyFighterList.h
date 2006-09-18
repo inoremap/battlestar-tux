@@ -30,7 +30,6 @@
 #include "Displayable.h"
 #include "DisplayableList.h"
 
-
 enum EnemyFighterType {
 	BASIC_ENEMY_FIGHTER		// Default enemy fighter
 };

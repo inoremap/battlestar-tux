@@ -29,8 +29,8 @@
 #include <string>
 
 #include "ButtonClickGenerator.h"
+#include "Game.h"
 #include "Widget.h"
-#include "../../Game.h"
 
 /* Button containing a rotating planet. */
 class PlanetButton : public Widget, public ButtonClickGenerator {

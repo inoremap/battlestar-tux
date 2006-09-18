@@ -27,8 +27,8 @@
 
 #include <SDL_opengl.h>
 
-#include "../Game.h"
-#include "../Structures/List.h"
+#include "Game.h"
+#include "List.h"
 
 class Shield;
 

@@ -27,7 +27,6 @@
 
 #include "Fighter.h"
 
-
 enum HeroFighterType {
 	BASIC_FIGHTER		// Default fighter
 };

@@ -27,8 +27,8 @@
 
 #include <FTGLTextureFont.h>
 
+#include "List.h"
 #include "MainMenu.h"
-#include "../Structures/List.h"
 
 /* Set of widgets and containers to be drawn. */
 class GUI : public List {

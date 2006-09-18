@@ -27,7 +27,6 @@
 
 #include "Game.h"
 
-
 static const int CYCLE_SIZE = 50;
 
 /* List of possible functions. */

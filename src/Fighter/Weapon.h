@@ -27,8 +27,8 @@
 
 #include <string>
 
-#include "../Game.h"
-#include "../FighterAmmoList.h"
+#include "FighterAmmoList.h"
+#include "Game.h"
 #include "WeaponSystem.h"
 
 

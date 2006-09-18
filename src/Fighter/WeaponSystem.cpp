@@ -22,10 +22,10 @@
  */
 
 
-#include "../TextureManager.h"
-#include "WeaponSystem.h"
 #include "Fighter.h"
+#include "TextureManager.h"
 #include "Weapon.h"
+#include "WeaponSystem.h"
 
 WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f, Game* g ) {
 	mount_points = allMounts;

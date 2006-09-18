@@ -25,8 +25,8 @@
 #ifndef WIDGET_H_
 #define WIDGET_H_
 
-#include "../../Structures/ListItem.h"
-#include "../GUI.h"
+#include "GUI.h"
+#include "ListItem.h"
 
 /* Default color/alpha for widgets. */
 static const float W_BG[4] = { 0.0, 0.0, 0.0, 0.6 };

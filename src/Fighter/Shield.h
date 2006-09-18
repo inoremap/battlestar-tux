@@ -27,8 +27,8 @@
 
 #include <SDL_opengl.h>
 
-#include "../Displayable.h"
-#include "../Game.h"
+#include "Displayable.h"
+#include "Game.h"
 #include "ShieldImpactList.h"
 
 class Fighter;

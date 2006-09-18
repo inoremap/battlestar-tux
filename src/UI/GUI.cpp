@@ -27,7 +27,7 @@
 #include <string>
 
 #include "GUI.h"
-#include "Primitives/Widget.h"
+#include "Widget.h"
 
 GUI::GUI( int w, int h, MainMenu* menu ) {
 	screenW = w;

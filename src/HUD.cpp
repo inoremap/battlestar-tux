@@ -25,9 +25,9 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-#include "Fighter/Fighter.h"
-#include "TextureManager.h"
+#include "Fighter.h"
 #include "HUD.h"
+#include "TextureManager.h"
 
 HUD::HUD( Game* g ) {
 	game = g;

@@ -24,7 +24,7 @@
 
 #include "HeroFighter.h"
 #include "Shield.h"
-#include "../TextureManager.h"
+#include "TextureManager.h"
 
 HeroFighter::HeroFighter( HeroFighterType f, Game* g ) : Fighter( HEROS_FIGHTER, g ) {
 	fighterType = f;

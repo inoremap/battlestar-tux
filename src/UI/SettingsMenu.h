@@ -25,11 +25,11 @@
 #ifndef SETTINGSMENU_H_
 #define SETTINGSMENU_H_
 
+#include "ButtonClickEvent.h"
+#include "ButtonClickListener.h"
+#include "Game.h"
 #include "GUI.h"
-#include "../Game.h"
 #include "MainMenu.h"
-#include "Primitives/ButtonClickEvent.h"
-#include "Primitives/ButtonClickListener.h"
 
 /* Display list of game settings. */
 class SettingsMenu : public GUI, ButtonClickListener {

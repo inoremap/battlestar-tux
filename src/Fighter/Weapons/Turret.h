@@ -27,7 +27,7 @@
 
 #include <string>
 
-#include "../Weapon.h"
+#include "Weapon.h"
 
 /* Turret for mounting/targetting weapons. */
 class Turret : public Weapon {

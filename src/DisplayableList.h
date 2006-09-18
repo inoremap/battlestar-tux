@@ -25,7 +25,7 @@
 #ifndef DISPLAYABLELIST_
 #define DISPLAYABLELIST_
 
-#include "Structures/List.h"
+#include "List.h"
 
 class Displayable;
 

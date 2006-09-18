@@ -24,10 +24,10 @@
 
 #include "Battle.h"
 #include "Config.h"
+#include "EnemyFighter.h"
 #include "EnemyFighterList.h"
 #include "ExplosionList.h"
-#include "Fighter/EnemyFighter.h"
-#include "Fighter/HeroFighter.h"
+#include "HeroFighter.h"
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 #include "Ground.h"

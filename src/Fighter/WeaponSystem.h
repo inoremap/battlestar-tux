@@ -27,7 +27,7 @@
 
 #include <SDL_opengl.h>
 
-#include "../Game.h"
+#include "Game.h"
 
 class Fighter;
 class Weapon;

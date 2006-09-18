@@ -27,10 +27,10 @@
 
 #include <SDL_opengl.h>
 
+#include "Displayable.h"
+#include "Game.h"
+#include "Pulse.h"
 #include "Shield.h"
-#include "../Displayable.h"
-#include "../Game.h"
-#include "../Pulse.h"
 
 class ShieldImpact : public Displayable {
 	public:

@@ -29,6 +29,14 @@ SET(FREETYPE_DIR ${CMAKE_MODULE_PATH})
 FIND_PACKAGE(FREETYPE REQUIRED)
 
 INCLUDE_DIRECTORIES(
+	# Directories in Battlestar TUX project
+	${BATTLESTAR_TUX_SOURCE_DIR}/src
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter/Weapons
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Structures
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI/Primitives
+
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/ftgl
 
