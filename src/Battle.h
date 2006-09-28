@@ -25,7 +25,14 @@
 #ifndef BATTLE_H_
 #define BATTLE_H_
 
+#include "EnemyFighterList.h"
+#include "ExplosionList.h"
+#include "FighterAmmoList.h"
 #include "Game.h"
+#include "Ground.h"
+#include "HeroFighter.h"
+#include "HUD.h"
+#include "Screen.h"
 
 /* The Hero's fighter is launched to battle a set of enemies. */
 class Battle {
@@ -33,23 +40,50 @@ class Battle {
 				Battle( Game* g );
 				~Battle();
 
-				// Start the battle.
-				void Start();
+				// Update battle status.
+				void Update();
+
+				// Draw battle.
+				void Draw();
+
+				// Finish the battle.
+				void FinishBattle();
+				bool isFinished();
 
 				// Abort the battle - hero forfeits.
-				void Abort();
+				void AbortBattle();
+				bool isAborted();
 
 	private:
 				Battle( const Battle &battle );
 				const Battle & operator= ( const Battle &battle );
 
 				// Is battle still raging?
-				bool isFinished;
+				bool finished;
 
 				// Has the battle been aborted?
-				bool isAborted;
+				bool aborted;
 
 				Game* game;
+
+
+				// Battle variables.
+				Screen* screen;
+
+				bool aDown;
+				bool uDown;
+
+				HUD* hud;
+				Ground* ground;
+
+				HeroFighter* hero;
+
+				FighterAmmoList* heroAmmoList;
+				FighterAmmoList* enemyAmmoList;
+
+				EnemyFighterList* enemies;
+
+				ExplosionList* explosionList;
 };
 
 

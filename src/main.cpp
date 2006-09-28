@@ -25,7 +25,6 @@
 #include <SDL.h>
 #include <math.h>
 
-#include "Battle.h"
 #include "Config.h"
 #include "Game.h"
 #include "MainMenu.h"
@@ -53,10 +52,6 @@ int main(int argc, char* argv[])
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
-		//Battle* battle = new Battle( game );
-		//battle->Start();
-		//delete battle;
-
 		MainMenu* menu = new MainMenu( OPENING_MENU, game );
 		menu->ShowMenu();
 		delete menu;

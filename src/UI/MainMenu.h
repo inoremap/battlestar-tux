@@ -27,6 +27,7 @@
 
 #include <FTGLTextureFont.h>
 
+#include "Battle.h"
 #include "Game.h"
 
 class GUI;
@@ -77,6 +78,9 @@ class MainMenu {
 				FTFont* normalFont;
 				FTFont* italicFont;
 				FTFont* boldFont;
+
+				// Battle/Campaign event
+				Battle* battle;
 
 				Game* game;
 };

@@ -38,6 +38,7 @@
 
 MainMenu::MainMenu( MenuType t, Game* g ) {
 	currentType = nextType = t;
+	battle = NULL;
 	game = g;
 	currentMenu = NULL;
 
@@ -74,6 +75,9 @@ MainMenu::MainMenu( MenuType t, Game* g ) {
 
 
 MainMenu::~MainMenu() {
+	if( battle )
+		delete battle;
+
 	delete normalFont;
 	delete italicFont;
 	delete boldFont;
@@ -89,45 +93,63 @@ void MainMenu::ShowMenu() {
 	while( !game->isFinished() ) {
 		game->startFrame();
 
-		// Clear the buffers.
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
 		// Update menu.
-		currentMenu->Update();
+		if( currentMenu ) {
+			// Clear the buffers.
+			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+			currentMenu->Update();
+		}
 
 		// Event listeners are called during Update().  The current menu may have changed.
 		if( nextType != NULL_MENU )
 			GenerateMenu();
 
+		// Update and draw battle.
+		if( battle ) {
+			if( battle->isAborted() || battle->isFinished() ) {
+				delete battle;
+				battle = NULL;
+				nextType = OPENING_MENU;
+			}
+			else {
+				battle->Update();
+				battle->Draw();
+			}
+		}
+
 		// Draw menu.
-		currentMenu->Draw();
+		if( currentMenu )
+			currentMenu->Draw();
 
 		// Swap buffers - the newly drawn items will appear.
 		SDL_GL_SwapBuffers();
 
-		// Read all events off the queue.
-		while( !game->isFinished() && SDL_PollEvent(&event) ) {
-			switch( event.type ) {
-				case SDL_KEYDOWN:
-					switch( event.key.keysym.sym ) {
-						case SDLK_ESCAPE:
-							if( currentType == OPENING_MENU )
-								game->exitBT();
-							else
-								ChangeMenu( OPENING_MENU );
-							break;
+		// If there is a battle, it will read all events.  Otherwise, read all events off the queue.
+		if( !battle ) {
+			while( !game->isFinished() && SDL_PollEvent(&event) ) {
+				switch( event.type ) {
+					case SDL_KEYDOWN:
+						switch( event.key.keysym.sym ) {
+							case SDLK_ESCAPE:
+								if( currentType == OPENING_MENU )
+									game->exitBT();
+								else
+									ChangeMenu( OPENING_MENU );
+								break;
+	
+							default:
+								break;
+						}
+						break;
 
-						default:
-							break;
-					}
-					break;
+					case SDL_QUIT:
+						game->exitBT();
+						break;
 
-				case SDL_QUIT:
-					game->exitBT();
-					break;
-
-				default:
-					break;
+					default:
+						break;
+				}
 			}
 		}
 
@@ -143,8 +165,10 @@ void MainMenu::ChangeMenu( MenuType t ) { nextType = t; }
 
 
 void MainMenu::GenerateMenu() {
-	if( currentMenu )
+	if( currentMenu ) {
 		delete currentMenu;
+		currentMenu = NULL;
+	}
 
 	currentType = nextType;
 	nextType = NULL_MENU;
@@ -157,7 +181,10 @@ void MainMenu::GenerateMenu() {
 			break;
 
 		case NEW_CAMPAIGN_MENU:
-			currentMenu = new NewCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			//currentMenu = new NewCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentType = NULL_MENU;
+
+			battle = new Battle( game );
 			break;
 
 		case LOAD_CAMPAIGN_MENU:
@@ -177,7 +204,8 @@ void MainMenu::GenerateMenu() {
 			break;
 	}
 
-	currentMenu->CreateWidgets();
+	if( currentMenu != NULL )
+		currentMenu->CreateWidgets();
 }
 
 FTFont* MainMenu::getFont() { return normalFont; }
