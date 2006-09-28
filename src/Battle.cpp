@@ -127,7 +127,7 @@ void Battle::Update() {
 		hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() + 0.5 );
 	if( uDown )
 		hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() - 0.5 );
-	while( !game->isFinished() && !game->isAborted() && SDL_PollEvent(&event) ) {
+	while( !game->isFinished() && !isFinished() && !isAborted() && SDL_PollEvent(&event) ) {
 		switch( event.type ) {
 			case SDL_KEYDOWN:
 				switch( event.key.keysym.sym ) {
