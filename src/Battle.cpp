@@ -22,6 +22,8 @@
  */
 
 
+#include <math.h>
+
 #include "Battle.h"
 #include "Config.h"
 #include "EnemyFighter.h"
@@ -36,8 +38,10 @@ Battle::Battle( Game* g ) {
 
 	screen = game->getScreen();
 
-	aDown = false;
-	uDown = false;
+	keyLeft = false;
+	keyRight = false;
+	keyUp = false;
+	keyDown = false;
 
 	hud = new HUD( game );
 	ground = new Ground( SOLID_GROUND, game );
@@ -71,11 +75,6 @@ Battle::~Battle() {
 
 
 void Battle::Update() {
-	int x = 0;
-	int y = 0;
-	float realWidth = 0.0;
-	float realHeight = 0.0;
-
 	SDL_Event event;
 
 	// If not paused, update all positions/states.
@@ -93,13 +92,16 @@ void Battle::Update() {
 			}
 		}
 
-		// Get cursor position and then set fighter position.
-		SDL_GetMouseState( &x, &y );
-		realWidth = (float) x - (float) screen->getWidth() / 2;
-		realHeight = (float) y - (float) screen->getHeight() / 2;
-		realWidth = realWidth / ((float) screen->getWidth() / 2);
-		realHeight = realHeight / ((float) screen->getHeight() / 2);
-		hero->setPos( realWidth * game->getBounds()[0], 1.0 - realHeight * game->getBounds()[1] );
+		float* pos = hero->getVel();
+		if( keyLeft )
+			pos[0] -= .01;
+		if( keyRight )
+			pos[0] += .01;
+		if( keyUp )
+			pos[1] += .01;
+		if( keyDown )
+			pos[1] -= .01;
+		hero->setVel( pos[0], pos[1], pos[2] );
 		hero->Update();
 		if( hero->getHealth() <= 0 )
 			FinishBattle();
@@ -122,11 +124,30 @@ void Battle::Update() {
 		ground->Update();
 	}
 
+	// Set current target angle.
+	int x = 0;
+	int y = 0;
+	SDL_GetMouseState( &x, &y );
+	int screenWidth = screen->getWidth();
+	int screenHeight = screen->getHeight();
+	x -= screenWidth / 2;
+	y -= screenHeight / 2;
+	float targetAngle = 0.0;
+	if( y == 0 ) {
+		if( x < 0 )
+			targetAngle = 90;
+		else
+			targetAngle = 270;		
+	}
+	else {
+		targetAngle = atanf((float) x/y) * (180/M_PI);
+
+		if( y > 0 )
+			targetAngle += 180;
+	}
+	hero->getWeaponSystem()->SetTarget( targetAngle );
+
 	// Read all events off the queue.
-	if( aDown )
-		hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() + 0.5 );
-	if( uDown )
-		hero->getWeaponSystem()->SetTarget( hero->getWeaponSystem()->getTarget() - 0.5 );
 	while( !game->isFinished() && !isFinished() && !isAborted() && SDL_PollEvent(&event) ) {
 		switch( event.type ) {
 			case SDL_KEYDOWN:
@@ -135,12 +156,20 @@ void Battle::Update() {
 						AbortBattle();
 						break;
 
+					case SDLK_COMMA:
+						keyUp = true;
+						break;
+
+					case SDLK_o:
+						keyDown = true;
+						break;
+
 					case SDLK_a:
-						aDown = true;
+						keyLeft = true;
 						break;
 
 					case SDLK_u:
-						uDown = true;
+						keyRight = true;
 						break;
 
 					case SDLK_p:
@@ -154,12 +183,20 @@ void Battle::Update() {
 
 			case SDL_KEYUP:
 				switch( event.key.keysym.sym ) {
+					case SDLK_COMMA:
+						keyUp = false;
+						break;
+
+					case SDLK_o:
+						keyDown = false;
+						break;
+
 					case SDLK_a:
-						aDown = false;
+						keyLeft = false;
 						break;
 
 					case SDLK_u:
-						uDown = false;
+						keyRight = false;
 						break;
 
 					default:
@@ -202,8 +239,9 @@ void Battle::Draw() {
 	// glClear( GL_COLOR_BUFFER_BIT );
 
 	// Set camera position and draw stuff...
+	float* heroPos = hero->getPos();
 	glLoadIdentity();
-	glTranslatef( 0, 0, -15 );
+	glTranslatef( -heroPos[0], -heroPos[1], -15 );
 
 	// As long as we draw in order, we don't need depth testing.
 	ground->Draw();

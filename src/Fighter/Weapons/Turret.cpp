@@ -23,7 +23,7 @@
 
 
 #include <math.h>
-
+#include <iostream>
 #include "FighterAmmo.h"
 #include "Turret.h"
 
@@ -102,10 +102,22 @@ void Turret::Update() {
 		if( fabsf(targetHeading - turretHeading) < trackAmount )
 			turretHeading = targetHeading;
 		else {
-			if( targetHeading > turretHeading )
-				turretHeading += trackAmount;
-			else
+			// The turret should be sure to travel the shortest distance.
+			if( (targetHeading - turretHeading) > 180 )
 				turretHeading -= trackAmount;
+			else if( (turretHeading - targetHeading) > 180 )
+				turretHeading += trackAmount;
+			else { 
+				if( targetHeading > turretHeading )
+					turretHeading += trackAmount;
+				else
+					turretHeading -= trackAmount;
+			}
+std::cout << "targetHeading: " << targetHeading  << "\tturretHeading: " << turretHeading << "\n";
+			if( turretHeading >= 360 )
+				turretHeading -= 360;
+			else if( turretHeading <= -360 )
+				turretHeading += 360;
 		}
 	}
 

@@ -62,6 +62,8 @@ WeaponSystem::WeaponSystem( int allMounts, float allOffsets[][2], Fighter* f, Ga
 		n *= 2;
 	}
 
+	targetHeading = 0.0;
+
 	texture = game->getTextureManager()->loadTexture( "data/gfx/crosshairs_0001-32.png" );
 }
 

@@ -70,8 +70,10 @@ class Battle {
 				// Battle variables.
 				Screen* screen;
 
-				bool aDown;
-				bool uDown;
+				bool keyLeft;
+				bool keyRight;
+				bool keyUp;
+				bool keyDown;
 
 				HUD* hud;
 				Ground* ground;
