@@ -34,7 +34,7 @@ Displayable::Displayable( DisplayableType t, Game* g ) {
 	pos[1] = 0;
 
 	// The default vertical position is as close to the
-	// screen as possible.  Most object will be drawn
+	// screen as possible.  Most objects will be drawn
 	// at a greater distance.
 	pos[2] = -1.0;
 

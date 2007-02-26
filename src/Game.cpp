@@ -1,6 +1,6 @@
 /* Game.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -50,10 +50,13 @@ Game::Game() {
 
 	syncSleep = 5;
 
+	// [-40, 30]    [40, 30]
+	// [-40,-30]    [40,-30]
 	bounds[0] = 40;
 	bounds[1] = 30;
 
-	scrollSpeed = 0.1;
+	position[0] = 0;
+	position[1] = 0;
 
 	config = 0;
 	textureManager = 0;
@@ -142,7 +145,17 @@ void Game::stopFrame() {
 unsigned int Game::getGameFrame() { return gameFrame; }
 int Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
-float Game::getScrollSpeed() { return scrollSpeed; }
+
+float* Game::getPos() {
+	if( fighter ) {
+		float* fighterPos = fighter->getPos();
+		position[0] = fighterPos[0];
+		position[1] = fighterPos[1];
+	}
+
+	return position;
+}
+
 
 Config* Game::getConfig() { return config; }
 void Game::setConfig( Config* c ) { config = c; }

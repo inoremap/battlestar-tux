@@ -1,6 +1,6 @@
 /* Ground.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -32,9 +32,6 @@ Ground::Ground( GroundType type, Game* g ) {
 	game = g;
 	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0001-256.png" );
 
-	position = 0.0;
-	offset = 0.0;
-	velocity = -0.05;
 	segmentSize = 10;
 }
 
@@ -44,18 +41,13 @@ Ground::~Ground() {
 }
 
 
-void Ground::Update() {
-	int speed = game->getGameSpeed();
-	position += velocity * speed;
-	offset += velocity * speed;
-	offset = fmodf( offset, segmentSize );
-}
+void Ground::Update() {}
 
 
 void Ground::Draw() {
+	float* pos = game->getPos();
 	float* bounds = game->getBounds();
-	int numSegmentsX = (int) ceil( bounds[0]/segmentSize );
-	int numSegmentsY = (int) ceil( bounds[1]/segmentSize );
+
 	float texCoords[4][2] = {
 		{ 0, 1 },
 		{ 0, 0 },
@@ -64,29 +56,29 @@ void Ground::Draw() {
 	};
 
 	glPushMatrix();
-	glTranslatef( 0, offset, 0 );
 
 	// Draw horizontal strips across the screen, starting at the bottom.
 	glBindTexture( GL_TEXTURE_2D, texture );
-	for( int y=-numSegmentsY; y < numSegmentsY; y++ ) {
+	for( float y = findLowerMultiple(-bounds[1] + pos[1]); y <= findUpperMultiple(bounds[1] + pos[1]); y+=segmentSize ) {
 		int tex = 0;
 
 		glBegin( GL_TRIANGLE_STRIP );
 			glColor4f( 1.0, 1.0, 1.0, 1.0 );
 
 			// Draw one horizontal strip at given y position.
-			for( int x=-numSegmentsX; x < numSegmentsX; x++ ) {
+			for( float x = findLowerMultiple(-bounds[0] + pos[0]); x <= findUpperMultiple(bounds[0] + pos[0]); x+=segmentSize ) {
 				if( tex >= 4 )
 					tex = 0;
 
 				glTexCoord2fv( texCoords[tex] );
-				glVertex3f( x * segmentSize, (y + 1) * segmentSize, sinf(offset + (y + 1) * segmentSize)/2 );
+				glVertex3f( x, y + segmentSize, 1 );
 				tex++;
 				glTexCoord2fv( texCoords[tex] );
-				glVertex3f( x * segmentSize, y * segmentSize, sinf(offset + y * segmentSize)/2 );
+				glVertex3f( x, y, 1 );
 				tex++;
 			}
 		glEnd();
+
 	}
 
 	glPopMatrix();
@@ -95,3 +87,13 @@ void Ground::Draw() {
 
 GroundType Ground::getType() { return groundType; }
 GLuint Ground::getTexture() { return texture; }
+
+
+float Ground::findLowerMultiple( const float n ) {
+	return n - fmodf( n, segmentSize );
+}
+
+
+float Ground::findUpperMultiple( const float n ) {
+	return n + ( segmentSize - fmodf(n, segmentSize) );
+}

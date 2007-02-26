@@ -1,6 +1,6 @@
 /* Ground.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -55,16 +55,8 @@ class Ground {
 				Ground( const Ground &ground );
 				const Ground & operator= ( const Ground &ground );
 
-				// Scroll (y-axis) position of the ground.
-				// This is not the actual position where the elements will be drawn,
-				// it is primarily for procedural generation of the ground.
-				float position;
-
-				// Position (y-axis) where the ground should be drawn.
-				float offset;
-
-				// Velocity of the ground moving.
-				float velocity;
+				float findLowerMultiple( const float n );
+				float findUpperMultiple( const float n );
 
 				// Size of each ground segment (the subdivision level).
 				float segmentSize;

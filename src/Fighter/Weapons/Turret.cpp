@@ -29,7 +29,7 @@
 
 Turret::Turret( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
 	turretHeading = 0.0;
-	trackingSpeed = 1.0;
+	trackingSpeed = 3.0;
 	weapon = NULL;
 
 	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R | UNDERBELLY_WEAPON_F | UNDERBELLY_WEAPON_R;

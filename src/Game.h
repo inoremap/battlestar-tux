@@ -1,6 +1,6 @@
 /* Game.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -63,7 +63,7 @@ class Game {
 				unsigned int getGameFrame();
 				int getGameSpeed();
 				float* getBounds();
-				float getScrollSpeed();
+				float* getPos();
 
 				Config* getConfig();
 				void setConfig( Config* c );
@@ -125,17 +125,12 @@ class Game {
 				int syncSleep;
 
 				// Maximum bounds of objects on the screen.
-				//
-				//  (-40, 30)             (40, 30)
-				//
-				//  (-40, -30)            (40, -30)
-				//
 				// Bounds are always centered on (0, 0).
 				float bounds[2];
 
-				// Base scroll speed.  Objects on the ground will move at this speed.
-				// Aircraft have their own velocity and may move faster.
-				float scrollSpeed;
+				// Last known position of the fighter.
+				// This is where the screen is centered.
+				float position[2];
 
 				// Stores game configuration
 				Config* config;
