@@ -33,6 +33,7 @@ INCLUDE_DIRECTORIES(
 	${BATTLESTAR_TUX_SOURCE_DIR}/src
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter/Weapons
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Procedural
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Structures
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI/Primitives
@@ -89,6 +90,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	Game.cpp
 	Ground.cpp
 	HUD.cpp
+	Procedural/Simplex.cpp
 	Pulse.cpp
 	Screen.cpp
 	Structures/List.cpp

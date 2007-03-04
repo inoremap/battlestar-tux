@@ -236,7 +236,9 @@ void Battle::Draw() {
 
 	// Don't need to clear the screen, because the
 	// entire area will be drawn again.  +20fps
-	// glClear( GL_COLOR_BUFFER_BIT );
+	// If we're in wireframe mode, the clear will be necessary.
+	if( game->getConfig()->getWireframe() )
+		glClear( GL_COLOR_BUFFER_BIT );
 
 	// Set camera position and draw stuff...
 	float* heroPos = hero->getPos();

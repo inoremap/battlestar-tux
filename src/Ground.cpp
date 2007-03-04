@@ -25,14 +25,16 @@
 #include <math.h>
 
 #include "Ground.h"
+#include "Simplex.h"
 #include "TextureManager.h"
+
 
 Ground::Ground( GroundType type, Game* g ) {
 	groundType = type;
 	game = g;
-	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0001-256.png" );
+	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0002-16.png" );
 
-	segmentSize = 10;
+	segmentSize = 3;
 }
 
 
@@ -58,23 +60,29 @@ void Ground::Draw() {
 	glPushMatrix();
 
 	// Draw horizontal strips across the screen, starting at the bottom.
+	// Notice that the adjacent polys share texture coords, so the texture
+	// has to be mirrored horizontally.
 	glBindTexture( GL_TEXTURE_2D, texture );
 	for( float y = findLowerMultiple(-bounds[1] + pos[1]); y <= findUpperMultiple(bounds[1] + pos[1]); y+=segmentSize ) {
 		int tex = 0;
 
 		glBegin( GL_TRIANGLE_STRIP );
-			glColor4f( 1.0, 1.0, 1.0, 1.0 );
-
 			// Draw one horizontal strip at given y position.
 			for( float x = findLowerMultiple(-bounds[0] + pos[0]); x <= findUpperMultiple(bounds[0] + pos[0]); x+=segmentSize ) {
 				if( tex >= 4 )
 					tex = 0;
 
 				glTexCoord2fv( texCoords[tex] );
-				glVertex3f( x, y + segmentSize, 1 );
+				float simplex1 = simplexNoise(x, y + segmentSize);
+				float simplex2 = simplex1 / 4 + 0.75;
+				glColor4f( simplex2, simplex2, simplex2, 1.0 );
+				glVertex3f( x, y + segmentSize, simplex1 );
 				tex++;
 				glTexCoord2fv( texCoords[tex] );
-				glVertex3f( x, y, 1 );
+				simplex1 = simplexNoise(x, y);
+				simplex2 = simplex2 = simplex1 / 4 + 0.75;
+				glColor4f( simplex2, simplex2, simplex2, 1.0 );
+				glVertex3f( x, y, simplex1 );
 				tex++;
 			}
 		glEnd();
