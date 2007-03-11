@@ -34,7 +34,8 @@ Ground::Ground( GroundType type, Game* g ) {
 	game = g;
 	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0002-16.png" );
 
-	segmentSize = 3;
+	height = 0.0;
+	segmentSize = 1;
 }
 
 
@@ -73,13 +74,13 @@ void Ground::Draw() {
 					tex = 0;
 
 				glTexCoord2fv( texCoords[tex] );
-				float simplex1 = simplexNoise(x, y + segmentSize);
+				float simplex1 = simplexNoise( 3, 0.5, x, y + segmentSize, height );
 				float simplex2 = simplex1 / 4 + 0.75;
 				glColor4f( simplex2, simplex2, simplex2, 1.0 );
 				glVertex3f( x, y + segmentSize, simplex1 );
 				tex++;
 				glTexCoord2fv( texCoords[tex] );
-				simplex1 = simplexNoise(x, y);
+				simplex1 = simplexNoise( 3, 0.5, x, y, height );
 				simplex2 = simplex2 = simplex1 / 4 + 0.75;
 				glColor4f( simplex2, simplex2, simplex2, 1.0 );
 				glVertex3f( x, y, simplex1 );
@@ -90,6 +91,8 @@ void Ground::Draw() {
 	}
 
 	glPopMatrix();
+
+	height += 0.01;
 }
 
 

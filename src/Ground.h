@@ -58,6 +58,9 @@ class Ground {
 				float findLowerMultiple( const float n );
 				float findUpperMultiple( const float n );
 
+				// Current vertical section of ground.
+				float height;
+
 				// Size of each ground segment (the subdivision level).
 				float segmentSize;
 

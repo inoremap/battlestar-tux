@@ -95,19 +95,22 @@ static const int simplex[64][4] = {
 };
 
 
+// 2D, 3D and 4D multi-octave Simplex noise.
+float simplexNoise( const float, const float, const float, const float );
+float simplexNoise( const float, const float, const float, const float, const float );
+float simplexNoise( const float, const float, const float, const float, const float, const float );
+
+
 int fastfloor( const float );
 
 float dot( const int*, const float, const float );
 float dot( const int*, const float, const float, const float );
 float dot( const int*, const float, const float, const float, const float );
 
-// 2D Simplex noise
-float simplexNoise( const float, const float );
 
-// 3D Simplex noise
-float simplexNoise( const float, const float, const float );
-
-// 4D Simplex noise
-float simplexNoise( const float, const float, const float, const float );
+// 2D, 3D and 4D raw Simplex noise
+float simplexRawNoise( const float, const float );
+float simplexRawNoise( const float, const float, const float );
+float simplexRawNoise( const float, const float, const float, const float );
 
 #endif /*SIMPLEX_H_*/
