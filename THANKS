@@ -11,3 +11,5 @@ The following resources proved useful when creating the game:
 The Game Programming Wiki  --------------------------------  http://gpwiki.org/
 Paul Bourke's Geometry  -----------------------------------  http://astronomy.swin.edu.au/~pbourke/
                                                              http://local.wasp.uwa.edu.au/~pbourke/
+Stefan Gustavson's Explanation of Simplex Noise -----------  http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
+Hugo Elias' Breakdown of Multi-Octave Noise ---------------  http://freespace.virgin.net/hugo.elias/models/m_perlin.htm

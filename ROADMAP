@@ -40,7 +40,7 @@ The goal is a fairly immersive game with exciting action and decent 4X (eXplore,
   > Integration with TinyXML
   > Save/Load elements to/from XML files
   > Modular Units
-    - Eventually, everything needs to be procedural.  Units, weapons and ammo need to be designed with this in mind.  We need clearly defined orthogonality between game objects - this facilitates computer generated content being dropped into the game.  Even if each "class" or "genre" of unit has to be hand written, the player needs to have freedom to expand the units.
+    - Eventually, everything needs to be procedural.  Units, weapons and ammo need to be designed with this in mind.  We need clearly defined orthogonality between game objects - this facilitates computer generated content being dropped into the game.  Even if each "class" or "genre" of unit has to be hand written, the player needs to have freedom to customize/expand the units.
     - Planets, systems and enemy(s) also need to be expandable.
 
 0.3.0:

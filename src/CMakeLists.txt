@@ -2,7 +2,7 @@
 #
 # Source cmake configuration file - assemble project.
 #
-# Copyright (C) 2006 Eliot Eshelman <battlestartux@6by9.net>
+# Copyright (C) 2006-2007 Eliot Eshelman <battlestartux@6by9.net>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -91,6 +91,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	Ground.cpp
 	HUD.cpp
 	Procedural/Simplex.cpp
+	Procedural/Textures.cpp
 	Pulse.cpp
 	Screen.cpp
 	Structures/List.cpp

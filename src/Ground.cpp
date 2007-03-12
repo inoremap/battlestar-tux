@@ -25,8 +25,8 @@
 #include <math.h>
 
 #include "Ground.h"
-#include "Simplex.h"
 #include "TextureManager.h"
+#include "Textures.h"
 
 
 Ground::Ground( GroundType type, Game* g ) {
@@ -74,13 +74,13 @@ void Ground::Draw() {
 					tex = 0;
 
 				glTexCoord2fv( texCoords[tex] );
-				float simplex1 = simplexNoise( 3, 0.5, x, y + segmentSize, height );
+				float simplex1 = marbleNoise( 4, 0.85, 0.1, x, y + segmentSize, height );
 				float simplex2 = simplex1 / 4 + 0.75;
 				glColor4f( simplex2, simplex2, simplex2, 1.0 );
 				glVertex3f( x, y + segmentSize, simplex1 );
 				tex++;
 				glTexCoord2fv( texCoords[tex] );
-				simplex1 = simplexNoise( 3, 0.5, x, y, height );
+				simplex1 = marbleNoise( 4, 0.85, 0.1, x, y, height );
 				simplex2 = simplex2 = simplex1 / 4 + 0.75;
 				glColor4f( simplex2, simplex2, simplex2, 1.0 );
 				glVertex3f( x, y, simplex1 );

@@ -31,9 +31,9 @@
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float simplexNoise( const float octaves, const float persistence, const float x, const float y ) {
+float simplexNoise( const float octaves, const float persistence, const float scale, const float x, const float y ) {
 	float total = 0;
-	float frequency = 0.05;
+	float frequency = scale;
 	float amplitude = 1;
 
 	for( int i=0; i < octaves; i++ ) {
@@ -51,9 +51,9 @@ float simplexNoise( const float octaves, const float persistence, const float x,
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float simplexNoise( const float octaves, const float persistence, const float x, const float y, const float z ) {
+float simplexNoise( const float octaves, const float persistence, const float scale, const float x, const float y, const float z ) {
 	float total = 0;
-	float frequency = 0.05;
+	float frequency = scale;
 	float amplitude = 1;
 
 	for( int i=0; i < octaves; i++ ) {
@@ -71,9 +71,9 @@ float simplexNoise( const float octaves, const float persistence, const float x,
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float simplexNoise( const float octaves, const float persistence, const float x, const float y, const float z, const float w ) {
+float simplexNoise( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w ) {
 	float total = 0;
-	float frequency = 0.05;
+	float frequency = scale;
 	float amplitude = 1;
 
 	for( int i=0; i < octaves; i++ ) {
