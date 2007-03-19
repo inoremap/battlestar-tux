@@ -49,7 +49,7 @@ class HexCell : public Object {
 				HexCell( Fighter*, HexCellType, const vec2 & );
 				virtual ~HexCell();
 
-				virtual void Update();
+				virtual void Update( int );
 
 				virtual void Draw();
 
@@ -58,7 +58,7 @@ class HexCell : public Object {
 
 	protected:
 				// Draw the hexagon.
-				void DrawHex( float, float, float );
+				void drawHex( float, float, float );
 
 				// The position of the cell inside the ship structure.
 				vec2 position;
@@ -72,6 +72,18 @@ class HexCell : public Object {
 	private:
 				HexCell( const HexCell & );
 				const HexCell & operator= ( const HexCell & );
+};
+
+
+// Points on a unit hexagon (x, y).
+static const float HEX_VERTS[7][2] = {
+	{ -1.0, 0.0 },
+	{ -0.5, 0.866025404 },
+	{ 0.5, 0.866025404 },
+	{ 1.0, 0.0 },
+	{ 0.5, -0.866025404 },
+	{ -0.5, -0.866025404 },
+	{ -1.0, 0.0 }
 };
 
 

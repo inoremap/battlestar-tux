@@ -64,7 +64,6 @@ void SystemMenu::Draw() {
 	GUI::Draw();
 
 	// Set star system OpenGL lighting requirements.
-	glEnable( GL_DEPTH_TEST );
 	glEnable( GL_LIGHTING );
 	glEnable( GL_LIGHT0 );
 	float lightPos[] = { -1000, 0.0, 100.0, 0.0 };
@@ -78,5 +77,4 @@ void SystemMenu::Draw() {
 	// Return to standard OpenGL settings.
 	glDisable( GL_LIGHT0 );
 	glDisable( GL_LIGHTING );
-	glDisable( GL_DEPTH_TEST );
 }

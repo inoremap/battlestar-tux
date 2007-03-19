@@ -78,6 +78,7 @@ void GUI::afterDraw() {
 
 void GUI::Draw() {
 	beforeDraw();
+	glDisable( GL_DEPTH_TEST );
 
 	Widget* cur = (Widget*) rootObj;
 
@@ -87,6 +88,7 @@ void GUI::Draw() {
 		cur = (Widget*) cur->getNext();
 	}
 
+	glEnable( GL_DEPTH_TEST );
 	afterDraw();
 }
 

@@ -31,12 +31,12 @@ CoreCell::CoreCell( Fighter* f, const vec2 &pos  ) : HexCell( f, CORE_CELL, pos 
 CoreCell::~CoreCell() {}
 
 
-void CoreCell::Update() {
-
+void CoreCell::Update( int speed ) {
+	HexCell::Update( speed );
 }
 
 
 void CoreCell::Draw() {
-
+	HexCell::Draw();
 }
 

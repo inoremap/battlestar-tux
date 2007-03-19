@@ -84,6 +84,10 @@ Screen::Screen( Game* g ) {
 	// The background color is black.
 	glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
+	// We will need depth testing to ensure
+	// polygons aren't drawn on top of each other.
+	glEnable( GL_DEPTH_TEST );
+
 	// Points and lines 1 pixel wide.
 	glPointSize( 1.0 );
 	glLineWidth( 1.0 );

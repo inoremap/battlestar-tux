@@ -205,22 +205,19 @@ void Battle::Update() {
 
 
 void Battle::Draw() {
-	// Disable depth testing.
-	// Depth testing isn't needed for the 2.5D drawing.
-	glDisable( GL_DEPTH_TEST );
-
 	// Don't need to clear the screen, because the
 	// entire area will be drawn again.  +20fps
 	// If we're in wireframe mode, the clear will be necessary.
 	if( game->getConfig()->getWireframe() )
 		glClear( GL_COLOR_BUFFER_BIT );
 
+	glClear( GL_DEPTH_BUFFER_BIT );
+
 	// Set camera position and draw stuff...
 	vec3 heroPos = hero->getPos();
 	glLoadIdentity();
 	glTranslatef( -heroPos[0], -heroPos[1], -15 );
 
-	// As long as we draw in order, we don't need depth testing.
 	ground->Draw();
 	//draw ground units?
 	enemyAmmoList->DrawObjects();

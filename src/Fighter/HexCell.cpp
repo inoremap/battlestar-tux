@@ -22,6 +22,8 @@
  */
 
 
+#include <SDL_opengl.h>
+
 #include "Fighter.h"
 #include "HexCell.h"
 #include "HexCellList.h"
@@ -38,21 +40,80 @@ HexCell::HexCell( Fighter* f, HexCellType t, const vec2 &pos  ) : Object( CELL )
 HexCell::~HexCell() {}
 
 
-void HexCell::Update() {
-
+void HexCell::Update( int speed ) {
+	Object::Update( speed );
 }
 
 
-void HexCell::Draw() {
-
-}
+void HexCell::Draw() {}
 
 
 vec2 HexCell::getCellPosition() { return position; }
 HexCellType HexCell::getCellType() { return cellType; }
 
 
-void HexCell::DrawHex( float innerWidth, float outerWidth, float height ) {
-	
+void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {
+	// We'll add half to the top, and half to the bottom.
+	height /= 2;
+
+	// Draw top.
+	glBegin( GL_TRIANGLE_STRIP );
+		for( int i=0; i < 7; i+=2 ) {
+			glTexCoord2f( 0, 1 );
+			glVertex3f( HEX_VERTS[i][0] * outerWidth, HEX_VERTS[i][1] * outerWidth, height );
+			glTexCoord2f( 0, 0 );
+			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, height );
+
+			glTexCoord2f( 1, 1 );
+			glVertex3f( HEX_VERTS[i+1][0] * outerWidth, HEX_VERTS[i+1][1] * outerWidth, height );
+			glTexCoord2f( 1, 0 );
+			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, height );
+		}
+	glEnd();
+
+	// Draw bottom.
+	glBegin( GL_TRIANGLE_STRIP );
+		for( int i=0; i < 7; i+=2 ) {
+			glTexCoord2f( 0, 1 );
+			glVertex3f( HEX_VERTS[i][0] * outerWidth, HEX_VERTS[i][1] * outerWidth, -height );
+			glTexCoord2f( 0, 0 );
+			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
+
+			glTexCoord2f( 1, 1 );
+			glVertex3f( HEX_VERTS[i+1][0] * outerWidth, HEX_VERTS[i+1][1] * outerWidth, -height );
+			glTexCoord2f( 1, 0 );
+			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
+		}
+	glEnd();
+
+	// Draw inner sides.
+	glBegin( GL_TRIANGLE_STRIP );
+		for( int i=0; i < 7; i+=2 ) {
+			glTexCoord2f( 0, 1 );
+			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, height );
+			glTexCoord2f( 0, 0 );
+			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
+
+			glTexCoord2f( 1, 1 );
+			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, height );
+			glTexCoord2f( 1, 0 );
+			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
+		}
+	glEnd();
+
+	// Draw outer sides.
+	glBegin( GL_TRIANGLE_STRIP );
+		for( int i=0; i < 7; i+=2 ) {
+			glTexCoord2f( 0, 1 );
+			glVertex3f( HEX_VERTS[i][0] * outerWidth, HEX_VERTS[i][1] * outerWidth, height );
+			glTexCoord2f( 0, 0 );
+			glVertex3f( HEX_VERTS[i][0] * outerWidth, HEX_VERTS[i][1] * outerWidth, -height );
+
+			glTexCoord2f( 1, 1 );
+			glVertex3f( HEX_VERTS[i+1][0] * outerWidth, HEX_VERTS[i+1][1] * outerWidth, height );
+			glTexCoord2f( 1, 0 );
+			glVertex3f( HEX_VERTS[i+1][0] * outerWidth, HEX_VERTS[i+1][1] * outerWidth, -height );
+		}
+	glEnd();
 }
 

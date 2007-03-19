@@ -61,8 +61,6 @@ void Ground::Draw() {
 		{ 1, 0 }
 	};
 
-	glPushMatrix();
-
 	// Draw horizontal strips across the screen, starting at the bottom.
 	// Notice that the adjacent polys share texture coords, so the texture
 	// has to be mirrored horizontally.
@@ -92,8 +90,6 @@ void Ground::Draw() {
 		glEnd();
 
 	}
-
-	glPopMatrix();
 }
 
 

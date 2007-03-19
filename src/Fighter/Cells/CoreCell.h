@@ -34,7 +34,7 @@ class CoreCell : public HexCell {
 				CoreCell( Fighter*, const vec2 & );
 				~CoreCell();
 
-				void Update();
+				void Update( int );
 
 				void Draw();
 
