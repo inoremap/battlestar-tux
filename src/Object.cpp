@@ -52,7 +52,14 @@ void Object::Update( int speed ) {
 }
 
 
-void Object::Draw() {}
+void Object::Draw() {
+	// The rotations are probably not what we want,
+	// but they at least offer some motion for now.
+	glTranslatef( pos[0], pos[1], pos[2] );
+	glRotatef( rot[2], 0.0, 0.0, 1.0 );
+	glRotatef( rot[1], 0.0, 1.0, 0.0 );
+	glRotatef( rot[0], 1.0, 0.0, 0.0 );
+}
 
 
 float Object::damage( float damage ) {

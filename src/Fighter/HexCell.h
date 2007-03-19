@@ -61,7 +61,7 @@ class HexCell : public Object {
 				void drawHex( float, float, float );
 
 				// The position of the cell inside the ship structure.
-				vec2 position;
+				vec2 cellOffset;
 
 				// What is the purpose of this cell?
 				HexCellType cellType;

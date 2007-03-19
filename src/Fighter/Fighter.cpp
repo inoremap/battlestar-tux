@@ -28,6 +28,8 @@
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	game = g;
 
+	pos[2] = 3;
+
 	allCells = new HexCellList( game );
 	storageCells = new HexCellList( game );
 	generationCells = new HexCellList( game );
@@ -49,15 +51,22 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 Fighter::~Fighter() {}
 
 
-void Fighter::Draw() {
-	allCells->DrawObjects();
+void Fighter::Update( int speed ) {
+	Object::Update( speed );
+
+	allCells->UpdateObjects();
 }
 
 
-void Fighter::Update() {
-	//weaponSystem->Update();
+void Fighter::Draw() {
+	glPushMatrix();
 
-	allCells->UpdateObjects();
+	// Apply transformations
+	Object::Draw();
+
+	allCells->DrawObjects();
+
+	glPopMatrix();
 }
 
 

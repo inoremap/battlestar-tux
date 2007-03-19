@@ -80,6 +80,8 @@ void Battle::Update() {
 
 	// If not paused, update all positions/states.
 	if( !game->isPaused() ) {
+		int speed = game->getGameSpeed();
+
 		heroAmmoList->UpdateObjects();
 		enemyAmmoList->UpdateObjects();
 
@@ -88,7 +90,7 @@ void Battle::Update() {
 
 		explosionList->Update();
 
-		hero->Update();
+		hero->Update( speed );
 		if( hero->getHealth() <= 0 )
 			FinishBattle();
 

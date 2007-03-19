@@ -28,12 +28,12 @@
 #include "HexCell.h"
 #include "HexCellList.h"
 
-HexCell::HexCell( Fighter* f, HexCellType t, const vec2 &pos  ) : Object( CELL ) {
+HexCell::HexCell( Fighter* f, HexCellType t, const vec2 &p  ) : Object( CELL ) {
 	fighter = f;
 
 	cellType = t;
 
-	position = pos;
+	cellOffset = p;
 }
 
 
@@ -45,10 +45,21 @@ void HexCell::Update( int speed ) {
 }
 
 
-void HexCell::Draw() {}
+void HexCell::Draw() {
+	glPushMatrix();
+
+	// The matrices have already been transformed for
+	// the position of the fighter - we just need to
+	// translate to the position of this cell in the fighter.
+	glTranslatef( cellOffset[0], cellOffset[1], 0 );
+
+	drawHex( 0.5, 0.65, .2 );
+
+	glPopMatrix();
+}
 
 
-vec2 HexCell::getCellPosition() { return position; }
+vec2 HexCell::getCellPosition() { return cellOffset; }
 HexCellType HexCell::getCellType() { return cellType; }
 
 

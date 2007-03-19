@@ -50,10 +50,10 @@ class Fighter : public Object {
 				Fighter( FighterAlignment, Game* );
 				virtual ~Fighter();
 
-				virtual void Draw();
-
 				// Update fighter systems.
-				void Update();
+				void Update( int );
+
+				void Draw();
 
 				// Weapons begin firing.
 				void startFiring();
