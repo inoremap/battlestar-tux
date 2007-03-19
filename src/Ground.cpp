@@ -27,6 +27,7 @@
 #include "Ground.h"
 #include "TextureManager.h"
 #include "Textures.h"
+#include "Vector.h"
 
 
 Ground::Ground( GroundType type, Game* g ) {
@@ -44,11 +45,13 @@ Ground::~Ground() {
 }
 
 
-void Ground::Update() {}
+void Ground::Update() {
+	height += 0.01;
+}
 
 
 void Ground::Draw() {
-	float* pos = game->getPos();
+	vec3 pos = game->getPos();
 	float* bounds = game->getBounds();
 
 	float texCoords[4][2] = {
@@ -91,8 +94,6 @@ void Ground::Draw() {
 	}
 
 	glPopMatrix();
-
-	height += 0.01;
 }
 
 

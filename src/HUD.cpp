@@ -1,6 +1,6 @@
 /* HUD.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -85,8 +85,8 @@ void HUD::Draw() {
 			glRotatef( game->getGameFrame() % 360, 0.0, 1.0, 0.0 );
 
 			// Draw armor status.
-			float healthHeight = game->getFighter()->getHealth() / game->getFighter()->getHealthFull() * 10;
-			float healthUnitHeight = game->getFighter()->getHealth() / game->getFighter()->getHealthFull();
+			float healthHeight = game->getFighter()->getHealth() / game->getFighter()->getFullHealth() * 10;
+			float healthUnitHeight = game->getFighter()->getHealth() / game->getFighter()->getFullHealth();
 			glBindTexture( GL_TEXTURE_2D, healthTexture );
 			glBegin( GL_QUAD_STRIP );
 				glColor4f( 0.0, 0.0, 0.0, 0.7 );
@@ -122,8 +122,10 @@ void HUD::Draw() {
 			glEnd();
 
 			// Draw shield status.
-			float shieldHeight = game->getFighter()->getShields() / game->getFighter()->getShieldsFull() * 10;
-			float shieldUnitHeight = game->getFighter()->getShields() / game->getFighter()->getShieldsFull();
+			//float shieldHeight = game->getFighter()->getShields() / game->getFighter()->getShieldsFull() * 10;
+			//float shieldUnitHeight = game->getFighter()->getShields() / game->getFighter()->getShieldsFull();
+			float shieldHeight = 10;
+			float shieldUnitHeight = 1;
 			glBindTexture( GL_TEXTURE_2D, shieldsTexture );
 			glBegin( GL_QUAD_STRIP );
 				glColor4f( 0.0, 0.0, 0.0, 0.7 );

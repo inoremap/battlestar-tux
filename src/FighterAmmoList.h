@@ -1,6 +1,6 @@
 /* FighterAmmoList.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,8 +27,8 @@
 
 #include <SDL_opengl.h>
 
-#include "Displayable.h"
-#include "DisplayableList.h"
+#include "Object.h"
+#include "ObjectList.h"
 
 class FighterAmmo;
 
@@ -41,17 +41,17 @@ static const int numFighterAmmo = 2;
 
 
 /* Holds, updates and draws the fighter's shots. */
-class FighterAmmoList : public DisplayableList {
+class FighterAmmoList : public ObjectList {
 	public:
-				FighterAmmoList( Game* g );
+				FighterAmmoList( Game* );
 				virtual ~FighterAmmoList();
 
 				// Get a texture ID.
-				GLuint getTexture( int index );
+				GLuint getTexture( int );
 
 	private:
-				FighterAmmoList( const FighterAmmoList &list );
-				const FighterAmmoList & operator= ( const FighterAmmoList &list );
+				FighterAmmoList( const FighterAmmoList & );
+				const FighterAmmoList & operator= ( const FighterAmmoList & );
 
 				// Texture for each type of ammo.
 				GLuint textures[numFighterAmmo];

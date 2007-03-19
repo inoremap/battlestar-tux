@@ -1,4 +1,4 @@
-/* DisplayableList.h
+/* ObjectList.h
  *
  * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,19 +22,20 @@
  */
 
 
-#ifndef DISPLAYABLELIST_
-#define DISPLAYABLELIST_
+#ifndef OBJECTLIST_H_
+#define OBJECTLIST_H_
 
+#include "Game.h"
 #include "List.h"
 
-class Displayable;
+class Object;
 
 
-/* Holds a group of displayable objects. */
-class DisplayableList : public List {
+/* Holds a group of physical game Objects. */
+class ObjectList : public List {
 	public:
-				DisplayableList();
-				virtual ~DisplayableList();
+				ObjectList( Game* );
+				virtual ~ObjectList();
 
 				// Update positions and states of all objects.
 				void UpdateObjects();
@@ -42,10 +43,27 @@ class DisplayableList : public List {
 				// Draw all the objects.
 				void DrawObjects();
 
+				// Determine if any objects collide between the lists.
+				void CheckCollisions( ObjectList* objectList );
+
+				// Determine if any list objects collide with the given object.
+				void CheckCollisions( Object* object );
+
+				// Determine what should result from a collision.
+				//
+				// References to Object* are passed to ensure the
+				// caller knows if an object was destroyed.
+				//
+				// Point (x, y) p specifies the location of the collision.
+				void ResolveCollision( Object* &a, Object* &b, float* p );
+
+	protected:
+				Game* game;
+
 	private:
-				DisplayableList( const DisplayableList & );
-				const DisplayableList & operator= ( const DisplayableList & );
+				ObjectList( const ObjectList &list );
+				const ObjectList & operator= ( const ObjectList &list );
 };
 
 
-#endif /*DISPLAYABLELIST_*/
+#endif /*OBJECTLIST_H_*/

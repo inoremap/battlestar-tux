@@ -1,6 +1,6 @@
 /* EnemyFighterList.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,8 +27,8 @@
 
 #include <SDL_opengl.h>
 
-#include "Displayable.h"
-#include "DisplayableList.h"
+#include "Object.h"
+#include "ObjectList.h"
 
 enum EnemyFighterType {
 	BASIC_ENEMY_FIGHTER		// Default enemy fighter
@@ -36,18 +36,19 @@ enum EnemyFighterType {
 static const int numEnemyTypes = 1;
 
 
+
 /* Holds, updates and draws enemy aircraft. */
-class EnemyFighterList : public DisplayableList {
+class EnemyFighterList : public ObjectList {
 	public:
-				EnemyFighterList( Game* g );
+				EnemyFighterList( Game* );
 				~EnemyFighterList();
 
 				// Get a texture ID.
-				GLuint getTexture( int index );
+				GLuint getTexture( int );
 
 	private:
-				EnemyFighterList( const EnemyFighterList &list );
-				const EnemyFighterList & operator= ( const EnemyFighterList &list );
+				EnemyFighterList( const EnemyFighterList & );
+				const EnemyFighterList & operator= ( const EnemyFighterList & );
 
 				// Texture for each type of enemy.
 				GLuint textures[numEnemyTypes];

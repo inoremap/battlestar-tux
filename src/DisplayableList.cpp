@@ -1,6 +1,6 @@
 /* DisplayableList.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,21 +22,11 @@
  */
 
 
-#include <math.h>
-#include <iostream>
-
-#include "Config.h"
 #include "Displayable.h"
 #include "DisplayableList.h"
-#include "EnemyFighterList.h"
-#include "ExplosionList.h"
-#include "Fighter.h"
-#include "FighterAmmo.h"
 
-DisplayableList::DisplayableList( Game* g ) {
-	game = g;
-}
 
+DisplayableList::DisplayableList() {}
 
 DisplayableList::~DisplayableList() {}
 
@@ -62,18 +52,8 @@ void DisplayableList::DrawObjects() {
 	}
 }
 
-
-void DisplayableList::CheckCollisions( DisplayableList* objectList ) {
-	Displayable* cur = (Displayable*) objectList->getRoot();
-	Displayable* next = 0;
-
-	while( cur ) {
-		next = (Displayable*) cur->getNext();
-
-		CheckCollisions( cur );
-		cur = next;
-	}
-}
+/* These objects can't collide, they don't have a physical presence.
+void DisplayableList::CheckCollisions( DisplayableList* objectList ) {}
 
 
 void DisplayableList::CheckCollisions( Displayable* object ) {
@@ -393,53 +373,4 @@ void DisplayableList::ResolveCollision( Displayable* &a, Displayable* &b, float*
 			std::cout << "Aircraft collision.\n";
 	}
 }
-
-
-void DisplayableList::CullObjects( objectCulling cull ) {
-	float* bounds = game->getBounds();
-	Displayable* cur = (Displayable*) rootObj;
-	Displayable* rem = 0;
-
-	while( cur ) {
-		float* pos = cur->getPos();
-		float* size = cur->getSize();
-
-		// Top of screen.
-		if( cull & CULL_TOP && (pos[1] - size[1] / 2) > bounds[1] ) {
-			rem = cur;
-	 		cur = (Displayable*) cur->getNext();
-
-			remObject( rem );
-			continue;
-		}
-
-		// Bottom of screen.
-		if( cull & CULL_BOTTOM && (pos[1] + size[1] / 2) < (0.0 - bounds[1]) ) {
-			rem = cur;
-	 		cur = (Displayable*) cur->getNext();
-
-			remObject( rem );
-			continue;
-		}
-
-		// Left of screen.
-		if( cull & CULL_LEFT && (pos[0] + size[0] / 2) < (0.0 - bounds[0]) ) {
-			rem = cur;
-	 		cur = (Displayable*) cur->getNext();
-
-			remObject( rem );
-			continue;
-		}
-
-		// Right of screen.
-		if( cull & CULL_RIGHT && (pos[0] - size[0] / 2) > bounds[0] ) {
-			rem = cur;
-	 		cur = (Displayable*) cur->getNext();
-
-			remObject( rem );
-			continue;
-		}
-
-		cur = (Displayable*) cur->getNext();
-	}
-}
+*/

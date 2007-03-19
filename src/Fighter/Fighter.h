@@ -1,6 +1,6 @@
 /* Fighter.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,29 +27,27 @@
 
 #include <SDL_opengl.h>
 
-#include "Displayable.h"
+#include "CoreCell.h"
 #include "Game.h"
-#include "Laser.h"
-#include "Plasma.h"
-#include "Shield.h"
-#include "Turret.h"
-#include "Weapon.h"
-#include "WeaponSystem.h"
+#include "HexCell.h"
+#include "HexCellList.h"
+#include "Object.h"
+#include "Vector.h"
 
+
+// Distinguish between 'evil' and 'good' fighters.
 enum FighterAlignment {
 	HEROS_FIGHTER,		// Fighter flown by player
 	ENEMY_FIGHTER		// Enemy fighter
 };
 
-enum FighterWeaponMounts {
-	BASIC_FIGHTER_MOUNTS		= PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R
-};
 
-
-/* A fighter aircraft. */
-class Fighter : public Displayable {
+// A fighter aircraft.
+// All the physical parts are actually handled by
+// the cells.  This is just a logical grouping.
+class Fighter : public Object {
 	public:
-				Fighter( FighterAlignment a, Game* g );
+				Fighter( FighterAlignment, Game* );
 				virtual ~Fighter();
 
 				virtual void Draw();
@@ -63,39 +61,30 @@ class Fighter : public Displayable {
 				// Weapons cease firing.
 				void stopFiring();
 
-				// Do 'damage' amount of damage to ship.
-				// Damage occurs at point ( X, Y ).
-				void damage( float damage, float* point );
-
 				float getHealth();
-				float getHealthFull();
-				Shield* getShield();
-				WeaponSystem* getWeaponSystem();
-				float getShields();
-				float getShieldsFull();
+				float getFullHealth();
+
 				int getAlignment();
 
+				bool hasComponents() { return true; }
+				ObjectList* getComponents() { return allCells; }
+
 	protected:
-				// Constant Z position of the fighter.
-				static const float zPos = -1.5;
-
-				// Remaining ship armor
-				float health;
-
-				// Maximum ship armor
-				float healthFull;
-
-				Shield* shield;
-
-				WeaponSystem* weaponSystem;
+				CoreCell* coreCell;
+				HexCellList* allCells;
+				HexCellList* storageCells;
+				HexCellList* generationCells;
+				HexCellList* shieldCells;
+				HexCellList* weaponCells;
+				HexCellList* propulsionCells;
 
 				FighterAlignment align;
 
-				GLuint texture;
+				Game* game;
 
 	private:
-				Fighter( const Fighter &fighter );
-				const Fighter & operator= ( const Fighter &fighter );
+				Fighter( const Fighter & );
+				const Fighter & operator= ( const Fighter & );
 };
 
 

@@ -1,6 +1,6 @@
 /* EnemyFighter.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,22 +25,17 @@
 #ifndef ENEMYFIGHTER_H_
 #define ENEMYFIGHTER_H_
 
-#include "EnemyFighterList.h"
 #include "Fighter.h"
 
 /* An enemy fighter aircraft - NPC. */
 class EnemyFighter : public Fighter {
 	public:
-				EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g );
+				EnemyFighter( Game* );
 				~EnemyFighter();
 
-				int getFighterType();
-
 	private:
-				EnemyFighter( const EnemyFighter &fighter );
-				const EnemyFighter & operator= ( const EnemyFighter &fighter );
-
-				EnemyFighterType fighterType;
+				EnemyFighter( const EnemyFighter & );
+				const EnemyFighter & operator= ( const EnemyFighter & );
 };
 
 

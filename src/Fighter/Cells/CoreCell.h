@@ -1,6 +1,6 @@
-/* Plasma.cpp
+/* CoreCell.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,19 +22,27 @@
  */
 
 
-#include "FighterAmmo.h"
-#include "Plasma.h"
+#ifndef CORECELL_H_
+#define CORECELL_H_
 
-Plasma::Plasma( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
-	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
+#include "HexCell.h"
 
-	type = PLASMA;
 
-	rechargeTime = 10.0;
+// Central cell of the fighter.  All is lost when this cell is destroyed.
+class CoreCell : public HexCell {
+	public:
+				CoreCell( Fighter*, const vec2 & );
+				~CoreCell();
 
-	velocity = 0.7;
-	damage = 100.0;
-	penetration = 0.0;
-}
+				void Update();
 
-std::string Plasma::getName() { return "Plasma"; }
+				void Draw();
+
+
+	private:
+				CoreCell( const CoreCell & );
+				const CoreCell & operator= ( const CoreCell & );
+};
+
+
+#endif /*CORECELL_H_*/

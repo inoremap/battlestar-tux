@@ -1,6 +1,6 @@
-/* ShieldImpact.h
+/* HexCell.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,32 +22,37 @@
  */
 
 
-#ifndef SHIELDIMPACT_H_
-#define SHIELDIMPACT_H_
+#include "Fighter.h"
+#include "HexCell.h"
+#include "HexCellList.h"
 
-#include <SDL_opengl.h>
+HexCell::HexCell( Fighter* f, HexCellType t, const vec2 &pos  ) : Object( CELL ) {
+	fighter = f;
 
-#include "Displayable.h"
-#include "Game.h"
-#include "Pulse.h"
-#include "Shield.h"
+	cellType = t;
 
-class ShieldImpact : public Displayable {
-	public:
-				ShieldImpact( Shield* s, float angle, GLuint t, Game* g );
-				~ShieldImpact();
+	position = pos;
+}
 
-				void Update();
 
-				void Draw();
+HexCell::~HexCell() {}
 
-				// Returns true when the impact has faded.
-				bool done();
 
-	private:
-				Pulse* impactPulse;
+void HexCell::Update() {
 
-				GLuint texture;
-};
+}
 
-#endif /*SHIELDIMPACT_H_*/
+
+void HexCell::Draw() {
+
+}
+
+
+vec2 HexCell::getCellPosition() { return position; }
+HexCellType HexCell::getCellType() { return cellType; }
+
+
+void HexCell::DrawHex( float innerWidth, float outerWidth, float height ) {
+	
+}
+

@@ -1,6 +1,6 @@
 /* FighterAmmoList.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -28,7 +28,7 @@
 #include "FighterAmmoList.h"
 #include "TextureManager.h"
 
-FighterAmmoList::FighterAmmoList( Game* g ) : DisplayableList( g ) {
+FighterAmmoList::FighterAmmoList( Game* g ) : ObjectList( g ) {
 	TextureManager* t = game->getTextureManager();
 
 	// Load all ammo textures.

@@ -1,6 +1,6 @@
-/* Laser.h
+/* HexCellList.cpp
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,27 +22,12 @@
  */
 
 
-#ifndef LASER_H_
-#define LASER_H_
+#include "HexCell.h"
+#include "HexCellList.h"
 
-#include <string>
-
-#include "FighterAmmoList.h"
-#include "Game.h"
-#include "Weapon.h"
-#include "WeaponSystem.h"
-
-/* Laser weapon. */
-class Laser : public Weapon {
-	public:
-				Laser( WeaponSystem* w, Game* g );
-
-				std::string getName();
-
-	private:
-				Laser( const Laser &laser );
-				const Laser & operator= ( const Laser &laser );
-};
+HexCellList::HexCellList( Game* g ) : ObjectList( g ) {}
 
 
-#endif /*LASER_H_*/
+HexCellList::~HexCellList() {
+}
+

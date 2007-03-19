@@ -1,6 +1,6 @@
-/* ShieldImpactList.h
+/* CoreCell.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,37 +22,21 @@
  */
 
 
-#ifndef SHIELDIMPACTLIST_H_
-#define SHIELDIMPACTLIST_H_
+#include "CoreCell.h"
 
-#include <SDL_opengl.h>
+CoreCell::CoreCell( Fighter* f, const vec2 &pos  ) : HexCell( f, CORE_CELL, pos )  {
+}
 
-#include "Game.h"
-#include "List.h"
 
-class Shield;
+CoreCell::~CoreCell() {}
 
-/* List of impacts with the shield. */
-class ShieldImpactList : public List {
-	public:
-				ShieldImpactList( Shield* s, Game* g );
-				~ShieldImpactList();
 
-				// Draw shield impacts.
-				void Draw();
+void CoreCell::Update() {
 
-				// Update shield impacts.
-				void Update();
+}
 
-				// Adds an impact at the specified location.
-				void Impact( float* point );
 
-	private:
-				GLuint texture;
+void CoreCell::Draw() {
 
-				Shield* shield;
+}
 
-				Game* game;
-};
-
-#endif /*SHIELDIMPACTLIST_H_*/

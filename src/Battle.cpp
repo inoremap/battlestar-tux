@@ -1,6 +1,6 @@
 /* Battle.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,6 +29,7 @@
 #include "EnemyFighter.h"
 #include "FighterAmmo.h"
 #include "TextureManager.h"
+#include "Vector.h"
 
 Battle::Battle( Game* g ) {
 	game = g;
@@ -46,7 +47,7 @@ Battle::Battle( Game* g ) {
 	hud = new HUD( game );
 	ground = new Ground( SOLID_GROUND, game );
 
-	hero = new HeroFighter( BASIC_FIGHTER, game );
+	hero = new HeroFighter( game );
 	game->setFighter( hero );
 
 	heroAmmoList = new FighterAmmoList( game );
@@ -79,47 +80,21 @@ void Battle::Update() {
 
 	// If not paused, update all positions/states.
 	if( !game->isPaused() ) {
-		EnemyFighter* enemyFighter = 0;
+		heroAmmoList->UpdateObjects();
+		enemyAmmoList->UpdateObjects();
 
-		if( game->getGameFrame()%150 == 0 && game->getGameSpeed() != 0 ) {
-			for( int n=0; n < 20; n+=4 ) {
-				enemyFighter = new EnemyFighter( BASIC_ENEMY_FIGHTER, enemies, game );
-				enemyFighter->setPos( -40 + 4 * n, 40 );
-				enemyFighter->setVel( 0, -0.2, 0 );
-				enemyFighter->setRot( 180 );
-				enemyFighter->startFiring();
-				enemies->addObject( enemyFighter );
-			}
-		}
+		heroAmmoList->CheckCollisions( enemies );
+		enemyAmmoList->CheckCollisions( hero );
 
-		float* pos = hero->getVel();
-		if( keyLeft )
-			pos[0] -= .01;
-		if( keyRight )
-			pos[0] += .01;
-		if( keyUp )
-			pos[1] += .01;
-		if( keyDown )
-			pos[1] -= .01;
-		hero->setVel( pos[0], pos[1], pos[2] );
+		explosionList->Update();
+
 		hero->Update();
 		if( hero->getHealth() <= 0 )
 			FinishBattle();
 
-		heroAmmoList->UpdateObjects();
-		heroAmmoList->CullObjects( CULL_TOP );
-
-		enemyAmmoList->UpdateObjects();
-		enemyAmmoList->CullObjects( CULL_BOTTOM );
-
 		enemies->UpdateObjects();
-		enemies->CullObjects( CULL_BOTTOM );
 
-		enemies->CheckCollisions( heroAmmoList );
-		enemyAmmoList->CheckCollisions( hero );
 		enemies->CheckCollisions( hero );
-
-		explosionList->Update();
 
 		ground->Update();
 	}
@@ -145,7 +120,7 @@ void Battle::Update() {
 		if( y > 0 )
 			targetAngle += 180;
 	}
-	hero->getWeaponSystem()->SetTarget( targetAngle );
+	//hero->getWeaponSystem()->SetTarget( targetAngle );
 
 	// Read all events off the queue.
 	while( !game->isFinished() && !isFinished() && !isAborted() && SDL_PollEvent(&event) ) {
@@ -241,7 +216,7 @@ void Battle::Draw() {
 		glClear( GL_COLOR_BUFFER_BIT );
 
 	// Set camera position and draw stuff...
-	float* heroPos = hero->getPos();
+	vec3 heroPos = hero->getPos();
 	glLoadIdentity();
 	glTranslatef( -heroPos[0], -heroPos[1], -15 );
 

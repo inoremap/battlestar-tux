@@ -42,7 +42,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	int x = 0;
+/*	int x = 0;
 	int y = 0;
 	float realWidth = 0.0;
 	float realHeight = 0.0;
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 	FighterAmmoList* enemyAmmoList = new FighterAmmoList( game );
 	game->setEnemyAmmoList( enemyAmmoList );
 
-
+*/
 	cout << "Testing Battlestar TUX...\n\n";
 ////// Test suite.
 

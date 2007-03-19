@@ -1,6 +1,6 @@
 /* FighterAmmo.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,11 +27,11 @@
 
 #include <SDL_opengl.h>
 
-#include "Displayable.h"
+#include "Object.h"
 #include "FighterAmmoList.h"
 #include "Game.h"
 
-class FighterAmmo : public Displayable {
+class FighterAmmo : public Object {
 	public:
 				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
 

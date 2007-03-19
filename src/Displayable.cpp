@@ -1,6 +1,6 @@
 /* Displayable.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,20 +27,16 @@
 Displayable::Displayable( DisplayableType t, Game* g ) {
 	game = g;
 
-	size[0] = 10;
-	size[1] = 10;
+	size = 10;
 
-	pos[0] = 0;
-	pos[1] = 0;
+	pos = 0;
 
 	// The default vertical position is as close to the
 	// screen as possible.  Most objects will be drawn
 	// at a greater distance.
 	pos[2] = -1.0;
 
-	vel[0] = 0;
-	vel[1] = 0;
-	vel[2] = 0;
+	vel = 0;
 
 	rot = 0;
 	torque = 0;
@@ -73,9 +69,7 @@ Displayable::~Displayable() {
 void Displayable::Update() {
 	int speed = game->getGameSpeed();
 
-	pos[0] += vel[0] * speed;
-	pos[1] += vel[1] * speed;
-	pos[2] += vel[2] * speed;
+	pos += vel * speed;
 
 	rot += torque * speed;
 
@@ -109,22 +103,34 @@ void Displayable::Draw() {
 }
 
 
-void Displayable::setSize( float w, float h ) {
-	size[0] = w;
-	size[1] = h;
-}
+void Displayable::setSize( vec2 &v ) { size = v; }
 
 
-void Displayable::setPos( float x, float y ) { setPos( x, y, pos[2] ); }
-void Displayable::setPos( float x, float y, float z ) {
-	pos[0] = x;
-	pos[1] = y;
-	pos[2] = z;
+void Displayable::setPos( vec2 &v ) {
+	pos[0] = v[0];
+	pos[1] = v[0];
 
 	if( stayOnScreen ) {
 		float mx = size[0] / 2;
 		float my = size[1] / 2;
+	
+		if( (pos[0] + mx) > game->getBounds()[0] )
+			pos[0] = game->getBounds()[0] - mx;
+		if( (pos[0] - mx) < 0.0 - game->getBounds()[0] )
+			pos[0] = 0.0 - game->getBounds()[0] + mx;
+		if( (pos[1] + my) > game->getBounds()[1] )
+			pos[1] = game->getBounds()[1] - my;
+		if( (pos[1] - my) < 0.0 - game->getBounds()[1] )
+			pos[1] = 0.0 - game->getBounds()[1] + my;
+	}
+}
+void Displayable::setPos( vec3 &v ) {
+	pos = v;
 
+	if( stayOnScreen ) {
+		float mx = size[0] / 2;
+		float my = size[1] / 2;
+	
 		if( (pos[0] + mx) > game->getBounds()[0] )
 			pos[0] = game->getBounds()[0] - mx;
 		if( (pos[0] - mx) < 0.0 - game->getBounds()[0] )
@@ -136,11 +142,7 @@ void Displayable::setPos( float x, float y, float z ) {
 	}
 }
 
-void Displayable::setVel( float x, float y, float z ) {
-	vel[0] = x;
-	vel[1] = y;
-	vel[2] = z;
-}
+void Displayable::setVel( vec3 &v ) { vel = v; }
 
 void Displayable::setRot( float r ) { rot = r; }
 void Displayable::setTorque( float t ) { torque = t; }
@@ -172,9 +174,9 @@ void Displayable::setPolygon( int numPoints, float points[][2] ) {
 void Displayable::setStayOnScreen( bool stay ) { stayOnScreen = stay; }
 
 
-float* Displayable::getSize() { return size; }
-float* Displayable::getPos() { return pos; }
-float* Displayable::getVel() { return vel; }
+vec2 & Displayable::getSize() { return size; }
+vec3 & Displayable::getPos() { return pos; }
+vec3 & Displayable::getVel() { return vel; }
 float Displayable::getRot() { return rot; }
 float Displayable::getTorque() { return torque; }
 float* Displayable::getColor() { return color; }

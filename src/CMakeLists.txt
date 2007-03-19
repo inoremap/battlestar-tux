@@ -32,7 +32,7 @@ INCLUDE_DIRECTORIES(
 	# Directories in Battlestar TUX project
 	${BATTLESTAR_TUX_SOURCE_DIR}/src
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter/Weapons
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter/Cells
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Procedural
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Structures
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI
@@ -76,20 +76,17 @@ SET(	BATTLESTAR_TUX_SOURCES
 	ExplosionList.cpp
 	Fighter/EnemyFighter.cpp
 	Fighter/Fighter.cpp
+	Fighter/HexCell.cpp
+	Fighter/HexCellList.cpp
 	Fighter/HeroFighter.cpp
-	Fighter/Shield.cpp
-	Fighter/ShieldImpact.cpp
-	Fighter/ShieldImpactList.cpp
-	Fighter/Weapon.cpp
-	Fighter/WeaponSystem.cpp
-	Fighter/Weapons/Laser.cpp
-	Fighter/Weapons/Plasma.cpp
-	Fighter/Weapons/Turret.cpp
+	Fighter/Cells/CoreCell.cpp
 	FighterAmmo.cpp
 	FighterAmmoList.cpp
 	Game.cpp
 	Ground.cpp
 	HUD.cpp
+	Object.cpp
+	ObjectList.cpp
 	Procedural/Simplex.cpp
 	Procedural/Textures.cpp
 	Pulse.cpp

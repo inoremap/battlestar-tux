@@ -1,6 +1,6 @@
 /* Displayable.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,19 +29,17 @@
 
 #include "Game.h"
 #include "ListItem.h"
+#include "Vector.h"
 
 enum DisplayableType {
 	GROUND		=	0x0001,				// Ground segment
-	FIGHTER		=	0x0002,				// Aircraft
-	SHIELD		=	0x0004,				// Aircraft shield
-	AMMO			=	0x0008,				// Weapon ammo
-	HEROS_AMMO	=	0x0010 | 0x0008,		// Hero's ammo
-	ENEMY_AMMO	=	0x0020 | 0x0008,		// Enemies' ammo
-	EFFECT		=	0x0040				// Special effect - not a real object
+	EFFECT		=	0x0002				// Special effect - not a real object
 };
 
 
-/* Any item which appears on the screen is Displayable. */
+/* Any item which appears on the screen is Displayable.
+ * Note that objects which have a physical presence should be of type Object.
+ */
 class Displayable : public ListItem {
 	public:
 				Displayable( DisplayableType t, Game* g );
@@ -56,14 +54,14 @@ class Displayable : public ListItem {
 				// a null texture if you don't want any textures.
 				virtual void Draw();
 
-				void setSize( float w, float h );
+				void setSize( vec2 & );
 
 				// Some (all?) objects have a set Z position.
 				// In this case, just set X and Y positions.
-				void setPos( float x, float y );
-				void setPos( float x, float y, float z );
+				void setPos( vec2 & );
+				void setPos( vec3 & );
 
-				void setVel( float x, float y, float z );
+				void setVel( vec3 & );
 
 				void setRot( float r );
 				void setTorque( float t );
@@ -80,9 +78,9 @@ class Displayable : public ListItem {
 
 				void setStayOnScreen( bool stay );
 
-				float* getSize();
-				float* getPos();
-				float* getVel();
+				vec2 & getSize();
+				vec3 & getPos();
+				vec3 & getVel();
 				float getRot();
 				float getTorque();
 				float* getColor();
@@ -95,16 +93,16 @@ class Displayable : public ListItem {
 
 	protected:
 				// Size (width and height) of object.
-				float size[2];
+				vec2 size;
 
 				// Position (X, Y, Z) at center of object.
-				float pos[3];
+				vec3 pos;
 
 				// Velocity (X, Y, Z)
 				// Number of units to move in each direction each frame.
 				// Remember that the game runs at 50 FPS, regardless of what the
 				// user's screen is actually displaying.
-				float vel[3];
+				vec3 vel;
 
 				// Rotation (Degrees)
 				// The angular position of the object (counter-clockwise).

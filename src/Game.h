@@ -27,6 +27,8 @@
 
 #include <time.h>
 
+#include "Vector.h"
+
 class Config;
 class EnemyFighterList;
 class ExplosionList;
@@ -63,7 +65,7 @@ class Game {
 				unsigned int getGameFrame();
 				int getGameSpeed();
 				float* getBounds();
-				float* getPos();
+				vec3 getPos();
 
 				Config* getConfig();
 				void setConfig( Config* c );
@@ -130,7 +132,7 @@ class Game {
 
 				// Last known position of the fighter.
 				// This is where the screen is centered.
-				float position[2];
+				vec3 position;
 
 				// Stores game configuration
 				Config* config;

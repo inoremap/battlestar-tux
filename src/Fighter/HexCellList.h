@@ -1,6 +1,6 @@
-/* Laser.cpp
+/* HexCellList.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,19 +22,24 @@
  */
 
 
-#include "FighterAmmo.h"
-#include "Laser.h"
+#ifndef HEXCELLLIST_H_
+#define HEXCELLLIST_H_
 
-Laser::Laser( WeaponSystem* w, Game* g ) : Weapon( w, g ) {
-	mount = PRIMARY_WEAPON | SECONDARY_WEAPON_L | SECONDARY_WEAPON_R;
+#include "Game.h"
+#include "HexCell.h"
+#include "ObjectList.h"
 
-	type = LASER;
 
-	rechargeTime = 6.0;
+/* List for holding ship's cell units. */
+class HexCellList : public ObjectList {
+	public:
+				HexCellList( Game* );
+				~HexCellList();
 
-	velocity = 1.3;
-	damage = 50.0;
-	penetration = 0.0;
-}
+	private:
+				HexCellList( const HexCellList &list );
+				const HexCellList & operator= ( const HexCellList &list );
+};
 
-std::string Laser::getName() { return "Laser"; }
+
+#endif /*HEXCELLLIST_H_*/

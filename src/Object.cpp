@@ -1,6 +1,6 @@
-/* Plasma.h
+/* Object.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -22,27 +22,38 @@
  */
 
 
-#ifndef PLASMA_H_
-#define PLASMA_H_
-
-#include <string>
-
-#include "Game.h"
-#include "FighterAmmoList.h"
-#include "Weapon.h"
-#include "WeaponSystem.h"
-
-/* Plasma weapon. */
-class Plasma : public Weapon {
-	public:
-				Plasma( WeaponSystem* w, Game* g );
-
-				std::string getName();
-
-	private:
-				Plasma( const Plasma &plasma );
-				const Plasma & operator= ( const Plasma &plasma );
-};
+#include "Object.h"
 
 
-#endif /*PLASMA_H_*/
+Object::Object( ObjectType t ) {
+	pos = vec3();
+	vel = vec3();
+	rot = vec3();
+	torque = vec3();
+
+	size = 0;
+	age = 0;
+	mass = 1;
+	health = 1;
+	fullHealth = 1;
+	type = t;
+}
+
+
+Object::~Object() {}
+
+
+void Object::Update( int speed ) {
+	pos += vel * speed;
+
+	rot += torque * speed;
+
+	age += speed;
+}
+
+
+void Object::Draw() {}
+
+
+void Object::accel( const vec3 &force ) { vel += force / mass; }
+

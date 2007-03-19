@@ -1,6 +1,6 @@
 /* ExplosionList.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,6 +29,7 @@
 
 #include "Game.h"
 #include "List.h"
+#include "Vector.h"
 
 class Explosion;
 
@@ -41,7 +42,7 @@ static const int numExplosionTypes = 1;
 /* Holds, updates and draws explosion animations. */
 class ExplosionList : public List {
 	public:
-				ExplosionList( Game* g );
+				ExplosionList( Game* );
 				~ExplosionList();
 
 				// Draw explosions.
@@ -51,11 +52,11 @@ class ExplosionList : public List {
 				void Update();
 
 				// Add an explosion at the specified point.
-				void AddExplosion( float* point );
+				void AddExplosion( vec2 & );
 
 	private:
-				ExplosionList( const ExplosionList &list );
-				const ExplosionList & operator= ( const ExplosionList &list );
+				ExplosionList( const ExplosionList & );
+				const ExplosionList & operator= ( const ExplosionList & );
 
 				// Texture for each type of explosion.
 				GLuint textures[numExplosionTypes];

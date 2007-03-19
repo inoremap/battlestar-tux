@@ -1,6 +1,6 @@
 /* EnemyFighter.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -24,34 +24,8 @@
 
 #include "EnemyFighter.h"
 
-EnemyFighter::EnemyFighter( EnemyFighterType f, EnemyFighterList* l, Game* g ) : Fighter( ENEMY_FIGHTER, g ) {
-	fighterType = f;
-	texture = l->getTexture( fighterType );
-
-	switch( fighterType ) {
-		case BASIC_ENEMY_FIGHTER:
-		default:
-			size[0] = 4;
-			size[1] = 4;
-			health = healthFull = 1000;
-			float offsets[3][2] = {
-				{ 0.0, 0.0 },
-				{ -0.75, 1.0 },
-				{ 0.75, 1.0 }
-			};
-			weaponSystem = new WeaponSystem( BASIC_FIGHTER_MOUNTS, offsets, this, g );
-			Laser* primary = new Laser( weaponSystem, game );
-			Plasma* left = new Plasma( weaponSystem, game );
-			Plasma* right = new Plasma( weaponSystem, game );
-			weaponSystem->Equip( primary, PRIMARY_WEAPON );
-			weaponSystem->Equip( left, SECONDARY_WEAPON_L );
-			weaponSystem->Equip( right, SECONDARY_WEAPON_R );
-			break;
-	}
+EnemyFighter::EnemyFighter( Game* g ) : Fighter( ENEMY_FIGHTER, g ) {
 }
 
 
 EnemyFighter::~EnemyFighter() {}
-
-
-int EnemyFighter::getFighterType() { return fighterType; }

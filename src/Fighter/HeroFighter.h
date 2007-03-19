@@ -1,6 +1,6 @@
 /* HeroFighter.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,26 +27,15 @@
 
 #include "Fighter.h"
 
-enum HeroFighterType {
-	BASIC_FIGHTER		// Default fighter
-};
-
-
 /* The player's aircraft. */
 class HeroFighter : public Fighter {
 	public:
-				HeroFighter( HeroFighterType f, Game* g );
+				HeroFighter( Game* );
 				~HeroFighter();
 
-				void Draw();
-
-				int getFighterType();
-
 	private:
-				HeroFighter( const HeroFighter &fighter );
-				const HeroFighter & operator= ( const HeroFighter &fighter );
-
-				HeroFighterType fighterType;
+				HeroFighter( const HeroFighter & );
+				const HeroFighter & operator= ( const HeroFighter & );
 };
 
 

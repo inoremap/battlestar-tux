@@ -1,6 +1,6 @@
 /* ExplosionList.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -76,8 +76,8 @@ void ExplosionList::Update() {
 }
 
 
-void ExplosionList::AddExplosion( float* point ) {
+void ExplosionList::AddExplosion( vec2 &point ) {
 	Explosion* explosion = new Explosion( BASIC_EXPLOSION, textures[BASIC_EXPLOSION], game );
-	explosion->setPos( point[0], point[1] );
+	explosion->setPos( point );
 	addObject( explosion );
 }

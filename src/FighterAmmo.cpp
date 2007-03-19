@@ -1,6 +1,6 @@
 /* FighterAmmo.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Displayable( AMMO, g ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Object( AMMO ) {
 	ammoType = f;
 	damage = d;
 	penetration = p;
@@ -33,44 +33,14 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 
 	pos[2] = zPos;
 
-	float points[4][2] = {
-		{0.0, 0.0},
-		{0.0, 0.0},
-		{0.0, 0.0},
-		{0.0, 0.0}
-	};
-
 	switch( ammoType ) {
 		default:
 		case LASER:
-			size[0] = 0.2;
-			size[1] = 4;
-		
-			color[0] = 0.0;
-			color[1] = 1.0;
-			color[2] = 0.2;
-			color[3] = 0.7;
-
-			points[0][0] = -size[0]/2;
-			points[0][1] = size[1]/2;
-			points[1][0] = -size[0]/2;
-			points[1][1] = -size[1]/2;
-			points[2][0] = size[0]/2;
-			points[2][1] = -size[1]/2;
-			points[3][0] = size[0]/2;
-			points[3][1] = size[1]/2;
-			setPolygon( 4, points );
-			circular = false;
+			size = 4;
 			break;
 
 		case PLASMA:
-			size[0] = 1;
-			size[1] = 1;
-		
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 0.9;
+			size = 1;
 			break;
 	}
 }
@@ -78,7 +48,7 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 
 void FighterAmmo::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
-	Displayable::Draw();
+	Object::Draw();
 }
 
 

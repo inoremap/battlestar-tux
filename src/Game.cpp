@@ -32,6 +32,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 
+
 Game::Game() {
 	startTime = SDL_GetTicks();
 	lastTime = 0;
@@ -55,8 +56,7 @@ Game::Game() {
 	bounds[0] = 40;
 	bounds[1] = 30;
 
-	position[0] = 0;
-	position[1] = 0;
+	position = vec3();
 
 	config = 0;
 	textureManager = 0;
@@ -146,12 +146,9 @@ unsigned int Game::getGameFrame() { return gameFrame; }
 int Game::getGameSpeed() { return gameSpeed; }
 float* Game::getBounds() { return bounds; }
 
-float* Game::getPos() {
-	if( fighter ) {
-		float* fighterPos = fighter->getPos();
-		position[0] = fighterPos[0];
-		position[1] = fighterPos[1];
-	}
+vec3 Game::getPos() {
+	if( fighter )
+		position = fighter->getPos();
 
 	return position;
 }

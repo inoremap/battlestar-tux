@@ -1,6 +1,6 @@
 /* Fighter.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -23,83 +23,53 @@
 
 
 #include "Fighter.h"
+#include "Vector.h"
 
-Fighter::Fighter( FighterAlignment a, Game* g ) : Displayable( FIGHTER, g ) {
+Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
+	game = g;
+
+	allCells = new HexCellList( game );
+	storageCells = new HexCellList( game );
+	generationCells = new HexCellList( game );
+	shieldCells = new HexCellList( game );
+	weaponCells = new HexCellList( game );
+	propulsionCells = new HexCellList( game );
+
+	vec2 pos = vec2();
+	coreCell = new CoreCell( this, pos );
+	coreCell->setFullHealth( 10000 );
+	coreCell->setHealth( 10000 );
+	coreCell->setMass( 1000 );
+	allCells->addObject( coreCell );
+
 	align = a;
-
-	texture = 0;
-
-	pos[2] = zPos;
-
-	size[0] = 3;
-	size[1] = 3;
-
-	shield = 0;
-	weaponSystem = 0;
 }
 
 
-Fighter::~Fighter() {
-	delete shield;
-	delete weaponSystem;
-}
+Fighter::~Fighter() {}
 
 
 void Fighter::Draw() {
-	glBindTexture( GL_TEXTURE_2D, texture );
-	Displayable::Draw();
-
-	if( shield )
-		shield->Draw();
+	allCells->DrawObjects();
 }
 
 
 void Fighter::Update() {
-	weaponSystem->Update();
+	//weaponSystem->Update();
 
-	if( shield )
-		shield->Update();
-
-	Displayable::Update();
+	allCells->UpdateObjects();
 }
 
 
-void Fighter::startFiring() { weaponSystem->Fire( true ); }
-void Fighter::stopFiring() { weaponSystem->Fire( false ); }
-
-
-void Fighter::damage( float damage, float* point ) {
-	health -= damage;
-
-	if( health < 0 )
-		health = 0;
+void Fighter::startFiring() { 
+	//weaponSystem->Fire( true );
+}
+void Fighter::stopFiring() {
+	//weaponSystem->Fire( false );
 }
 
 
-float Fighter::getHealth() { return health; }
-float Fighter::getHealthFull() { return healthFull; }
-
-
-Shield* Fighter::getShield() { return shield; }
-
-
-WeaponSystem* Fighter::getWeaponSystem() { return weaponSystem; }
-
-
-float Fighter::getShields() {
-	if( shield )
-		return shield->getShields();
-	else
-		return 0;
-}
-
-
-float Fighter::getShieldsFull() {
-	if( shield )
-		return shield->getShieldsFull();
-	else
-		return 0;
-}
-
+float Fighter::getHealth() { return coreCell->getHealth(); }
+float Fighter::getFullHealth() { return coreCell->getFullHealth(); }
 
 int Fighter::getAlignment() { return align; }
