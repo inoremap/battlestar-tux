@@ -74,32 +74,35 @@ void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {
 	// Draw bottom.
 	glBegin( GL_TRIANGLE_STRIP );
 		for( int i=0; i < 7; i+=2 ) {
+			glTexCoord2f( 0, 0 );
+			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
 			glTexCoord2f( 0, 1 );
 			glVertex3f( HEX_VERTS[i][0] * outerWidth, HEX_VERTS[i][1] * outerWidth, -height );
-			glTexCoord2f( 0, 0 );
-			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
 
+			glTexCoord2f( 1, 0 );
+			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
 			glTexCoord2f( 1, 1 );
 			glVertex3f( HEX_VERTS[i+1][0] * outerWidth, HEX_VERTS[i+1][1] * outerWidth, -height );
-			glTexCoord2f( 1, 0 );
-			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
 		}
 	glEnd();
 
-	// Draw inner sides.
-	glBegin( GL_TRIANGLE_STRIP );
-		for( int i=0; i < 7; i+=2 ) {
-			glTexCoord2f( 0, 1 );
-			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, height );
-			glTexCoord2f( 0, 0 );
-			glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
-
-			glTexCoord2f( 1, 1 );
-			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, height );
-			glTexCoord2f( 1, 0 );
-			glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
-		}
-	glEnd();
+	// If innerWidth is 0, there won't be a hole in the middle.
+	if( innerWidth > 0 ) {
+		// Draw inner sides.
+		glBegin( GL_TRIANGLE_STRIP );
+			for( int i=0; i < 7; i+=2 ) {
+				glTexCoord2f( 0, 1 );
+				glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, height );
+				glTexCoord2f( 0, 0 );
+				glVertex3f( HEX_VERTS[i][0] * innerWidth, HEX_VERTS[i][1] * innerWidth, -height );
+	
+				glTexCoord2f( 1, 1 );
+				glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, height );
+				glTexCoord2f( 1, 0 );
+				glVertex3f( HEX_VERTS[i+1][0] * innerWidth, HEX_VERTS[i+1][1] * innerWidth, -height );
+			}
+		glEnd();
+	}
 
 	// Draw outer sides.
 	glBegin( GL_TRIANGLE_STRIP );
