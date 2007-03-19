@@ -58,6 +58,10 @@ class Object : public ListItem {
 				// a null texture if you don't want any textures.
 				virtual void Draw();
 
+				// Object has been impacted by damaging energy.
+				// If the object cannot absorb this much energy,
+				// it must return the amount it didn't absorb.
+				virtual float damage( float );
 
 				// Apply an acceleration to the object.
 				void accel( const vec3 & );

@@ -55,5 +55,19 @@ void Object::Update( int speed ) {
 void Object::Draw() {}
 
 
+float Object::damage( float damage ) {
+	if( damage >= health ) {
+		damage -= health;
+		health = 0;
+
+		return damage;
+	}
+	else {
+		health -= damage;
+		return 0;
+	}
+}
+
+
 void Object::accel( const vec3 &force ) { vel += force / mass; }
 
