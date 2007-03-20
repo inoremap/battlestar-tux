@@ -37,6 +37,10 @@ void CoreCell::Update( int speed ) {
 
 
 void CoreCell::Draw() {
+	glColor4f( 0.0, 0.0, 1.0, 1.0 );
 	HexCell::Draw();
+
+	glColor4f( 0.3, 0.3, 1.0, 1.0 );
+	drawHex( 0, HEX_CELL_SIZE[0] - 0.1, HEX_CELL_SIZE[2] );
 }
 

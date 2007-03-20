@@ -53,7 +53,7 @@ void HexCell::Draw() {
 	// translate to the position of this cell in the fighter.
 	glTranslatef( cellOffset[0], cellOffset[1], 0 );
 
-	drawHex( 0.5, 0.65, .2 );
+	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 
 	glPopMatrix();
 }

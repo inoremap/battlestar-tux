@@ -75,6 +75,14 @@ class HexCell : public Object {
 };
 
 
+// Standard sizes for hex cell.
+static const float HEX_CELL_SIZE[3] = {
+	0.5,		// Inner width
+	0.65,	// Outer width
+	0.2		// Height
+};
+
+
 // Points on a unit hexagon (x, y).
 static const float HEX_VERTS[7][2] = {
 	{ -1.0, 0.0 },
