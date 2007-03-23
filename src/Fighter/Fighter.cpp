@@ -22,33 +22,102 @@
  */
 
 
+#include "ArmorCell.h"
 #include "Fighter.h"
 #include "Vector.h"
 
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	game = g;
 
+	torque[1] = 1;
+
 	pos[2] = 3;
 
 	allCells = new HexCellList( game );
-	storageCells = new HexCellList( game );
+	armorCells = new HexCellList( game );
 	generationCells = new HexCellList( game );
+	storageCells = new HexCellList( game );
+	propulsionCells = new HexCellList( game );
 	shieldCells = new HexCellList( game );
 	weaponCells = new HexCellList( game );
-	propulsionCells = new HexCellList( game );
 
-	vec2 pos = vec2();
-	coreCell = new CoreCell( this, pos );
+	ivec2 cellPos = ivec2();
+	coreCell = new CoreCell( this, cellPos );
 	coreCell->setFullHealth( 10000 );
 	coreCell->setHealth( 10000 );
 	coreCell->setMass( 1000 );
 	allCells->addObject( coreCell );
 
+	cellPos = ivec2( 1, 0 );
+	ArmorCell* cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
+	cellPos = ivec2( 0, 1 );
+	cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
+	cellPos = ivec2( -1, 0 );
+	cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
+	cellPos = ivec2( -1, -1 );
+	cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
+	cellPos = ivec2( 0, -1 );
+	cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
+	cellPos = ivec2( 1, -1 );
+	cell = new ArmorCell( this, cellPos );
+	cell->setFullHealth( 1000 );
+	cell->setHealth( 1000 );
+	cell->setMass( 250 );
+	allCells->addObject( cell );
+	armorCells->addObject( cell );
+
 	align = a;
 }
 
 
-Fighter::~Fighter() {}
+Fighter::~Fighter() {
+	// Delete all fighter cells.
+	HexCell* cur = (HexCell*) allCells->getRoot();
+	HexCell* next = 0;
+	while( cur ) {
+		next = (HexCell*) cur->getNext();
+		delete cur;
+		cur = next;
+	}
+
+	delete allCells;
+	delete armorCells;
+	delete generationCells;
+	delete storageCells;
+	delete propulsionCells;
+	delete shieldCells;
+	delete weaponCells;
+}
 
 
 void Fighter::Update( int speed ) {
@@ -61,10 +130,26 @@ void Fighter::Update( int speed ) {
 void Fighter::Draw() {
 	glPushMatrix();
 
-	// Apply transformations
+	// Apply fighter position transformations.
 	Object::Draw();
 
-	allCells->DrawObjects();
+	// Draw all cells.
+	HexCell* cur = (HexCell*) allCells->getRoot();
+	HexCell* next = 0;
+	while( cur ) {
+		next = (HexCell*) cur->getNext();
+
+		glPushMatrix();
+		// The matrices have already been transformed for
+		// the position of the fighter - we just need to
+		// translate to the position of this cell in the fighter.
+		vec2 translation = cur->getCellPosition();
+		glTranslatef( translation[0], translation[1], 0 );
+		cur->Draw();
+		glPopMatrix();
+
+		cur = next;
+	}
 
 	glPopMatrix();
 }

@@ -24,7 +24,7 @@
 
 #include "CoreCell.h"
 
-CoreCell::CoreCell( Fighter* f, const vec2 &pos  ) : HexCell( f, CORE_CELL, pos )  {
+CoreCell::CoreCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, CORE_CELL, pos )  {
 }
 
 
@@ -37,10 +37,7 @@ void CoreCell::Update( int speed ) {
 
 
 void CoreCell::Draw() {
-	glColor4f( 0.0, 0.0, 1.0, 1.0 );
-	HexCell::Draw();
-
-	glColor4f( 0.3, 0.3, 1.0, 1.0 );
-	drawHex( 0, HEX_CELL_SIZE[0] - 0.1, HEX_CELL_SIZE[2] );
+	glColor4f( 0.1, 0.1, 0.9, 1.0 );
+	drawHex( 0.3, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 }
 

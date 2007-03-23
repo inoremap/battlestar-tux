@@ -79,6 +79,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	Fighter/HexCell.cpp
 	Fighter/HexCellList.cpp
 	Fighter/HeroFighter.cpp
+	Fighter/Cells/ArmorCell.cpp
 	Fighter/Cells/CoreCell.cpp
 	FighterAmmo.cpp
 	FighterAmmoList.cpp

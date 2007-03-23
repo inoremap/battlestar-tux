@@ -72,11 +72,12 @@ class Fighter : public Object {
 	protected:
 				CoreCell* coreCell;
 				HexCellList* allCells;
-				HexCellList* storageCells;
+				HexCellList* armorCells;
 				HexCellList* generationCells;
+				HexCellList* storageCells;
+				HexCellList* propulsionCells;
 				HexCellList* shieldCells;
 				HexCellList* weaponCells;
-				HexCellList* propulsionCells;
 
 				FighterAlignment align;
 

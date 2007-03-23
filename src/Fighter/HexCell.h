@@ -25,6 +25,7 @@
 #ifndef HEXCELL_H_
 #define HEXCELL_H_
 
+#include "IntegerVector.h"
 #include "Object.h"
 #include "Vector.h"
 
@@ -46,13 +47,14 @@ enum HexCellType {
 // Each fighter is composed of these cell units.
 class HexCell : public Object {
 	public:
-				HexCell( Fighter*, HexCellType, const vec2 & );
+				HexCell( Fighter*, HexCellType, const ivec2 & );
 				virtual ~HexCell();
 
 				virtual void Update( int );
 
 				virtual void Draw();
 
+				ivec2 getCellOffset();
 				vec2 getCellPosition();
 				HexCellType getCellType();
 
@@ -60,8 +62,13 @@ class HexCell : public Object {
 				// Draw the hexagon.
 				void drawHex( float, float, float );
 
+				// The offset of the cell inside the ship structure.
+				// This assumes a unit size of one cell.
+				ivec2 cellOffset;
+
 				// The position of the cell inside the ship structure.
-				vec2 cellOffset;
+				// This is where the cell will actually be drawn.
+				vec2 cellPosition;
 
 				// What is the purpose of this cell?
 				HexCellType cellType;

@@ -28,12 +28,22 @@
 #include "HexCell.h"
 #include "HexCellList.h"
 
-HexCell::HexCell( Fighter* f, HexCellType t, const vec2 &p  ) : Object( CELL ) {
+HexCell::HexCell( Fighter* f, HexCellType t, const ivec2 &p  ) : Object( CELL ) {
 	fighter = f;
 
 	cellType = t;
-
 	cellOffset = p;
+
+	// Calculate the actual position of the cell, using the offset.
+	cellPosition = vec2(
+		// Horizontal position is just the offset times the size.
+		cellOffset[0] * 1.5 * HEX_CELL_SIZE[1],
+		// Vertical position is the offset times the size,
+		// with the possible additional offset below.
+		cellOffset[1] * 2 * HEX_CELL_SIZE[1] * HEX_VERTS[1][1]
+	);
+	if( (cellOffset[0] % 2) != 0 )
+		cellPosition[1] += HEX_CELL_SIZE[1] * HEX_VERTS[1][1];
 }
 
 
@@ -46,20 +56,12 @@ void HexCell::Update( int speed ) {
 
 
 void HexCell::Draw() {
-	glPushMatrix();
-
-	// The matrices have already been transformed for
-	// the position of the fighter - we just need to
-	// translate to the position of this cell in the fighter.
-	glTranslatef( cellOffset[0], cellOffset[1], 0 );
-
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
-
-	glPopMatrix();
 }
 
 
-vec2 HexCell::getCellPosition() { return cellOffset; }
+ivec2 HexCell::getCellOffset() { return cellOffset; }
+vec2 HexCell::getCellPosition() { return cellPosition; }
 HexCellType HexCell::getCellType() { return cellType; }
 
 

@@ -1,4 +1,4 @@
-/* CoreCell.h
+/* ArmorCell.h
  *
  * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,27 +22,25 @@
  */
 
 
-#ifndef CORECELL_H_
-#define CORECELL_H_
+#ifndef ARMORCELL_H_
+#define ARMORCELL_H_
 
 #include "HexCell.h"
 
 
-// Central cell of the fighter.  All is lost when this cell is destroyed.
-class CoreCell : public HexCell {
+// Protective ArmorCell for the fighter.
+class ArmorCell : public HexCell {
 	public:
-				CoreCell( Fighter*, const ivec2 & );
-				~CoreCell();
-
-				void Update( int );
+				ArmorCell( Fighter*, const ivec2 & );
+				~ArmorCell();
 
 				void Draw();
 
 
 	private:
-				CoreCell( const CoreCell & );
-				const CoreCell & operator= ( const CoreCell & );
+				ArmorCell( const ArmorCell & );
+				const ArmorCell & operator= ( const ArmorCell & );
 };
 
 
-#endif /*CORECELL_H_*/
+#endif /*ARMORCELL_H_*/
