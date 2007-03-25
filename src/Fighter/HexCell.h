@@ -35,12 +35,12 @@ class Fighter;
 enum HexCellType {
 	CORE_CELL,			// Central unit in the fighter
 	ARMOR_CELL,			// Protective armor on the hull
-	STORAGE_CELL,		// Energy storage
 	GENERATION_CELL,		// Energy generation
+	STORAGE_CELL,		// Energy storage
 	CAPTURE_CELL,		// Energy capture/attraction
+	PROPULSION_CELL,		// Propulsion of the fighter
 	SHIELD_CELL,			// Shield generator
-	WEAPON_CELL,			// Weaponry
-	PROPULSION_CELL		// Propulsion of the fighter
+	WEAPON_CELL			// Weaponry
 };
 
 
@@ -53,6 +53,8 @@ class HexCell : public Object {
 				virtual void Update( int );
 
 				virtual void Draw();
+
+				void destroy();
 
 				ivec2 getCellOffset();
 				vec2 getCellPosition();

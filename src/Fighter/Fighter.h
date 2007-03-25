@@ -64,6 +64,9 @@ class Fighter : public Object {
 				float getHealth();
 				float getFullHealth();
 
+				// One of the ship's components has been destroyed.
+				void destroyCell( HexCell* );
+
 				int getAlignment();
 
 				bool hasComponents() { return true; }
@@ -72,9 +75,9 @@ class Fighter : public Object {
 	protected:
 				CoreCell* coreCell;
 				HexCellList* allCells;
-				HexCellList* armorCells;
 				HexCellList* generationCells;
 				HexCellList* storageCells;
+				HexCellList* captureCells;
 				HexCellList* propulsionCells;
 				HexCellList* shieldCells;
 				HexCellList* weaponCells;

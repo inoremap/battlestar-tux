@@ -44,6 +44,10 @@ Object::~Object() {}
 
 
 void Object::Update( int speed ) {
+	// If the object has no energy, it has been destroyed.
+	if( health <= 0 )
+		destroy();
+
 	pos += vel * speed;
 
 	rot += torque * speed;
@@ -74,6 +78,9 @@ float Object::damage( float damage ) {
 		return 0;
 	}
 }
+
+
+void Object::destroy() { delete this; }
 
 
 void Object::accel( const vec3 &force ) { vel += force / mass; }

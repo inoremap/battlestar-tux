@@ -34,9 +34,9 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	pos[2] = 3;
 
 	allCells = new HexCellList( game );
-	armorCells = new HexCellList( game );
 	generationCells = new HexCellList( game );
 	storageCells = new HexCellList( game );
+	captureCells = new HexCellList( game );
 	propulsionCells = new HexCellList( game );
 	shieldCells = new HexCellList( game );
 	weaponCells = new HexCellList( game );
@@ -54,7 +54,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	cellPos = ivec2( 0, 1 );
 	cell = new ArmorCell( this, cellPos );
@@ -62,7 +61,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	cellPos = ivec2( -1, 0 );
 	cell = new ArmorCell( this, cellPos );
@@ -70,7 +68,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	cellPos = ivec2( -1, -1 );
 	cell = new ArmorCell( this, cellPos );
@@ -78,7 +75,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	cellPos = ivec2( 0, -1 );
 	cell = new ArmorCell( this, cellPos );
@@ -86,7 +82,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	cellPos = ivec2( 1, -1 );
 	cell = new ArmorCell( this, cellPos );
@@ -94,7 +89,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	cell->setHealth( 1000 );
 	cell->setMass( 250 );
 	allCells->addObject( cell );
-	armorCells->addObject( cell );
 
 	align = a;
 }
@@ -111,9 +105,9 @@ Fighter::~Fighter() {
 	}
 
 	delete allCells;
-	delete armorCells;
 	delete generationCells;
 	delete storageCells;
+	delete captureCells;
 	delete propulsionCells;
 	delete shieldCells;
 	delete weaponCells;
@@ -165,5 +159,39 @@ void Fighter::stopFiring() {
 
 float Fighter::getHealth() { return coreCell->getHealth(); }
 float Fighter::getFullHealth() { return coreCell->getFullHealth(); }
+
+
+void Fighter::destroyCell( HexCell* cell ) {
+	switch( cell->getCellType() ) {
+		// The whole ship has been destroyed when this cell goes...
+		case CORE_CELL:
+			break;
+
+		// These components can be destroyed without losing the ship.
+		case GENERATION_CELL:
+			generationCells->remObject( cell );
+			break;
+		case STORAGE_CELL:
+			storageCells->remObject( cell );
+			break;
+		case CAPTURE_CELL:
+			captureCells->remObject( cell );
+			break;
+		case PROPULSION_CELL:
+			propulsionCells->remObject( cell );
+			break;
+		case SHIELD_CELL:
+			shieldCells->remObject( cell );
+			break;
+		case WEAPON_CELL:
+			weaponCells->remObject( cell );
+			break;
+	}
+
+	allCells->remObject( cell );
+
+	delete cell;
+}
+
 
 int Fighter::getAlignment() { return align; }

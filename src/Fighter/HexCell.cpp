@@ -60,6 +60,8 @@ void HexCell::Draw() {
 }
 
 
+void HexCell::destroy() { fighter->destroyCell( this ); }
+
 ivec2 HexCell::getCellOffset() { return cellOffset; }
 vec2 HexCell::getCellPosition() { return cellPosition; }
 HexCellType HexCell::getCellType() { return cellType; }

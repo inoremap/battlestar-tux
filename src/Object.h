@@ -63,6 +63,10 @@ class Object : public ListItem {
 				// it must return the amount it didn't absorb.
 				virtual float damage( float );
 
+				// The object has sustained too much damage.
+				// It has been destroyed.
+				virtual void destroy();
+
 				// Apply an acceleration to the object.
 				void accel( const vec3 & );
 
