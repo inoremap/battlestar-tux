@@ -28,7 +28,7 @@
 #include "HexCell.h"
 
 
-// Protective ArmorCell for the fighter.
+// Protective armor unit for the fighter.
 class ArmorCell : public HexCell {
 	public:
 				ArmorCell( Fighter*, const ivec2 & );

@@ -24,6 +24,7 @@
 
 #include "ArmorCell.h"
 #include "Fighter.h"
+#include "GenerationCell.h"
 #include "Vector.h"
 
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
@@ -49,46 +50,55 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	allCells->addObject( coreCell );
 
 	cellPos = ivec2( 1, 0 );
-	ArmorCell* cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	ArmorCell* armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, 1 );
-	cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, 0 );
-	cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, -1 );
-	cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, -1 );
-	cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 1, -1 );
-	cell = new ArmorCell( this, cellPos );
-	cell->setFullHealth( 1000 );
-	cell->setHealth( 1000 );
-	cell->setMass( 250 );
-	allCells->addObject( cell );
+	armorCell = new ArmorCell( this, cellPos );
+	armorCell->setFullHealth( 1000 );
+	armorCell->setHealth( 1000 );
+	armorCell->setMass( 250 );
+	allCells->addObject( armorCell );
+
+	cellPos = ivec2( 0, -2 );
+	GenerationCell* generationCell = new GenerationCell( this, cellPos );
+	generationCell->setFullHealth( 200 );
+	generationCell->setHealth( 200 );
+	generationCell->setMass( 150 );
+	generationCell->setGenerationRate( 10000 );
+	generationCells->addObject( generationCell );
+	allCells->addObject( generationCell );
 
 	align = a;
 }
@@ -195,3 +205,4 @@ void Fighter::destroyCell( HexCell* cell ) {
 
 
 int Fighter::getAlignment() { return align; }
+
