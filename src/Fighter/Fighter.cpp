@@ -25,6 +25,7 @@
 #include "ArmorCell.h"
 #include "Fighter.h"
 #include "GenerationCell.h"
+#include "StorageCell.h"
 #include "Vector.h"
 
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
@@ -99,6 +100,24 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	generationCell->setGenerationRate( 10000 );
 	generationCells->addObject( generationCell );
 	allCells->addObject( generationCell );
+
+	cellPos = ivec2( -1, -2 );
+	StorageCell* storageCell = new StorageCell( this, cellPos );
+	storageCell->setFullHealth( 300 );
+	storageCell->setHealth( 300 );
+	storageCell->setMass( 200 );
+	storageCell->setMaxEnergy( 25000 );
+	storageCells->addObject( storageCell );
+	allCells->addObject( storageCell );
+
+	cellPos = ivec2( 1, -2 );
+	storageCell = new StorageCell( this, cellPos );
+	storageCell->setFullHealth( 300 );
+	storageCell->setHealth( 300 );
+	storageCell->setMass( 200 );
+	storageCell->setMaxEnergy( 25000 );
+	storageCells->addObject( storageCell );
+	allCells->addObject( storageCell );
 
 	align = a;
 }
