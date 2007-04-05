@@ -46,6 +46,11 @@ class GenerationCell : public HexCell {
 				// The amount of power being transferred is returned.
 				float getPower( float );
 
+				// Return power to the cell.
+				// If a component ends up not using the power, it
+				// needs to be returned.
+				void returnPower( float );
+
 	private:
 				// How much power this cell generates per unit time.
 				float generationRate;

@@ -65,3 +65,11 @@ float GenerationCell::getPower( float power ) {
 	}
 }
 
+
+void GenerationCell::returnPower( float power ) {
+	drawRate -= power;
+
+	if( drawRate < 0 )
+		drawRate = 0;
+}
+
