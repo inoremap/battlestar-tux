@@ -25,6 +25,7 @@
 #ifndef VECTOR_H_
 #define VECTOR_H_
 
+#include <iostream.h>
 #include <math.h>
 
 
@@ -35,9 +36,11 @@ class vec3 {
 				vec3( float x, float y, float z ) { vector[0] = x; vector[1] = y; vector[2] = z; }
 				vec3( const vec3 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; vector[2] = v.vector[2]; }
 
+				inline float length() { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); }
 
-				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); 	}
-
+				inline void display( ostream & out ) {
+					out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
+				}
 
 				inline float & operator[]( int n ) {
 					if( n < 0 || n > 2 )
@@ -138,6 +141,8 @@ class vec3 {
 };
 
 
+
+
 // 2 Dimensional Vector.
 class vec2 {
 	public:
@@ -145,9 +150,7 @@ class vec2 {
 				vec2( float x, float y ) { vector[0] = x; vector[1] = y; }
 				vec2( const vec2 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; }
 
-
-				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
-
+				inline void display( ostream & out ) { out << vector[0] << vector[1]; }
 
 				inline float & operator[]( int n ) {
 					if( n < 0 || n > 1 )
@@ -238,6 +241,19 @@ class vec2 {
 	protected:
 				float vector[2];
 };
+
+
+
+inline ostream & operator<<( ostream & out, vec3 v ) {
+	v.display( out );
+	return out;
+}
+
+
+inline ostream & operator<<( ostream & out, vec2 v ) {
+	v.display( out );
+	return out;
+}
 
 
 #endif /*VECTOR_H_*/

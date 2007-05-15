@@ -25,6 +25,7 @@
 #include "GenerationCell.h"
 
 GenerationCell::GenerationCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, GENERATION_CELL, pos )  {
+	generationRate = 0;
 	drawRate = 0;
 }
 
@@ -66,10 +67,15 @@ float GenerationCell::getPower( float power ) {
 }
 
 
-void GenerationCell::returnPower( float power ) {
-	drawRate -= power;
-
-	if( drawRate < 0 )
+float GenerationCell::returnPower( float power ) {
+	if( power > drawRate ) {
+		float available = drawRate;
 		drawRate = 0;
+		return power - available;
+	}
+	else {
+		drawRate -= power;
+		return 0;
+	}
 }
 

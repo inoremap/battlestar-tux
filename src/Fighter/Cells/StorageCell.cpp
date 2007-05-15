@@ -26,6 +26,7 @@
 
 StorageCell::StorageCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, STORAGE_CELL, pos )  {
 	currentEnergy = 0;
+	maxEnergy = 0;
 }
 
 

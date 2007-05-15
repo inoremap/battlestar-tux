@@ -73,6 +73,14 @@ class Fighter : public Object {
 				ObjectList* getComponents() { return allCells; }
 
 	protected:
+				// Ship components can get power here.
+				float getPower( float );
+
+				// If a component doesn't use all the power it has
+				// reserved, it must be returned to the ship.
+				void returnPower( float );
+
+
 				CoreCell* coreCell;
 				HexCellList* allCells;
 				HexCellList* generationCells;
@@ -89,6 +97,13 @@ class Fighter : public Object {
 	private:
 				Fighter( const Fighter & );
 				const Fighter & operator= ( const Fighter & );
+
+
+	friend class ArmorCell;
+	friend class CoreCell;
+	friend class GenerationCell;
+	friend class PropulsionCell;
+	friend class StorageCell;
 };
 
 

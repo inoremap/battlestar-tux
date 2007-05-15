@@ -41,7 +41,7 @@ class StorageCell : public HexCell {
 				float getMaxEnergy();
 
 				// Store power.
-				// The amount of power being stored is returned,
+				// The amount of power that can't be stored is returned,
 				// in case this cell can't store everything.
 				float putPower( float );
 

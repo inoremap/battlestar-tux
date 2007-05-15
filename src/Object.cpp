@@ -44,7 +44,7 @@ Object::~Object() {}
 
 
 void Object::Update( int speed ) {
-	// If the object has no energy, it has been destroyed.
+	// If the object has no health, it has been destroyed.
 	if( health <= 0 )
 		destroy();
 

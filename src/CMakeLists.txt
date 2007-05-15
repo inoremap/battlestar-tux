@@ -82,6 +82,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	Fighter/Cells/ArmorCell.cpp
 	Fighter/Cells/CoreCell.cpp
 	Fighter/Cells/GenerationCell.cpp
+	Fighter/Cells/PropulsionCell.cpp
 	Fighter/Cells/StorageCell.cpp
 	FighterAmmo.cpp
 	FighterAmmoList.cpp
@@ -120,14 +121,13 @@ ADD_EXECUTABLE(	battlestarTUX
 		${BATTLESTAR_TUX_SOURCES}
 		main.cpp
 )
-
-ADD_EXECUTABLE(	testTUX
-		${BATTLESTAR_TUX_SOURCES}
-		test.cpp
-)
-
 TARGET_LINK_LIBRARIES(battlestarTUX ${BATTLESTAR_TUX_LIBRARIES})
-TARGET_LINK_LIBRARIES(testTUX ${BATTLESTAR_TUX_LIBRARIES})
+
+#ADD_EXECUTABLE(	testTUX
+#		${BATTLESTAR_TUX_SOURCES}
+#		test.cpp
+#)
+#TARGET_LINK_LIBRARIES(testTUX ${BATTLESTAR_TUX_LIBRARIES})
 
 # Copy binary data (graphics, sounds, fonts, etc) to executable directory.
 # If this is an in-source build, the copy isn't necessary.
