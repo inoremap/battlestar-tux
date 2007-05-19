@@ -25,6 +25,7 @@
 #ifndef INTEGERVECTOR_H_
 #define INTEGERVECTOR_H_
 
+#include <iostream.h>
 #include <math.h>
 
 
@@ -38,6 +39,9 @@ class ivec3 {
 
 				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); 	}
 
+				inline void display( ostream & out ) {
+					out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
+				}
 
 				inline int & operator[]( int n ) {
 					if( n < 0 || n > 2 )
@@ -148,6 +152,9 @@ class ivec2 {
 
 				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
 
+				inline void display( ostream & out ) {
+					out << "[" << vector[0] << ", " << vector[1] << "]";
+				}
 
 				inline int & operator[]( int n ) {
 					if( n < 0 || n > 1 )
@@ -238,6 +245,19 @@ class ivec2 {
 	protected:
 				int vector[2];
 };
+
+
+
+inline ostream & operator<<( ostream & out, ivec3 v ) {
+	v.display( out );
+	return out;
+}
+
+
+inline ostream & operator<<( ostream & out, ivec2 v ) {
+	v.display( out );
+	return out;
+}
 
 
 #endif /*INTEGERVECTOR_H_*/
