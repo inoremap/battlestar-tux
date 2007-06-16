@@ -29,7 +29,7 @@ Object::Object( ObjectType t ) {
 	pos = vec3();
 	vel = vec3();
 	rot = vec3();
-	torque = vec3();
+	torq = vec3();
 
 	size = 0;
 	age = 0;
@@ -50,7 +50,7 @@ void Object::Update( int speed ) {
 
 	pos += vel * speed;
 
-	rot += torque * speed;
+	rot += torq * speed;
 
 	age += speed;
 }
@@ -84,4 +84,7 @@ void Object::destroy() { delete this; }
 
 
 void Object::accel( const vec3 &force ) { vel += force / mass; }
+
+
+void Object::torque( const vec3 &t ) { torq += t / mass; } 
 

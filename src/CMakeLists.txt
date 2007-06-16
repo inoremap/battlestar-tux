@@ -76,6 +76,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	ExplosionList.cpp
 	Fighter/EnemyFighter.cpp
 	Fighter/Fighter.cpp
+	Fighter/FighterController.cpp
 	Fighter/HexCell.cpp
 	Fighter/HexCellList.cpp
 	Fighter/HeroFighter.cpp

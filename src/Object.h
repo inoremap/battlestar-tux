@@ -70,6 +70,9 @@ class Object : public ListItem {
 				// Apply an acceleration to the object.
 				void accel( const vec3 & );
 
+				// Apply a torque to the object.
+				void torque( const vec3 & );
+
 				// The maximum length of the object along any plane at any angle.
 				// This needs to be updated if the object ever changes size.
 				// The size is used to determine the sphere-boundary for collision detection.
@@ -83,8 +86,13 @@ class Object : public ListItem {
 				// You don't normally do this.
 				void setVel( const vec3 &v ) { vel = v; }
 
+				// Statically set the rotational position of the object.
+				// You don't normally do this.
 				void setRot( const vec3 &r ) { rot = r; }
-				void setTorque( const vec3 &t ) { torque = t; }
+
+				// Statically set the angular momentum of the object.
+				// You don't normally do this.
+				void setTorque( const vec3 &t ) { torq = t; }
 
 				void setMass( float m ) { mass = m; }
 
@@ -97,7 +105,7 @@ class Object : public ListItem {
 				virtual vec3 getPos() { return pos; }
 				virtual vec3 getVel() { return vel; }
 				virtual vec3 getRot() { return rot; }
-				virtual vec3 getTorque() { return torque; }
+				virtual vec3 getTorque() { return torq; }
 				virtual unsigned int getAge() { return age; }
 				virtual float getMass() { return mass; }
 				virtual float getHealth() { return health; }
@@ -126,7 +134,7 @@ class Object : public ListItem {
 
 				// Torque (Degrees)
 				// The angular velocity of the object (counter-clockwise).
-				vec3 torque;
+				vec3 torq;
 
 				// Maximum size of object.
 				float size;

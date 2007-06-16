@@ -32,7 +32,7 @@
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	game = g;
 
-	torque[1] = 1;
+	torq[1] = 1;
 
 	pos[2] = 3;
 
@@ -285,6 +285,19 @@ void Fighter::returnPower( float power ) {
 		returned += stor->putPower( power - returned );
 
 		stor = (StorageCell*) stor->getNext();
+	}
+}
+
+
+void Fighter::setPropulsion( const vec3 &p ) {
+	vec3 propulsionDone = vec3();
+
+	// Try to propel the fighter.
+	PropulsionCell* prop = (PropulsionCell*) propulsionCells->getRoot();
+	while( prop && propulsionDone < p ) {
+		propulsionDone += prop->accelerate( p - propulsionDone );
+
+		prop = (PropulsionCell*) prop->getNext();
 	}
 }
 

@@ -74,11 +74,15 @@ class Fighter : public Object {
 
 	protected:
 				// Ship components can get power here.
+				// Returns the amount of power obtained.
 				float getPower( float );
 
 				// If a component doesn't use all the power it has
 				// reserved, it must be returned to the ship.
 				void returnPower( float );
+
+				// Propulsion cells will be used to move ship.
+				void setPropulsion( const vec3 & );
 
 
 				CoreCell* coreCell;
@@ -101,6 +105,7 @@ class Fighter : public Object {
 
 	friend class ArmorCell;
 	friend class CoreCell;
+	friend class FighterController;
 	friend class GenerationCell;
 	friend class PropulsionCell;
 	friend class StorageCell;

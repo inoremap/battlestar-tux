@@ -26,6 +26,7 @@
 #define PROPULSIONCELL_H_
 
 #include "HexCell.h"
+#include "Vector.h"
 
 
 // Move the fighter.
@@ -39,7 +40,8 @@ class PropulsionCell : public HexCell {
 				void Draw();
 
 				// Apply acceleration forces to the fighter.
-				void accelerate( vec3 & );
+				// Return the amount of acceleration that wasn't performed.
+				vec3 accelerate( const vec3 & );
 
 				void setAccelerationRate( float );
 				float getAccelerationRate(); 
