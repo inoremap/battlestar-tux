@@ -25,7 +25,7 @@
 
 #include "FighterController.h"
 
-FighterController::FighterController( Fighter* , Game* g ) {
+FighterController::FighterController( Fighter* f , Game* g ) {
 	fighter = f;
 	game = g;
 }
@@ -40,7 +40,7 @@ void FighterController::accel( vec3 &f ) {
 
 
 void FighterController::decelerate( float f ) {
-	fighter->setPropulsion( f * - fighter->getVel() );
+	fighter->setPropulsion( f * (vec3() - fighter->getVel()) );
 }
 
 

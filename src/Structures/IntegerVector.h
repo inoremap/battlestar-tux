@@ -65,6 +65,46 @@ class ivec3 {
 					return *this;
 				}
 
+				inline bool operator<=( const ivec3 &v ) {
+					if (
+						vector[0] <= v.vector[0] &&
+						vector[1] <= v.vector[1] &&
+						vector[2] <= v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>=( const ivec3 &v ) {
+					if (
+						vector[0] >= v.vector[0] &&
+						vector[1] >= v.vector[1] &&
+						vector[2] >= v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<( const ivec3 &v ) {
+					if (
+						vector[0] < v.vector[0] &&
+						vector[1] < v.vector[1] &&
+						vector[2] < v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>( const ivec3 &v ) {
+					if (
+						vector[0] > v.vector[0] &&
+						vector[1] > v.vector[1] &&
+						vector[2] > v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
 				inline ivec3 & operator+=( const ivec3 &v ) {
 					vector[0] += v.vector[0];
 					vector[1] += v.vector[1];
@@ -174,6 +214,42 @@ class ivec2 {
 					vector[0] = x;
 					vector[1] = x;
 					return *this;
+				}
+
+				inline bool operator<=( const ivec2 &v ) {
+					if (
+						vector[0] <= v.vector[0] &&
+						vector[1] <= v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>=( const ivec2 &v ) {
+					if (
+						vector[0] >= v.vector[0] &&
+						vector[1] >= v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<( const ivec2 &v ) {
+					if (
+						vector[0] < v.vector[0] &&
+						vector[1] < v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>( const ivec2 &v ) {
+					if (
+						vector[0] > v.vector[0] &&
+						vector[1] > v.vector[1]
+					) return true;
+					else
+						return false;
 				}
 
 				inline ivec2 & operator+=( const ivec2 &v ) {

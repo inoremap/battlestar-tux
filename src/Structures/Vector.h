@@ -64,6 +64,46 @@ class vec3 {
 					return *this;
 				}
 
+				inline bool operator<=( const vec3 &v ) {
+					if (
+						vector[0] <= v.vector[0] &&
+						vector[1] <= v.vector[1] &&
+						vector[2] <= v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>=( const vec3 &v ) {
+					if (
+						vector[0] >= v.vector[0] &&
+						vector[1] >= v.vector[1] &&
+						vector[2] >= v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<( const vec3 &v ) {
+					if (
+						vector[0] < v.vector[0] &&
+						vector[1] < v.vector[1] &&
+						vector[2] < v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>( const vec3 &v ) {
+					if (
+						vector[0] > v.vector[0] &&
+						vector[1] > v.vector[1] &&
+						vector[2] > v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
 				inline vec3 & operator+=( const vec3 &v ) {
 					vector[0] += v.vector[0];
 					vector[1] += v.vector[1];
@@ -170,6 +210,42 @@ class vec2 {
 					vector[0] = x;
 					vector[1] = x;
 					return *this;
+				}
+
+				inline bool operator<=( const vec2 &v ) {
+					if (
+						vector[0] <= v.vector[0] &&
+						vector[1] <= v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>=( const vec2 &v ) {
+					if (
+						vector[0] >= v.vector[0] &&
+						vector[1] >= v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<( const vec2 &v ) {
+					if (
+						vector[0] < v.vector[0] &&
+						vector[1] < v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator>( const vec2 &v ) {
+					if (
+						vector[0] > v.vector[0] &&
+						vector[1] > v.vector[1]
+					) return true;
+					else
+						return false;
 				}
 
 				inline vec2 & operator+=( const vec2 &v ) {
