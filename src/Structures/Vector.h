@@ -25,7 +25,7 @@
 #ifndef VECTOR_H_
 #define VECTOR_H_
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
 
 
@@ -38,7 +38,7 @@ class vec3 {
 
 				inline float length() { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); }
 
-				inline void display( ostream & out ) {
+				inline void display( std::ostream & out ) {
 					out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
 				}
 
@@ -190,7 +190,7 @@ class vec2 {
 				vec2( float x, float y ) { vector[0] = x; vector[1] = y; }
 				vec2( const vec2 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; }
 
-				inline void display( ostream & out ) { out << vector[0] << vector[1]; }
+				inline void display( std::ostream & out ) { out << vector[0] << vector[1]; }
 
 				inline float & operator[]( int n ) {
 					if( n < 0 || n > 1 )
@@ -320,13 +320,13 @@ class vec2 {
 
 
 
-inline ostream & operator<<( ostream & out, vec3 v ) {
+inline std::ostream & operator<<( std::ostream & out, vec3 v ) {
 	v.display( out );
 	return out;
 }
 
 
-inline ostream & operator<<( ostream & out, vec2 v ) {
+inline std::ostream & operator<<( std::ostream & out, vec2 v ) {
 	v.display( out );
 	return out;
 }
