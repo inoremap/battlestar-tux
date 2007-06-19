@@ -1,4 +1,4 @@
-/* FighterController.cpp
+/* PlayerFighterController.cpp
  *
  * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,38 +22,44 @@
  */
 
 
+#include "PlayerFighterController.h"
 
-#include "FighterController.h"
-
-FighterController::FighterController( Fighter* f , Game* g ) {
-	fighter = f;
-	game = g;
+PlayerFighterController::PlayerFighterController( Fighter* f , Game* g ) : FighterController( f, g ) {
 }
 
 
-FighterController::~FighterController() {
+PlayerFighterController::~PlayerFighterController() {
 }
 
 
-void FighterController::accel( vec3 &f ) {
-	fighter->setPropulsion( f );
-}
+void PlayerFighterController::Update( int speed ) {
+	vec3 direction = vec3();
 
+	// get the keypresses and mouse stuff
+	// remember that two or three keys mat be down!!
+	char keydown;
 
-void FighterController::decelerate( float f ) {
-	fighter->setPropulsion( f * (vec3() - fighter->getVel()) );
-}
+	// we actually ned to use bools here,
+	// because we are using key events,
+	// not key states.
+	switch( keydown ) {
+		case accelUp:
+			direction[1] += 1;
+			break;
 
+		case accelDown:
+			direction[1] -= 1;
+			break;
 
+		case accelLeft:
+			direction[0] -= 1;
+			break;
 
-void firePrimary( bool fire ) {
-}
+		case accelRight:
+			direction[0] += 1;
+			break;
+	}
 
-
-void fireSecondary( bool fire ) {
-}
-
-
-void fireTertiary( bool fire ) {
+	accel( direction );
 }
 

@@ -1,4 +1,4 @@
-/* FighterController.cpp
+/* PlayerFighterController.h
  *
  * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,38 +22,32 @@
  */
 
 
+#ifndef PLAYERFIGHTERCONTROLLER_H_
+#define PLAYERFIGHTERCONTROLLER_H_
 
 #include "FighterController.h"
-
-FighterController::FighterController( Fighter* f , Game* g ) {
-	fighter = f;
-	game = g;
-}
+#include "Game.h"
+#include "Vector.h"
 
 
-FighterController::~FighterController() {
-}
+// Real people controller the fighter from here.
+class PlayerFighterController : public FighterController {
+	public:
+				PlayerFighterController( Fighter*, Game* );
+				virtual ~PlayerFighterController();
+
+				void Update( int );
+
+	private:
+				PlayerFighterController( const PlayerFighterController & );
+				const PlayerFighterController & operator= ( const PlayerFighterController & );
+
+				// Key bindings for controlling fighter.
+				char accelUp;
+				char accelDown;
+				char accelLeft;
+				char accelRight;
+};
 
 
-void FighterController::accel( vec3 &f ) {
-	fighter->setPropulsion( f );
-}
-
-
-void FighterController::decelerate( float f ) {
-	fighter->setPropulsion( f * (vec3() - fighter->getVel()) );
-}
-
-
-
-void firePrimary( bool fire ) {
-}
-
-
-void fireSecondary( bool fire ) {
-}
-
-
-void fireTertiary( bool fire ) {
-}
-
+#endif /*PLAYERFIGHTERCONTROLLER_H_*/

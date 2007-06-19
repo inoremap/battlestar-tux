@@ -37,6 +37,7 @@ class FighterController {
 				FighterController( Fighter*, Game* );
 				virtual ~FighterController();
 
+	protected:
 				// Accerate the fighter by a percentage
 				// of the engine's total power.
 				void accel( vec3 & );
@@ -54,7 +55,6 @@ class FighterController {
 				// Activate/Deactivate tertiary offensive/defensive weapons.
 				void fireTertiary( bool );
 
-	protected:
 				Fighter* fighter;
 				Game* game;
 

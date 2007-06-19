@@ -167,6 +167,8 @@ Fighter::~Fighter() {
 void Fighter::Update( int speed ) {
 	Object::Update( speed );
 	allCells->UpdateObjects();
+
+	// need to move generated power to storage cells??
 }
 
 
