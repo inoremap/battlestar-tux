@@ -42,7 +42,7 @@ class vec3 {
 					out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
 				}
 
-				inline float & operator[]( int n ) {
+				inline float & operator[]( const int n ) {
 					if( n < 0 || n > 2 )
 						return vector[0];
 					else
@@ -64,7 +64,17 @@ class vec3 {
 					return *this;
 				}
 
-				inline bool operator<=( const vec3 &v ) {
+				inline bool operator==( const vec3 &v ) const {
+					if (
+						vector[0] == v.vector[0] &&
+						vector[1] == v.vector[1] &&
+						vector[2] == v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<=( const vec3 &v ) const {
 					if (
 						vector[0] <= v.vector[0] &&
 						vector[1] <= v.vector[1] &&
@@ -74,7 +84,7 @@ class vec3 {
 						return false;
 				}
 
-				inline bool operator>=( const vec3 &v ) {
+				inline bool operator>=( const vec3 &v ) const {
 					if (
 						vector[0] >= v.vector[0] &&
 						vector[1] >= v.vector[1] &&
@@ -84,7 +94,7 @@ class vec3 {
 						return false;
 				}
 
-				inline bool operator<( const vec3 &v ) {
+				inline bool operator<( const vec3 &v ) const {
 					if (
 						vector[0] < v.vector[0] &&
 						vector[1] < v.vector[1] &&
@@ -94,7 +104,7 @@ class vec3 {
 						return false;
 				}
 
-				inline bool operator>( const vec3 &v ) {
+				inline bool operator>( const vec3 &v ) const {
 					if (
 						vector[0] > v.vector[0] &&
 						vector[1] > v.vector[1] &&
@@ -164,11 +174,11 @@ class vec3 {
 				}
 
 
-				inline float dot( const vec3 &v, const vec3 &w ) {
+				inline float dot( const vec3 &v, const vec3 &w ) const {
 					return v.vector[0] * w.vector[0] + v.vector[1] * w.vector[1] + v.vector[2] * w.vector[2];
 				}
 
-				inline vec3 cross( const vec3 &v, const vec3 &w ) {
+				inline vec3 cross( const vec3 &v, const vec3 &w ) const {
 					return vec3(
 						v.vector[1] * w.vector[2] - v.vector[2] * w.vector[1],
 						v.vector[2] * w.vector[0] - v.vector[0] * w.vector[2],
@@ -212,7 +222,16 @@ class vec2 {
 					return *this;
 				}
 
-				inline bool operator<=( const vec2 &v ) {
+				inline bool operator==( const vec2 &v ) const {
+					if (
+						vector[0] == v.vector[0] &&
+						vector[1] == v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<=( const vec2 &v ) const {
 					if (
 						vector[0] <= v.vector[0] &&
 						vector[1] <= v.vector[1]
@@ -221,7 +240,7 @@ class vec2 {
 						return false;
 				}
 
-				inline bool operator>=( const vec2 &v ) {
+				inline bool operator>=( const vec2 &v ) const {
 					if (
 						vector[0] >= v.vector[0] &&
 						vector[1] >= v.vector[1]
@@ -230,7 +249,7 @@ class vec2 {
 						return false;
 				}
 
-				inline bool operator<( const vec2 &v ) {
+				inline bool operator<( const vec2 &v ) const {
 					if (
 						vector[0] < v.vector[0] &&
 						vector[1] < v.vector[1]
@@ -239,7 +258,7 @@ class vec2 {
 						return false;
 				}
 
-				inline bool operator>( const vec2 &v ) {
+				inline bool operator>( const vec2 &v ) const {
 					if (
 						vector[0] > v.vector[0] &&
 						vector[1] > v.vector[1]
@@ -302,11 +321,11 @@ class vec2 {
 				}
 
 
-				inline float dot( const vec2 &v, const vec2 &w ) {
+				inline float dot( const vec2 &v, const vec2 &w ) const {
 					return v.vector[0] * w.vector[0] + v.vector[1] * w.vector[1];
 				}
 
-				inline vec3 cross( const vec2 &v, const vec2 &w ) {
+				inline vec3 cross( const vec2 &v, const vec2 &w ) const {
 					return vec3(
 						0.0,
 						0.0,

@@ -65,7 +65,17 @@ class ivec3 {
 					return *this;
 				}
 
-				inline bool operator<=( const ivec3 &v ) {
+				inline bool operator==( const ivec3 &v ) const {
+					if (
+						vector[0] == v.vector[0] &&
+						vector[1] == v.vector[1] &&
+						vector[2] == v.vector[2]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<=( const ivec3 &v ) const {
 					if (
 						vector[0] <= v.vector[0] &&
 						vector[1] <= v.vector[1] &&
@@ -75,7 +85,7 @@ class ivec3 {
 						return false;
 				}
 
-				inline bool operator>=( const ivec3 &v ) {
+				inline bool operator>=( const ivec3 &v ) const {
 					if (
 						vector[0] >= v.vector[0] &&
 						vector[1] >= v.vector[1] &&
@@ -85,7 +95,7 @@ class ivec3 {
 						return false;
 				}
 
-				inline bool operator<( const ivec3 &v ) {
+				inline bool operator<( const ivec3 &v ) const {
 					if (
 						vector[0] < v.vector[0] &&
 						vector[1] < v.vector[1] &&
@@ -95,7 +105,7 @@ class ivec3 {
 						return false;
 				}
 
-				inline bool operator>( const ivec3 &v ) {
+				inline bool operator>( const ivec3 &v ) const {
 					if (
 						vector[0] > v.vector[0] &&
 						vector[1] > v.vector[1] &&
@@ -165,11 +175,11 @@ class ivec3 {
 				}
 
 
-				inline int dot( const ivec3 &v, const ivec3 &w ) {
+				inline int dot( const ivec3 &v, const ivec3 &w ) const {
 					return v.vector[0] * w.vector[0] + v.vector[1] * w.vector[1] + v.vector[2] * w.vector[2];
 				}
 
-				inline ivec3 cross( const ivec3 &v, const ivec3 &w ) {
+				inline ivec3 cross( const ivec3 &v, const ivec3 &w ) const {
 					return ivec3(
 						v.vector[1] * w.vector[2] - v.vector[2] * w.vector[1],
 						v.vector[2] * w.vector[0] - v.vector[0] * w.vector[2],
@@ -190,7 +200,7 @@ class ivec2 {
 				ivec2( const ivec2 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; }
 
 
-				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
+				inline float length() { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
 
 				inline void display( std::ostream & out ) {
 					out << "[" << vector[0] << ", " << vector[1] << "]";
@@ -216,7 +226,16 @@ class ivec2 {
 					return *this;
 				}
 
-				inline bool operator<=( const ivec2 &v ) {
+				inline bool operator==( const ivec2 &v ) const {
+					if (
+						vector[0] == v.vector[0] &&
+						vector[1] == v.vector[1]
+					) return true;
+					else
+						return false;
+				}
+
+				inline bool operator<=( const ivec2 &v ) const {
 					if (
 						vector[0] <= v.vector[0] &&
 						vector[1] <= v.vector[1]
@@ -225,7 +244,7 @@ class ivec2 {
 						return false;
 				}
 
-				inline bool operator>=( const ivec2 &v ) {
+				inline bool operator>=( const ivec2 &v ) const {
 					if (
 						vector[0] >= v.vector[0] &&
 						vector[1] >= v.vector[1]
@@ -234,7 +253,7 @@ class ivec2 {
 						return false;
 				}
 
-				inline bool operator<( const ivec2 &v ) {
+				inline bool operator<( const ivec2 &v ) const {
 					if (
 						vector[0] < v.vector[0] &&
 						vector[1] < v.vector[1]
@@ -243,7 +262,7 @@ class ivec2 {
 						return false;
 				}
 
-				inline bool operator>( const ivec2 &v ) {
+				inline bool operator>( const ivec2 &v ) const {
 					if (
 						vector[0] > v.vector[0] &&
 						vector[1] > v.vector[1]
@@ -306,11 +325,11 @@ class ivec2 {
 				}
 
 
-				inline int dot( const ivec2 &v, const ivec2 &w ) {
+				inline int dot( const ivec2 &v, const ivec2 &w ) const {
 					return v.vector[0] * w.vector[0] + v.vector[1] * w.vector[1];
 				}
 
-				inline ivec3 cross( const ivec2 &v, const ivec2 &w ) {
+				inline ivec3 cross( const ivec2 &v, const ivec2 &w ) const {
 					return ivec3(
 						0,
 						0,
