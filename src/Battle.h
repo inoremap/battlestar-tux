@@ -34,6 +34,9 @@
 #include "HUD.h"
 #include "Screen.h"
 
+class PlayerFighterController;
+
+
 /* The Hero's fighter is launched to battle a set of enemies. */
 class Battle {
 	public:
@@ -70,15 +73,11 @@ class Battle {
 				// Battle variables.
 				Screen* screen;
 
-				bool keyLeft;
-				bool keyRight;
-				bool keyUp;
-				bool keyDown;
-
 				HUD* hud;
 				Ground* ground;
 
 				HeroFighter* hero;
+				PlayerFighterController* playerController;
 
 				FighterAmmoList* heroAmmoList;
 				FighterAmmoList* enemyAmmoList;

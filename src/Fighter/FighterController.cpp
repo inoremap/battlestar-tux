@@ -24,6 +24,7 @@
 
 
 #include "FighterController.h"
+#include <iostream>
 
 FighterController::FighterController( Fighter* f , Game* g ) {
 	fighter = f;
@@ -43,7 +44,6 @@ void FighterController::accel( vec3 &f ) {
 void FighterController::decelerate( float f ) {
 	fighter->setPropulsion( f * (vec3() - fighter->getVel()) );
 }
-
 
 
 void firePrimary( bool fire ) {

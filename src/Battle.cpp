@@ -28,6 +28,7 @@
 #include "Config.h"
 #include "EnemyFighter.h"
 #include "FighterAmmo.h"
+#include "PlayerFighterController.h"
 #include "TextureManager.h"
 #include "Vector.h"
 
@@ -39,16 +40,13 @@ Battle::Battle( Game* g ) {
 
 	screen = game->getScreen();
 
-	keyLeft = false;
-	keyRight = false;
-	keyUp = false;
-	keyDown = false;
-
 	hud = new HUD( game );
 	ground = new Ground( SOLID_GROUND, game );
 
 	hero = new HeroFighter( game );
 	game->setFighter( hero );
+
+	playerController = new PlayerFighterController( this, screen, hero, game );
 
 	heroAmmoList = new FighterAmmoList( game );
 	game->setHeroAmmoList( heroAmmoList );
@@ -68,6 +66,7 @@ Battle::~Battle() {
 	delete hud;
 	delete ground;
 	delete hero;
+	delete playerController;
 	delete heroAmmoList;
 	delete enemies;
 	delete explosionList;
@@ -76,12 +75,9 @@ Battle::~Battle() {
 
 
 void Battle::Update() {
-	SDL_Event event;
-
 	// If not paused, update all positions/states.
+	int speed = game->getGameSpeed();
 	if( !game->isPaused() ) {
-		int speed = game->getGameSpeed();
-
 		heroAmmoList->UpdateObjects();
 		enemyAmmoList->UpdateObjects();
 
@@ -100,6 +96,8 @@ void Battle::Update() {
 
 		ground->Update();
 	}
+	playerController->Update( speed );
+
 
 	// Set current target angle.
 	int x = 0;
@@ -123,86 +121,6 @@ void Battle::Update() {
 			targetAngle += 180;
 	}
 	//hero->getWeaponSystem()->SetTarget( targetAngle );
-
-	// Read all events off the queue.
-	while( !game->isFinished() && !isFinished() && !isAborted() && SDL_PollEvent(&event) ) {
-		switch( event.type ) {
-			case SDL_KEYDOWN:
-				switch( event.key.keysym.sym ) {
-					case SDLK_ESCAPE:
-						AbortBattle();
-						break;
-
-					case SDLK_COMMA:
-						keyUp = true;
-						break;
-
-					case SDLK_o:
-						keyDown = true;
-						break;
-
-					case SDLK_a:
-						keyLeft = true;
-						break;
-
-					case SDLK_u:
-						keyRight = true;
-						break;
-
-					case SDLK_p:
-						game->pause();
-						break;
-
-					default:
-						break;
-				}
-				break;
-
-			case SDL_KEYUP:
-				switch( event.key.keysym.sym ) {
-					case SDLK_COMMA:
-						keyUp = false;
-						break;
-
-					case SDLK_o:
-						keyDown = false;
-						break;
-
-					case SDLK_a:
-						keyLeft = false;
-						break;
-
-					case SDLK_u:
-						keyRight = false;
-						break;
-
-					default:
-						break;
-				}
-				break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				if( event.button.button == SDL_BUTTON_LEFT )
-					hero->startFiring();
-				break;
-
-			case SDL_MOUSEBUTTONUP:
-				if( event.button.button == SDL_BUTTON_LEFT )
-					hero->stopFiring();
-				else if( event.button.button == SDL_BUTTON_WHEELUP )
-					screen->setFOVY( screen->getFOVY() - 2 );
-				else if( event.button.button == SDL_BUTTON_WHEELDOWN )
-					screen->setFOVY( screen->getFOVY() + 2 );
-				break;
-
-			case SDL_QUIT:
-				game->exitBT();
-				break;
-
-			default:
-				break;
-		}
-	}
 }
 
 

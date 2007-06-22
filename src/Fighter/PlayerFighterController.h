@@ -25,15 +25,17 @@
 #ifndef PLAYERFIGHTERCONTROLLER_H_
 #define PLAYERFIGHTERCONTROLLER_H_
 
+#include "Battle.h"
 #include "FighterController.h"
 #include "Game.h"
+#include "Screen.h"
 #include "Vector.h"
 
 
 // Real people controller the fighter from here.
 class PlayerFighterController : public FighterController {
 	public:
-				PlayerFighterController( Fighter*, Game* );
+				PlayerFighterController( Battle*, Screen*, Fighter*, Game* );
 				virtual ~PlayerFighterController();
 
 				void Update( int );
@@ -42,11 +44,21 @@ class PlayerFighterController : public FighterController {
 				PlayerFighterController( const PlayerFighterController & );
 				const PlayerFighterController & operator= ( const PlayerFighterController & );
 
+				Battle* battle;
+				Screen* screen;
+
 				// Key bindings for controlling fighter.
+				char pause;
 				char accelUp;
 				char accelDown;
 				char accelLeft;
 				char accelRight;
+
+				// State variables - are the keys pressed?
+				bool isAccelUpOn;
+				bool isAccelDownOn;
+				bool isAccelLeftOn;
+				bool isAccelRightOn;
 };
 
 

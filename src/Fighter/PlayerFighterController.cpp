@@ -24,7 +24,21 @@
 
 #include "PlayerFighterController.h"
 
-PlayerFighterController::PlayerFighterController( Fighter* f , Game* g ) : FighterController( f, g ) {
+PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter* f , Game* g ) : FighterController( f, g ) {
+	battle = b;
+	screen = s;
+
+	// TODO: replace static settings with configuration panel
+	pause = SDLK_p;
+	accelUp = SDLK_COMMA;
+	accelDown = SDLK_o;
+	accelLeft = SDLK_a;
+	accelRight = SDLK_u;
+
+	isAccelUpOn = false;
+	isAccelDownOn = false;
+	isAccelLeftOn = false;
+	isAccelRightOn = false;
 }
 
 
@@ -33,33 +47,72 @@ PlayerFighterController::~PlayerFighterController() {
 
 
 void PlayerFighterController::Update( int speed ) {
-	vec3 direction = vec3();
+	// check for keypresses and mouse events
+	// remember that two or three keys/buttons may be down!!
+	SDL_Event event;
+	while( !game->isFinished() && !battle->isFinished() && !battle->isAborted() && SDL_PollEvent(&event) ) {
+		switch( event.type ) {
+			case SDL_KEYDOWN:
+				if( event.key.keysym.sym == SDLK_ESCAPE )
+					battle->AbortBattle();
+				else if( event.key.keysym.sym == pause )
+					game->pause();
+				else if( event.key.keysym.sym == accelUp )
+					isAccelUpOn = true;
+				else if( event.key.keysym.sym == accelDown )
+					isAccelDownOn = true;
+				else if( event.key.keysym.sym == accelLeft )
+					isAccelLeftOn = true;
+				else if( event.key.keysym.sym == accelRight )
+					isAccelRightOn = true;
+				break;
 
-	// get the keypresses and mouse stuff
-	// remember that two or three keys mat be down!!
-	char keydown;
+			case SDL_KEYUP:
+				if( event.key.keysym.sym == accelUp )
+					isAccelUpOn = false;
+				else if( event.key.keysym.sym == accelDown )
+					isAccelDownOn = false;
+				else if( event.key.keysym.sym == accelLeft )
+					isAccelLeftOn = false;
+				else if( event.key.keysym.sym == accelRight )
+					isAccelRightOn = false;
+				break;
 
-	// we actually ned to use bools here,
-	// because we are using key events,
-	// not key states.
-	switch( keydown ) {
-		case accelUp:
-			direction[1] += 1;
-			break;
+			case SDL_MOUSEBUTTONDOWN:
+				if( event.button.button == SDL_BUTTON_LEFT )
+					fighter->startFiring();
+				break;
 
-		case accelDown:
-			direction[1] -= 1;
-			break;
+			case SDL_MOUSEBUTTONUP:
+				if( event.button.button == SDL_BUTTON_LEFT )
+					fighter->stopFiring();
+				else if( event.button.button == SDL_BUTTON_WHEELUP )
+					screen->setFOVY( screen->getFOVY() - 2 );
+				else if( event.button.button == SDL_BUTTON_WHEELDOWN )
+					screen->setFOVY( screen->getFOVY() + 2 );
+				break;
 
-		case accelLeft:
-			direction[0] -= 1;
-			break;
+			case SDL_QUIT:
+				game->exitBT();
+				break;
 
-		case accelRight:
-			direction[0] += 1;
-			break;
+			default:
+				break;
+		}
 	}
 
-	accel( direction );
+	// move fighter
+	if( ! game->isPaused() ) {
+		vec3 direction = vec3();
+		if( isAccelUpOn )
+			direction[1] += 1;
+		if( isAccelDownOn )
+			direction[1] -= 1;
+		if( isAccelLeftOn )
+			direction[0] -= 1;
+		if( isAccelRightOn )
+			direction[0] += 1;
+		accel( direction );
+	}
 }
 
