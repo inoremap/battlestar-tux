@@ -36,10 +36,9 @@ class ivec3 {
 				ivec3( int x, int y, int z ) { vector[0] = x; vector[1] = y; vector[2] = z; }
 				ivec3( const ivec3 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; vector[2] = v.vector[2]; }
 
+				inline float length() const { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); }
 
-				inline float length() { 	return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); 	}
-
-				inline void display( std::ostream & out ) {
+				inline void display( std::ostream & out ) const {
 					out << "[" << vector[0] << ", " << vector[1] << ", " << vector[2] << "]";
 				}
 
@@ -49,7 +48,6 @@ class ivec3 {
 					else
 						return vector[n];
 				}
-
 
 				inline ivec3 & operator=( const ivec3 &v ) {
 					vector[0] = v.vector[0];
@@ -65,7 +63,7 @@ class ivec3 {
 					return *this;
 				}
 
-				inline bool operator==( const ivec3 &v ) const {
+				inline bool isIdentical( const ivec3 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
 						vector[1] == v.vector[1] &&
@@ -75,42 +73,41 @@ class ivec3 {
 						return false;
 				}
 
+				/* This is a BIG judgement call.  Comparisons are performed
+				 * based on vector length, without taking direction into consideration.
+				 * See isIdentical() above.
+				 */
+				inline bool operator==( const ivec3 &v ) const {
+					if ( length() == v.length() )
+						return true;
+					else
+						return false;
+				}
+
 				inline bool operator<=( const ivec3 &v ) const {
-					if (
-						vector[0] <= v.vector[0] &&
-						vector[1] <= v.vector[1] &&
-						vector[2] <= v.vector[2]
-					) return true;
+					if ( length() <= v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator>=( const ivec3 &v ) const {
-					if (
-						vector[0] >= v.vector[0] &&
-						vector[1] >= v.vector[1] &&
-						vector[2] >= v.vector[2]
-					) return true;
+					if ( length() >= v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator<( const ivec3 &v ) const {
-					if (
-						vector[0] < v.vector[0] &&
-						vector[1] < v.vector[1] &&
-						vector[2] < v.vector[2]
-					) return true;
+					if ( length() < v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator>( const ivec3 &v ) const {
-					if (
-						vector[0] > v.vector[0] &&
-						vector[1] > v.vector[1] &&
-						vector[2] > v.vector[2]
-					) return true;
+					if ( length() > v.length() )
+						return true;
 					else
 						return false;
 				}
@@ -199,10 +196,9 @@ class ivec2 {
 				ivec2( int x, int y ) { vector[0] = x; vector[1] = y; }
 				ivec2( const ivec2 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; }
 
+				inline float length() const { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
 
-				inline float length() { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
-
-				inline void display( std::ostream & out ) {
+				inline void display( std::ostream & out ) const {
 					out << "[" << vector[0] << ", " << vector[1] << "]";
 				}
 
@@ -212,7 +208,6 @@ class ivec2 {
 					else
 						return vector[n];
 				}
-
 
 				inline ivec2 & operator=( const ivec2 &v ) {
 					vector[0] = v.vector[0];
@@ -226,47 +221,51 @@ class ivec2 {
 					return *this;
 				}
 
-				inline bool operator==( const ivec2 &v ) const {
+				inline bool isIdentical( const ivec2 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
-						vector[1] == v.vector[1]
+						vector[1] == v.vector[1] &&
+						vector[2] == v.vector[2]
 					) return true;
+					else
+						return false;
+				}
+
+				/* This is a BIG judgement call.  Comparisons are performed
+				 * based on vector length, without taking direction into consideration.
+				 * See isIdentical() above.
+				 */
+				inline bool operator==( const ivec2 &v ) const {
+					if ( length() == v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator<=( const ivec2 &v ) const {
-					if (
-						vector[0] <= v.vector[0] &&
-						vector[1] <= v.vector[1]
-					) return true;
+					if ( length() <= v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator>=( const ivec2 &v ) const {
-					if (
-						vector[0] >= v.vector[0] &&
-						vector[1] >= v.vector[1]
-					) return true;
+					if ( length() >= v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator<( const ivec2 &v ) const {
-					if (
-						vector[0] < v.vector[0] &&
-						vector[1] < v.vector[1]
-					) return true;
+					if ( length() < v.length() )
+						return true;
 					else
 						return false;
 				}
 
 				inline bool operator>( const ivec2 &v ) const {
-					if (
-						vector[0] > v.vector[0] &&
-						vector[1] > v.vector[1]
-					) return true;
+					if ( length() > v.length() )
+						return true;
 					else
 						return false;
 				}
