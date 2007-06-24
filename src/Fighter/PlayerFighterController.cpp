@@ -39,6 +39,13 @@ PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter*
 	isAccelDownOn = false;
 	isAccelLeftOn = false;
 	isAccelRightOn = false;
+
+	rampAccelUp = 0;
+	rampAccelDown = 0;
+	rampAccelLeft = 0;
+	rampAccelRight = 0;
+
+	keyramp = 0.1;
 }
 
 
@@ -57,25 +64,41 @@ void PlayerFighterController::Update( int speed ) {
 					battle->AbortBattle();
 				else if( event.key.keysym.sym == pause )
 					game->pause();
-				else if( event.key.keysym.sym == accelUp )
+				else if( event.key.keysym.sym == accelUp ) {
 					isAccelUpOn = true;
-				else if( event.key.keysym.sym == accelDown )
+					rampAccelUp += keyramp;
+				}
+				else if( event.key.keysym.sym == accelDown ) {
 					isAccelDownOn = true;
-				else if( event.key.keysym.sym == accelLeft )
+					rampAccelDown += keyramp;
+				}
+				else if( event.key.keysym.sym == accelLeft ) {
 					isAccelLeftOn = true;
-				else if( event.key.keysym.sym == accelRight )
+					rampAccelLeft += keyramp;
+				}
+				else if( event.key.keysym.sym == accelRight ) {
 					isAccelRightOn = true;
+					rampAccelRight += keyramp;
+				}
 				break;
 
 			case SDL_KEYUP:
-				if( event.key.keysym.sym == accelUp )
+				if( event.key.keysym.sym == accelUp ) {
 					isAccelUpOn = false;
-				else if( event.key.keysym.sym == accelDown )
+					rampAccelUp -= keyramp;
+				}
+				else if( event.key.keysym.sym == accelDown ) {
 					isAccelDownOn = false;
-				else if( event.key.keysym.sym == accelLeft )
+					rampAccelDown -= keyramp;
+				}
+				else if( event.key.keysym.sym == accelLeft ) {
 					isAccelLeftOn = false;
-				else if( event.key.keysym.sym == accelRight )
+					rampAccelLeft -= keyramp;
+				}
+				else if( event.key.keysym.sym == accelRight ) {
 					isAccelRightOn = false;
+					rampAccelRight -= keyramp;
+				}
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
@@ -105,13 +128,13 @@ void PlayerFighterController::Update( int speed ) {
 	if( ! game->isPaused() ) {
 		vec3 direction = vec3();
 		if( isAccelUpOn )
-			direction[1] += 1;
+			direction[1] += rampAccelUp;
 		if( isAccelDownOn )
-			direction[1] -= 1;
+			direction[1] -= rampAccelDown;
 		if( isAccelLeftOn )
-			direction[0] -= 1;
+			direction[0] -= rampAccelLeft;
 		if( isAccelRightOn )
-			direction[0] += 1;
+			direction[0] += rampAccelRight;
 		accel( direction );
 	}
 }

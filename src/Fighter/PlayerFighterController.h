@@ -59,6 +59,15 @@ class PlayerFighterController : public FighterController {
 				bool isAccelDownOn;
 				bool isAccelLeftOn;
 				bool isAccelRightOn;
+
+				// Helps to smooth the controls.
+				// When a key is pressed, it doesn't immediately go to 100%.
+				float keyramp;
+
+				float rampAccelUp;
+				float rampAccelDown;
+				float rampAccelLeft;
+				float rampAccelRight;
 };
 
 
