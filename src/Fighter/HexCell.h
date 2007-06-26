@@ -35,11 +35,11 @@ class Fighter;
 enum HexCellType {
 	CORE_CELL,			// Central unit in the fighter
 	ARMOR_CELL,			// Protective armor on the hull
-	GENERATION_CELL,		// Energy generation
+	GENERATION_CELL,	// Energy generation
 	STORAGE_CELL,		// Energy storage
 	CAPTURE_CELL,		// Energy capture/attraction
-	PROPULSION_CELL,		// Propulsion of the fighter
-	SHIELD_CELL,			// Shield generator
+	PROPULSION_CELL,	// Propulsion of the fighter
+	SHIELD_CELL,		// Shield generator
 	WEAPON_CELL			// Weaponry
 };
 
@@ -86,21 +86,20 @@ class HexCell : public Object {
 
 // Standard sizes for hex cell.
 static const float HEX_CELL_SIZE[3] = {
-	0.5,		// Inner width
+	0.5,	// Inner width
 	0.65,	// Outer width
 	0.2		// Height
 };
 
 
 // Points on a unit hexagon (x, y).
-static const float HEX_VERTS[7][2] = {
+static const float HEX_VERTS[6][2] = {
 	{ -1.0, 0.0 },
 	{ -0.5, 0.866025404 },
 	{ 0.5, 0.866025404 },
 	{ 1.0, 0.0 },
 	{ 0.5, -0.866025404 },
-	{ -0.5, -0.866025404 },
-	{ -1.0, 0.0 }
+	{ -0.5, -0.866025404 }
 };
 
 
