@@ -26,8 +26,8 @@
 #include "PropulsionCell.h"
 
 PropulsionCell::PropulsionCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, PROPULSION_CELL, pos )  {
-	accelerationRate = 1;
-	powerRate = 100;
+	accelerationRate = 0.5; 
+	powerRate = 10000;
 }
 
 

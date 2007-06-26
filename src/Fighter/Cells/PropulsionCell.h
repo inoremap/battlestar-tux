@@ -49,6 +49,7 @@ class PropulsionCell : public HexCell {
 
 	private:
 				// How much (maximum) force this cell can exert.
+				// Remember that acceleration can occur 50 times per second.
 				float accelerationRate;
 
 				// The amount of power the cell uses for each unit of acceleration force.
