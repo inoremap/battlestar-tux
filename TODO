@@ -1,0 +1,7 @@
+Developers will come across many things that need to be examined or fixed.  Instead of sprinkling TODOs all through the code, lets just list them here.
+
+- Check that all objects actually respect the "int speed" they are passed which will alert them if frames have been skipped:
+  > Explosion Pulse Displayable Object PropulsionCell GenerationCell
+
+
+
