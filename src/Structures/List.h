@@ -36,10 +36,10 @@ class List {
 				virtual ~List();
 
 				// Add a new object.
-				void addObject( ListItem* obj );
+				virtual void addObject( ListItem* obj );
 
 				// Remove an object.
-				void remObject( ListItem* obj );
+				virtual void remObject( ListItem* obj );
 
 				// Return the list of objects.
 				ListItem* getRoot();

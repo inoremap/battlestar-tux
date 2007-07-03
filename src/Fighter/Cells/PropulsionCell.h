@@ -26,13 +26,14 @@
 #define PROPULSIONCELL_H_
 
 #include "HexCell.h"
+#include "ParticleGenerator.h"
 #include "Vector.h"
 
 
 // Move the fighter.
 class PropulsionCell : public HexCell {
 	public:
-				PropulsionCell( Fighter*, const ivec2 & );
+				PropulsionCell( Fighter*, TextureManager*, const ivec2 & );
 				~PropulsionCell();
 
 				void Update( int );
@@ -48,6 +49,9 @@ class PropulsionCell : public HexCell {
 				void setPowerRate( float );
 
 	private:
+				PropulsionCell( const PropulsionCell & );
+				const PropulsionCell & operator= ( const PropulsionCell & );
+
 				// How much (maximum) force this cell can exert.
 				// Remember that acceleration can occur 50 times per second.
 				float accelerationRate;
@@ -55,8 +59,9 @@ class PropulsionCell : public HexCell {
 				// The amount of power the cell uses for each unit of acceleration force.
 				float powerRate;
 
-				PropulsionCell( const PropulsionCell & );
-				const PropulsionCell & operator= ( const PropulsionCell & );
+				GLuint texture;
+
+				ParticleGenerator* particles;
 };
 
 

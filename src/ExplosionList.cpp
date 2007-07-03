@@ -57,7 +57,7 @@ void ExplosionList::Draw() {
 }
 
 
-void ExplosionList::Update() {
+void ExplosionList::Update( int speed ) {
 	Explosion* cur = (Explosion*) rootObj;
 	Explosion* next = 0;
 
@@ -69,15 +69,15 @@ void ExplosionList::Update() {
 		if( cur->done() )
 			remObject( cur );
 		else
-			cur->Update();
+			cur->Update( speed );
 
 		cur = next;
 	}
 }
 
 
-void ExplosionList::AddExplosion( vec2 &point ) {
-	Explosion* explosion = new Explosion( BASIC_EXPLOSION, textures[BASIC_EXPLOSION], game );
+void ExplosionList::AddExplosion( vec3 &point ) {
+	Explosion* explosion = new Explosion( BASIC_EXPLOSION, textures[BASIC_EXPLOSION] );
 	explosion->setPos( point );
 	addObject( explosion );
 }

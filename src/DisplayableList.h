@@ -37,7 +37,7 @@ class DisplayableList : public List {
 				virtual ~DisplayableList();
 
 				// Update positions and states of all objects.
-				void UpdateObjects();
+				void UpdateObjects( int );
 
 				// Draw all the objects.
 				void DrawObjects();

@@ -31,11 +31,11 @@ DisplayableList::DisplayableList() {}
 DisplayableList::~DisplayableList() {}
 
 
-void DisplayableList::UpdateObjects() {
+void DisplayableList::UpdateObjects( int speed ) {
 	Displayable* cur = (Displayable*) rootObj;
 
 	while( cur ) {
-		cur->Update();
+		cur->Update( speed );
 		cur = (Displayable*) cur->getNext();
 	}
 }

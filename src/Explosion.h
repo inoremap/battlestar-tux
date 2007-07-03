@@ -29,14 +29,14 @@
 
 #include "Displayable.h"
 #include "ExplosionList.h"
-#include "Game.h"
 #include "Pulse.h"
 
 class Explosion : public Displayable {
 	public:
-				Explosion( ExplosionType e, GLuint t, Game* g );
+				Explosion( ExplosionType e, GLuint t );
+				~Explosion();
 
-				void Update();
+				void Update( int );
 
 				void Draw();
 

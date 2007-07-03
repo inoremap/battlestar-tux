@@ -1,0 +1,108 @@
+/* ParticleGenerator.cpp
+ *
+ * Copyright 2007 Eliot Eshelman
+ * battlestartux@6by9.net
+ *
+ *
+ *  This file is part of Battlestar Tux.
+ *
+ *  Battlestar Tux is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; version 2 of the License.
+ *
+ *  Battlestar Tux is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Battlestar Tux; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+
+#include "ParticleGenerator.h"
+
+
+ParticleGenerator::ParticleGenerator( TextureManager* t, int num, float rate ) {
+	maxParticles = num;
+	numParticles = 0;
+	generationRate = rate;
+	waitFrames = (int) (1 / rate) * 50;
+	framesPassed = 0;
+
+	positionRandomness = 0.1;
+	velocityRandomness = 0.1;
+	sizeRandomness = 0.1;
+	alphaRandomness = 0.05;
+
+	maxAge = 250;
+	ageRandomness = 25;
+
+	textureManager = t;
+	texture = textureManager->loadTexture( "data/gfx/plasma_0001-32.png" );
+}
+
+
+ParticleGenerator::~ParticleGenerator() {
+	textureManager->freeTextures( 1, &texture );
+}
+
+
+void ParticleGenerator::Update( int speed ) {
+	Particle* cur = (Particle*) rootObj;
+	Particle* next = 0;
+
+	// Update each particle, if there are any.
+	while( cur ) {
+		next = (Particle*) cur->getNext();
+
+		// Remove finished particle.
+		if( cur->getAge() >= maxAge )
+			remObject( cur );
+		else
+			cur->Update( speed );
+
+		cur = next;
+	}
+
+
+	// If the proper amount of time has passed,
+	// add a new particle.
+	framesPassed += speed;
+	if( framesPassed >= waitFrames ) {
+		framesPassed = 0;
+		addObject( new Particle(texture) );
+	}
+}
+
+
+void ParticleGenerator::Draw() {
+	Particle* cur = (Particle*) rootObj;
+	Particle* next = 0;
+
+	// Draw each Particle, if there are any.
+	while( cur ) {
+		next = (Particle*) cur->getNext();
+
+		cur->Draw();
+
+		cur = next;
+	}
+}
+
+
+void ParticleGenerator::addObject( Particle* p ) {
+	if( numParticles < maxParticles ) {
+		numParticles++;
+		List::addObject( p );
+	}
+}
+
+
+void ParticleGenerator::remObject( Particle* p ) {
+	numParticles--;
+	List::remObject( p );
+}
+

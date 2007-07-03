@@ -27,6 +27,7 @@
 
 #include "IntegerVector.h"
 #include "Object.h"
+#include "TextureManager.h"
 #include "Vector.h"
 
 class Fighter;
@@ -47,7 +48,7 @@ enum HexCellType {
 // Each fighter is composed of these cell units.
 class HexCell : public Object {
 	public:
-				HexCell( Fighter*, HexCellType, const ivec2 & );
+				HexCell( Fighter*, TextureManager*, HexCellType, const ivec2 & );
 				virtual ~HexCell();
 
 				virtual void Update( int );
@@ -77,6 +78,8 @@ class HexCell : public Object {
 
 				// The fighter that this cell belongs to.
 				Fighter* fighter;
+
+				TextureManager* textureManager;
 
 	private:
 				HexCell( const HexCell & );

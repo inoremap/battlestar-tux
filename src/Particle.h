@@ -1,4 +1,4 @@
-/* CoreCell.cpp
+/* Particle.h
  *
  * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,22 +22,36 @@
  */
 
 
-#include "CoreCell.h"
+#ifndef PARTICLE_H_
+#define PARTICLE_H_
 
-CoreCell::CoreCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, CORE_CELL, pos )  {
-}
+#include <SDL_opengl.h>
+
+#include "Displayable.h"
+#include "Game.h"
+#include "Pulse.h"
+
+class Particle : public Displayable {
+	public:
+				Particle( GLuint );
+				~Particle();
+
+				void Update( int );
+
+				void Draw();
+
+	private:
+				Particle( const Particle & );
+				const Particle & operator= ( const Particle & );
+
+				// Control the changing size of the Particle.
+				Pulse* sizePulse;
+
+				// Control the appearance and fade of the Particle.
+				Pulse* alphaPulse;
+
+				GLuint texture;
+};
 
 
-CoreCell::~CoreCell() {}
-
-
-void CoreCell::Update( int speed ) {
-	HexCell::Update( speed );
-}
-
-
-void CoreCell::Draw() {
-	glColor4f( 0.1, 0.1, 0.9, 1.0 );
-	drawHex( 0.3, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
-}
-
+#endif /*PARTICLE_H_*/

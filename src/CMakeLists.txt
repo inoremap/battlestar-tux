@@ -93,6 +93,8 @@ SET(	BATTLESTAR_TUX_SOURCES
 	HUD.cpp
 	Object.cpp
 	ObjectList.cpp
+	Particle.cpp
+	ParticleGenerator.cpp
 	Procedural/Simplex.cpp
 	Procedural/Textures.cpp
 	Pulse.cpp

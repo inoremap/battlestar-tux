@@ -1,4 +1,4 @@
-/* CoreCell.cpp
+/* Particle.cpp
  *
  * Copyright 2007 Eliot Eshelman
  * battlestartux@6by9.net
@@ -22,22 +22,44 @@
  */
 
 
-#include "CoreCell.h"
+#include "Particle.h"
 
-CoreCell::CoreCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, CORE_CELL, pos )  {
+Particle::Particle( GLuint t ) : Displayable( EFFECT ) {
+	sizePulse = new Pulse( DOUBLE_ZERO_PULSE, 1, 1 );
+	alphaPulse = new Pulse( DOUBLE_ZERO_PULSE, 1, 1 );
+
+	texture = t;
 }
 
 
-CoreCell::~CoreCell() {}
-
-
-void CoreCell::Update( int speed ) {
-	HexCell::Update( speed );
+Particle::~Particle() {
+	delete sizePulse;
+	delete alphaPulse;
 }
 
 
-void CoreCell::Draw() {
-	glColor4f( 0.1, 0.1, 0.9, 1.0 );
-	drawHex( 0.3, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
+void Particle::Update( int speed ) {
+	size = 0.1 * sizePulse->GetNextPulse();
+	color[3] = alphaPulse->GetNextPulse();
+
+	// Set Position and Rotation
+	Displayable::Update( speed );
+}
+
+
+void Particle::Draw() {
+	Displayable::Draw();
+
+	glBindTexture( GL_TEXTURE_2D, texture );
+	glBegin( GL_TRIANGLE_STRIP );
+		glTexCoord2f( 0, 0 );
+		glVertex3f( -size, -size, 0 );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( -size, size, 0 );
+		glTexCoord2f( 1, 0 );
+		glVertex3f( size, -size, 0 );
+		glTexCoord2f( 1, 1 );
+		glVertex3f( size, size, 0 );
+	glEnd();
 }
 

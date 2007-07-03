@@ -45,56 +45,56 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	weaponCells = new HexCellList( game );
 
 	ivec2 cellPos = ivec2();
-	coreCell = new CoreCell( this, cellPos );
+	coreCell = new CoreCell( this, game->getTextureManager(), cellPos );
 	coreCell->setFullHealth( 10000 );
 	coreCell->setHealth( 10000 );
 	coreCell->setMass( 100000 );
 	allCells->addObject( coreCell );
 
 	cellPos = ivec2( 1, 0 );
-	ArmorCell* armorCell = new ArmorCell( this, cellPos );
+	ArmorCell* armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, 1 );
-	armorCell = new ArmorCell( this, cellPos );
+	armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, 0 );
-	armorCell = new ArmorCell( this, cellPos );
+	armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, -1 );
-	armorCell = new ArmorCell( this, cellPos );
+	armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, -1 );
-	armorCell = new ArmorCell( this, cellPos );
+	armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 1, -1 );
-	armorCell = new ArmorCell( this, cellPos );
+	armorCell = new ArmorCell( this, game->getTextureManager(), cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
 	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, -2 );
-	GenerationCell* generationCell = new GenerationCell( this, cellPos );
+	GenerationCell* generationCell = new GenerationCell( this, game->getTextureManager(), cellPos );
 	generationCell->setFullHealth( 200 );
 	generationCell->setHealth( 200 );
 	generationCell->setMass( 1500 );
@@ -103,7 +103,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	allCells->addObject( generationCell );
 
 	cellPos = ivec2( -1, -2 );
-	StorageCell* storageCell = new StorageCell( this, cellPos );
+	StorageCell* storageCell = new StorageCell( this, game->getTextureManager(), cellPos );
 	storageCell->setFullHealth( 300 );
 	storageCell->setHealth( 300 );
 	storageCell->setMass( 2000 );
@@ -112,7 +112,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( 1, -2 );
-	storageCell = new StorageCell( this, cellPos );
+	storageCell = new StorageCell( this, game->getTextureManager(), cellPos );
 	storageCell->setFullHealth( 300 );
 	storageCell->setHealth( 300 );
 	storageCell->setMass( 2000 );
@@ -121,7 +121,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( -2, -1 );
-	PropulsionCell* propulsionCell = new PropulsionCell( this, cellPos );
+	PropulsionCell* propulsionCell = new PropulsionCell( this, game->getTextureManager(), cellPos );
 	propulsionCell->setFullHealth( 500 );
 	propulsionCell->setHealth( 500 );
 	propulsionCell->setMass( 3000 );
@@ -131,7 +131,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	allCells->addObject( propulsionCell );
 
 	cellPos = ivec2( 2, -1 );
-	propulsionCell = new PropulsionCell( this, cellPos );
+	propulsionCell = new PropulsionCell( this, game->getTextureManager(), cellPos );
 	propulsionCell->setFullHealth( 500 );
 	propulsionCell->setHealth( 500 );
 	propulsionCell->setMass( 3000 );

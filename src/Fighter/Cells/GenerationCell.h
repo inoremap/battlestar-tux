@@ -31,7 +31,7 @@
 // Create energy for the fighter to use.
 class GenerationCell : public HexCell {
 	public:
-				GenerationCell( Fighter*, const ivec2 & );
+				GenerationCell( Fighter*, TextureManager*, const ivec2 & );
 				~GenerationCell();
 
 				void Update( int );

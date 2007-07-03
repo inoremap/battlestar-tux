@@ -28,10 +28,11 @@
 #include "HexCell.h"
 #include "HexCellList.h"
 
-HexCell::HexCell( Fighter* f, HexCellType t, const ivec2 &p  ) : Object( CELL ) {
+HexCell::HexCell( Fighter* f, TextureManager* tex, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
 	fighter = f;
+	textureManager = tex;
 
-	cellType = t;
+	cellType = type;
 	cellOffset = p;
 
 	// Calculate the actual position of the cell, using the offset.

@@ -27,7 +27,6 @@
 
 #include <SDL_opengl.h>
 
-#include "Game.h"
 #include "ListItem.h"
 #include "Vector.h"
 
@@ -42,100 +41,92 @@ enum DisplayableType {
  */
 class Displayable : public ListItem {
 	public:
-				Displayable( DisplayableType t, Game* g );
+				Displayable( DisplayableType );
 				virtual ~Displayable();
 
-				// Move object to its new position and update other elements.
-				virtual void Update();
+				// Update item positioning and other data.
+				virtual void Update( int );
 
-				// Draw the object to the screen.
+				// Draw the item to the screen.
 				//
 				// Textures are enabled, so you need to bind
 				// a null texture if you don't want any textures.
 				virtual void Draw();
 
-				void setSize( vec2 & );
+				// Apply an acceleration to the item.
+				void accel( const vec3 & );
 
-				// Some (all?) objects have a set Z position.
-				// In this case, just set X and Y positions.
-				void setPos( vec2 & );
-				void setPos( vec3 & );
+				// Apply a torque to the item.
+				void torque( const vec3 & );
 
-				void setVel( vec3 & );
+				// The maximum length of the item along any plane at any angle.
+				// This needs to be updated if the object ever changes size.
+				// The size is used to determine the sphere-boundary for collision detection.
+				void setSize( float s ) { size = s; }
 
-				void setRot( float r );
-				void setTorque( float t );
+				// Statically set the position of the item.
+				// You don't normally do this.
+				void setPos( const vec3 &p ) { pos = p; }
 
-				void setColor( float r, float g, float b, float a );
+				// Statically set the velocity of the item.
+				// You don't normally do this.
+				void setVel( const vec3 &v ) { vel = v; }
 
-				void incrAge();
+				// Statically set the rotational position of the item.
+				// You don't normally do this.
+				void setRot( const vec3 &r ) { rot = r; }
 
-				void setType( int t );
+				// Statically set the angular momentum of the item.
+				// You don't normally do this.
+				void setTorque( const vec3 &t ) { torq = t; }
 
-				void setCircular( bool circle );
+				void setMass( float m ) { mass = m; }
 
-				void setPolygon( int numPoints, float points[][2] );
+				void setType( DisplayableType t ) { type = t; }
 
-				void setStayOnScreen( bool stay );
+				virtual float getSize() { return size; }
+				virtual vec3 getPos() { return pos; }
+				virtual vec3 getVel() { return vel; }
+				virtual vec3 getRot() { return rot; }
+				virtual vec3 getTorque() { return torq; }
+				virtual unsigned int getAge() { return age; }
+				virtual float getMass() { return mass; }
+				virtual int getType() { return type; }
 
-				vec2 & getSize();
-				vec3 & getPos();
-				vec3 & getVel();
-				float getRot();
-				float getTorque();
-				float* getColor();
-				unsigned int getAge();
-				int getType();
-				bool getCircular();
-				float** getPolygon();
-				int getNumPolygonPoints();
-				bool getStayOnScreen();
 
 	protected:
-				// Size (width and height) of object.
-				vec2 size;
+				// RGBA Color of the item.
+				float color[4];
 
-				// Position (X, Y, Z) at center of object.
+				// Position (X, Y, Z) at center of item (meters).
 				vec3 pos;
 
 				// Velocity (X, Y, Z)
-				// Number of units to move in each direction each frame.
+				// Number of meters to move in each direction each frame.
 				// Remember that the game runs at 50 FPS, regardless of what the
 				// user's screen is actually displaying.
 				vec3 vel;
 
 				// Rotation (Degrees)
-				// The angular position of the object (counter-clockwise).
-				float rot;
+				// The angular position of the item (counter-clockwise).
+				vec3 rot;
 
 				// Torque (Degrees)
-				// The rotational velocity of the object (counter-clockwise).
-				float torque;
+				// The angular velocity of the item (counter-clockwise).
+				vec3 torq;
 
-				// Color (Red, Green, Blue, Alpha)
-				float color[4];
+				// Maximum size of item.
+				float size;
 
 				// Age of item in frames
 				unsigned int age;
 
-				// Type of displayable object.
+				// Mass of the item (kilograms).
+				float mass;
+
+				// Type of item.
 				int type;
 
-				// Is the object a circle or a polygon?
-				// Needed for collision detection.
-				bool circular;
-
-				// If the object is a polygon, the points (X, Y)
-				// of the polygon must be defined. Points must be
-				// specified in counter-clockwise order.
-				// These points will be offsets from the object's current position.
-				float** polygon;
-				int numPolygonPoints;
-
-				// Must the object remain on the screen at all times?
-				bool stayOnScreen;
-
-				Game* game;
 
 	private:
 				Displayable( const Displayable &displayable );

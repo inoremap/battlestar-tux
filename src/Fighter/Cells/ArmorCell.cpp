@@ -24,7 +24,7 @@
 
 #include "ArmorCell.h"
 
-ArmorCell::ArmorCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, ARMOR_CELL, pos )  {
+ArmorCell::ArmorCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, ARMOR_CELL, pos )  {
 }
 
 

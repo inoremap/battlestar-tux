@@ -84,7 +84,7 @@ void Battle::Update() {
 		heroAmmoList->CheckCollisions( enemies );
 		enemyAmmoList->CheckCollisions( hero );
 
-		explosionList->Update();
+		explosionList->Update( speed );
 
 		hero->Update( speed );
 		if( hero->getHealth() <= 0 )

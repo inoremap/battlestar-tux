@@ -25,7 +25,7 @@
 #include "Explosion.h"
 #include "ExplosionList.h"
 
-Explosion::Explosion( ExplosionType e, GLuint t, Game* g ) : Displayable( EFFECT, g ) {
+Explosion::Explosion( ExplosionType e, GLuint t) : Displayable( EFFECT ) {
 	sizePulse = new Pulse( DOUBLE_ZERO_PULSE, 1, 1 );
 	alphaPulse = new Pulse( DOUBLE_ZERO_PULSE, 1, 1 );
 
@@ -34,11 +34,17 @@ Explosion::Explosion( ExplosionType e, GLuint t, Game* g ) : Displayable( EFFECT
 }
 
 
-void Explosion::Update() {
-	size[0] = size[1] = 4 * sizePulse->GetNextPulse();
+Explosion::~Explosion() {
+	delete sizePulse;
+	delete alphaPulse;
+}
+
+
+void Explosion::Update( int speed ) {
+	size = 4 * sizePulse->GetNextPulse();
 	color[3] = alphaPulse->GetNextPulse();
 
-	Displayable::Update();
+	Displayable::Update( speed );
 }
 
 

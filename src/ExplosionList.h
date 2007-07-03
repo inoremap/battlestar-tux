@@ -49,10 +49,10 @@ class ExplosionList : public List {
 				void Draw();
 
 				// Update explosions.
-				void Update();
+				void Update( int );
 
 				// Add an explosion at the specified point.
-				void AddExplosion( vec2 & );
+				void AddExplosion( vec3 & );
 
 	private:
 				ExplosionList( const ExplosionList & );

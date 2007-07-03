@@ -25,26 +25,41 @@
 #include "Fighter.h"
 #include "PropulsionCell.h"
 
-PropulsionCell::PropulsionCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, PROPULSION_CELL, pos )  {
+PropulsionCell::PropulsionCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, PROPULSION_CELL, pos )  {
 	accelerationRate = 0.5; 
 	powerRate = 10000;
+
+	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+
+	particles = new ParticleGenerator( textureManager, 10, 2 );
 }
 
 
-PropulsionCell::~PropulsionCell() {}
+PropulsionCell::~PropulsionCell() {
+	textureManager->freeTextures( 1, &texture );
+	delete particles;
+}
 
 
 void PropulsionCell::Update( int speed ) {
+	particles->Update( speed );
+
 	HexCell::Update( speed );
 }
 
 
 void PropulsionCell::Draw() {
-	glColor4f( 0.9, 0.9, 0.1, 1.0 );
+	glBindTexture( GL_TEXTURE_2D, texture );
+
+	glColor4f( 0.0, 0.59, 0.88, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 
-	glColor4f( 0.7, 0.7, 0.3, 1.0 );
-	drawHex( 0.15, HEX_CELL_SIZE[0], HEX_CELL_SIZE[2] );
+	glColor4f( 0.46, 0.55, 0.6, 1.0 );
+	drawHex( 0.35, HEX_CELL_SIZE[0], HEX_CELL_SIZE[2] );
+
+	// We're not sorting polygons.  If we draw these first,
+	// their alphas will screw up the fighter's cells.
+	particles->Draw();
 }
 
 
