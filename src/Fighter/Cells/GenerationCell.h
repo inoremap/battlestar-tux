@@ -53,6 +53,9 @@ class GenerationCell : public HexCell {
 				float returnPower( float );
 
 	private:
+				GenerationCell( const GenerationCell & );
+				const GenerationCell & operator= ( const GenerationCell & );
+
 				// How much power this cell generates per unit time.
 				float generationRate;
 
@@ -62,8 +65,7 @@ class GenerationCell : public HexCell {
 				// generator has power left for use.
 				float drawRate;
 
-				GenerationCell( const GenerationCell & );
-				const GenerationCell & operator= ( const GenerationCell & );
+				GLuint texture;
 };
 
 

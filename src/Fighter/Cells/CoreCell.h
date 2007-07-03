@@ -42,6 +42,8 @@ class CoreCell : public HexCell {
 	private:
 				CoreCell( const CoreCell & );
 				const CoreCell & operator= ( const CoreCell & );
+
+				GLuint texture;
 };
 
 

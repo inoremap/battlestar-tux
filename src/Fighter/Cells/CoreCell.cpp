@@ -25,10 +25,13 @@
 #include "CoreCell.h"
 
 CoreCell::CoreCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, CORE_CELL, pos )  {
+	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
-CoreCell::~CoreCell() {}
+CoreCell::~CoreCell() {
+	textureManager->freeTextures( 1, &texture );
+}
 
 
 void CoreCell::Update( int speed ) {
@@ -37,6 +40,8 @@ void CoreCell::Update( int speed ) {
 
 
 void CoreCell::Draw() {
+	glBindTexture( GL_TEXTURE_2D, texture );
+
 	glColor4f( 0.1, 0.1, 0.9, 1.0 );
 	drawHex( 0.3, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 }

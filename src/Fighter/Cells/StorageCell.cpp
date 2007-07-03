@@ -27,13 +27,19 @@
 StorageCell::StorageCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, STORAGE_CELL, pos )  {
 	currentEnergy = 0;
 	maxEnergy = 0;
+
+	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
-StorageCell::~StorageCell() {}
+StorageCell::~StorageCell() {
+	textureManager->freeTextures( 1, &texture );
+}
 
 
 void StorageCell::Draw() {
+	glBindTexture( GL_TEXTURE_2D, texture );
+
 	glColor4f( 0.7, 0.7, 0.7, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 

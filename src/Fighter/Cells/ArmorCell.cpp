@@ -25,13 +25,18 @@
 #include "ArmorCell.h"
 
 ArmorCell::ArmorCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, ARMOR_CELL, pos )  {
+	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
-ArmorCell::~ArmorCell() {}
+ArmorCell::~ArmorCell() {
+	textureManager->freeTextures( 1, &texture );
+}
 
 
 void ArmorCell::Draw() {
+	glBindTexture( GL_TEXTURE_2D, texture );
+
 	glColor4f( 0.9, 0.1, 0.1, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 

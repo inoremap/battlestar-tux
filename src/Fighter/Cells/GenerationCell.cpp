@@ -27,10 +27,14 @@
 GenerationCell::GenerationCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, GENERATION_CELL, pos )  {
 	generationRate = 0;
 	drawRate = 0;
+
+	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
-GenerationCell::~GenerationCell() {}
+GenerationCell::~GenerationCell() {
+	textureManager->freeTextures( 1, &texture );
+}
 
 
 void GenerationCell::Update( int speed ) {
@@ -41,6 +45,8 @@ void GenerationCell::Update( int speed ) {
 
 
 void GenerationCell::Draw() {
+	glBindTexture( GL_TEXTURE_2D, texture );
+
 	glColor4f( 0.1, 0.9, 0.1, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 

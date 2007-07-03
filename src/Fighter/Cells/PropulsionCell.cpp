@@ -66,7 +66,6 @@ void PropulsionCell::Draw() {
 vec3 PropulsionCell::accelerate( const vec3 &accel ) {
 	vec3 actualAccel = accel;
 	float length = actualAccel.length();
-	
 
 	// Ensure the cell can exert this much force.
 	if( length > accelerationRate ) {
@@ -91,5 +90,4 @@ vec3 PropulsionCell::accelerate( const vec3 &accel ) {
 void PropulsionCell::setAccelerationRate( float r ) { accelerationRate = r; }
 float PropulsionCell::getAccelerationRate() { return accelerationRate; }
 void PropulsionCell::setPowerRate( float r ) { powerRate = r; }
-
 

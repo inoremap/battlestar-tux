@@ -40,6 +40,8 @@ class ArmorCell : public HexCell {
 	private:
 				ArmorCell( const ArmorCell & );
 				const ArmorCell & operator= ( const ArmorCell & );
+
+				GLuint texture;
 };
 
 

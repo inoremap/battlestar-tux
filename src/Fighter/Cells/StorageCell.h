@@ -51,14 +51,16 @@ class StorageCell : public HexCell {
 				float getPower( float );
 
 	private:
+				StorageCell( const StorageCell & );
+				const StorageCell & operator= ( const StorageCell & );
+
 				// The current amount of energy in the cell.
 				float currentEnergy;
 
 				// The maximum amount of energy that can be stored in this cell.
 				float maxEnergy;
 
-				StorageCell( const StorageCell & );
-				const StorageCell & operator= ( const StorageCell & );
+				GLuint texture;
 };
 
 
