@@ -33,7 +33,7 @@
 // Move the fighter.
 class PropulsionCell : public HexCell {
 	public:
-				PropulsionCell( Fighter*, TextureManager*, const ivec2 & );
+				PropulsionCell( Fighter*, Game*, const ivec2 & );
 				~PropulsionCell();
 
 				void Update( int );

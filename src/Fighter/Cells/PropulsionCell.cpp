@@ -24,25 +24,26 @@
 
 #include "Fighter.h"
 #include "PropulsionCell.h"
+#include "TextureManager.h"
 
-PropulsionCell::PropulsionCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, PROPULSION_CELL, pos )  {
+PropulsionCell::PropulsionCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, PROPULSION_CELL, pos )  {
 	accelerationRate = 0.5; 
 	powerRate = 10000;
 
-	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 
-	particles = new ParticleGenerator( textureManager, 10, 2 );
+	particles = new ParticleGenerator( game->getTextureManager(), 100, 2 );
 }
 
 
 PropulsionCell::~PropulsionCell() {
-	textureManager->freeTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 	delete particles;
 }
 
 
 void PropulsionCell::Update( int speed ) {
-	particles->Update( speed );
+	particles->Update( speed, game->getGameFrame()%1000, cellPosition[0] + cellPosition[1] );
 
 	HexCell::Update( speed );
 }

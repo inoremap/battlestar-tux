@@ -23,17 +23,18 @@
 
 
 #include "StorageCell.h"
+#include "TextureManager.h"
 
-StorageCell::StorageCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, STORAGE_CELL, pos )  {
+StorageCell::StorageCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, STORAGE_CELL, pos )  {
 	currentEnergy = 0;
 	maxEnergy = 0;
 
-	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
 StorageCell::~StorageCell() {
-	textureManager->freeTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

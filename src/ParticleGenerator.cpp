@@ -23,6 +23,7 @@
 
 
 #include "ParticleGenerator.h"
+#include "Simplex.h"
 
 
 ParticleGenerator::ParticleGenerator( TextureManager* t, int num, float rate ) {
@@ -32,12 +33,13 @@ ParticleGenerator::ParticleGenerator( TextureManager* t, int num, float rate ) {
 	waitFrames = (int) (1 / rate) * 50;
 	framesPassed = 0;
 
-	positionRandomness = 0.1;
-	velocityRandomness = 0.1;
-	sizeRandomness = 0.1;
+	generationRandomness = 0.1;
+	positionRandomness = 0.0001;
+	velocityRandomness = 0.0004;
+	sizeRandomness = 0.0001;
 	alphaRandomness = 0.05;
 
-	maxAge = 250;
+	maxAge = 75;
 	ageRandomness = 25;
 
 	textureManager = t;
@@ -50,7 +52,7 @@ ParticleGenerator::~ParticleGenerator() {
 }
 
 
-void ParticleGenerator::Update( int speed ) {
+void ParticleGenerator::Update( int speed, float param1, float param2 ) {
 	Particle* cur = (Particle*) rootObj;
 	Particle* next = 0;
 
@@ -71,9 +73,23 @@ void ParticleGenerator::Update( int speed ) {
 	// If the proper amount of time has passed,
 	// add a new particle.
 	framesPassed += speed;
-	if( framesPassed >= waitFrames ) {
+	if( framesPassed >= waitFrames && numParticles < maxParticles) {
 		framesPassed = 0;
-		addObject( new Particle(texture) );
+
+		Particle* p = new Particle( texture );
+		vec3 position = vec3(
+			simplexRawNoise(param1, param2) * positionRandomness,
+			simplexRawNoise(param2, param1) * positionRandomness,
+			simplexRawNoise(param1, param2) * 0.000001
+		);
+		vec3 velocity = vec3(
+			simplexRawNoise(param1, param2) * velocityRandomness,
+			simplexRawNoise(param2, param1) * velocityRandomness,
+			simplexRawNoise(param1, param2) * 0.000001
+		);
+		p->setPos( position );
+		p->setVel( velocity );
+		addObject( p );
 	}
 }
 
@@ -83,6 +99,8 @@ void ParticleGenerator::Draw() {
 	Particle* next = 0;
 
 	// Draw each Particle, if there are any.
+	glEnable( GL_ALPHA_TEST );
+	glAlphaFunc( GL_GREATER, 0.5 );
 	while( cur ) {
 		next = (Particle*) cur->getNext();
 
@@ -90,14 +108,13 @@ void ParticleGenerator::Draw() {
 
 		cur = next;
 	}
+	glDisable( GL_ALPHA_TEST );
 }
 
 
 void ParticleGenerator::addObject( Particle* p ) {
-	if( numParticles < maxParticles ) {
-		numParticles++;
-		List::addObject( p );
-	}
+	numParticles++;
+	List::addObject( p );
 }
 
 

@@ -23,17 +23,18 @@
 
 
 #include "GenerationCell.h"
+#include "TextureManager.h"
 
-GenerationCell::GenerationCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, GENERATION_CELL, pos )  {
+GenerationCell::GenerationCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, GENERATION_CELL, pos )  {
 	generationRate = 0;
 	drawRate = 0;
 
-	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
 GenerationCell::~GenerationCell() {
-	textureManager->freeTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

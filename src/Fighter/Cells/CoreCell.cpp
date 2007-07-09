@@ -23,14 +23,15 @@
 
 
 #include "CoreCell.h"
+#include "TextureManager.h"
 
-CoreCell::CoreCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, CORE_CELL, pos )  {
-	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+CoreCell::CoreCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, CORE_CELL, pos )  {
+	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
 CoreCell::~CoreCell() {
-	textureManager->freeTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

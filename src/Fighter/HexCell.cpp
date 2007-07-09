@@ -28,9 +28,9 @@
 #include "HexCell.h"
 #include "HexCellList.h"
 
-HexCell::HexCell( Fighter* f, TextureManager* tex, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
+HexCell::HexCell( Fighter* f, Game* g, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
 	fighter = f;
-	textureManager = tex;
+	game = g;
 
 	cellType = type;
 	cellOffset = p;

@@ -23,14 +23,15 @@
 
 
 #include "ArmorCell.h"
+#include "TextureManager.h"
 
-ArmorCell::ArmorCell( Fighter* f, TextureManager* t, const ivec2 &pos  ) : HexCell( f, t, ARMOR_CELL, pos )  {
-	texture = textureManager->loadTexture( "data/gfx/hex_cell_0001-16.png" );
+ArmorCell::ArmorCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, ARMOR_CELL, pos )  {
+	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 
 
 ArmorCell::~ArmorCell() {
-	textureManager->freeTextures( 1, &texture );
+	game->getTextureManager()->freeTextures( 1, &texture );
 }
 
 

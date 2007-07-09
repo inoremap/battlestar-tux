@@ -28,7 +28,14 @@
 
 /* Simplex functions - values (-1, 1).
  * This algorithm was originally designed by Ken Perlin, but my code has been adapted
- * from the implementation written by Stefan Gustavson (stegu@itn.liu.se) */
+ * from the implementation written by Stefan Gustavson (stegu@itn.liu.se)
+ *
+ * In many cases, you may think you only need a 1D noise function, but in practice 2D
+ * is almost always better.  For instance, if you're using the current frame number
+ * as the parameter for the noise, all objects will end up with the same noise value
+ * at each frame.  By adding a second parameter on the second dimension, you can ensure
+ * that each gets a unique noise value and they don't all look identical.
+ */
 
 
 // The gradients are the midpoints of the vertices of a cube.
@@ -58,7 +65,7 @@ static const int perm[512] = {
 	8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,
 	35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,
 	134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,
-	55,46,245,40,244,102,143,54,	65,25,63,161,1,216,80,73,209,76,132,187,208, 89,
+	55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,
 	18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,
 	250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,
 	189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,
@@ -71,7 +78,7 @@ static const int perm[512] = {
 	8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,
 	35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,
 	134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,
-	55,46,245,40,244,102,143,54,	65,25,63,161,1,216,80,73,209,76,132,187,208, 89,
+	55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,
 	18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,
 	250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,
 	189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,

@@ -42,13 +42,42 @@ class ParticleGenerator : public List {
 				~ParticleGenerator();
 
 				// Update particles.
-				void Update( int );
+				void Update( int, float, float );
 
 				// Draw particles.
 				void Draw();
 
 				void addObject( Particle* );
 				void remObject( Particle* );
+
+				void setMaxParticles( int n ) { maxParticles = n; }
+				int getMaxParticles() { return maxParticles; }
+
+				int getNumParticles() { return numParticles; }
+
+				void setGenerationRate( float r ) { generationRate = r; }
+				float getGenerationRate() { return generationRate; }
+
+				void setGenerationRandomness( float r ) { generationRandomness = r; }
+				float getGenerationRandomness() { return generationRandomness; }
+
+				void setPositionRandomness( float r ) { positionRandomness = r; }
+				float getPositionRandomness() { return positionRandomness; }
+
+				void setVelocityRandomness( float r ) { velocityRandomness = r; }
+				float getVelocityRandomness() { return velocityRandomness; }
+
+				void setSizeRandomness( float r ) { sizeRandomness = r; }
+				float getSizeRandomness() { return sizeRandomness; }
+
+				void setAlphaRandomness( float r ) { alphaRandomness = r; }
+				float getAlphaRandomness() { return alphaRandomness; }
+
+				void setMaxAge( float a ) { maxAge = a; }
+				float getMaxAge() { return maxAge; }
+
+				void setAgeRandomness( float r ) { ageRandomness = r; }
+				float getAgeRandomness() { return ageRandomness; }
 
 	private:
 				ParticleGenerator( const ParticleGenerator & );

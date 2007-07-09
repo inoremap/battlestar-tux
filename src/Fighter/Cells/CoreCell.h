@@ -31,7 +31,7 @@
 // Central cell of the fighter.  All is lost when this cell is destroyed.
 class CoreCell : public HexCell {
 	public:
-				CoreCell( Fighter*, TextureManager*, const ivec2 & );
+				CoreCell( Fighter*, Game*, const ivec2 & );
 				~CoreCell();
 
 				void Update( int );
