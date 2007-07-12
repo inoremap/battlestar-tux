@@ -35,12 +35,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	pos[2] = 3;
 
 	allCells = new HexCellList( game );
-	generationCells = new HexCellList( game );
-	storageCells = new HexCellList( game );
-	captureCells = new HexCellList( game );
-	propulsionCells = new HexCellList( game );
-	shieldCells = new HexCellList( game );
-	weaponCells = new HexCellList( game );
 
 	ivec2 cellPos = ivec2();
 	coreCell = new CoreCell( this, game, cellPos );
@@ -97,7 +91,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	generationCell->setHealth( 200 );
 	generationCell->setMass( 1500 );
 	generationCell->setGenerationRate( 555 );
-	generationCells->addObject( generationCell );
 	allCells->addObject( generationCell );
 
 	cellPos = ivec2( -1, -2 );
@@ -106,7 +99,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	storageCell->setHealth( 300 );
 	storageCell->setMass( 2000 );
 	storageCell->setMaxEnergy( 25000 );
-	storageCells->addObject( storageCell );
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( 1, -2 );
@@ -115,7 +107,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	storageCell->setHealth( 300 );
 	storageCell->setMass( 2000 );
 	storageCell->setMaxEnergy( 25000 );
-	storageCells->addObject( storageCell );
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( -2, -1 );
@@ -125,7 +116,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	propulsionCell->setMass( 3000 );
 	propulsionCell->setAccelerationRate( 50 );
 	propulsionCell->setPowerRate( 250 );
-	propulsionCells->addObject( propulsionCell );
 	allCells->addObject( propulsionCell );
 
 	cellPos = ivec2( 2, -1 );
@@ -135,7 +125,6 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	propulsionCell->setMass( 3000 );
 	propulsionCell->setAccelerationRate( 50 );
 	propulsionCell->setPowerRate( 250 );
-	propulsionCells->addObject( propulsionCell );
 	allCells->addObject( propulsionCell );
 
 	align = a;
@@ -143,22 +132,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 
 
 Fighter::~Fighter() {
-	// Delete all fighter cells.
-	HexCell* cur = (HexCell*) allCells->getRoot();
-	HexCell* next = 0;
-	while( cur ) {
-		next = (HexCell*) cur->getNext();
-		delete cur;
-		cur = next;
-	}
-
 	delete allCells;
-	delete generationCells;
-	delete storageCells;
-	delete captureCells;
-	delete propulsionCells;
-	delete shieldCells;
-	delete weaponCells;
 }
 
 
@@ -177,19 +151,7 @@ void Fighter::Draw() {
 	Object::Draw();
 
 	// Draw all cells.
-	HexCell* cur = (HexCell*) allCells->getRoot();
-	while( cur ) {
-		glPushMatrix();
-		// The matrices have already been transformed for
-		// the position of the fighter - we just need to
-		// translate to the position of this cell in the fighter.
-		vec2 translation = cur->getCellPosition();
-		glTranslatef( translation[0], translation[1], 0 );
-		cur->Draw();
-		glPopMatrix();
-
-		cur = (HexCell*) cur->getNext();
-	}
+	allCells->DrawObjects();
 
 	glPopMatrix();
 }
@@ -208,33 +170,9 @@ float Fighter::getFullHealth() { return coreCell->getFullHealth(); }
 
 
 void Fighter::destroyCell( HexCell* cell ) {
-	switch( cell->getCellType() ) {
-		// The whole ship has been destroyed when this cell goes...
-		case CORE_CELL:
-			break;
-
-		// These components can be destroyed without losing the ship.
-		case GENERATION_CELL:
-			generationCells->remObject( cell );
-			break;
-		case STORAGE_CELL:
-			storageCells->remObject( cell );
-			break;
-		case CAPTURE_CELL:
-			captureCells->remObject( cell );
-			break;
-		case PROPULSION_CELL:
-			propulsionCells->remObject( cell );
-			break;
-		case SHIELD_CELL:
-			shieldCells->remObject( cell );
-			break;
-		case WEAPON_CELL:
-			weaponCells->remObject( cell );
-			break;
+	// The whole ship has been destroyed when this cell goes...
+	if( cell->getCellType() == CORE_CELL ) {
 	}
-
-	allCells->remObject( cell );
 
 	delete cell;
 }
@@ -247,20 +185,21 @@ float Fighter::getPower( float power ) {
 	float available = 0;
 
 	// Try to get the power from the generators.
-	GenerationCell* gen = (GenerationCell*) generationCells->getRoot();
-	while( gen && available < power ) {
-		available += gen->getPower( power - available );
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell && available < power ) {
+		if( cell->getCellType() == GENERATION_CELL )
+			available += ((GenerationCell*) cell)->getPower( power - available );
 
-		gen = (GenerationCell*) gen->getNext();
+		cell = (HexCell*) cell->getNext();
 	}
 
-	// If the generators don't have enough,
-	// the storage cells might.
-	StorageCell* stor = (StorageCell*) storageCells->getRoot();
-	while( stor && available < power ) {
-		available += stor->getPower( power - available );
+	// If the generators don't have enough power, the storage cells might.
+	cell = (HexCell*) allCells->getRoot();
+	while( cell && available < power ) {
+		if( cell->getCellType() == STORAGE_CELL )
+			available += ((StorageCell*) cell)->getPower( power - available );
 
-		stor = (StorageCell*) stor->getNext();
+		cell = (HexCell*) cell->getNext();
 	}
 
 	return available;
@@ -270,21 +209,23 @@ float Fighter::getPower( float power ) {
 void Fighter::returnPower( float power ) {
 	float returned = 0;
 
-	// Try to return the power to the generators.
-	GenerationCell* gen = (GenerationCell*) generationCells->getRoot();
-	while( gen && returned < power ) {
-		returned += gen->returnPower( power - returned );
+	// Try to put the power in the storage cells.
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell && returned < power ) {
+		if( cell->getCellType() == STORAGE_CELL )
+			returned += ((StorageCell*) cell)->putPower( power - returned );
 
-		gen = (GenerationCell*) gen->getNext();
+		cell = (HexCell*) cell->getNext();
 	}
 
-	// If the generators don't have enough space,
-	// the rest will be put in the storage cells.
-	StorageCell* stor = (StorageCell*) storageCells->getRoot();
-	while( stor && returned < power ) {
-		returned += stor->putPower( power - returned );
+	// If the storage cells don't have enough space,
+	// the rest will be returned to the generators.
+	cell = (HexCell*) allCells->getRoot();
+	while( cell && returned < power ) {
+		if( cell->getCellType() == GENERATION_CELL )
+			returned += ((GenerationCell*) cell)->returnPower( power - returned );
 
-		stor = (StorageCell*) stor->getNext();
+		cell = (HexCell*) cell->getNext();
 	}
 }
 
@@ -293,11 +234,12 @@ void Fighter::setPropulsion( const vec3 &p ) {
 	vec3 propulsionDone = vec3();
 
 	// Try to propel the fighter.
-	PropulsionCell* prop = (PropulsionCell*) propulsionCells->getRoot();
-	while( prop && propulsionDone < p ) {
-		propulsionDone += prop->accelerate( p - propulsionDone );
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell && propulsionDone < p ) {
+		if( cell->getCellType() == PROPULSION_CELL )
+			propulsionDone += ((PropulsionCell*) cell)->accelerate( p - propulsionDone );
 
-		prop = (PropulsionCell*) prop->getNext();
+		cell = (HexCell*) cell->getNext();
 	}
 }
 

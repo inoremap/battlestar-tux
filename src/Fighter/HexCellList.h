@@ -36,6 +36,9 @@ class HexCellList : public ObjectList {
 				HexCellList( Game* );
 				~HexCellList();
 
+				// Draw all the hex cells.
+				void DrawObjects();
+
 	private:
 				HexCellList( const HexCellList &list );
 				const HexCellList & operator= ( const HexCellList &list );

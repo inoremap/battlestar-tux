@@ -31,3 +31,21 @@ HexCellList::HexCellList( Game* g ) : ObjectList( g ) {}
 HexCellList::~HexCellList() {
 }
 
+
+void HexCellList::DrawObjects() {
+	HexCell* cur = (HexCell*) rootObj;
+
+	while( cur ) {
+		glPushMatrix();
+		// The matrices have already been transformed for
+		// the position of the fighter - we just need to
+		// translate to the position of this cell in the fighter.
+		vec2 translation = cur->getCellPosition();
+		glTranslatef( translation[0], translation[1], 0 );
+		cur->Draw();
+		glPopMatrix();
+
+		cur = (HexCell*) cur->getNext();
+	}
+}
+

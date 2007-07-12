@@ -33,13 +33,13 @@
 class ObjectList;
 
 enum ObjectType {
-	FIGHTER		=	0X0001,				// Entire aircraft
+	FIGHTER		=	0x0001,				// Entire aircraft
 	CELL		=	0x0002,				// Aircraft component
 	SHIELD		=	0x0004,				// Aircraft shield
 	AMMO		=	0x0008,				// Weapon ammo
 	HEROS_AMMO	=	0x0010 | AMMO,		// Hero's ammo
 	ENEMY_AMMO	=	0x0020 | AMMO,		// Enemies' ammo
-	EFFECTOR	=	0X0040				// Physical effects such as explosions and gravity wells
+	EFFECTOR	=	0x0040				// Physical effects such as explosions and gravity wells
 };
 
 

@@ -28,10 +28,6 @@
 #include "Config.h"
 #include "Object.h"
 #include "ObjectList.h"
-#include "EnemyFighterList.h"
-#include "ExplosionList.h"
-#include "Fighter.h"
-#include "FighterAmmo.h"
 
 ObjectList::ObjectList( Game* g ) {
 	game = g;
@@ -56,12 +52,10 @@ void ObjectList::UpdateObjects() {
 
 void ObjectList::DrawObjects() {
 	Object* cur = (Object*) rootObj;
-	Object* next = 0;
 
 	while( cur ) {
-		next = (Object*) cur->getNext();
 		cur->Draw();
-		cur = next;
+		cur = (Object*) cur->getNext();
 	}
 }
 

@@ -86,13 +86,11 @@ class Fighter : public Object {
 
 
 				CoreCell* coreCell;
+
+				// It's tempting to make different lists for each type of cell.
+				// Unfortunately, objects can only be members of one list at a
+				// time.  There shouldn't be too many cells and too much overhead.
 				HexCellList* allCells;
-				HexCellList* generationCells;
-				HexCellList* storageCells;
-				HexCellList* captureCells;
-				HexCellList* propulsionCells;
-				HexCellList* shieldCells;
-				HexCellList* weaponCells;
 
 				FighterAlignment align;
 

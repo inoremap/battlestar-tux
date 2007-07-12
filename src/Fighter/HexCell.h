@@ -36,11 +36,11 @@ class Fighter;
 enum HexCellType {
 	CORE_CELL,			// Central unit in the fighter
 	ARMOR_CELL,			// Protective armor on the hull
-	GENERATION_CELL,	// Energy generation
-	STORAGE_CELL,		// Energy storage
 	CAPTURE_CELL,		// Energy capture/attraction
+	GENERATION_CELL,	// Energy generation
 	PROPULSION_CELL,	// Propulsion of the fighter
 	SHIELD_CELL,		// Shield generator
+	STORAGE_CELL,		// Energy storage
 	WEAPON_CELL			// Weaponry
 };
 

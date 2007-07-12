@@ -41,7 +41,7 @@ class ObjectList : public List {
 				void UpdateObjects();
 
 				// Draw all the objects.
-				void DrawObjects();
+				virtual void DrawObjects();
 
 				// Determine if any objects collide between the lists.
 				void CheckCollisions( ObjectList* objectList );
