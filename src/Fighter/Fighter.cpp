@@ -169,11 +169,15 @@ float Fighter::getHealth() { return coreCell->getHealth(); }
 float Fighter::getFullHealth() { return coreCell->getFullHealth(); }
 
 
+void Fighter::detachCell( HexCell* cell ) { allCells->remObject( cell ); }
+
+
 void Fighter::destroyCell( HexCell* cell ) {
 	// The whole ship has been destroyed when this cell goes...
 	if( cell->getCellType() == CORE_CELL ) {
 	}
 
+	allCells->remObject( cell );
 	delete cell;
 }
 

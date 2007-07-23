@@ -43,11 +43,27 @@ class ObjectList : public List {
 				// Draw all the objects.
 				virtual void DrawObjects();
 
-				// Determine if any objects collide between the lists.
-				void CheckCollisions( ObjectList* objectList );
+				// Check for collisions between this list and the given list.
+				void CheckCollisions( ObjectList* );
 
-				// Determine if any list objects collide with the given object.
-				void CheckCollisions( Object* object );
+				// Check for collisions with the given object.
+				void CheckCollisions( Object* );
+
+				// Check for collisions between the list and object.
+				void CheckCollisions( ObjectList*, Object* );
+
+				// Check for collisions between the two objects.
+				void CheckCollisions( Object*, Object* );
+
+	protected:
+				Game* game;
+
+	private:
+				ObjectList( const ObjectList & );
+				const ObjectList & operator= ( const ObjectList & );
+
+				// Determine if the two objects collide.
+				bool DetermineCollision( Object*, Object* );
 
 				// Determine what should result from a collision.
 				//
@@ -55,14 +71,7 @@ class ObjectList : public List {
 				// caller knows if an object was destroyed.
 				//
 				// Point (x, y) p specifies the location of the collision.
-				void ResolveCollision( Object* &a, Object* &b, float* p );
-
-	protected:
-				Game* game;
-
-	private:
-				ObjectList( const ObjectList &list );
-				const ObjectList & operator= ( const ObjectList &list );
+				void ResolveCollision( Object* &, Object* &, float* );
 };
 
 

@@ -68,6 +68,21 @@ vec2 HexCell::getCellPosition() { return cellPosition; }
 HexCellType HexCell::getCellType() { return cellType; }
 
 
+vec3 HexCell::getPos() {
+	vec3 fighterPos = fighter->getPos();
+
+	return vec3(
+		fighterPos[0] + cellPosition[0],
+		fighterPos[1] + cellPosition[1],
+		fighterPos[2]
+	);
+}
+
+vec3 HexCell::getVel() { return fighter->getVel(); }
+vec3 HexCell::getRot() { return fighter->getRot(); }
+vec3 HexCell::getTorque() { return fighter->getTorque(); }
+
+
 void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {
 	// We'll add half to the top, and half to the bottom.
 	height /= 2;

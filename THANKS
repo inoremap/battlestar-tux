@@ -13,3 +13,4 @@ Paul Bourke's Geometry  -----------------------------------  http://astronomy.sw
                                                              http://local.wasp.uwa.edu.au/~pbourke/
 Stefan Gustavson's Explanation of Simplex Noise -----------  http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
 Hugo Elias' Breakdown of Multi-Octave Noise ---------------  http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
+Simple Bounding-Sphere Collision Detection ----------------  http://www.gamedev.net/reference/programming/features/boundingsphere/

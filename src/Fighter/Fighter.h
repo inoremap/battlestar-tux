@@ -64,6 +64,11 @@ class Fighter : public Object {
 				float getHealth();
 				float getFullHealth();
 
+				// One of the ship's components is no longer a part of the ship.
+				// Usually this happens when a cell becomes disconnected and
+				// floats away.  The cell itself remains intact.
+				void detachCell( HexCell* );
+
 				// One of the ship's components has been destroyed.
 				void destroyCell( HexCell* );
 

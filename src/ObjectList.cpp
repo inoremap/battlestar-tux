@@ -74,6 +74,89 @@ void ObjectList::CheckCollisions( ObjectList* objectList ) {
 
 
 void ObjectList::CheckCollisions( Object* object ) {
+	Object* cur = (Object*) getRoot();
+	Object* next = 0;
+
+	while( cur ) {
+		next = (Object*) cur->getNext();
+
+		CheckCollisions( cur, object );
+		cur = next;
+	}
+}
+
+
+void ObjectList::CheckCollisions( ObjectList* objectList, Object* object ) {
+	Object* cur = (Object*) objectList->getRoot();
+	Object* next = 0;
+
+	while( cur ) {
+		next = (Object*) cur->getNext();
+
+		CheckCollisions( cur, object );
+		cur = next;
+	}
+}
+
+
+void ObjectList::CheckCollisions( Object* object1, Object* object2 ) {
+
+	if( DetermineCollision(object1, object2) ) {
+		// An object can consist of multiple sub-objects.  If that is the case,
+		// we need to check each of them - not just the "container" object.
+		if( object1->hasComponents() )
+			CheckCollisions( object1->getComponents(), object2 );
+		// If object1 has components, object2 will be broken down into its
+		// components in subsequent calls.
+		else if( object2->hasComponents() )
+			CheckCollisions( object2->getComponents(), object1 );
+
+		std::cout << "Collision..." << std::endl;
+	}
+}
+
+
+bool ObjectList::DetermineCollision( Object* object1, Object* object2 ) {
+	// We can quickly determine if the bounding spheres of the objects intersect.
+	// Adapted from code written by Oleg Dopertchouk:
+	// http://www.gamedev.net/reference/programming/features/boundingsphere/
+
+	// Relative velocity
+	vec3 dv = object2->getVel() - object1->getVel();
+
+	// Relative position
+	vec3 dp = object2->getPos() - object1->getPos();
+
+	// Minimal distance squared
+	float r = object1->getSize() + object2->getSize();
+
+	// dP^2-r^2
+	float pp = dp[0] * dp[0] + dp[1] * dp[1] + dp[2] * dp[2] - r * r;
+
+	// (1) Check if the spheres are already intersecting
+	if ( pp < 0 )
+		return true;
+
+	// dP*dV
+	float pv = dp[0] * dv[0] + dp[1] * dv[1] + dp[2] * dv[2];
+
+	// (2) Check if the spheres are moving away from each other
+	if ( pv >= 0 )
+		return false;
+
+	// dV^2
+	float vv = dv[0] * dv[0] + dv[1] * dv[1] + dv[2] * dv[2];
+
+	// (3) Check if the spheres can intersect within 1 frame
+	if ( (pv + vv) <= 0 && (vv + 2 * pv + pp) >= 0 )
+		return false;
+
+	// tmin = -dP*dV/dV*2 
+	// The time when the distance between the spheres is minimal
+	float tmin = -pv / vv;
+
+	// Discriminant/(4*dV^2) = -(dp^2-r^2+dP*dV*tmin)
+	return ( pp + pv * tmin > 0 );
 }
 
 

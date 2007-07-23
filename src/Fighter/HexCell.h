@@ -61,6 +61,13 @@ class HexCell : public Object {
 				vec2 getCellPosition();
 				HexCellType getCellType();
 
+				// The motion of the cell is dictated by the fighter,
+				// so we need to override the default functions.
+				vec3 getPos();
+				vec3 getVel();
+				vec3 getRot();
+				vec3 getTorque();
+
 	protected:
 				// Draw the hexagon.
 				void drawHex( float, float, float );
