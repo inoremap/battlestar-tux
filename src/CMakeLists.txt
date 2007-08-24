@@ -15,7 +15,10 @@
 #
 ## YOU DO NOT NEED TO MODIFY THIS FILE ##
 
-SUBDIRS(lib/ftgl)
+SUBDIRS(
+	lib/ftgl
+	lib/tinyxml
+)
 
 # OpenGL includes OpenGL and GLU
 FIND_PACKAGE(OpenGL REQUIRED)
@@ -41,6 +44,7 @@ INCLUDE_DIRECTORIES(
 
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/ftgl
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/tinyxml
 
 	# Libraries not included with Battlestar TUX
 	${FREETYPE_INCLUDE_DIR}
@@ -52,12 +56,14 @@ INCLUDE_DIRECTORIES(
 LINK_DIRECTORIES(
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/ftgl
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/tinyxml
 )
 
 SET(	BATTLESTAR_TUX_LIBRARIES
 
 	# Libraries included with Battlestar TUX
 	FTGL
+	TINYXML
 
 	# Libraries not included with Battlestar TUX
 	${FREETYPE_LIBRARY}
