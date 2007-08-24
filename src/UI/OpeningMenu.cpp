@@ -67,7 +67,7 @@ void OpeningMenu::EventGenerated( ButtonClickEvent* e ) {
 	std::string text = e->getButtonText();
 
 	if( text == " New Campaign " )
-		mainMenu->ChangeMenu( NEW_CAMPAIGN_MENU );
+		mainMenu->ChangeMenu( SYSTEM_MENU );
 
 	else if( text == " Load Campaign " )
 		mainMenu->ChangeMenu( LOAD_CAMPAIGN_MENU );

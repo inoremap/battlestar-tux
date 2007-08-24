@@ -23,9 +23,11 @@
 
 
 #include <math.h>
+#include <SDL_opengl.h>
 
 #include "Planet.h"
 #include "Simplex.h"
+#include "SpaceObject.h"
 #include "Vector.h"
 
 
@@ -79,8 +81,26 @@ Planet::~Planet() {
 }
 
 
+void Planet::display( std::ostream & out ) const {
+	out << "Planet --";
+	out << "\tMass: " << mass;
+	out << "\tRadius: " << radius;
+	out << "\tRotation Velocity: " << rotationVelocity;
+	out << "\tAxial tilt: " << axialTilt;
+	out << "\tOrbital Radius: " << orbitalRadius;
+	out << "\tOrbital Eccentricity: " << orbitalEccentricity;
+	out << "\tOrbital Inclination: " << orbitalInclination;
+	out << "\tOrbital Offset: " << orbitalOffset;
+	out << "\tRotation Position: " << rotationPosition;
+	out << "\tOrbital Position: " << orbitalPosition;
+
+	out << "\tSolar System: " << solarSystem->getPos();
+	out << "\t# of satellites: " << satellites->getNum();
+}
+
+
 void Planet::Update() {
-	rotationPosition += rotationVelocity * UNIVERSE_SPEED;
+	rotationPosition += rotationVelocity * SpaceObject::UNIVERSE_SPEED;
 	if( rotationPosition >= 360 )
 		rotationPosition -= 360;
 
@@ -88,9 +108,9 @@ void Planet::Update() {
 		( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
 		( 1 + orbitalEccentricity * cosf(orbitalPosition * M_PI/180) );
 	orbitalPosition += sqrtf(
-			GRAVITATIONAL_CONSTANT * ( mass + solarSystem->getCentralMass() ) *
-			( 2 / orbitalDistance - 1 / orbitalRadius )
-		) * UNIVERSE_SPEED;
+			SpaceObject::GRAVITATIONAL_CONSTANT * ( mass + solarSystem->getCentralMass() ) *
+			( 2 / (orbitalDistance * SpaceObject::DISTANCE_SCALE) - 1 / (orbitalRadius * SpaceObject::DISTANCE_SCALE) )
+		) * SpaceObject::UNIVERSE_SPEED;
 	if( orbitalPosition >= 360 )
 		orbitalPosition -= 360;
 
@@ -110,9 +130,10 @@ void Planet::Draw() {
 	//
 	// http://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion
 	glTranslatef(
+		0.0,
 		( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
 		( 1 + orbitalEccentricity * cosf(orbitalPosition * M_PI/180) ),
-		0.0, 1.0, 0.0
+		0.0
 	);
 
 	// axial tilt
@@ -127,6 +148,9 @@ void Planet::Draw() {
 	float theta1 = 0.0;
 	float theta2 = 0.0;
 	float theta3 = 0.0;
+
+	// The subdivision of the sphere depends on its size.
+	int precision = (int) radius * 3;
 
 	// Center of polygon.
 	float cx = 0.0;
@@ -143,7 +167,8 @@ void Planet::Draw() {
 	float ny = 0.0;
 	float nz = 0.0;
 
-	glBindTexture( GL_TEXTURE_2D, NULL );
+	glBindTexture( GL_TEXTURE_2D, 0 );
+	glColor4f( 1.0, 1.0, 1.0, 1.0 );
 
 	for( int j = 0; j < precision/2; ++j ) {
 		theta1 = j * TWOPI / precision - PITWO; 

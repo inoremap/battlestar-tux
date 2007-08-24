@@ -1,6 +1,6 @@
 /* SystemMenu.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,10 +25,10 @@
 #include <SDL_opengl.h>
 
 #include "HorizontalPane.h"
-#include "PlanetButton.h"
 #include "SystemMenu.h"
 
 SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
+	solarSystem = new SolarSystem( vec3(1, 0, 0) );
 	mainMenu = menu;
 	game = g;
 }
@@ -39,18 +39,6 @@ SystemMenu::~SystemMenu() {}
 
 void SystemMenu::CreateWidgets() {
 	// Create widgets for System Menu.
-	PlanetButton* planet1 = new PlanetButton( game, this, "System I", HORIZ_CENTER, VERTI_CENTER, 40, 35, 2.0, 30.0, 10.0 );
-	PlanetButton* planet2 = new PlanetButton( game, this, "System II", HORIZ_CENTER, VERTI_CENTER, 60, 35, 1.3, 270.0, 30.0 );
-	PlanetButton* planet3 = new PlanetButton( game, this, "System III", HORIZ_CENTER, VERTI_CENTER, 140, 35, 1.0, 80.0, -80.0 );
-	PlanetButton* planet4 = new PlanetButton( game, this, "System IV", HORIZ_CENTER, VERTI_CENTER, 80, 35, 0.5, 120.0, 70.0 );
-
-	HorizontalPane* system = new HorizontalPane( this, true, HORIZ_CENTER, VERTI_BOTTOM );
-	system->setPos( CONTAINER_BC );
-	system->AddWidget( planet1 );
-	system->AddWidget( planet2 );
-	system->AddWidget( planet3 );
-	system->AddWidget( planet4 );
-	addObject( system );
 }
 
 
@@ -77,4 +65,7 @@ void SystemMenu::Draw() {
 	// Return to standard OpenGL settings.
 	glDisable( GL_LIGHT0 );
 	glDisable( GL_LIGHTING );
+
+	solarSystem->Update();
+	solarSystem->Draw();
 }

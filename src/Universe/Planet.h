@@ -25,6 +25,8 @@
 #ifndef PLANET_H_
 #define PLANET_H_
 
+#include <iostream>
+
 #include "SolarSystem.h"
 #include "SpaceGroup.h"
 #include "SpaceObject.h"
@@ -39,9 +41,13 @@ class Planet : public SpaceObject {
 				Planet( SolarSystem*, float );
 				~Planet();
 
+				void display( std::ostream & ) const;
+
 				void Update();
 
 				void Draw();
+
+				float getRadius() { return radius; }
 
 	private:
 				Planet( const Planet & );
@@ -69,6 +75,19 @@ class Planet : public SpaceObject {
 				// Any objects which orbit this planet.
 				SpaceGroup* satellites;
 };
+
+
+
+inline std::ostream & operator<<( std::ostream & out, Planet p ) {
+	p.display( out );
+	return out;
+}
+
+
+inline std::ostream & operator<<( std::ostream & out, Planet* p ) {
+	p->display( out );
+	return out;
+}
 
 
 #endif /*PLANET_H_*/

@@ -37,6 +37,7 @@ INCLUDE_DIRECTORIES(
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/Structures
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI/Primitives
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/Universe
 
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/ftgl
@@ -119,6 +120,10 @@ SET(	BATTLESTAR_TUX_SOURCES
 	UI/Primitives/Widget.cpp
 	UI/SettingsMenu.cpp
 	UI/SystemMenu.cpp
+	Universe/Planet.cpp
+	Universe/SolarSystem.cpp
+	Universe/SpaceGroup.cpp
+	Universe/SpaceObject.cpp
 )
 
 ADD_EXECUTABLE(	battlestarTUX

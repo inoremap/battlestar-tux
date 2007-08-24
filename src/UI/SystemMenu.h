@@ -1,6 +1,6 @@
 /* SystemMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,6 +30,7 @@
 #include "Game.h"
 #include "GUI.h"
 #include "MainMenu.h"
+#include "SolarSystem.h"
 
 /* Display a star system and its properties. */
 class SystemMenu : public GUI, ButtonClickListener {
@@ -48,6 +49,8 @@ class SystemMenu : public GUI, ButtonClickListener {
 	private:
 				SystemMenu( const SystemMenu &menu );
 				const SystemMenu & operator= ( const SystemMenu &menu );
+
+				SolarSystem* solarSystem;
 
 				// Main menu selects what menu is currently visible.
 				MainMenu* mainMenu;

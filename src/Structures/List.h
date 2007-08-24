@@ -1,6 +1,6 @@
 /* List.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -44,6 +44,9 @@ class List {
 				// Return the list of objects.
 				ListItem* getRoot();
 
+				// Return the total number of items.
+				int getNum();
+
 				// Print list of objects, starting at root.
 				void printList();
 				void printList( std::string desc );
@@ -57,6 +60,9 @@ class List {
 
 				// Add items at beginning or end of list?
 				bool addAtEnd;
+
+				// Current number of objects.
+				int numItems;
 
 	private:
 				List( const List &list );

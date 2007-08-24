@@ -23,6 +23,7 @@
 
 
 #include "SpaceGroup.h"
+#include "SpaceObject.h"
 
 
 SpaceGroup::SpaceGroup() {

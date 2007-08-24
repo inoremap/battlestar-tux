@@ -1,6 +1,6 @@
 /* List.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,12 +29,14 @@
 List::List() {
 	rootObj = 0;
 	addAtEnd = false;
+	numItems = 0;
 }
 
 
 List::List( bool atEnd ) {
 	rootObj = 0;
 	addAtEnd = atEnd;
+	numItems = 0;
 }
 
 
@@ -67,6 +69,8 @@ void List::addObject( ListItem* obj ) {
 			rootObj = obj;
 		}
 	}
+
+	numItems++;
 }
 
 
@@ -81,10 +85,14 @@ void List::remObject( ListItem* obj ) {
 		obj->getNext()->setPrev( obj->getPrev() );
 
 	delete obj;
+
+	numItems--;
 }
 
 
 ListItem* List::getRoot() { return rootObj; }
+
+int List::getNum() { return numItems; }
 
 
 void List::printList() { printList( rootObj, "List" ); }

@@ -45,6 +45,8 @@ class SolarSystem {
 				// Return the magnitude of the center of mass of the solar
 				// system (Kg).  If there are multiple suns, that center of mass
 				// will be somewhere between the suns.
+				//
+				// When the solar system is drawn, this point will be at (0, 0).
 				float getCentralMass();
 
 				vec3 getPos() { return position; }

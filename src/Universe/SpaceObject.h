@@ -25,14 +25,7 @@
 #ifndef SPACEOBJECT_H_
 #define SPACEOBJECT_H_
 
-
-// How much do we want to scale the speed of the universe?
-// Watching a solar system in real-time is very boring.
-// Lets make a year seem like a minute.
-const float UNIVERSE_SPEED = 525600;
-
-// Gravitational Constant - all bodies with mass attract each other.
-const float GRAVITIONAL_CONSTANT = 0.0000000000667428; 
+#include "ListItem.h"
 
 
 /* A SpaceObject is any object, or group of objects, in space.
@@ -57,12 +50,23 @@ class SpaceObject : public ListItem {
 				// near other objects in an interface.
 				virtual float getRadius() { return 0; }
 
-	private:
-				SpaceObject( const SpaceObject & );
-				const SpaceObject & operator= ( const SpaceObject & );
+	protected:
+				// How much do we want to scale the speed of the universe?
+				// Watching a solar system in real-time is very boring.
+				static const float UNIVERSE_SPEED = 50.0;
+
+				// Gravitational Constant - all bodies with mass attract each other.
+				static const float GRAVITATIONAL_CONSTANT = 0.0000000000667428; 
+
+				// We can't actually draw the universe and solar systems to scale.
+				static const float DISTANCE_SCALE = 1000000000000000000000000000.0;
 
 				// All objects need to have mass.
 				float mass;
+
+	private:
+				SpaceObject( const SpaceObject & );
+				const SpaceObject & operator= ( const SpaceObject & );
 };
 
 

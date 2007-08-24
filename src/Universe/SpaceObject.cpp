@@ -25,6 +25,7 @@
 #include "SpaceObject.h"
 
 SpaceObject::SpaceObject() {
+	mass = 100000000000000000000000.0;
 }
 
 

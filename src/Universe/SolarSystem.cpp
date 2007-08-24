@@ -23,6 +23,7 @@
 
 
 #include <math.h>
+#include <SDL_opengl.h>
 
 #include "Planet.h"
 #include "SolarSystem.h"
@@ -37,12 +38,21 @@ SolarSystem::SolarSystem( vec3 p ) {
 	satellites = new SpaceGroup();
 
 	// Determine how many planets will be in the system.
-	int numPlanets = (int) ceilf( 15 * fabsf( simplexRawNoise(position[0], position[1], position[2]) ) );
+	float rawNum = fabsf( simplexRawNoise(position[0], position[1], position[2]) );
+	if( rawNum < 0.01 )
+		rawNum = 0;
+	else if( rawNum <= 0.1 )
+		rawNum *= 100;
+	else
+		rawNum *= 10;
+	int numPlanets = (int) ceilf( rawNum );
 
 	for( int n=1; n <= numPlanets; n++ ) {
-		float planetOrbit = fabsf( n * simplexRawNoise(position[0], position[1], position[2], (float) n) );
+		float planetOrbit = fabsf( n * 10 * simplexRawNoise(position[0], position[1], position[2], (float) n) );
 		Planet* planet = new Planet( this, planetOrbit );
 		satellites->addObject( planet );
+
+		std::cout << "New Planet Created:" << std::endl << planet << std::endl << std::endl;
 	}
 }
 
@@ -60,8 +70,8 @@ SolarSystem::~SolarSystem() {
 	delete suns;
 
 
-	SpaceObject* cur = (SpaceObject*) satellites->getRoot();
-	SpaceObject* next = 0;
+	cur = (SpaceObject*) satellites->getRoot();
+	next = 0;
 
 	while( cur ) {
 		next = (SpaceObject*) cur->getNext();
@@ -80,13 +90,43 @@ void SolarSystem::Update() {
 
 
 void SolarSystem::Draw() {
-	suns->DrawObjects();
-	satellites->DrawObjects();
+	// Set star system OpenGL lighting requirements.
+	glEnable( GL_LIGHTING );
+	glEnable( GL_LIGHT0 );
+	float lightPos[] = { -1000, 0.0, 100.0, 0.0 };
+	float lightAmb[] = { 0.0, 0.0, 0.0, 1.0 };
+	float lightDif[] = { 1.0, 1.0, 1.0, 1.0 };
+	glLightfv( GL_LIGHT0, GL_POSITION, lightPos );
+
+	// Use orthographic projection from above sun's ecliptic plane.
+	glMatrixMode( GL_PROJECTION );
+	glPushMatrix();
+		glLoadIdentity();
+		glOrtho( -10, 10, -10, 10, -100, 100 );
+
+		glMatrixMode( GL_MODELVIEW );
+		glTranslatef( 0.0, 0.0, 20 );
+		glPushMatrix();
+
+		// Draw solar system.
+		suns->DrawObjects();
+		satellites->DrawObjects();
+
+		// Return projection and modeliew matrices to their in-game states.
+		glPopMatrix();
+
+	glMatrixMode( GL_PROJECTION );
+	glPopMatrix();
+	glMatrixMode( GL_MODELVIEW );
+
+	// Return to standard OpenGL lighting settings.
+	glDisable( GL_LIGHT0 );
+	glDisable( GL_LIGHTING );
 }
 
 
 float SolarSystem::getCentralMass() {
 	// Mass of Sol is 1.9891 * 10^30
-	return 1989100000000000000000000000000;
+	return 1989100000000000000000000000000.0;
 }
 
