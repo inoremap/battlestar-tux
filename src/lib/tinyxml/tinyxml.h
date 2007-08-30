@@ -26,6 +26,12 @@ distribution.
 #ifndef TINYXML_INCLUDED
 #define TINYXML_INCLUDED
 
+
+/* Edit by Eliot Eshelman for Battlestar TUX:
+ * We want to use STL for everything. */
+#define TIXML_USE_STL
+
+
 #ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable : 4530 )

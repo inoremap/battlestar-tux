@@ -29,6 +29,7 @@
 
 SystemMenu::SystemMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
 	solarSystem = new SolarSystem( vec3(1, 0, 0) );
+	std::cout << solarSystem;
 	mainMenu = menu;
 	game = g;
 }

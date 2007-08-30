@@ -81,21 +81,23 @@ Planet::~Planet() {
 }
 
 
-void Planet::display( std::ostream & out ) const {
-	out << "Planet --";
-	out << "\tMass: " << mass;
-	out << "\tRadius: " << radius;
-	out << "\tRotation Velocity: " << rotationVelocity;
-	out << "\tAxial tilt: " << axialTilt;
-	out << "\tOrbital Radius: " << orbitalRadius;
-	out << "\tOrbital Eccentricity: " << orbitalEccentricity;
-	out << "\tOrbital Inclination: " << orbitalInclination;
-	out << "\tOrbital Offset: " << orbitalOffset;
-	out << "\tRotation Position: " << rotationPosition;
-	out << "\tOrbital Position: " << orbitalPosition;
+void Planet::toXML( TiXmlElement* node ) {
+	node->SetAttribute( "type", "planet" );
+	node->SetDoubleAttribute( "mass", mass );
+	node->SetDoubleAttribute( "radius", radius );
+	node->SetDoubleAttribute( "rotational_velocity", rotationVelocity );
+	node->SetDoubleAttribute( "axial_tilt", axialTilt );
+	node->SetDoubleAttribute( "orbital_radius", orbitalRadius );
+	node->SetDoubleAttribute( "orbital_eccentricity", orbitalEccentricity );
+	node->SetDoubleAttribute( "orbital_inclination", orbitalInclination );
+	node->SetDoubleAttribute( "orbital_offset", orbitalOffset );
+	node->SetDoubleAttribute( "rotational_position", rotationPosition );
+	node->SetDoubleAttribute( "orbital_position", orbitalPosition );
 
-	out << "\tSolar System: " << solarSystem->getPos();
-	out << "\t# of satellites: " << satellites->getNum();
+	TiXmlElement* sats = new TiXmlElement( "Satellites" );
+	satellites->toXML( sats );
+
+	node->LinkEndChild( sats );
 }
 
 

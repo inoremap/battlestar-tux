@@ -26,6 +26,7 @@
 #define SPACEOBJECT_H_
 
 #include "ListItem.h"
+#include "tinyxml.h"
 
 
 /* A SpaceObject is any object, or group of objects, in space.
@@ -39,6 +40,9 @@ class SpaceObject : public ListItem {
 				SpaceObject();
 				virtual ~SpaceObject();
 
+				// Add the object configuration to the given XML node.
+				virtual void toXML( TiXmlElement* );
+
 				// Unlike objects that appear during battles, it is not as
 				// critical that these objects never skip.  For that reason,
 				// they don't need to be as robust about updating their status.
@@ -49,6 +53,10 @@ class SpaceObject : public ListItem {
 				// We need to know the size of this object when positioning it
 				// near other objects in an interface.
 				virtual float getRadius() { return 0; }
+
+				// We need to know the mass of this object when determining
+				// velocities and orbits.
+				virtual float getMass() { return mass; }
 
 	protected:
 				// How much do we want to scale the speed of the universe?
@@ -68,6 +76,22 @@ class SpaceObject : public ListItem {
 				SpaceObject( const SpaceObject & );
 				const SpaceObject & operator= ( const SpaceObject & );
 };
+
+
+
+inline std::ostream & operator<<( std::ostream & out, SpaceObject o ) {
+	out << &o;
+	return out;
+}
+
+
+inline std::ostream & operator<<( std::ostream & out, SpaceObject* o ) {
+	TiXmlElement node( "Space_Object" );
+	o->toXML( &node );
+
+	out << node;
+	return out;
+}
 
 
 #endif /*SPACEOBJECT_H_*/

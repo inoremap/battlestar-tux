@@ -26,6 +26,8 @@
 #define SOLARSYSTEM_H_
 
 #include "SpaceGroup.h"
+#include "SpaceObject.h"
+#include "tinyxml.h"
 #include "Vector.h"
 
 
@@ -33,10 +35,13 @@
  *
  * The SolarSystem's particulars are procedurally generated at creation.
  */
-class SolarSystem {
+class SolarSystem : public SpaceObject {
 	public:
 				SolarSystem( vec3 );
 				~SolarSystem();
+
+				// Add the solar system configuration to the given XML node.
+				void toXML( TiXmlElement* );
 
 				void Update();
 
@@ -48,6 +53,7 @@ class SolarSystem {
 				//
 				// When the solar system is drawn, this point will be at (0, 0).
 				float getCentralMass();
+				inline float getMass() { return getCentralMass(); }
 
 				vec3 getPos() { return position; }
 

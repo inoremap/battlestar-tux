@@ -30,6 +30,7 @@
 #include "SolarSystem.h"
 #include "SpaceGroup.h"
 #include "SpaceObject.h"
+#include "tinyxml.h"
 
 
 /* Planets are usually part of a solar system, but they may wander.
@@ -41,7 +42,8 @@ class Planet : public SpaceObject {
 				Planet( SolarSystem*, float );
 				~Planet();
 
-				void display( std::ostream & ) const;
+				// Add the planet configuration to the given XML node.
+				void toXML( TiXmlElement* );
 
 				void Update();
 
@@ -75,19 +77,6 @@ class Planet : public SpaceObject {
 				// Any objects which orbit this planet.
 				SpaceGroup* satellites;
 };
-
-
-
-inline std::ostream & operator<<( std::ostream & out, Planet p ) {
-	p.display( out );
-	return out;
-}
-
-
-inline std::ostream & operator<<( std::ostream & out, Planet* p ) {
-	p->display( out );
-	return out;
-}
 
 
 #endif /*PLANET_H_*/

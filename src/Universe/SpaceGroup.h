@@ -26,6 +26,7 @@
 #define SPACEGROUP_H_
 
 #include "List.h"
+#include "tinyxml.h"
 
 
 /* A SpaceGroup is a list of SpaceObjects.
@@ -37,6 +38,9 @@ class SpaceGroup : public List {
 				SpaceGroup();
 				virtual ~SpaceGroup();
 
+				// Add the group configuration to the given XML node.
+				void toXML( TiXmlElement* );
+
 				virtual void UpdateObjects();
 
 				virtual void DrawObjects();
@@ -45,6 +49,22 @@ class SpaceGroup : public List {
 				SpaceGroup( const SpaceGroup & );
 				const SpaceGroup & operator= ( const SpaceGroup & );
 };
+
+
+
+inline std::ostream & operator<<( std::ostream & out, SpaceGroup g ) {
+	out << &g;
+	return out;
+}
+
+
+inline std::ostream & operator<<( std::ostream & out, SpaceGroup* g ) {
+	TiXmlElement node( "Space_Group" );
+	g->toXML( &node );
+
+	out << node;
+	return out;
+}
 
 
 #endif /*SPACEGROUP_H_*/

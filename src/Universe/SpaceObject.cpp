@@ -32,3 +32,8 @@ SpaceObject::SpaceObject() {
 SpaceObject::~SpaceObject() {
 }
 
+
+void SpaceObject::toXML( TiXmlElement* node ) {
+	node->SetAttribute( "type", "undefined" );
+}
+

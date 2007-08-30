@@ -51,8 +51,6 @@ SolarSystem::SolarSystem( vec3 p ) {
 		float planetOrbit = fabsf( n * 10 * simplexRawNoise(position[0], position[1], position[2], (float) n) );
 		Planet* planet = new Planet( this, planetOrbit );
 		satellites->addObject( planet );
-
-		std::cout << "New Planet Created:" << std::endl << planet << std::endl << std::endl;
 	}
 }
 
@@ -80,6 +78,19 @@ SolarSystem::~SolarSystem() {
 	}
 
 	delete satellites;
+}
+
+
+void SolarSystem::toXML( TiXmlElement* node ) {
+	node->SetAttribute( "type", "solar_system" );
+
+	TiXmlElement* sunNode = new TiXmlElement( "Suns" );
+	suns->toXML( sunNode );
+	node->LinkEndChild( sunNode );
+
+	TiXmlElement* satNode = new TiXmlElement( "Satellites" );
+	satellites->toXML( satNode );
+	node->LinkEndChild( satNode );
 }
 
 

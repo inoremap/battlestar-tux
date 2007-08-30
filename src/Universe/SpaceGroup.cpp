@@ -24,6 +24,7 @@
 
 #include "SpaceGroup.h"
 #include "SpaceObject.h"
+#include "tinyxml.h"
 
 
 SpaceGroup::SpaceGroup() {
@@ -31,6 +32,19 @@ SpaceGroup::SpaceGroup() {
 
 
 SpaceGroup::~SpaceGroup() {
+}
+
+
+void SpaceGroup::toXML( TiXmlElement* node ) {
+	SpaceObject* cur = (SpaceObject*) rootObj;
+
+	while( cur ) {
+		TiXmlElement* objectNode = new TiXmlElement( "Space_Object" );
+		cur->toXML( objectNode );
+		node->LinkEndChild( objectNode );
+
+		cur = (SpaceObject*) cur->getNext();
+	}
 }
 
 
