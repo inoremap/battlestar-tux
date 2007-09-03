@@ -22,6 +22,8 @@
  */
 
 
+#include <SDL_opengl.h>
+
 #include "SpaceGroup.h"
 #include "SpaceObject.h"
 #include "tinyxml.h"
@@ -65,8 +67,12 @@ void SpaceGroup::DrawObjects() {
 	SpaceObject* cur = (SpaceObject*) rootObj;
 
 	while( cur ) {
+		glPushMatrix();
+
 		cur->Draw();
 		cur = (SpaceObject*) cur->getNext();
+
+		glPopMatrix();
 	}
 }
 

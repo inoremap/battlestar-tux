@@ -48,7 +48,7 @@ SolarSystem::SolarSystem( vec3 p ) {
 	int numPlanets = (int) ceilf( rawNum );
 
 	for( int n=1; n <= numPlanets; n++ ) {
-		float planetOrbit = fabsf( n * 10 * simplexRawNoise(position[0], position[1], position[2], (float) n) );
+		float planetOrbit = fabsf( n * 2 * simplexRawNoise(position[0], position[1], position[2], (float) n) );
 		Planet* planet = new Planet( this, planetOrbit );
 		satellites->addObject( planet );
 	}
@@ -104,7 +104,7 @@ void SolarSystem::Draw() {
 	// Set star system OpenGL lighting requirements.
 	glEnable( GL_LIGHTING );
 	glEnable( GL_LIGHT0 );
-	float lightPos[] = { -1000, 0.0, 100.0, 0.0 };
+	float lightPos[] = { 0.0, 0.0, 0.0, 0.0 };
 	float lightAmb[] = { 0.0, 0.0, 0.0, 1.0 };
 	float lightDif[] = { 1.0, 1.0, 1.0, 1.0 };
 	glLightfv( GL_LIGHT0, GL_POSITION, lightPos );
@@ -116,19 +116,18 @@ void SolarSystem::Draw() {
 		glOrtho( -10, 10, -10, 10, -100, 100 );
 
 		glMatrixMode( GL_MODELVIEW );
-		glTranslatef( 0.0, 0.0, 20 );
 		glPushMatrix();
+			glLoadIdentity();
 
-		// Draw solar system.
-		suns->DrawObjects();
-		satellites->DrawObjects();
+			// Draw solar system.
+			suns->DrawObjects();
+			satellites->DrawObjects();
 
-		// Return projection and modeliew matrices to their in-game states.
-		glPopMatrix();
-
+	// Return projection and modeliew matrices to their previous states.
 	glMatrixMode( GL_PROJECTION );
 	glPopMatrix();
 	glMatrixMode( GL_MODELVIEW );
+	glPopMatrix();
 
 	// Return to standard OpenGL lighting settings.
 	glDisable( GL_LIGHT0 );

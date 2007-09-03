@@ -38,7 +38,9 @@ Planet::Planet( SolarSystem* system, float oRadius ) {
 	vec3 systemPos = solarSystem->getPos(); 
 
 	// Radius is somewhat correlated with orbital radius. Always positive.
-	radius = fabsf( orbitalRadius * 0.1 * simplexRawNoise(systemPos[0], systemPos[1], systemPos[2], orbitalRadius) );
+	radius = fabsf( orbitalRadius * simplexRawNoise(systemPos[0], systemPos[1], systemPos[2], orbitalRadius) );
+	if( radius < 0.1 )
+		radius = 0.1;
 
 	// Rotation velocity seems to be uncorrelated with orbital radius.
 	rotationVelocity =
@@ -121,6 +123,8 @@ void Planet::Update() {
 
 
 void Planet::Draw() {
+	glPushMatrix();
+
 	glRotatef( orbitalOffset, 0.0, 0.0, 1.0 );
 	glRotatef( orbitalInclination, 1.0, 0.0, 0.0 );
 
@@ -152,7 +156,9 @@ void Planet::Draw() {
 	float theta3 = 0.0;
 
 	// The subdivision of the sphere depends on its size.
-	int precision = (int) radius * 3;
+	int precision = (int) radius * 32;
+	if( precision < 16 )
+		precision = 16;
 
 	// Center of polygon.
 	float cx = 0.0;
@@ -205,6 +211,7 @@ void Planet::Draw() {
 		glEnd();
 	}
 
+	glPopMatrix();
 
 	satellites->DrawObjects();
 }
