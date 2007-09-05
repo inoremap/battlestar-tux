@@ -87,11 +87,29 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 }
 
 
-int fastfloor( const float x ) { return x > 0 ? (int) x : (int) x - 1; }
 
-float dot( const int* g, const float x, const float y ) { return g[0]*x + g[1]*y; }
-float dot( const int* g, const float x, const float y, const float z ) { return g[0]*x + g[1]*y + g[2]*z; }
-float dot( const int* g, const float x, const float y, const float z, const float w ) { return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
+// 2D Scaled Simplex noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y ) {
+	return loBound + fabsf( simplexRawNoise(x, y) ) * (hiBound - loBound);
+}
+
+
+// 3D Scaled Simplex noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z ) {
+	return loBound + fabsf( simplexRawNoise(x, y, z) ) * (hiBound - loBound);
+}
+
+// 4D Scaled Simplex noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
+	return loBound + fabsf( simplexRawNoise(x, y, z, w) ) * (hiBound - loBound);
+}
+
 
 
 // 2D raw Simplex noise
@@ -258,6 +276,7 @@ float simplexRawNoise( const float x, const float y, const float z ) {
 	return 32.0*(n0 + n1 + n2 + n3);
 }
 
+
 // 4D raw Simplex noise
 float simplexRawNoise( const float x, const float y, const float z, const float w ) {
 	// The skewing and unskewing factors are hairy again for the 4D case
@@ -390,4 +409,11 @@ float simplexRawNoise( const float x, const float y, const float z, const float 
 	// Sum up and scale the result to cover the range [-1,1]
 	return 27.0 * (n0 + n1 + n2 + n3 + n4);
 }
+
+
+int fastfloor( const float x ) { return x > 0 ? (int) x : (int) x - 1; }
+
+float dot( const int* g, const float x, const float y ) { return g[0]*x + g[1]*y; }
+float dot( const int* g, const float x, const float y, const float z ) { return g[0]*x + g[1]*y + g[2]*z; }
+float dot( const int* g, const float x, const float y, const float z, const float w ) { return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 

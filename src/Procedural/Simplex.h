@@ -26,7 +26,7 @@
 #define SIMPLEX_H_
 
 
-/* Simplex functions - values (-1, 1).
+/* 2D, 3D and 4D Simplex functions - values (-1, 1).
  * This algorithm was originally designed by Ken Perlin, but my code has been adapted
  * from the implementation written by Stefan Gustavson (stegu@itn.liu.se)
  *
@@ -36,6 +36,31 @@
  * at each frame.  By adding a second parameter on the second dimension, you can ensure
  * that each gets a unique noise value and they don't all look identical.
  */
+
+
+// Multi-octave Simplex noise - multiple noise values are combined.
+float simplexNoise( const float, const float, const float, const float, const float );
+float simplexNoise( const float, const float, const float, const float, const float, const float );
+float simplexNoise( const float, const float, const float, const float, const float, const float, const float );
+
+
+// Scaled Simplex noise - the result will be between the two parameters passed.
+float simplexScaledNoise( const float, const float, const float, const float );
+float simplexScaledNoise( const float, const float, const float, const float, const float );
+float simplexScaledNoise( const float, const float, const float, const float, const float, const float );
+
+
+// Raw Simplex noise - a single noise value.
+float simplexRawNoise( const float, const float );
+float simplexRawNoise( const float, const float, const float );
+float simplexRawNoise( const float, const float, const float, const float );
+
+
+int fastfloor( const float );
+
+float dot( const int*, const float, const float );
+float dot( const int*, const float, const float, const float );
+float dot( const int*, const float, const float, const float, const float );
 
 
 // The gradients are the midpoints of the vertices of a cube.
@@ -101,23 +126,5 @@ static const int simplex[64][4] = {
 	{2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}
 };
 
-
-// 2D, 3D and 4D multi-octave Simplex noise.
-float simplexNoise( const float, const float, const float, const float, const float );
-float simplexNoise( const float, const float, const float, const float, const float, const float );
-float simplexNoise( const float, const float, const float, const float, const float, const float, const float );
-
-
-int fastfloor( const float );
-
-float dot( const int*, const float, const float );
-float dot( const int*, const float, const float, const float );
-float dot( const int*, const float, const float, const float, const float );
-
-
-// 2D, 3D and 4D raw Simplex noise
-float simplexRawNoise( const float, const float );
-float simplexRawNoise( const float, const float, const float );
-float simplexRawNoise( const float, const float, const float, const float );
 
 #endif /*SIMPLEX_H_*/

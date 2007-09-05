@@ -25,7 +25,6 @@
 #ifndef TEXTURES_H_
 #define TEXTURES_H_
 
-
 // Composite procedural textures built from noise functions.
 float marbleNoise( const float, const float, const float, const float, const float );
 float marbleNoise( const float, const float, const float, const float, const float, const float );

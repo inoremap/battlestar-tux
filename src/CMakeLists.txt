@@ -138,11 +138,11 @@ ADD_EXECUTABLE(	battlestarTUX
 )
 TARGET_LINK_LIBRARIES(battlestarTUX ${BATTLESTAR_TUX_LIBRARIES})
 
-#ADD_EXECUTABLE(	testTUX
-#		${BATTLESTAR_TUX_SOURCES}
-#		test.cpp
-#)
-#TARGET_LINK_LIBRARIES(testTUX ${BATTLESTAR_TUX_LIBRARIES})
+ADD_EXECUTABLE(	testTUX
+		${BATTLESTAR_TUX_SOURCES}
+		test.cpp
+)
+TARGET_LINK_LIBRARIES(testTUX ${BATTLESTAR_TUX_LIBRARIES})
 
 # Copy binary data (graphics, sounds, fonts, etc) to executable directory.
 # If this is an in-source build, the copy isn't necessary.
