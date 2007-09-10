@@ -36,14 +36,19 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 	float frequency = scale;
 	float amplitude = 1;
 
+	// We have to keep track of the largest possible amplitude,
+	// because each octave adds more, and we need a value in [-1, 1].
+	float maxAmplitude = 0;
+
 	for( int i=0; i < octaves; i++ ) {
 		total += simplexRawNoise( x * frequency, y * frequency ) * amplitude;
 
 		frequency *= 2;
+		maxAmplitude += amplitude;
 		amplitude *= persistence;
 	}
 
-	return total;
+	return total / maxAmplitude;
 }
 
 
@@ -56,14 +61,19 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 	float frequency = scale;
 	float amplitude = 1;
 
+	// We have to keep track of the largest possible amplitude,
+	// because each octave adds more, and we need a value in [-1, 1].
+	float maxAmplitude = 0;
+
 	for( int i=0; i < octaves; i++ ) {
 		total += simplexRawNoise( x * frequency, y * frequency, z * frequency ) * amplitude;
 
 		frequency *= 2;
+		maxAmplitude += amplitude;
 		amplitude *= persistence;
 	}
 
-	return total;
+	return total / maxAmplitude;
 }
 
 
@@ -76,14 +86,19 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 	float frequency = scale;
 	float amplitude = 1;
 
+	// We have to keep track of the largest possible amplitude,
+	// because each octave adds more, and we need a value in [-1, 1].
+	float maxAmplitude = 0;
+
 	for( int i=0; i < octaves; i++ ) {
 		total += simplexRawNoise( x * frequency, y * frequency, z * frequency, w * frequency ) * amplitude;
 
 		frequency *= 2;
+		maxAmplitude += amplitude;
 		amplitude *= persistence;
 	}
 
-	return total;
+	return total / maxAmplitude;
 }
 
 
@@ -92,7 +107,7 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 //
 // Returned value will be between loBound and hiBound.
 float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y ) {
-	return loBound + fabsf( simplexRawNoise(x, y) ) * (hiBound - loBound);
+	return simplexRawNoise(x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
@@ -100,14 +115,14 @@ float simplexScaledNoise( const float loBound, const float hiBound, const float 
 //
 // Returned value will be between loBound and hiBound.
 float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z ) {
-	return loBound + fabsf( simplexRawNoise(x, y, z) ) * (hiBound - loBound);
+	return simplexRawNoise(x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 // 4D Scaled Simplex noise.
 //
 // Returned value will be between loBound and hiBound.
 float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
-	return loBound + fabsf( simplexRawNoise(x, y, z, w) ) * (hiBound - loBound);
+	return simplexRawNoise(x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
