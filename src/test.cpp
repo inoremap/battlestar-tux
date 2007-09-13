@@ -36,13 +36,14 @@ int main(int argc, char* argv[])
 	float octaves = 0.0;
 	float persist = 0.0;
 
-	cin >> octaves;
-	cin >> persist;
+	//cin >> octaves;
+	//cin >> persist;
 
 	for( float n = 0.0; n < 100; n += 0.1 )
 		//cout << n << "\t" << simplexRawNoise( n, n ) << endl;
-		//cout << n << "\t" << simplexScaledNoise( -1, 1, n, n ) << endl;
-		cout << n << "\t" << simplexNoise( octaves, persist, 1, n, n ) << endl;
+		//cout << n << "\t" << simplexScaledNoise( octaves, persist, 1, 50, 100, n, n ) << endl;
+		cout << n << "\t" << simplexScaledRawNoise( 0, 10, n, n ) << endl;
+		//cout << n << "\t" << simplexNoise( octaves, persist, 1, n, n ) << endl;
 
 
 	SDL_Quit();

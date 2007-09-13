@@ -103,25 +103,49 @@ float simplexNoise( const float octaves, const float persistence, const float sc
 
 
 
-// 2D Scaled Simplex noise.
+// 2D Scaled Multi-octave Simplex noise.
 //
 // Returned value will be between loBound and hiBound.
-float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y ) {
+float simplexScaledNoise( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y ) {
+	return simplexNoise(octaves, persistence, scale, x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+}
+
+
+// 3D Scaled Multi-octave Simplex noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledNoise( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z ) {
+	return simplexNoise(octaves, persistence, scale, x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+}
+
+// 4D Scaled Multi-octave Simplex noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledNoise( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
+	return simplexNoise(octaves, persistence, scale, x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+}
+
+
+
+// 2D Scaled Simplex raw noise.
+//
+// Returned value will be between loBound and hiBound.
+float simplexScaledRawNoise( const float loBound, const float hiBound, const float x, const float y ) {
 	return simplexRawNoise(x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
-// 3D Scaled Simplex noise.
+// 3D Scaled Simplex raw noise.
 //
 // Returned value will be between loBound and hiBound.
-float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z ) {
+float simplexScaledRawNoise( const float loBound, const float hiBound, const float x, const float y, const float z ) {
 	return simplexRawNoise(x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
-// 4D Scaled Simplex noise.
+// 4D Scaled Simplex raw noise.
 //
 // Returned value will be between loBound and hiBound.
-float simplexScaledNoise( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
+float simplexScaledRawNoise( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
 	return simplexRawNoise(x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 

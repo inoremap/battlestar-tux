@@ -44,10 +44,15 @@ float simplexNoise( const float, const float, const float, const float, const fl
 float simplexNoise( const float, const float, const float, const float, const float, const float, const float );
 
 
-// Scaled Simplex noise - the result will be between the two parameters passed.
-float simplexScaledNoise( const float, const float, const float, const float );
-float simplexScaledNoise( const float, const float, const float, const float, const float );
-float simplexScaledNoise( const float, const float, const float, const float, const float, const float );
+// Multi-octave Scaled Simplex noise - the result will be between the two parameters passed.
+float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float );
+float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float, const float );
+float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float, const float, const float );
+
+// Scaled Raw Simplex noise - the result will be between the two parameters passed.
+float simplexScaledRawNoise( const float, const float, const float, const float );
+float simplexScaledRawNoise( const float, const float, const float, const float, const float );
+float simplexScaledRawNoise( const float, const float, const float, const float, const float, const float );
 
 
 // Raw Simplex noise - a single noise value.
