@@ -61,13 +61,11 @@ class SpaceObject : public ListItem {
 	protected:
 				// How much do we want to scale the speed of the universe?
 				// Watching a solar system in real-time is very boring.
-				static const float UNIVERSE_SPEED = 50.0;
+				// ~ 1 earth year = 20 seconds
+				static const float UNIVERSE_SPEED = 1577880;
 
 				// Gravitational Constant - all bodies with mass attract each other.
 				static const float GRAVITATIONAL_CONSTANT = 0.0000000000667428; 
-
-				// We can't actually draw the universe and solar systems to scale.
-				static const float DISTANCE_SCALE = 1000000000000000000000000000.0;
 
 				// All objects need to have mass.
 				float mass;

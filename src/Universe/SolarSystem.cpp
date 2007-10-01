@@ -38,19 +38,20 @@ SolarSystem::SolarSystem( vec3 p ) {
 	satellites = new SpaceGroup();
 
 	// Determine how many planets will be in the system.
-	float rawNum = fabsf( simplexRawNoise(position[0], position[1], position[2]) );
-	if( rawNum < 0.01 )
-		rawNum = 0;
-	else if( rawNum <= 0.1 )
-		rawNum *= 100;
-	else
-		rawNum *= 10;
-	int numPlanets = (int) ceilf( rawNum );
+	int numPlanets = (int) floorf( simplexScaledNoise(2, 0.3, 1, 0, 20, logf(position[0]), logf(position[1]), logf(position[2])) );
 
+	// Determine planet orbital radii.
+	// In our solar system, Mercury is about 6 * 10^7 km out.  Neptune is 2.8 * 10^10 km.
+	float planetOrbit = 0.0;
+	float previousOrbit = simplexScaledNoise(2, 0.3, 1, 50000000000.0, 100000000000.0, logf(position[0]), logf(position[1]), logf(position[2]), 0.0 );
 	for( int n=1; n <= numPlanets; n++ ) {
-		float planetOrbit = fabsf( n * 2 * simplexRawNoise(position[0], position[1], position[2], (float) n) );
+		// In our solar system, the orbital distance of each succeeding planet
+		// is usually 1.4 to 2.0 times the distance of the previous planet.
+		planetOrbit = previousOrbit * simplexScaledNoise(2, 0.3, 1, 1.2, 2.2, logf(position[0]), logf(position[1]), logf(position[2]), (float) n );
 		Planet* planet = new Planet( this, planetOrbit );
 		satellites->addObject( planet );
+
+		previousOrbit = planetOrbit;
 	}
 }
 
@@ -104,16 +105,17 @@ void SolarSystem::Draw() {
 	// Set star system OpenGL lighting requirements.
 	glEnable( GL_LIGHTING );
 	glEnable( GL_LIGHT0 );
-	float lightPos[] = { 0.0, 0.0, 0.0, 0.0 };
+	float lightPos[] = { 0.0, 0.0, 0.0, 1.0 };
 	float lightAmb[] = { 0.0, 0.0, 0.0, 1.0 };
-	float lightDif[] = { 1.0, 1.0, 1.0, 1.0 };
+	float lightDif[] = { 0.75, 0.75, 1.0, 1.0 };
 	glLightfv( GL_LIGHT0, GL_POSITION, lightPos );
+	glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDif );
 
 	// Use orthographic projection from above sun's ecliptic plane.
 	glMatrixMode( GL_PROJECTION );
 	glPushMatrix();
 		glLoadIdentity();
-		glOrtho( -10, 10, -10, 10, -100, 100 );
+		glOrtho( -750, 750, -750, 750, -100, 100 );
 
 		glMatrixMode( GL_MODELVIEW );
 		glPushMatrix();
@@ -136,7 +138,7 @@ void SolarSystem::Draw() {
 
 
 float SolarSystem::getCentralMass() {
-	// Mass of Sol is 1.9891 * 10^30
+	// Mass of Sol is 1.9891 * 10^30 kg.
 	return 1989100000000000000000000000000.0;
 }
 

@@ -59,14 +59,17 @@ class Planet : public SpaceObject {
 				float radius;
 				float rotationVelocity;
 				float axialTilt;
+				// If the orbit is an ellipse, this is the semi-major axis.
 				float orbitalRadius;
-				// Orbital velocity is determined by orbital radius.
 				float orbitalEccentricity;
 				float orbitalInclination;
+				// The orbital velocity will be dynamically calculated.
 
 				// The current rotational positions of the planet - updated each frame.
 				float rotationPosition;
 				float orbitalPosition;
+				// As the planet orbits the sun, this is the current distance.
+				float currentOrbitalRadius;
 
 				// The angular 'starting point' of the planet as it orbits the solar system.
 				float orbitalOffset;

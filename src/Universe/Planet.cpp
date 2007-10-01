@@ -35,34 +35,47 @@ Planet::Planet( SolarSystem* system, float oRadius ) {
 	solarSystem = system;
 	orbitalRadius = oRadius;
 
-	vec3 systemPos = solarSystem->getPos(); 
+	vec3 systemPos = solarSystem->getPos();
 
-	// Radius is somewhat correlated with orbital radius. Always positive.
-	radius = fabsf( orbitalRadius * simplexRawNoise(systemPos[0], systemPos[1], systemPos[2], orbitalRadius) );
-	if( radius < 0.1 )
-		radius = 0.1;
+	// The real values can be too big for Simplex.
+	float logRadius = logf( orbitalRadius );
+	systemPos[0] = logf( systemPos[0] );
+	systemPos[1] = logf( systemPos[1] );
+	systemPos[2] = logf( systemPos[2] );
+
+	// When generating the following values, we don't want them to all be based
+	// on the same noise value.  By altering the parameters to each,
+	// we can be certain that each returned value will be different.
+
+	// Radius may be somewhat correlated with orbital radius -
+	// in our solar system, the largest planets are far out from the sun.
+	// Mercury's equatorial radius is 2440 km, Jupiter's is 71492 km.
+	radius = simplexScaledNoise(2, 0.3, 100, 1000000.0, 90000000.0, systemPos[0], systemPos[0], systemPos[0], logRadius );
+
+	// Mass is not always entirely correlated with a planet's radius - some planets
+	// have denser make-ups than others.  The density of earth-like planets is usually
+	// 5.5 kg/m^3, while gas giants are closer to 1.6 kg/m^3.
+	mass = (4/3) * M_PI * radius * radius * radius * simplexScaledNoise(2, 0.3, 100, 1400, 5700, systemPos[0], systemPos[0], systemPos[1], logRadius );
 
 	// Rotation velocity seems to be uncorrelated with orbital radius.
-	rotationVelocity =
-		simplexRawNoise( systemPos[0], systemPos[1], systemPos[2], orbitalRadius ) *
-		simplexRawNoise( orbitalRadius, systemPos[0], systemPos[1], systemPos[2] );
+	// The fastest planets will complete a revolution in 20 seconds.
+	rotationVelocity = simplexScaledNoise(2, 0.3, 100, -0.36, 0.36, systemPos[0], systemPos[0], systemPos[2], logRadius );
 
 	// Axial tilt is not correlated with orbital radius.
-	axialTilt = 70 *
-		simplexRawNoise( systemPos[0], systemPos[1], systemPos[2], orbitalRadius ) *
-		simplexRawNoise( orbitalRadius, systemPos[0], systemPos[1], systemPos[2] );
+	axialTilt = simplexScaledNoise(2, 0.3, 100, -70, 70, systemPos[0], systemPos[1], systemPos[0], logRadius );
 
-	// Large orbital eccentricity is only possible for large orbital radii. Always positive and less than 1.
-	orbitalEccentricity = fabsf( 0.05 * orbitalRadius * simplexRawNoise(systemPos[0], systemPos[1], systemPos[2], orbitalRadius) );
+	// Large orbital eccentricity is usually only possible for large orbital radii. Always positive and less than 1.
+	orbitalEccentricity = simplexScaledNoise(2, 0.3, 100, 0, 0.5, systemPos[0], systemPos[1], systemPos[1], logRadius );
 
 	// Orbital inclination is not correlated with orbital radius.
-	orbitalInclination = 10 * simplexRawNoise( systemPos[0], systemPos[1], systemPos[2], orbitalRadius );
+	orbitalInclination = simplexScaledNoise(2, 0.3, 100, -10, 10, systemPos[0], systemPos[1], systemPos[2], logRadius );
 
 	rotationPosition = 0.0;
 	orbitalPosition = 0.0;
+	currentOrbitalRadius = orbitalRadius;
 
 	// Orbital offset should be essentially random. Always positive.
-	orbitalOffset = fabsf( 350 * simplexRawNoise(systemPos[0], systemPos[1], systemPos[2], orbitalRadius) );
+	orbitalOffset = simplexScaledNoise(2, 0.3, 100, 0, 360, systemPos[0], systemPos[2], systemPos[0], logRadius );
 
 	// Create any satellites, such as moons and rings.
 	satellites = new SpaceGroup();
@@ -106,27 +119,51 @@ void Planet::toXML( TiXmlElement* node ) {
 void Planet::Update() {
 	rotationPosition += rotationVelocity * SpaceObject::UNIVERSE_SPEED;
 	if( rotationPosition >= 360 )
-		rotationPosition -= 360;
+		rotationPosition = fmodf( rotationPosition, 360 );
 
-	float orbitalDistance =
-		( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
-		( 1 + orbitalEccentricity * cosf(orbitalPosition * M_PI/180) );
-	orbitalPosition += sqrtf(
-			SpaceObject::GRAVITATIONAL_CONSTANT * ( mass + solarSystem->getCentralMass() ) *
-			( 2 / (orbitalDistance * SpaceObject::DISTANCE_SCALE) - 1 / (orbitalRadius * SpaceObject::DISTANCE_SCALE) )
-		) * SpaceObject::UNIVERSE_SPEED;
+	// According to Kepler's laws of planetary motion, the velocity of an object
+	// is determined by the masses and distance between the objects.
+	//
+	// http://en.wikipedia.org/wiki/Elliptic_orbit
+	orbitalPosition += sqrtf( SpaceObject::GRAVITATIONAL_CONSTANT * ( mass + solarSystem->getCentralMass() ) *
+			( 2 / (currentOrbitalRadius / 1000) - 1 / (orbitalRadius / 1000) ) )  // velocity of planet at this point
+		/ (orbitalRadius * 2 * M_PI)  // approx. circumference of the orbit
+		* 360  // number of degrees in the circumference
+		/ 50   // number of frames per second
+		* SpaceObject::UNIVERSE_SPEED;
 	if( orbitalPosition >= 360 )
-		orbitalPosition -= 360;
+		orbitalPosition = fmodf( orbitalPosition, 360 );
 
 	satellites->UpdateObjects();
 }
 
 
 void Planet::Draw() {
+	// We need to keep the radii of planets within displayable bounds.
+	float logRadius = radius / 10000000;
+
 	glPushMatrix();
 
 	glRotatef( orbitalOffset, 0.0, 0.0, 1.0 );
 	glRotatef( orbitalInclination, 1.0, 0.0, 0.0 );
+
+
+	// Outline the orbit of the planet.
+	glColor4f( 1.0, 1.0, 1.0, 1.0 );
+	glBegin( GL_LINE_LOOP );
+		for( float i = 1.0; i < 360; i++ ) {
+			float lineRadius = ( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
+				( 1 + orbitalEccentricity * cosf(i * M_PI/180) );
+			vec3 coords;
+			coords[0] = lineRadius * sinf( i * M_PI/180 );
+			coords[1] = lineRadius * cosf( i * M_PI/180 );
+
+			// We need to keep the distances between planets within displayable bounds.
+			coords /= 10000000000.0;
+			glVertex3f( coords[0], coords[1], coords[2] );
+		}
+	glEnd();
+
 
 	glRotatef( orbitalPosition, 0.0, 0.0, 1.0 );
 
@@ -135,12 +172,10 @@ void Planet::Draw() {
 	// elliptical orbit.  We are translating from that foci out.
 	//
 	// http://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion
-	glTranslatef(
-		0.0,
-		( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
-		( 1 + orbitalEccentricity * cosf(orbitalPosition * M_PI/180) ),
-		0.0
-	);
+	currentOrbitalRadius = ( orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) ) /
+		( 1 + orbitalEccentricity * cosf(orbitalPosition * M_PI/180) );
+	// We need to keep the distances between planets within displayable bounds.
+	glTranslatef( 0.0, currentOrbitalRadius / 10000000000.0, 0.0 );
 
 	// axial tilt
 
@@ -155,10 +190,8 @@ void Planet::Draw() {
 	float theta2 = 0.0;
 	float theta3 = 0.0;
 
-	// The subdivision of the sphere depends on its size.
-	int precision = (int) radius * 32;
-	if( precision < 16 )
-		precision = 16;
+	// The subdivision of the sphere should probably depend on its size.
+	int precision = 16;
 
 	// Center of polygon.
 	float cx = 0.0;
@@ -189,9 +222,9 @@ void Planet::Draw() {
 				nx = cosf( theta2 ) * cosf( theta3 );
 				ny = sinf( theta2 );
 				nz = cosf( theta2 ) * sinf( theta3 );
-				px = cx + radius * nx; 
-				py = cy + radius * ny; 
-				pz = cz + radius * nz; 
+				px = cx + logRadius * nx; 
+				py = cy + logRadius * ny; 
+				pz = cz + logRadius * nz; 
 
 				glNormal3f( nx, ny, nz );
 				glTexCoord2f( i/(float)precision, 2*(j+1)/(float)precision );
@@ -200,9 +233,9 @@ void Planet::Draw() {
 				nx = cosf( theta1 ) * cosf( theta3 );
 				ny = sinf( theta1 );
 				nz = cosf( theta1 ) * sinf( theta3 );
-				px = cx + radius * nx; 
-				py = cy + radius * ny; 
-				pz = cz + radius * nz; 
+				px = cx + logRadius * nx; 
+				py = cy + logRadius * ny; 
+				pz = cz + logRadius * nz; 
 	
 				glNormal3f( nx, ny, nz );
 				glTexCoord2f( i/(float)precision, 2*j/(float)precision );
