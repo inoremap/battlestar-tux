@@ -140,7 +140,26 @@ void Fighter::Update( int speed ) {
 	Object::Update( speed );
 	allCells->UpdateObjects();
 
-	// need to move generated power to storage cells??
+	// Move any remaining power to storage.
+	float available = 0;
+
+	// Pull all the power out of the generators.
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell ) {
+		if( cell->getCellType() == GENERATION_CELL )
+			available += ((GenerationCell*) cell)->getPower( ((GenerationCell*) cell)->getGenerationRate() );
+
+		cell = (HexCell*) cell->getNext();
+	}
+
+	// Put as much as possible into storage.
+	cell = (HexCell*) allCells->getRoot();
+	while( cell && available > 0 ) {
+		if( cell->getCellType() == STORAGE_CELL )
+			available -= ((StorageCell*) cell)->putPower( ((StorageCell*) cell)->getMaxEnergy() - ((StorageCell*) cell)->getCurrentEnergy() );
+
+		cell = (HexCell*) cell->getNext();
+	}
 }
 
 

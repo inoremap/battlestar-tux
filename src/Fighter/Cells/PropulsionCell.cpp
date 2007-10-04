@@ -27,7 +27,7 @@
 #include "TextureManager.h"
 
 PropulsionCell::PropulsionCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, PROPULSION_CELL, pos )  {
-	accelerationRate = 0.5; 
+	accelerationRate = 0.001; 
 	powerRate = 10000;
 
 	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
