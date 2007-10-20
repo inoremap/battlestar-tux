@@ -103,12 +103,16 @@ void PlayerFighterController::Update( int speed ) {
 
 			case SDL_MOUSEBUTTONDOWN:
 				if( event.button.button == SDL_BUTTON_LEFT )
-					fighter->startFiring();
+					fighter->FirePrimary( true );
+				else if( event.button.button == SDL_BUTTON_RIGHT )
+					fighter->FireSecondary( true );
 				break;
 
 			case SDL_MOUSEBUTTONUP:
 				if( event.button.button == SDL_BUTTON_LEFT )
-					fighter->stopFiring();
+					fighter->FirePrimary( false );
+				else if( event.button.button == SDL_BUTTON_RIGHT )
+					fighter->FireSecondary( false );
 				else if( event.button.button == SDL_BUTTON_WHEELUP )
 					screen->setFOVY( screen->getFOVY() - 2 );
 				else if( event.button.button == SDL_BUTTON_WHEELDOWN )

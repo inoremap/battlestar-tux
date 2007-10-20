@@ -34,6 +34,8 @@
 #include "Object.h"
 #include "Vector.h"
 
+class WeaponSystem;
+
 
 // Distinguish between 'evil' and 'good' fighters.
 enum FighterAlignment {
@@ -55,11 +57,9 @@ class Fighter : public Object {
 
 				void Draw();
 
-				// Weapons begin firing.
-				void startFiring();
-
-				// Weapons cease firing.
-				void stopFiring();
+				// Start or stop weapons fire.
+				void FirePrimary( bool );
+				void FireSecondary( bool );
 
 				float getHealth();
 				float getFullHealth();
@@ -89,6 +89,8 @@ class Fighter : public Object {
 				// Propulsion cells will be used to move ship.
 				void setPropulsion( const vec3 & );
 
+
+				WeaponSystem* weaponSystem;
 
 				CoreCell* coreCell;
 

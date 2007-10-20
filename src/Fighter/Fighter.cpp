@@ -28,11 +28,15 @@
 #include "PropulsionCell.h"
 #include "StorageCell.h"
 #include "Vector.h"
+#include "WeaponSystem.h"
+
 
 Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	game = g;
 
 	pos[2] = 3;
+
+	weaponSystem = new WeaponSystem( this, game );
 
 	allCells = new HexCellList( game );
 
@@ -138,6 +142,7 @@ Fighter::~Fighter() {
 
 void Fighter::Update( int speed ) {
 	Object::Update( speed );
+	weaponSystem->Update( speed );
 	allCells->UpdateObjects();
 
 	// Move any remaining power to storage.
@@ -164,6 +169,10 @@ void Fighter::Update( int speed ) {
 
 
 void Fighter::Draw() {
+	// Draw weapon system (crosshairs).
+	weaponSystem->Draw();
+
+
 	glPushMatrix();
 
 	// Apply fighter position transformations.
@@ -176,11 +185,13 @@ void Fighter::Draw() {
 }
 
 
-void Fighter::startFiring() { 
-	//weaponSystem->Fire( true );
+void Fighter::FirePrimary( bool fire ) {
+	weaponSystem->FirePrimary( fire );
 }
-void Fighter::stopFiring() {
-	//weaponSystem->Fire( false );
+
+
+void Fighter::FireSecondary( bool fire ) {
+	weaponSystem->FireSecondary( fire );
 }
 
 

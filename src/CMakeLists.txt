@@ -88,11 +88,13 @@ SET(	BATTLESTAR_TUX_SOURCES
 	Fighter/HexCellList.cpp
 	Fighter/HeroFighter.cpp
 	Fighter/PlayerFighterController.cpp
+	Fighter/WeaponSystem.cpp
 	Fighter/Cells/ArmorCell.cpp
 	Fighter/Cells/CoreCell.cpp
 	Fighter/Cells/GenerationCell.cpp
 	Fighter/Cells/PropulsionCell.cpp
 	Fighter/Cells/StorageCell.cpp
+	Fighter/Cells/WeaponCell.cpp
 	FighterAmmo.cpp
 	FighterAmmoList.cpp
 	Game.cpp
@@ -116,6 +118,8 @@ SET(	BATTLESTAR_TUX_SOURCES
 	UI/MainMenu.cpp
 	UI/NewCampaignMenu.cpp
 	UI/OpeningMenu.cpp
+	UI/SettingsMenu.cpp
+	UI/SystemMenu.cpp
 	UI/Primitives/Button.cpp
 	UI/Primitives/HorizontalContainer.cpp
 	UI/Primitives/HorizontalPane.cpp
@@ -124,8 +128,6 @@ SET(	BATTLESTAR_TUX_SOURCES
 	UI/Primitives/VerticalContainer.cpp
 	UI/Primitives/VerticalPane.cpp
 	UI/Primitives/Widget.cpp
-	UI/SettingsMenu.cpp
-	UI/SystemMenu.cpp
 	Universe/Planet.cpp
 	Universe/SolarSystem.cpp
 	Universe/SpaceGroup.cpp

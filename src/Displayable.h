@@ -32,7 +32,8 @@
 
 enum DisplayableType {
 	GROUND		=	0x0001,				// Ground segment
-	EFFECT		=	0x0002				// Special effect - not a real object
+	EFFECT		=	0x0002,				// Special effect - not a real object
+	HUD			=	0x0004				// Items drawn as part of the UI
 };
 
 
