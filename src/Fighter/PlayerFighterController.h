@@ -29,6 +29,7 @@
 #include "FighterController.h"
 #include "Game.h"
 #include "Screen.h"
+#include "IntegerVector.h"
 #include "Vector.h"
 
 
@@ -68,6 +69,18 @@ class PlayerFighterController : public FighterController {
 				float rampAccelDown;
 				float rampAccelLeft;
 				float rampAccelRight;
+
+
+				// Previous mouse position.  We'll need to determine where to
+				// move the crosshairs for aiming the weapons.
+				ivec2 prevCursorPos;
+
+				// The crosshairs travel with the fighter.  We need to track it.
+				vec3 prevFighterPos;
+
+				// Mouse sensitivity - how much to move the crosshairs for each
+				// pixel of movement on the screen.
+				float mouseSensitivity;
 };
 
 

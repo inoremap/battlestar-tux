@@ -74,8 +74,10 @@ class Fighter : public Object {
 
 				int getAlignment();
 
-				bool hasComponents() { return true; }
-				ObjectList* getComponents() { return allCells; }
+				inline bool hasComponents() { return true; }
+				inline ObjectList* getComponents() { return allCells; }
+
+				inline WeaponSystem* getWeaponSystem() { return weaponSystem; }
 
 	protected:
 				// Ship components can get power here.

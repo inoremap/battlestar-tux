@@ -24,13 +24,12 @@
 
 #include <SDL_opengl.h>
 
+#include "Screen.h"
+#include "TextureManager.h"
 #include "WeaponCell.h"
 #include "WeaponSystem.h"
-#include "TextureManager.h"
 
 WeaponSystem::WeaponSystem( Fighter* f, Game* g ) : Displayable( HUD ) {
-	target = pos = vec3();
-
 	fireAll = true;
 	primaryFiring = false;
 	secondaryFiring = false;
@@ -39,6 +38,9 @@ WeaponSystem::WeaponSystem( Fighter* f, Game* g ) : Displayable( HUD ) {
 	game = g;
 
 	texture = game->getTextureManager()->loadTexture( "data/gfx/crosshairs_0001-32.png" );
+
+	pos = fighter->getPos();
+	pos[1] += 5;
 }
 
 
@@ -49,8 +51,6 @@ WeaponSystem::~WeaponSystem() {
 
 void WeaponSystem::Update( int speed ) {
 	Displayable::Update( speed );
-
-	target = pos = vec3( 0, 10, 1 );
 }
 
 
@@ -66,10 +66,10 @@ void WeaponSystem::Draw() {
 		glVertex3f( -1, -1, 0 );
 		glTexCoord2f( 1, 0 );
 		glVertex3f( 1, -1, 0 );
-		glTexCoord2f( 0, 1 );
-		glVertex3f( -1, 1, 0 );
 		glTexCoord2f( 1, 1 );
 		glVertex3f( 1, 1, 0 );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( -1, 1, 0 );
 	glEnd();
 
 	glPopMatrix();

@@ -169,10 +169,6 @@ void Fighter::Update( int speed ) {
 
 
 void Fighter::Draw() {
-	// Draw weapon system (crosshairs).
-	weaponSystem->Draw();
-
-
 	glPushMatrix();
 
 	// Apply fighter position transformations.
@@ -182,6 +178,10 @@ void Fighter::Draw() {
 	allCells->DrawObjects();
 
 	glPopMatrix();
+
+
+	// Draw weapon system (crosshairs).
+	weaponSystem->Draw();
 }
 
 

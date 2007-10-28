@@ -50,8 +50,8 @@ class WeaponSystem : public Displayable {
 				void FirePrimary( bool );
 				void FireSecondary( bool );
 
-				inline void setTarget( vec3 t ) { target = t; }
-				inline const vec3 getTarget() { return target; }
+				inline void setTarget( vec3 target ) { pos = target; }
+				inline const vec3 getTarget() { return pos; }
 
 				inline void setFireAll( bool a ) { fireAll = a; }
 				inline const bool getFireAll() { return fireAll; } 
@@ -60,8 +60,8 @@ class WeaponSystem : public Displayable {
 				WeaponSystem( const WeaponSystem & );
 				const WeaponSystem & operator= ( const WeaponSystem & );
 
-				// All weapons will attempt to target this location.
-				vec3 target;
+				// All weapons will attempt to target the location of this object.
+				// The vec3 pos holds the position of the object.
 
 				// Fire all weapons, even when the desired target is out of range.
 				bool fireAll;

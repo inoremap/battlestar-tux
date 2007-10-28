@@ -1,6 +1,6 @@
 /* Screen.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,29 +29,34 @@
 #include <SDL_opengl.h>
 
 #include "Game.h"
+#include "IntegerVector.h"
+#include "Vector.h"
 
 /* Represents screen application will draw on. */
 class Screen {
 	public:
 				// Creates a screen in a new window.
-				Screen( Game* g );
+				Screen( Game* );
 
 				// Returns true if the SDL screen hasn't been created.
-				bool isNull();
+				const bool isNull();
 
 				// Call when the window size changes to resize the viewport
-				void Resize( int width, int height );
+				void Resize( const int, const int );
 
 				// Change the field-of-view (FOV).  Essentially, the zoom.
-				void setFOVY( float fov );
+				void setFOVY( const float );
 
-				int getWidth();
-				int getHeight();
-				float getFOVY();
+				// Return the position of the cursor on the screen.
+				const ivec2 getCursorPos();
+
+				const int getWidth();
+				const int getHeight();
+				const float getFOVY();
 
 	private:
-				Screen( const Screen &screen );
-				const Screen & operator= ( const Screen &screen );
+				Screen( const Screen & );
+				const Screen & operator= ( const Screen & );
 
 				SDL_Surface* screen;
 				int height;

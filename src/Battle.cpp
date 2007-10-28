@@ -1,6 +1,6 @@
 /* Battle.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2006-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -97,30 +97,6 @@ void Battle::Update() {
 		ground->Update();
 	}
 	playerController->Update( speed );
-
-
-	// Set current target angle.
-	int x = 0;
-	int y = 0;
-	SDL_GetMouseState( &x, &y );
-	int screenWidth = screen->getWidth();
-	int screenHeight = screen->getHeight();
-	x -= screenWidth / 2;
-	y -= screenHeight / 2;
-	float targetAngle = 0.0;
-	if( y == 0 ) {
-		if( x < 0 )
-			targetAngle = 90;
-		else
-			targetAngle = 270;		
-	}
-	else {
-		targetAngle = atanf((float) x/y) * (180/M_PI);
-
-		if( y > 0 )
-			targetAngle += 180;
-	}
-	//hero->getWeaponSystem()->SetTarget( targetAngle );
 }
 
 
@@ -134,9 +110,10 @@ void Battle::Draw() {
 	glClear( GL_DEPTH_BUFFER_BIT );
 
 	// Set camera position and draw stuff...
+	// We want the camera to follow our fighter.
 	vec3 heroPos = hero->getPos();
 	glLoadIdentity();
-	glTranslatef( -heroPos[0], -heroPos[1], -15 );
+	glTranslatef( -heroPos[0], -heroPos[1], -30 );
 
 	ground->Draw();
 	//draw ground units?

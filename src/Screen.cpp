@@ -1,6 +1,6 @@
 /* Screen.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -55,7 +55,7 @@ Screen::Screen( Game* g ) {
 	// For fullscreen, use 'SDL_OPENGL | SDL_FULLSCREEN'
 	width = 1024;
 	height = 768;
-	fovy = 110;
+	fovy = 70;
 	screen = SDL_SetVideoMode( width, height, 0, SDL_OPENGL );
 
 	if( g->getConfig()->getGrabInput() ) {
@@ -114,7 +114,7 @@ Screen::Screen( Game* g ) {
 }
 
 
-bool Screen::isNull() {
+const bool Screen::isNull() {
 	if( screen == NULL )
 		return true;
 	else
@@ -122,14 +122,11 @@ bool Screen::isNull() {
 }
 
 
-void Screen::Resize( int w, int h ) {
+void Screen::Resize( const int w, const int h ) {
 	width = w;
 	height = h;
 
-	// Configure the OpenGL screen for a 2D scrolling engine.
-	// Objects are drawn in 3D, with the z-axis perpendicular to the viewing plane.
-	//
-	// The coordinate system is configured so that ( 0, 0, 0 ) is at the center of the screen.
+	// We'll use the whole screen for OpenGL drawing.
 	glViewport( 0, 0, width, height );
 	setFOVY( fovy );
 }
@@ -138,13 +135,30 @@ void Screen::Resize( int w, int h ) {
 void Screen::setFOVY( float fov ) {
 	fovy = fov;
 
+	// Configure the OpenGL screen for a 2D scrolling engine.
+	// Objects are drawn in 3D, with the z-axis perpendicular to the viewing plane.
+	//
+	// The coordinate system is configured so that ( 0, 0, 0 ) is at the center of the screen.
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	gluPerspective( fovy, (float) width/height, 1, 30 );
+	gluPerspective( fovy, (float) width/height, 20, 40 );
 	glMatrixMode( GL_MODELVIEW );
 }
 
 
-int Screen::getWidth() { return width; }
-int Screen::getHeight() { return height; }
-float Screen::getFOVY() { return fovy; }
+const ivec2 Screen::getCursorPos() {
+	int x = 0;
+	int y = 0;
+	SDL_GetMouseState( &x, &y );
+
+	ivec2 pos = ivec2();
+	pos[0] = x;
+	pos[1] = y;
+
+	return pos;
+}
+
+
+const int Screen::getWidth() { return width; }
+const int Screen::getHeight() { return height; }
+const float Screen::getFOVY() { return fovy; }

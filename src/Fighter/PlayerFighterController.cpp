@@ -23,6 +23,7 @@
 
 
 #include "PlayerFighterController.h"
+#include "WeaponSystem.h"
 
 PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter* f , Game* g ) : FighterController( f, g ) {
 	battle = b;
@@ -46,6 +47,10 @@ PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter*
 	rampAccelRight = 0;
 
 	keyramp = 0.1;
+
+	prevCursorPos = screen->getCursorPos();
+	prevFighterPos = fighter->getPos();
+	mouseSensitivity = 0.075;
 }
 
 
@@ -54,8 +59,8 @@ PlayerFighterController::~PlayerFighterController() {
 
 
 void PlayerFighterController::Update( int speed ) {
-	// check for keypresses and mouse events
-	// remember that two or three keys/buttons may be down!!
+	// Check for keypresses and mouse events.
+	// Remember that two or three keys/buttons may be down!!
 	SDL_Event event;
 	while( !game->isFinished() && !battle->isFinished() && !battle->isAborted() && SDL_PollEvent(&event) ) {
 		switch( event.type ) {
@@ -141,5 +146,19 @@ void PlayerFighterController::Update( int speed ) {
 			direction[0] += rampAccelRight;
 		accel( direction );
 	}
+
+	// Update the crosshair position for weapons fire. 
+	ivec2 cursorDelta = screen->getCursorPos() - prevCursorPos;
+	vec3 targetPos = fighter->getWeaponSystem()->getTarget();
+	vec3 fighterPos = fighter->getPos();
+
+	targetPos[0] += (float) cursorDelta[0] * mouseSensitivity + fighterPos[0] - prevFighterPos[0];
+	// y-axis is reversed on screen.
+	targetPos[1] -= (float) cursorDelta[1] * mouseSensitivity;
+	targetPos[1] += fighterPos[1] - prevFighterPos[1];
+	fighter->getWeaponSystem()->setTarget( targetPos );
+
+	prevCursorPos = screen->getCursorPos();
+	prevFighterPos = fighterPos;
 }
 

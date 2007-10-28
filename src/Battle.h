@@ -1,6 +1,6 @@
 /* Battle.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2007 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
