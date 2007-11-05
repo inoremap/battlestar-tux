@@ -50,6 +50,11 @@ class WeaponSystem : public Displayable {
 				void FirePrimary( bool );
 				void FireSecondary( bool );
 
+				void addPrimaryWeapon( WeaponCell* );
+				void addSecondaryWeapon( WeaponCell* );
+				void remPrimaryWeapon( WeaponCell* );
+				void remSecondaryWeapon( WeaponCell* );
+
 				inline void setTarget( vec3 target ) { pos = target; }
 				inline const vec3 getTarget() { return pos; }
 
@@ -59,6 +64,9 @@ class WeaponSystem : public Displayable {
 	private:
 				WeaponSystem( const WeaponSystem & );
 				const WeaponSystem & operator= ( const WeaponSystem & );
+
+				void addWeapon( std::vector<WeaponCell*> &, WeaponCell* );
+				void remWeapon( std::vector<WeaponCell*> &, WeaponCell* );
 
 				// All weapons will attempt to target the location of this object.
 				// The vec3 pos holds the position of the object.
@@ -73,10 +81,10 @@ class WeaponSystem : public Displayable {
 				bool secondaryFiring;
 
 				// List of weapons in primary group.
-				std::vector<WeaponCell> primaryWeapons;
+				std::vector<WeaponCell*> primaryWeapons;
 
 				// List of weapons in secondary group.
-				std::vector<WeaponCell> secondaryWeapons;
+				std::vector<WeaponCell*> secondaryWeapons;
 
 				// The fighter that uses this weapon system.
 				Fighter* fighter;

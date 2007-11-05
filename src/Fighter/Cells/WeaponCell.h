@@ -39,9 +39,24 @@ class WeaponCell : public HexCell {
 
 				void Draw();
 
+				inline void Fire( bool f ) { firing = f; }
+
+				// Returns true if weapon is ready to fire.
+				inline bool isCharged() { return chargingTime >= rechargeTime; }
+
 	private:
-				WeaponCell( const WeaponCell & );
 				const WeaponCell & operator= ( const WeaponCell & );
+				WeaponCell( const WeaponCell & );
+
+				// Is weapon currently firing?
+				bool firing;
+
+				// Time taken to recharge weapon after firing.
+				float rechargeTime;
+
+				// Current amount of time spent charging.  When
+				// rechargeTime == chargingTime, the weapon can fire.
+				float chargingTime;
 
 				GLuint texture;
 };

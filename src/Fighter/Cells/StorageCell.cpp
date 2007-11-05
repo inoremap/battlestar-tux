@@ -41,7 +41,7 @@ StorageCell::~StorageCell() {
 void StorageCell::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
 
-	glColor4f( 0.7, 0.7, 0.7, 1.0 );
+	glColor4f( 0.3, 0.3, 0.3, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 
 	glColor4f( 0.6, 0.6, 0.6, 1.0 );

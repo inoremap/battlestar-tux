@@ -28,6 +28,7 @@
 #include "PropulsionCell.h"
 #include "StorageCell.h"
 #include "Vector.h"
+#include "WeaponCell.h"
 #include "WeaponSystem.h"
 
 
@@ -131,11 +132,28 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	propulsionCell->setPowerRate( 250 );
 	allCells->addObject( propulsionCell );
 
+	cellPos = ivec2( -2, 1 );
+	WeaponCell* weaponCell = new WeaponCell( this, game, cellPos );
+	weaponCell->setFullHealth( 750 );
+	weaponCell->setHealth( 750 );
+	weaponCell->setMass( 2000 );
+	weaponSystem->addPrimaryWeapon( weaponCell );
+	allCells->addObject( weaponCell );
+
+	cellPos = ivec2( 2, 1 );
+	weaponCell = new WeaponCell( this, game, cellPos );
+	weaponCell->setFullHealth( 750 );
+	weaponCell->setHealth( 750 );
+	weaponCell->setMass( 2000 );
+	weaponSystem->addPrimaryWeapon( weaponCell );
+	allCells->addObject( weaponCell );
+
 	align = a;
 }
 
 
 Fighter::~Fighter() {
+	delete weaponSystem;
 	delete allCells;
 }
 

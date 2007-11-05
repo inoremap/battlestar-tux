@@ -52,7 +52,7 @@ void PropulsionCell::Update( int speed ) {
 void PropulsionCell::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
 
-	glColor4f( 0.0, 0.59, 0.88, 1.0 );
+	glColor4f( 0.3, 0.3, 0.3, 1.0 );
 	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 
 	glColor4f( 0.46, 0.55, 0.6, 1.0 );

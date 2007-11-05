@@ -34,6 +34,9 @@ WeaponSystem::WeaponSystem( Fighter* f, Game* g ) : Displayable( HUD ) {
 	primaryFiring = false;
 	secondaryFiring = false;
 
+	primaryWeapons = std::vector<WeaponCell*>();
+	secondaryWeapons = std::vector<WeaponCell*>();
+
 	fighter = f;
 	game = g;
 
@@ -51,6 +54,8 @@ WeaponSystem::~WeaponSystem() {
 
 void WeaponSystem::Update( int speed ) {
 	Displayable::Update( speed );
+
+	// The weapon cell status is updated by the fighter, not here.
 }
 
 
@@ -78,10 +83,44 @@ void WeaponSystem::Draw() {
 
 void WeaponSystem::FirePrimary( bool fire ) {
 	primaryFiring = fire;
+
+	// Update primary weapons.
+	std::vector<WeaponCell*>::iterator iter;
+	for( iter = primaryWeapons.begin(); iter != primaryWeapons.end(); iter++ ) {
+		(*iter)->Fire( primaryFiring );
+	}
 }
 
 
 void WeaponSystem::FireSecondary( bool fire ) {
 	secondaryFiring = fire;
+
+	// Update secondary weapons.
+	std::vector<WeaponCell*>::iterator iter;
+	for( iter = secondaryWeapons.begin(); iter != secondaryWeapons.end(); iter++ ) {
+		(*iter)->Fire( secondaryFiring );
+	}
+}
+
+
+void WeaponSystem::addPrimaryWeapon( WeaponCell* w )	{ addWeapon(primaryWeapons, w); }
+void WeaponSystem::addSecondaryWeapon( WeaponCell* w )	{ addWeapon(secondaryWeapons, w); }
+void WeaponSystem::remPrimaryWeapon( WeaponCell* w )	{ remWeapon(primaryWeapons, w); }
+void WeaponSystem::remSecondaryWeapon( WeaponCell* w )	{ remWeapon(secondaryWeapons, w); }
+
+
+void WeaponSystem::addWeapon( std::vector<WeaponCell*> & cells, WeaponCell* w ) {
+	cells.push_back( w );
+}
+
+
+void WeaponSystem::remWeapon( std::vector<WeaponCell*> & cells, WeaponCell* w ) {
+	std::vector<WeaponCell*>::iterator iter;
+
+	// Find the weapon cell and remove it.
+	for( iter = cells.begin(); iter != cells.end(); iter++ ) {
+		if( *iter == w )
+			cells.erase( iter );
+	}
 }
 

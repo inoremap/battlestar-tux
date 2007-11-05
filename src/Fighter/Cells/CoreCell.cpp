@@ -43,7 +43,10 @@ void CoreCell::Update( int speed ) {
 void CoreCell::Draw() {
 	glBindTexture( GL_TEXTURE_2D, texture );
 
-	glColor4f( 0.1, 0.1, 0.9, 1.0 );
-	drawHex( 0.3, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
+	glColor4f( 0.3, 0.3, 0.3, 1.0 );
+	drawHex( HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
+
+	glColor4f( 0.9, 0.4, 0.0, 1.0 );
+	drawHex( 0.25, HEX_CELL_SIZE[1], HEX_CELL_SIZE[2] );
 }
 
