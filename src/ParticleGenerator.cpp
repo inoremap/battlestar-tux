@@ -99,8 +99,6 @@ void ParticleGenerator::Draw() {
 	Particle* next = 0;
 
 	// Draw each Particle, if there are any.
-	glEnable( GL_ALPHA_TEST );
-	glAlphaFunc( GL_GREATER, 0.5 );
 	while( cur ) {
 		next = (Particle*) cur->getNext();
 
@@ -108,7 +106,6 @@ void ParticleGenerator::Draw() {
 
 		cur = next;
 	}
-	glDisable( GL_ALPHA_TEST );
 }
 
 
