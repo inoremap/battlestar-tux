@@ -32,8 +32,8 @@ FighterAmmoList::FighterAmmoList( Game* g ) : ObjectList( g ) {
 	TextureManager* t = game->getTextureManager();
 
 	// Load all ammo textures.
-	textures[0] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// LASER
-	textures[1] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// PLASMA
+	textures[LASER] = t->loadTexture( "data/gfx/laser_0001-64.png" );		// LASER
+	textures[PLASMA] = t->loadTexture( "data/gfx/plasma_0001-32.png" );		// PLASMA
 }
 
 

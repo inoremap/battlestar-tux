@@ -25,10 +25,9 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g ) : Object( AMMO ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, GLuint t, Game* g ) : Object( AMMO ) {
 	ammoType = f;
 	damage = d;
-	penetration = p;
 	texture = t;
 
 	pos[2] = zPos;
@@ -36,21 +35,38 @@ FighterAmmo::FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g
 	switch( ammoType ) {
 		default:
 		case LASER:
-			size = 4;
+			size = 1;
 			break;
 
 		case PLASMA:
-			size = 1;
+			size = 0.75;
 			break;
 	}
 }
 
 
 void FighterAmmo::Draw() {
-	glBindTexture( GL_TEXTURE_2D, texture );
+	glPushMatrix();
+
+	// Set ammo position, rotation and velocity.
 	Object::Draw();
+	glBindTexture( GL_TEXTURE_2D, texture );
+
+	// Set the color of the ammo.
+	glColor4f( 1.0, 1.0, 1.0, 1.0 );
+
+	float halfSize = size / 2;
+	glBegin( GL_QUADS );
+		glTexCoord2f( 0, 0 );
+		glVertex3f( -halfSize, -halfSize, 0 );
+		glTexCoord2f( 1, 0 );
+		glVertex3f( halfSize, -halfSize, 0 );
+		glTexCoord2f( 1, 1 );
+		glVertex3f( halfSize, halfSize, 0 );
+		glTexCoord2f( 0, 1 );
+		glVertex3f( -halfSize, halfSize, 0 );
+	glEnd();
+
+	glPopMatrix();
 }
 
-
-float FighterAmmo::getDamage() { return damage; }
-float FighterAmmo::getPenetration() { return penetration; }

@@ -33,27 +33,23 @@
 
 class FighterAmmo : public Object {
 	public:
-				FighterAmmo( FighterAmmoType f, float d, float p, GLuint t, Game* g );
+				FighterAmmo( FighterAmmoType, float, GLuint, Game* );
 
 				void Draw();
 
-				float getDamage();
-				float getPenetration();
+				inline float getDamage() { return damage; }
 
 	private:
-				FighterAmmo( const FighterAmmo &ammo );
-				const FighterAmmo & operator= ( const FighterAmmo &ammo );
+				FighterAmmo( const FighterAmmo & );
+				const FighterAmmo & operator= ( const FighterAmmo & );
 
 				// Constant Z position of the ammo.
-				static const float zPos = -1.4;
+				static const float zPos = 3;
 
 				FighterAmmoType ammoType;
 
 				// Damage dealt by the ammo.
 				float damage;
-
-				// Penetrating power of the ammo.
-				float penetration;
 
 				GLuint texture;
 };

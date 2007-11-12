@@ -106,8 +106,8 @@ void ObjectList::CheckCollisions( Object* object1, Object* object2 ) {
 		// we need to check each of them - not just the "container" object.
 		if( object1->hasComponents() )
 			CheckCollisions( object1->getComponents(), object2 );
-		// If object1 has components, object2 will be broken down into its
-		// components in subsequent calls.
+		// If both objects have components, the first is broken down here and the
+		// second will be broken down in the recursive call.
 		else if( object2->hasComponents() )
 			CheckCollisions( object2->getComponents(), object1 );
 

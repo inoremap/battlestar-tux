@@ -145,7 +145,7 @@ Fighter::Fighter( FighterAlignment a, Game* g ) : Object( FIGHTER ) {
 	weaponCell->setFullHealth( 750 );
 	weaponCell->setHealth( 750 );
 	weaponCell->setMass( 2000 );
-	weaponSystem->addPrimaryWeapon( weaponCell );
+	weaponSystem->addSecondaryWeapon( weaponCell );
 	allCells->addObject( weaponCell );
 
 	align = a;

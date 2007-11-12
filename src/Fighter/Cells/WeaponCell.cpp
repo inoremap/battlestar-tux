@@ -23,6 +23,8 @@
 
 
 #include "Fighter.h"
+#include "FighterAmmo.h"
+#include "FighterAmmoList.h"
 #include "WeaponCell.h"
 #include "TextureManager.h"
 
@@ -43,8 +45,21 @@ WeaponCell::~WeaponCell() {
 void WeaponCell::Update( int speed ) {
 	if( isCharged() ) {
 		if( firing ) {
-			// fire weapon
-			std::cout << "Fire!" << std::endl;
+			FighterAmmoList* ammoList = game->getHeroAmmoList();
+			FighterAmmo* newAmmo = new FighterAmmo( PLASMA, 100 , ammoList->getTexture(PLASMA), game );
+
+			vec3 ammoPos = fighter->getPos();
+			ammoPos[0] += cellPosition[0];
+			ammoPos[1] += cellPosition[1];
+			newAmmo->setPos( ammoPos );
+			
+			vec3 ammoVel = fighter->getVel();
+			ammoVel[1] += 0.1;
+			newAmmo->setVel( ammoVel );
+
+			ammoList->addObject( newAmmo );
+
+			chargingTime = 0;
 		}
 	}
 	else {
