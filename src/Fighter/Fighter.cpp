@@ -163,6 +163,36 @@ void Fighter::Update( int speed ) {
 	weaponSystem->Update( speed );
 	allCells->UpdateObjects();
 
+	// Determine difference between fighter angle and target angle.
+	vec3 target = weaponSystem->getTarget();
+	vec2 posDiff = vec2();
+	posDiff[0] = target[0] - pos[0];
+	posDiff[1] = target[1] - pos[1];
+	float targetAngle = (180 / M_PI) * atanf (
+		fabsf( posDiff[0]/posDiff[1] )
+	);
+	// Lower two quadrants.
+	if( target[1] < pos[1] ) {
+		// Third quadrant.
+		if( target[0] < pos[0] )
+			targetAngle = 180 - targetAngle;
+		// Fourth quadrant.
+		else
+			targetAngle = 180 + targetAngle;
+	}
+	// Upper two quadrants.
+	else {
+		// Second quadrant - do nothing.
+		// First quadrant.
+		if( target[0] > pos[0] )
+			targetAngle = 360 - targetAngle;
+	}
+	if( targetAngle >= 360 )
+		targetAngle = fmodf( targetAngle, 360.0 );
+	// Rotate fighter towards target.
+	setRotation( targetAngle - rot[2] );
+
+
 	// Move any remaining power to storage.
 	float available = 0;
 
@@ -196,7 +226,6 @@ void Fighter::Draw() {
 	allCells->DrawObjects();
 
 	glPopMatrix();
-
 
 	// Draw weapon system (crosshairs).
 	weaponSystem->Draw();
@@ -289,7 +318,49 @@ void Fighter::setPropulsion( const vec3 &p ) {
 	HexCell* cell = (HexCell*) allCells->getRoot();
 	while( cell && propulsionDone < p ) {
 		if( cell->getCellType() == PROPULSION_CELL )
-			propulsionDone += ((PropulsionCell*) cell)->accelerate( p - propulsionDone );
+			propulsionDone += ((PropulsionCell*) cell)->generateAcceleration( p - propulsionDone );
+
+		cell = (HexCell*) cell->getNext();
+	}
+}
+
+
+void Fighter::setRotation( const float rotation ) {
+	vec3 rotationNeeded = vec3();
+
+	// Try to rotate the fighter - we don't actually want it to try to fully
+	// rotate in the course of one frame - even if it's possible.
+	rotationNeeded[2] = fmodf( rotation, 3 );
+
+	// If the ship is really close, we need to lock it down.
+	if( fabsf(rotation) <= 1.0 && fabsf(torq[2]) <= 0.4 ) {
+		rot[2] += rotation;
+		rotationNeeded[2] = 0;
+		torq[2] = 0;
+	}
+	// Find out if the ship has overshot the target.  If not,
+	// and the ship is nearing the target, we'll slow down.
+	else if( ! (torq[2] > 0 && rotation < 0) &&	! (torq[2] < 0 && rotation > 0) ) {
+		if( fabsf(torq[2] * 10) > fabsf(rotation) )
+			rotationNeeded[2] /= - fabsf(torq[2] * 10) / fabsf(rotation);
+	}
+	// If we're close to the target, we need to approach it slowly.
+	// This will eliminate any last possibility of "jittering".
+	else if( fabsf(rotation) <= 6.0 && fabsf(rotationNeeded[2]) >= 1.0 ) {
+		rotationNeeded[2] /= (10 / fabsf(rotation));
+	}
+
+	// Effects of explosions may also be dampened here.
+	// If X and Y rotations are not 0, the ship is being buffetted.
+	if( rot[0] != 0 )
+		rotationNeeded[0] = - rot[0] / 2;
+	if( rot[1] != 0 )
+		rotationNeeded[1] = - rot[1] / 2;
+
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell && rotationNeeded.length() != 0 ) {
+		if( cell->getCellType() == PROPULSION_CELL )
+			rotationNeeded -= ((PropulsionCell*) cell)->generateTorque( rotationNeeded );
 
 		cell = (HexCell*) cell->getNext();
 	}

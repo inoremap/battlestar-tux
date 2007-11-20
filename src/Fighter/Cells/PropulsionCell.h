@@ -42,7 +42,11 @@ class PropulsionCell : public HexCell {
 
 				// Apply acceleration forces to the fighter.
 				// Return the amount of acceleration that wasn't performed.
-				vec3 accelerate( const vec3 & );
+				vec3 generateAcceleration( const vec3 & );
+
+				// Apply torque forces to the fighter.
+				// Return the amount of torque that wasn't performed.
+				vec3 generateTorque( const vec3 & );
 
 				void setAccelerationRate( float );
 				float getAccelerationRate(); 

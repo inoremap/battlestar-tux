@@ -91,6 +91,8 @@ class Fighter : public Object {
 				// Propulsion cells will be used to move ship.
 				void setPropulsion( const vec3 & );
 
+				// Propulsion cells will be used to rotate the ship.
+				void setRotation( const float );
 
 				WeaponSystem* weaponSystem;
 

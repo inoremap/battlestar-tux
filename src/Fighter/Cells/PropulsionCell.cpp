@@ -64,7 +64,7 @@ void PropulsionCell::Draw() {
 }
 
 
-vec3 PropulsionCell::accelerate( const vec3 &accel ) {
+vec3 PropulsionCell::generateAcceleration( const vec3 &accel ) {
 	vec3 actualAccel = accel;
 	float length = actualAccel.length();
 
@@ -85,6 +85,30 @@ vec3 PropulsionCell::accelerate( const vec3 &accel ) {
 	fighter->accel( actualAccel );
 
 	return accel - actualAccel;
+}
+
+
+vec3 PropulsionCell::generateTorque( const vec3 &torque ) {
+	vec3 actualTorque = torque;
+	float length = actualTorque.length();
+
+	// Ensure the cell can exert this much force.
+	if( length > accelerationRate ) {
+		actualTorque *= accelerationRate / length;
+		length = accelerationRate;
+	}
+
+	// Get as much power as is needed to accelerate.
+	float neededPower = length * powerRate;
+	float power = fighter->getPower( neededPower );
+
+	// Torque using as much power as was obtained.
+	if( power < neededPower )
+		actualTorque *= power / neededPower;
+
+	fighter->torque( actualTorque );
+
+	return torque - actualTorque;
 }
 
 
