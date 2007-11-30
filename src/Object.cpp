@@ -51,12 +51,19 @@ void Object::Update( int speed ) {
 	pos += vel * speed;
 
 	rot += torq * speed;
+	// Keep object rotations within [0.0, 360.0].
 	if( rot[0] >= 360 )
 		rot[0] = fmodf( rot[0], 360.0 );
 	if( rot[1] >= 360 )
 		rot[1] = fmodf( rot[1], 360.0 );
 	if( rot[2] >= 360 )
 		rot[2] = fmodf( rot[2], 360.0 );
+	if( rot[0] < 0 )
+		rot[0] = fmodf( rot[0], 360.0 ) + 360.0;
+	if( rot[1] < 0 )
+		rot[1] = fmodf( rot[1], 360.0 ) + 360.0;
+	if( rot[2] < 0 )
+		rot[2] = fmodf( rot[2], 360.0 ) + 360.0;
 
 	age += speed;
 }
