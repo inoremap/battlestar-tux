@@ -187,10 +187,14 @@ void Fighter::Update( int speed ) {
 		if( target[0] > pos[0] )
 			targetAngle = 360 - targetAngle;
 	}
-	if( targetAngle >= 360 )
-		targetAngle = fmodf( targetAngle, 360.0 );
 	// Rotate fighter towards target.
-	setRotation( targetAngle - rot[2] );
+	float diff = targetAngle - rot[2];
+	if( diff > 180 )
+		setRotation( diff - 360 );
+	else if( diff < -180 )
+		setRotation( diff + 360 );
+	else
+		setRotation( diff );
 
 
 	// Move any remaining power to storage.
