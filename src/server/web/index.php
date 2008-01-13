@@ -1,3 +1,5 @@
+<?php
+
 /* index.php
  *
  * Copyright 2008 Eliot Eshelman
@@ -22,10 +24,18 @@
  */
 
 
-<?php
+	require_once( 'db.php' );
 	require_once( 'headers.php' );
+	require_once( 'session.php' );
 
-	printHead();
-	printFoot();
+	start_game_session();
+	print_head();
 
+	$db = connect_db();
+
+	// Ensure the user is logged in.
+	if( $db && login($db) ) {
+	}
+
+	print_foot();
 ?>

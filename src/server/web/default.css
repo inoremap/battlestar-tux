@@ -22,3 +22,111 @@
  */
 
 
+/* Set default parameters for all objects. */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* body attributes and alignment */
+body {
+	color: #008CDD;
+	background: #000000 url('images/nebula.png') no-repeat;
+	background-position: center center;
+	text-align: center;
+	font-family: Verdana, Lucida, Sans-Serif;
+	font-size: 12pt;
+}
+
+
+/* Title at top of page. */
+div#title {
+	color: #000000;
+	background-color: #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.1em;
+	margin-bottom: 1em;
+	padding: 0.2em;
+	width: 14em;
+}
+
+
+/* Heading for framed areas.  The frame needs to have 0.5em padding along the top. */
+div.heading {
+	color: #000000;
+	background-color: #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -0.5em;
+	margin-bottom: 0.7em;
+	padding: 0.1em;
+	width: 75%;
+}
+
+
+
+/***************************** Links ********************************/
+a, a:link, a:visited, a:active {
+	color: #008CDD;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/********************************************************************/
+
+
+
+/***************************** Forms ********************************/
+textarea, input, select, option {
+	color: #FFFFFF;
+	background-color: #181818;
+	border: solid 1px #008CDD;
+	margin: 0.1em;
+	padding: 0.1em 0.5em;
+}
+/********************************************************************/
+
+
+
+/* Error messages. */
+div.error {
+	color: #DD0000;
+	background-color: #080808;
+	border: solid 1px #DD0000;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	width: 25em;
+	padding: 0.5em;
+}
+
+
+/*************************** Login Page *****************************/
+/* Login form. */
+form.login {
+	opacity: 0.8;
+	background-color: #080808;
+	border: solid 1px #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	width: 25em;
+	padding: 0.5em;
+}
+form.login table { width: 100%; }
+form.login th { text-align: right; }
+form.login td { text-align: left; }
+
+/* Link for new accounts. */
+div.new_account {
+	margin-top: 1em;
+	text-align: right;
+}
+/********************************************************************/

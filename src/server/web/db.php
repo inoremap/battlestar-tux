@@ -1,6 +1,7 @@
 <?php
 
-/* settings.php
+
+/* db.php
  *
  * Copyright 2008 Eliot Eshelman
  * battlestartux@6by9.net
@@ -24,16 +25,18 @@
  */
 
 
-	/* Webserver paths. */
-	define( FULL_PATH, '/home/httpd/htdocs/' );
-	define( BIN_PATH, '/usr/bin/' );
-	define( BTUX_PATH, 'battlestar-tux/' );
-	define( IMAGE_PATH, $BTUX_PATH . 'images/' );
-	define( URL_PATH, 'http://igrok/' );
+	/* Connect to MySQL database. */
+	function connect_db() {
+		$db;
 
-	/* MySQL settings. */
-	define( SQL_HOST, 'localhost' );
-	define( SQL_USER, 'battlestar-tux' );
-	define( SQL_PASS, 'aoeuaoeu' );
-	define( SQL_DB, 'battlestar-tux' );
+		($db = mysql_connect( SQL_HOST, SQL_USER, SQL_PASS )) || ($db = false);
+
+		if( ! ($db && mysql_select_db(SQL_DB, $db) && mysql_query("SELECT user_id FROM users LIMIT 1", $db)) ) {
+			print "<div class=\"error\">Unable to access database.  Please report the error.</div>\n";
+			$db = false;
+		}
+
+		return $db;
+	}
+
 ?>

@@ -1,3 +1,5 @@
+<?php
+
 /* common.php
  *
  * Copyright 2008 Eliot Eshelman
@@ -22,12 +24,10 @@
  */
 
 
-<?php
-
 	/* Ensure that user input is safe and valid.
 	 * Any value that is not a number will be replaced by $default.
 	 * Caller may specify whether negative numbers and 0 are allowed. */
-	function validateNum( $num, $default, $allowZero ) {
+	function validate_num( $num, $default, $allowZero ) {
 		if( !is_numeric($num) )
 			$num = $default;
 		else
@@ -45,9 +45,21 @@
 
 
 	/* Ensure that user input is safe and valid.
-	 * Remove any potential attacks from strings. */
-	function validateTagString( $string ) {
+	 * Remove any potential MySQL attacks from strings. */
+	function validate_sql_string( $string ) {
 		return mysql_real_escape_string( stripslashes($string) );
 	}
 
+
+	/* Ensure that user input is interpreted as normal characters. */
+	function html_input( $string ) {
+		return stripslashes( htmlspecialchars_decode($string) );
+	}
+
+
+	/* Ensure that user input doesn't look strange on the user's end.
+	 * Remove any potential HTML attacks from strings. */
+	function html_output( $string ) {
+		return htmlspecialchars( stripslashes($string) );
+	}
 ?>

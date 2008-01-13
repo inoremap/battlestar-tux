@@ -1,3 +1,5 @@
+<?php
+
 /* headers.php
  *
  * Copyright 2008 Eliot Eshelman
@@ -22,11 +24,10 @@
  */
 
 
-<?php
 	require_once( 'settings.php' );
 
 
-	function printHead() {
+	function print_head() {
 		$css_path = '/' . BTUX_PATH . 'default.css';
 		$javascript_path = '/' . BTUX_PATH . 'scripts/javascript.js';
 		$home = '/' . BTUX_PATH . 'index.php';
@@ -38,7 +39,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Battlestar T.U.X.</title>
+	<title>Battlestar T.U.X. - Remote Ship Login</title>
 	<meta name="rating" content="general" />
 	<meta name="copyright" content="Copyright 2007-2008 Eliot Eshelman" />
 	<meta name="author" content="Eliot Eshelman" />
@@ -46,22 +47,19 @@
 	<link rel="stylesheet" type="text/css" href="$css_path" />
 	<script type="text/javascript" src="$javascript_path"></script>
 </head>
-<body><a name="top"></a>
+<body>
 	<div id="title">Battlestar T.U.X.</div>
-	<div id="menu">
-		<div><a href="$home">Images</a></div>
-		<div><a href="$home?type=showtags">Tags</a></div>
-		<div><a href="$home?type=import">Import</a></div>
-		<div><a href="$home?type=settings">Settings</a></div>
-	</div>
 	<div id="main">
+
+
 
 END_TEXT;
 	}
 
 
-	function printFoot() {
+	function print_foot() {
 		print <<<END_TEXT
+
 
 	</div>
 	<div id="footer">Copyright 2007-2008 Eliot Eshelman</div>
