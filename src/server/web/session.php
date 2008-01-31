@@ -26,23 +26,24 @@
 	require_once( 'common.php' );
 
 	/* Start PHP session - store user data. */
-	function start_game_session() {
+	function start_game_session( $db ) {
 		session_start();
-
-var_dump( $_SESSION );
 
 		// User would like to log out.
 		if( $_REQUEST['logout'] ) {
-			stop_game_session();
-			print "<div class=\"logout\">Successfully logged out.</div>\n";
+			// Update login status if user was actually logged in.
+			if( $_SESSION['bt_auth'] ) {
+				$username = $_SESSION['bt_username'];
+				mysql_query( "UPDATE users SET logged_in = '0' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+			}
+
+			session_destroy();
+
+			// Start a new, blank session.
+			session_start();
 		}
 	}
 
-
-	/* Stop PHP session - log out. */
-	function stop_game_session() {
-		session_destroy();
-	}
 
 
 	/* Log in a new user.
@@ -72,6 +73,14 @@ var_dump( $_SESSION );
 					print "<div class=\"error\">Please ensure the two passwords are identical.</div>\n";
 					$password_confirm = false;
 				}
+				if( strlen($username) > 32 ) {
+					print "<div class=\"error\">Usernames must be 32 characters, or less.</div>\n";
+					$username = false;
+				}
+				if( strlen($email) > 64 ) {
+					print "<div class=\"error\">E-mail addresses must be 64 characters, or less.</div>\n";
+					$email = false;
+				}
 
 				// If all variables are set, try to create account.
 				if( $username && $password && $password_confirm && $email ) {
@@ -81,7 +90,7 @@ var_dump( $_SESSION );
 						print "<div class=\"error\">The user " . html_output($username) . " already exists.</div>\n";
 					// Everything is good - create account.
 					else {
-						mysql_query( "INSERT INTO `users` ( `user_id`, `username`, `password`, `email`, `join_date`, `login_date` ) VALUES ( '', '" . validate_sql_string($username) . "', '" . md5($password) . "', '" . validate_sql_string($email) . "', NOW(), NOW() )", $db );
+						mysql_query( "INSERT INTO `users` ( `user_id`, `username`, `password`, `email`, `join_date`, `login_date`, `logged_in` ) VALUES ( '', '" . validate_sql_string($username) . "', '" . md5($password) . "', '" . validate_sql_string($email) . "', NOW(), NOW(), 'W' )", $db );
 						$user_id = mysql_insert_id();
 
 						// Account successfully created.
@@ -123,7 +132,7 @@ var_dump( $_SESSION );
 							$_SESSION['bt_username'] = $username;
 
 							// Update last login time.
-							mysql_query( "UPDATE users SET login_date = NOW() WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+							mysql_query( "UPDATE users SET login_date = NOW(), logged_in = 'W' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
 
 							return true;
 						}
@@ -144,7 +153,7 @@ var_dump( $_SESSION );
 				print "		<tr><th>Password:</th><td><input name=\"bt_password\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
 				print "		<tr><th colspan=\"2\"><input type=\"submit\" value=\"Login\" /></th></tr>\n";
 				print "	</table>\n";
-				print "	<div class=\"new_account\"><a href=\"/" . BTUX_PATH . "index.php?new_account=1\">Create New Login Account</a></div>\n";
+				print "	<div class=\"new_account\"><a href=\"/" . BTUX_PATH . "index.php?new_account=true\">Create New Login Account</a></div>\n";
 				print "</form>\n";
 			}
 

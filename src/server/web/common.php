@@ -28,6 +28,8 @@
 	 * Any value that is not a number will be replaced by $default.
 	 * Caller may specify whether negative numbers and 0 are allowed. */
 	function validate_num( $num, $default, $allowZero ) {
+		$num = floatval( $num );
+
 		if( !is_numeric($num) )
 			$num = $default;
 		else

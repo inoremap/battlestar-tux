@@ -39,7 +39,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Battlestar T.U.X. - Remote Ship Login</title>
+	<title>Battlestar T.U.X. - Remote Login</title>
 	<meta name="rating" content="general" />
 	<meta name="copyright" content="Copyright 2007-2008 Eliot Eshelman" />
 	<meta name="author" content="Eliot Eshelman" />
@@ -48,21 +48,52 @@
 	<script type="text/javascript" src="$javascript_path"></script>
 </head>
 <body>
-	<div id="title">Battlestar T.U.X.</div>
 	<div id="main">
-
-
+	<div id="title">Battlestar T.U.X.</div>
 
 END_TEXT;
 	}
 
 
+	/* Print navigation panel. */
+	function print_nav() {
+		if( $_SESSION['bt_auth'] ) {
+			print "	<div id=\"nav\">\n";
+			print "		<div>\n";
+			print "			<a href=\"index.php?panel=overview\">Overview</a>\n";
+			print "			<a href=\"index.php?panel=inventory\">Inventory</a>\n";
+			print "			<a href=\"index.php?panel=production\">Production</a>\n";
+			print "			<a href=\"index.php?panel=elements\">Elements</a>\n";
+			print "		</div>\n";
+			print "		<div>\n";
+			print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
+			print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
+			print "		</div>\n";
+			print "		<div>\n";
+			print "			<a href=\"index.php?logout=true\">Logout</a>\n";
+			print "		</div>\n";
+			print "	</div>\n\n";
+		}
+		else {
+			print "	<div id=\"nav\">\n";
+			print "		<div>\n";
+			print "			<a href=\"index.php\">Login</a>\n";
+			print "		</div>\n";
+			print "		<div>\n";
+			print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
+			print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
+			print "		</div>\n";
+			print "	</div>\n\n";
+		}
+	}
+
+
 	function print_foot() {
+		var_dump( $_SESSION );
 		print <<<END_TEXT
 
 
 	</div>
-	<div id="footer">Copyright 2007-2008 Eliot Eshelman</div>
 </body>
 </html>
 END_TEXT;

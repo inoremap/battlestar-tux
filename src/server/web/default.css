@@ -46,10 +46,34 @@ div#title {
 	background-color: #008CDD;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 0.1em;
 	margin-bottom: 1em;
 	padding: 0.2em;
 	width: 14em;
+}
+
+
+/***************************** Navigation Pane ********************************/
+div#nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 8em;
+	padding-top: 2em;
+}
+div#nav div {
+	margin: 0.8em 0em;
+}
+div#nav a {
+	display: block;
+	padding: 0.5em 0.2em;
+	text-decoration: none;
+}
+/******************************************************************************/
+
+
+/* Main content. */
+div#main {
+	margin-left: 9em;
 }
 
 
@@ -108,7 +132,6 @@ div.error {
 
 
 /*************************** Login Page *****************************/
-/* Login form. */
 form.login {
 	opacity: 0.8;
 	background-color: #080808;
@@ -130,3 +153,59 @@ div.new_account {
 	text-align: right;
 }
 /********************************************************************/
+
+
+
+/************************* Periodic Table ***************************/
+div.element {
+	opacity: 0.8;
+	background-color: #080808;
+	border: solid 1px #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	padding: 0.5em;
+	width: 40em;
+	text-align: left;
+}
+
+
+table.periodic {
+	opacity: 0.8;
+	background-color: #080808;
+	border: solid 1px #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	padding: 0.5em;
+	border-collapse: collapse;
+}
+a.element {
+	display: block;
+	text-decoration: none;
+	color: #000000;
+}
+table.periodic td {
+	border: solid 1px #000000;
+	width: 3em;
+	height: 3em;
+}
+table.periodic td.blank {
+	color: #008CDD;
+	background: none;
+	border: none;
+}
+table.periodic td.gas { background-color: #FFFFFF; }
+table.periodic td.gas:hover { background-color: #D9D9D9; }
+table.periodic td.liquid { background-color: #C8FF7A; }
+table.periodic td.liquid:hover { background-color: #A8D666; }
+table.periodic td.solid { background-color: #9CE0FF; }
+table.periodic td.solid:hover { background-color: #80B7D1; }
+div.symbol { font-size: 125%; }
+div.number { font-size: 75%; }
+/********************************************************************/
+
+
+
