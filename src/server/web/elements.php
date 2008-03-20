@@ -36,6 +36,7 @@
 			print "	<div>Density: $query[5] g/cm<sup>3</sup></div>\n";
 			print "	<div>Melting Point: $query[6] Kelvin</div>\n";
 			print "	<div>Boiling Point: $query[7] Kelvin</div>\n";
+			print " <div>Emission/Absorbtion Properties:<br /><img src=\"/" . BTUX_PATH . "/images/emission_lines/emission_plot.php?atomic_num=$atomic_num\" width=800 height=150 alt=\"$query[1] Emission/Absorbtion\" /></div>\n";
 			print "</div>\n";
 		}
 	}

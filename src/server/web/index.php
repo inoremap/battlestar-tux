@@ -34,10 +34,12 @@
 	start_game_session( $db );
 	print_head();
 
+
+	($panel = $_REQUEST['panel']) || ($panel = 'overview');
+
+
 	// Ensure the user is logged in.
 	if( $db && login($db) ) {
-		($panel = $_REQUEST['panel']) || ($panel = 'overview');
-
 		print_nav();
 
 		// Print overview of user's game.
@@ -67,9 +69,17 @@
 			print "Information\n";
 		}
 	}
-	// User not logged in - we'll still print navigation.
-	else
+
+	// User not logged in.
+	else {
 		print_nav();
+
+
+		// Print general game information.
+                if( strcmp($panel,'information') == 0 ) {
+                        print "Information\n";
+                }
+	}
 
 	print_foot();
 ?>
