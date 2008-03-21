@@ -1,6 +1,5 @@
 <?php
 
-
 /* db.php
  *
  * Copyright 2008 Eliot Eshelman
@@ -25,18 +24,19 @@
  */
 
 
-	/* Connect to MySQL database. */
-	function connect_db() {
-		$db;
+/* Connect to MySQL database. */
+function connect_db() {
+	$db;
 
-		($db = mysql_connect( SQL_HOST, SQL_USER, SQL_PASS )) || ($db = false);
+	($db = mysql_connect( SQL_HOST, SQL_USER, SQL_PASS )) || ($db = false);
 
-		if( ! ($db && mysql_select_db(SQL_DB, $db) && mysql_query("SELECT user_id FROM users LIMIT 1", $db)) ) {
-			print "<div class=\"error\">Unable to access database.  Please report the error.</div>\n";
-			$db = false;
-		}
-
-		return $db;
+	if( ! ($db && mysql_select_db(SQL_DB, $db) && mysql_query("SELECT user_id FROM users LIMIT 1", $db)) ) {
+		print "<div class=\"error\">Unable to access database.  Please report the error.</div>\n";
+		$db = false;
 	}
+
+	return $db;
+}
+
 
 ?>

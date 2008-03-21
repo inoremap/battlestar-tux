@@ -24,15 +24,15 @@
  */
 
 
-	require_once( 'settings.php' );
+require_once( 'settings.php' );
 
 
-	function print_head() {
-		$css_path = '/' . BTUX_PATH . 'default.css';
-		$javascript_path = '/' . BTUX_PATH . 'scripts/javascript.js';
-		$home = '/' . BTUX_PATH . 'index.php';
+function print_head() {
+	$css_path = '/' . BTUX_PATH . 'default.css';
+	$javascript_path = '/' . BTUX_PATH . 'scripts/javascript.js';
+	$home = '/' . BTUX_PATH . 'index.php';
 
-		print <<<END_TEXT
+	print <<<END_TEXT
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -52,50 +52,52 @@
 	<div id="title">Battlestar T.U.X.</div>
 
 END_TEXT;
+}
+
+
+/* Print navigation panel. */
+function print_nav() {
+	if( $_SESSION['bt_auth'] ) {
+		print "	<div id=\"nav\">\n";
+		print "		<div>\n";
+		print "			<a href=\"index.php?panel=overview\">Overview</a>\n";
+		print "			<a href=\"index.php?panel=inventory\">Inventory</a>\n";
+		print "			<a href=\"index.php?panel=production\">Production</a>\n";
+		print "			<a href=\"index.php?panel=elements\">Elements</a>\n";
+		print "		</div>\n";
+		print "		<div>\n";
+		print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
+		print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
+		print "		</div>\n";
+		print "		<div>\n";
+		print "			<a href=\"index.php?logout=true\">Logout</a>\n";
+		print "		</div>\n";
+		print "	</div>\n\n";
 	}
-
-
-	/* Print navigation panel. */
-	function print_nav() {
-		if( $_SESSION['bt_auth'] ) {
-			print "	<div id=\"nav\">\n";
-			print "		<div>\n";
-			print "			<a href=\"index.php?panel=overview\">Overview</a>\n";
-			print "			<a href=\"index.php?panel=inventory\">Inventory</a>\n";
-			print "			<a href=\"index.php?panel=production\">Production</a>\n";
-			print "			<a href=\"index.php?panel=elements\">Elements</a>\n";
-			print "		</div>\n";
-			print "		<div>\n";
-			print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
-			print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
-			print "		</div>\n";
-			print "		<div>\n";
-			print "			<a href=\"index.php?logout=true\">Logout</a>\n";
-			print "		</div>\n";
-			print "	</div>\n\n";
-		}
-		else {
-			print "	<div id=\"nav\">\n";
-			print "		<div>\n";
-			print "			<a href=\"index.php\">Login</a>\n";
-			print "		</div>\n";
-			print "		<div>\n";
-			print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
-			print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
-			print "		</div>\n";
-			print "	</div>\n\n";
-		}
+	else {
+		print "	<div id=\"nav\">\n";
+		print "		<div>\n";
+		print "			<a href=\"index.php\">Login</a>\n";
+		print "		</div>\n";
+		print "		<div>\n";
+		print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
+		print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
+		print "		</div>\n";
+		print "	</div>\n\n";
 	}
+}
 
 
-	function print_foot() {
-		var_dump( $_SESSION );
-		print <<<END_TEXT
+function print_foot() {
+	var_dump( $_SESSION );
+	print <<<END_TEXT
 
 
 	</div>
 </body>
 </html>
 END_TEXT;
-	}
+}
+
+
 ?>

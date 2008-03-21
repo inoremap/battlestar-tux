@@ -24,44 +24,46 @@
  */
 
 
-	/* Ensure that user input is safe and valid.
-	 * Any value that is not a number will be replaced by $default.
-	 * Caller may specify whether negative numbers and 0 are allowed. */
-	function validate_num( $num, $default, $allowZero ) {
-		$num = floatval( $num );
+/* Ensure that user input is safe and valid.
+ * Any value that is not a number will be replaced by $default.
+ * Caller may specify whether negative numbers and 0 are allowed. */
+function validate_num( $num, $default, $allowZero ) {
+	$num = floatval( $num );
 
-		if( !is_numeric($num) )
-			$num = $default;
-		else
-			if( $allowZero ) {
-				if( $num < 0 )
-					$num = $default;
-			}
-			else {
-				if( $num <= 0 )
-					$num = $default;
-			}
+	if( !is_numeric($num) )
+		$num = $default;
+	else
+		if( $allowZero ) {
+			if( $num < 0 )
+				$num = $default;
+		}
+		else {
+			if( $num <= 0 )
+				$num = $default;
+		}
 
-		return $num;
-	}
-
-
-	/* Ensure that user input is safe and valid.
-	 * Remove any potential MySQL attacks from strings. */
-	function validate_sql_string( $string ) {
-		return mysql_real_escape_string( stripslashes($string) );
-	}
+	return $num;
+}
 
 
-	/* Ensure that user input is interpreted as normal characters. */
-	function html_input( $string ) {
-		return stripslashes( htmlspecialchars_decode($string) );
-	}
+/* Ensure that user input is safe and valid.
+ * Remove any potential MySQL attacks from strings. */
+function validate_sql_string( $string ) {
+	return mysql_real_escape_string( stripslashes($string) );
+}
 
 
-	/* Ensure that user input doesn't look strange on the user's end.
-	 * Remove any potential HTML attacks from strings. */
-	function html_output( $string ) {
-		return htmlspecialchars( stripslashes($string) );
-	}
+/* Ensure that user input is interpreted as normal characters. */
+function html_input( $string ) {
+	return stripslashes( htmlspecialchars_decode($string) );
+}
+
+
+/* Ensure that user input doesn't look strange on the user's end.
+ * Remove any potential HTML attacks from strings. */
+function html_output( $string ) {
+	return htmlspecialchars( stripslashes($string) );
+}
+
+
 ?>

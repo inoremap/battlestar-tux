@@ -23,145 +23,147 @@
  *
  */
 
-	require_once( 'common.php' );
+require_once( 'common.php' );
 
-	/* Start PHP session - store user data. */
-	function start_game_session( $db ) {
+/* Start PHP session - store user data. */
+function start_game_session( $db ) {
+	session_start();
+
+	// User would like to log out.
+	if( $_REQUEST['logout'] ) {
+		// Update login status if user was actually logged in.
+		if( $_SESSION['bt_auth'] ) {
+			$username = $_SESSION['bt_username'];
+			mysql_query( "UPDATE users SET logged_in = '0' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+		}
+
+		session_destroy();
+
+		// Start a new, blank session.
 		session_start();
+	}
+}
 
-		// User would like to log out.
-		if( $_REQUEST['logout'] ) {
-			// Update login status if user was actually logged in.
-			if( $_SESSION['bt_auth'] ) {
-				$username = $_SESSION['bt_username'];
-				mysql_query( "UPDATE users SET logged_in = '0' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+
+
+/* Log in a new user.
+ * If the user is already logged in, this is transparent.
+ * Returns true if a user is logged in.  */
+function login( $db ) {
+	// User is not currently logged in.
+	if( ! $_SESSION['bt_auth'] ) {
+		// If this variable is set, the user needs a new account.
+		if( $_REQUEST['new_account'] ) {
+			$username = html_input( $_REQUEST['new_bt_username'] );
+			$password = html_input( $_REQUEST['new_bt_password'] );
+			$password_confirm = html_input( $_REQUEST['new_bt_password_confirm'] );
+			$email = html_input( $_REQUEST['new_bt_email'] );
+
+			// Determine if any values are missing.
+			$submitted = $username || $password || $password_confirm || $email;
+			if( ! $username && $submitted )
+				print "<div class=\"error\">Please enter a username.</div>\n";
+			if( ! $password && $submitted )
+				print "<div class=\"error\">Please enter a password.</div>\n";
+			if( ! $password_confirm && $submitted )
+				print "<div class=\"error\">Please enter a password and password confirmation.</div>\n";
+			if( ! $email && $submitted )
+				print "<div class=\"error\">Please enter an e-mail address in case of lost password.</div>\n";
+			if( strcmp($password, $password_confirm) != 0 ) {
+				print "<div class=\"error\">Please ensure the two passwords are identical.</div>\n";
+				$password_confirm = false;
+			}
+			if( strlen($username) > 32 ) {
+				print "<div class=\"error\">Usernames must be 32 characters, or less.</div>\n";
+				$username = false;
+			}
+			if( strlen($email) > 64 ) {
+				print "<div class=\"error\">E-mail addresses must be 64 characters, or less.</div>\n";
+				$email = false;
 			}
 
-			session_destroy();
+			// If all variables are set, try to create account.
+			if( $username && $password && $password_confirm && $email ) {
+				// Determine if the user already exists.
+				$query = mysql_query( "SELECT user_id FROM users WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+				if( $query && mysql_num_rows($query) )
+					print "<div class=\"error\">The user " . html_output($username) . " already exists.</div>\n";
+				// Everything is good - create account.
+				else {
+					mysql_query( "INSERT INTO `users` ( `user_id`, `username`, `password`, `email`, `join_date`, `login_date`, `logged_in` ) VALUES ( '', '" . validate_sql_string($username) . "', '" . md5($password) . "', '" . validate_sql_string($email) . "', NOW(), NOW(), 'W' )", $db );
+					$user_id = mysql_insert_id();
 
-			// Start a new, blank session.
-			session_start();
+					// Account successfully created.
+					if( $user_id ) {
+						$_SESSION['bt_auth'] = true;
+						$_SESSION['bt_username'] = $username;
+
+						return true;
+					}
+				}
+			}
+
+			print "<form class=\"login\" method=\"post\" action=\"/" . BTUX_PATH . "\"><input type=\"hidden\" name=\"new_account\" value=\"true\" />\n";
+			print "	<div class=\"heading\">Remote Login Account Creation</div>\n";
+			print "	<table>\n";
+			print "		<tr><th>Username:</th><td><input name=\"new_bt_username\" value=\"" . html_output($username) . "\" type=\"text\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
+			print "		<tr><th>Password:</th><td><input name=\"new_bt_password\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
+			print "		<tr><th>Confirm Password:</th><td><input name=\"new_bt_password_confirm\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
+			print "		<tr><th>E-Mail:</th><td><input name=\"new_bt_email\" value=\"" . html_output($email) . "\" type=\"text\" size=\"32\" maxlength=\"64\" /></td></tr>\n";
+			print "		<tr><th colspan=\"2\"><input type=\"submit\" value=\"Create Account\" /></th></tr>\n";
+			print "	</table>\n";
+			print "</form>\n";
 		}
-	}
 
+		// User has not yet logged in - but isn't creating a new account.
+		else {
+			$username = html_input( $_REQUEST['bt_username'] );
+			$password = html_input( $_REQUEST['bt_password'] );
 
+			// If these variables are set, the user is trying to log in.
+			if( $username && $password ) {
+				$query = mysql_query( "SELECT password FROM users WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
+				if( $query && mysql_num_rows($query) ) {
+					$query = mysql_fetch_row( $query );
 
-	/* Log in a new user.
-	 * If the user is already logged in, this is transparent.
-	 * Returns true if a user is logged in.  */
-	function login( $db ) {
-		// User is not currently logged in.
-		if( ! $_SESSION['bt_auth'] ) {
-			// If this variable is set, the user needs a new account.
-			if( $_REQUEST['new_account'] ) {
-				$username = html_input( $_REQUEST['new_bt_username'] );
-				$password = html_input( $_REQUEST['new_bt_password'] );
-				$password_confirm = html_input( $_REQUEST['new_bt_password_confirm'] );
-				$email = html_input( $_REQUEST['new_bt_email'] );
+					// If passwords match, user is logged in.
+					if( strcmp(md5($password), $query[0]) == 0 ) {
+						$_SESSION['bt_auth'] = true;
+						$_SESSION['bt_username'] = $username;
 
-				// Determine if any values are missing.
-				$submitted = $username || $password || $password_confirm || $email;
-				if( ! $username && $submitted )
-					print "<div class=\"error\">Please enter a username.</div>\n";
-				if( ! $password && $submitted )
-					print "<div class=\"error\">Please enter a password.</div>\n";
-				if( ! $password_confirm && $submitted )
-					print "<div class=\"error\">Please enter a password and password confirmation.</div>\n";
-				if( ! $email && $submitted )
-					print "<div class=\"error\">Please enter an e-mail address in case of lost password.</div>\n";
-				if( strcmp($password, $password_confirm) != 0 ) {
-					print "<div class=\"error\">Please ensure the two passwords are identical.</div>\n";
-					$password_confirm = false;
-				}
-				if( strlen($username) > 32 ) {
-					print "<div class=\"error\">Usernames must be 32 characters, or less.</div>\n";
-					$username = false;
-				}
-				if( strlen($email) > 64 ) {
-					print "<div class=\"error\">E-mail addresses must be 64 characters, or less.</div>\n";
-					$email = false;
-				}
+						// Update last login time.
+						mysql_query( "UPDATE users SET login_date = NOW(), logged_in = 'W' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
 
-				// If all variables are set, try to create account.
-				if( $username && $password && $password_confirm && $email ) {
-					// Determine if the user already exists.
-					$query = mysql_query( "SELECT user_id FROM users WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
-					if( $query && mysql_num_rows($query) )
-						print "<div class=\"error\">The user " . html_output($username) . " already exists.</div>\n";
-					// Everything is good - create account.
-					else {
-						mysql_query( "INSERT INTO `users` ( `user_id`, `username`, `password`, `email`, `join_date`, `login_date`, `logged_in` ) VALUES ( '', '" . validate_sql_string($username) . "', '" . md5($password) . "', '" . validate_sql_string($email) . "', NOW(), NOW(), 'W' )", $db );
-						$user_id = mysql_insert_id();
-
-						// Account successfully created.
-						if( $user_id ) {
-							$_SESSION['bt_auth'] = true;
-							$_SESSION['bt_username'] = $username;
-
-							return true;
-						}
+						return true;
 					}
 				}
 
-				print "<form class=\"login\" method=\"post\" action=\"/" . BTUX_PATH . "\"><input type=\"hidden\" name=\"new_account\" value=\"true\" />\n";
-				print "	<div class=\"heading\">Remote Login Account Creation</div>\n";
-				print "	<table>\n";
-				print "		<tr><th>Username:</th><td><input name=\"new_bt_username\" value=\"" . html_output($username) . "\" type=\"text\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
-				print "		<tr><th>Password:</th><td><input name=\"new_bt_password\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
-				print "		<tr><th>Confirm Password:</th><td><input name=\"new_bt_password_confirm\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
-				print "		<tr><th>E-Mail:</th><td><input name=\"new_bt_email\" value=\"" . html_output($email) . "\" type=\"text\" size=\"32\" maxlength=\"64\" /></td></tr>\n";
-				print "		<tr><th colspan=\"2\"><input type=\"submit\" value=\"Create Account\" /></th></tr>\n";
-				print "	</table>\n";
-				print "</form>\n";
+				print "<div class=\"error\">Login denied - please try again.</div>\n";
 			}
 
-			// User has not yet logged in - but isn't creating a new account.
-			else {
-				$username = html_input( $_REQUEST['bt_username'] );
-				$password = html_input( $_REQUEST['bt_password'] );
+			if( ! $username && $password )
+				print "<div class=\"error\">Please enter your username.</div>\n";
+			if( ! $password && $username )
+				print "<div class=\"error\">Please enter your password.</div>\n";
 
-				// If these variables are set, the user is trying to log in.
-				if( $username && $password ) {
-					$query = mysql_query( "SELECT password FROM users WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
-					if( $query && mysql_num_rows($query) ) {
-						$query = mysql_fetch_row( $query );
-
-						// If passwords match, user is logged in.
-						if( strcmp(md5($password), $query[0]) == 0 ) {
-							$_SESSION['bt_auth'] = true;
-							$_SESSION['bt_username'] = $username;
-
-							// Update last login time.
-							mysql_query( "UPDATE users SET login_date = NOW(), logged_in = 'W' WHERE username = '" . validate_sql_string($username) . "' LIMIT 1", $db );
-
-							return true;
-						}
-					}
-
-					print "<div class=\"error\">Login denied - please try again.</div>\n";
-				}
-
-				if( ! $username && $password )
-					print "<div class=\"error\">Please enter your username.</div>\n";
-				if( ! $password && $username )
-					print "<div class=\"error\">Please enter your password.</div>\n";
-
-				print "<form class=\"login\" method=\"post\" action=\"/" . BTUX_PATH . "\">\n";
-				print "	<div class=\"heading\">Remote Login</div>\n";
-				print "	<table>\n";
-				print "		<tr><th>Username:</th><td><input name=\"bt_username\" value=\"" . html_output($username) . "\" type=\"text\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
-				print "		<tr><th>Password:</th><td><input name=\"bt_password\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
-				print "		<tr><th colspan=\"2\"><input type=\"submit\" value=\"Login\" /></th></tr>\n";
-				print "	</table>\n";
-				print "	<div class=\"new_account\"><a href=\"/" . BTUX_PATH . "index.php?new_account=true\">Create New Login Account</a></div>\n";
-				print "</form>\n";
-			}
-
-			return false;
+			print "<form class=\"login\" method=\"post\" action=\"/" . BTUX_PATH . "\">\n";
+			print "	<div class=\"heading\">Remote Login</div>\n";
+			print "	<table>\n";
+			print "		<tr><th>Username:</th><td><input name=\"bt_username\" value=\"" . html_output($username) . "\" type=\"text\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
+			print "		<tr><th>Password:</th><td><input name=\"bt_password\" value=\"\" type=\"password\" size=\"16\" maxlength=\"32\" /></td></tr>\n";
+			print "		<tr><th colspan=\"2\"><input type=\"submit\" value=\"Login\" /></th></tr>\n";
+			print "	</table>\n";
+			print "	<div class=\"new_account\"><a href=\"/" . BTUX_PATH . "index.php?new_account=true\">Create New Login Account</a></div>\n";
+			print "</form>\n";
 		}
 
-		// User is already logged in.
-		else
-			return true;
+		return false;
 	}
+
+	// User is already logged in.
+	else
+		return true;
+}
+
+
 ?>

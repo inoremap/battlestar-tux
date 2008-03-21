@@ -24,16 +24,18 @@
  */
 
 
-	/* Webserver paths. */
-	define( FULL_PATH, '/home/httpd/htdocs/' );
-	define( BIN_PATH, '/usr/bin/' );
-	define( BTUX_PATH, 'battlestar-tux/' );
-	define( IMAGE_PATH, $BTUX_PATH . 'images/' );
-	define( URL_PATH, 'http://igrok/' );
+/* Webserver paths. */
+define( FULL_PATH, '/home/httpd/htdocs/' );
+define( BIN_PATH, '/usr/bin/' );
+define( BTUX_PATH, 'battlestar-tux/' );
+define( IMAGE_PATH, $BTUX_PATH . 'images/' );
+define( URL_PATH, 'http://igrok/' );
 
-	/* MySQL settings. */
-	define( SQL_HOST, 'localhost' );
-	define( SQL_USER, 'battlestar-tux' );
-	define( SQL_PASS, 'aoeuaoeu' );
-	define( SQL_DB, 'battlestar-tux' );
+/* MySQL settings. */
+define( SQL_HOST, 'localhost' );
+define( SQL_USER, 'battlestar-tux' );
+define( SQL_PASS, 'aoeuaoeu' );
+define( SQL_DB, 'battlestar-tux' );
+
+
 ?>

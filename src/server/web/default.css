@@ -52,6 +52,7 @@ div#title {
 }
 
 
+
 /***************************** Navigation Pane ********************************/
 div#nav {
 	position: absolute;
@@ -71,6 +72,7 @@ div#nav a {
 /******************************************************************************/
 
 
+
 /* Main content. */
 div#main {
 	margin-left: 9em;
@@ -85,9 +87,29 @@ div.heading {
 	margin-right: auto;
 	margin-top: -0.5em;
 	margin-bottom: 0.7em;
-	padding: 0.1em;
+	padding: 0.1em 0.1em 0.1em 1em;
 	width: 75%;
+	text-align: left;
 }
+
+
+/* This div holds primary page contents. */
+div.content {
+	opacity: 0.8;
+	background-color: #080808;
+	border: solid 1px #008CDD;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	padding: 0.5em;
+	width: 75%;
+	text-align: left;
+}
+
+
+/* Heading for sub-sections. */
+div.subheading { font-weight: bolder; }
 
 
 
@@ -131,6 +153,7 @@ div.error {
 }
 
 
+
 /*************************** Login Page *****************************/
 form.login {
 	opacity: 0.8;
@@ -157,30 +180,11 @@ div.new_account {
 
 
 /************************* Periodic Table ***************************/
-div.element {
-	opacity: 0.8;
-	background-color: #080808;
-	border: solid 1px #008CDD;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	padding: 0.5em;
-	width: 820px;
-	text-align: left;
-}
-
-
 table.periodic {
 	opacity: 0.8;
-	background-color: #080808;
-	border: solid 1px #008CDD;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
 	padding: 0.5em;
 	border-collapse: collapse;
+	text-align: center;
 }
 a.element {
 	display: block;

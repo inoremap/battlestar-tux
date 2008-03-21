@@ -24,62 +24,72 @@
  */
 
 
-	require_once( 'db.php' );
-	require_once( 'headers.php' );
-	require_once( 'elements.php' );
-	require_once( 'session.php' );
+require_once( 'db.php' );
+require_once( 'headers.php' );
+require_once( 'elements.php' );
+require_once( 'information.php' );
+require_once( 'session.php' );
 
-	$db = connect_db();
+$db = connect_db();
 
-	start_game_session( $db );
-	print_head();
+/* If the database is unavailable, it's best to stop now. */
+if( ! $db ) {
+		print "<div class=\"error\">This page is temporarily unavailable.</div>\n";
+		exit( 1 );
+}
 
 
-	($panel = $_REQUEST['panel']) || ($panel = 'overview');
+start_game_session( $db );
+print_head();
 
 
-	// Ensure the user is logged in.
-	if( $db && login($db) ) {
-		print_nav();
+($panel = $_REQUEST['panel']) || ($panel = 'overview');
 
-		// Print overview of user's game.
-		if( strcmp($panel,'overview') == 0 )
-			print "Overview\n";
 
-		// Display user's inventory.
-		elseif( strcmp($panel,'inventory') == 0 )
-			print "Inventory\n";
+// Ensure the user is logged in.
+if( login($db) ) {
+	print_nav();
 
-		// Manage production of units.
-		elseif( strcmp($panel,'production') == 0 )
-			print "Production\n";
+	// Print overview of user's game.
+	if( strcmp($panel,'overview') == 0 )
+		print "Overview\n";
 
-		// Display atomic element properties.
-		elseif( strcmp($panel,'elements') == 0 ) {
-			if( $element = $_REQUEST['element'] )
-				print_element( $db, validate_num($element, 1, false) );
-			($temperature = $_GET['temperature']) || ($temperature = $_POST['temperature']) || ($temperature = $_SESSION['temperature']);
-			$_SESSION['temperature'] = validate_num( $temperature, 273, false );
+	// Display user's inventory.
+	elseif( strcmp($panel,'inventory') == 0 )
+		print "Inventory\n";
 
-			print_periodic( $db );
-		}
+	// Manage production of units.
+	elseif( strcmp($panel,'production') == 0 )
+		print "Production\n";
 
-		// Print general game information.
-		elseif( strcmp($panel,'information') == 0 ) {
-			print "Information\n";
-		}
+	// Display atomic element properties.
+	elseif( strcmp($panel,'elements') == 0 ) {
+		if( $element = $_REQUEST['element'] )
+			print_element( $db, validate_num($element, 1, false) );
+		($temperature = $_GET['temperature']) || ($temperature = $_POST['temperature']) || ($temperature = $_SESSION['temperature']);
+		$_SESSION['temperature'] = validate_num( $temperature, 273, false );
+
+		print_periodic( $db );
 	}
 
-	// User not logged in.
-	else {
-		print_nav();
-
-
-		// Print general game information.
-                if( strcmp($panel,'information') == 0 ) {
-                        print "Information\n";
-                }
+	// Print general game information.
+	elseif( strcmp($panel,'information') == 0 ) {
+		print_game_info( $db );
 	}
+}
 
-	print_foot();
+// User not logged in.
+else {
+	print_nav();
+
+
+	// Print general game information.
+	if( strcmp($panel,'information') == 0 ) {
+		print_game_info( $db );
+	}
+}
+
+print_foot();
+
+
 ?>
