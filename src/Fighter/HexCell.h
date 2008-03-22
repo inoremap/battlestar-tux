@@ -1,6 +1,6 @@
 /* HexCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,14 +34,14 @@ class Fighter;
 
 // Different possible cell functions.
 enum HexCellType {
-	CORE_CELL,			// Central unit in the fighter
-	ARMOR_CELL,			// Protective armor on the hull
-	CAPTURE_CELL,		// Energy capture/attraction
-	GENERATION_CELL,	// Energy generation
-	PROPULSION_CELL,	// Propulsion of the fighter
-	SHIELD_CELL,		// Shield generator
-	STORAGE_CELL,		// Energy storage
-	WEAPON_CELL			// Weaponry
+	CORE_CELL	= 0x0001,		// Central unit in the fighter
+	ARMOR_CELL	= 0x0002,		// Protective armor on the hull
+	CAPTURE_CELL	= 0x0004,		// Energy capture/attraction
+	GENERATION_CELL	= 0x0008,		// Energy generation
+	PROPULSION_CELL	= 0x0010,		// Propulsion of the fighter
+	SHIELD_CELL	= 0x0020,		// Shield generator
+	STORAGE_CELL	= 0x0040,		// Energy storage
+	WEAPON_CELL	= 0x0080		// Weaponry
 };
 
 
