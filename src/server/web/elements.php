@@ -32,10 +32,10 @@ function print_element( $db, $atomic_num ) {
 
 		print "<div class=\"content\">\n";
 		print "	<div class=\"heading\">$query[1] ($query[2])</div>\n";
-		print "	<div>Density: $query[5] g/cm<sup>3</sup></div>\n";
-		print "	<div>Melting Point: $query[6] Kelvin</div>\n";
-		print "	<div>Boiling Point: $query[7] Kelvin</div>\n";
-		print "	<div>Emission/Absorbtion Properties:<br /><img src=\"/" . BTUX_PATH . "/images/emission_lines/emission_plot.php?atomic_num=$atomic_num\" width=800 height=150 alt=\"$query[1] Emission/Absorbtion\" /></div>\n";
+		print "	<p>Density: $query[5] g/cm<sup>3</sup></p>\n";
+		print "	<p>Melting Point: $query[6] Kelvin</p>\n";
+		print "	<p>Boiling Point: $query[7] Kelvin</p>\n";
+		print "	<p>Emission/Absorbtion Properties:<br /><img src=\"/" . BTUX_PATH . "/images/emission_lines/emission_plot.php?atomic_num=$atomic_num\" width=800 height=150 alt=\"$query[1] Emission/Absorbtion\" /></p>\n";
 		print "</div>\n";
 	}
 }

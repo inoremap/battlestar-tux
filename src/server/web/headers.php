@@ -67,7 +67,6 @@ function print_nav() {
 		print "		</div>\n";
 		print "		<div>\n";
 		print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
-		print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
 		print "		</div>\n";
 		print "		<div>\n";
 		print "			<a href=\"index.php?logout=true\">Logout</a>\n";
@@ -81,7 +80,6 @@ function print_nav() {
 		print "		</div>\n";
 		print "		<div>\n";
 		print "			<a href=\"index.php?panel=information\">Game Info</a>\n";
-		print "			<a href=\"http://code.google.com/p/battlestar-tux/\">Tech Details</a>\n";
 		print "		</div>\n";
 		print "	</div>\n\n";
 	}

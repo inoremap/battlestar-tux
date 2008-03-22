@@ -73,46 +73,6 @@ div#nav a {
 
 
 
-/* Main content. */
-div#main {
-	margin-left: 9em;
-}
-
-
-/* Heading for framed areas.  The frame needs to have 0.5em padding along the top. */
-div.heading {
-	color: #000000;
-	background-color: #008CDD;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: -0.5em;
-	margin-bottom: 0.7em;
-	padding: 0.1em 0.1em 0.1em 1em;
-	width: 75%;
-	text-align: left;
-}
-
-
-/* This div holds primary page contents. */
-div.content {
-	opacity: 0.8;
-	background-color: #080808;
-	border: solid 1px #008CDD;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	padding: 0.5em;
-	width: 75%;
-	text-align: left;
-}
-
-
-/* Heading for sub-sections. */
-div.subheading { font-weight: bolder; }
-
-
-
 /***************************** Links ********************************/
 a, a:link, a:visited, a:active {
 	color: #008CDD;
@@ -139,30 +99,12 @@ textarea, input, select, option {
 
 
 
-/* Error messages. */
-div.error {
-	color: #DD0000;
-	background-color: #080808;
-	border: solid 1px #DD0000;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	width: 25em;
-	padding: 0.5em;
-}
-
-
-
 /*************************** Login Page *****************************/
 form.login {
 	opacity: 0.8;
 	background-color: #080808;
 	border: solid 1px #008CDD;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+	margin: 0.5em auto;
 	width: 25em;
 	padding: 0.5em;
 }
@@ -212,4 +154,59 @@ div.number { font-size: 75%; }
 /********************************************************************/
 
 
+
+/* Main content. */
+div#main {
+	margin-left: 9em;
+}
+
+
+/* Error messages. */
+div.error {
+	color: #DD0000;
+	background-color: #080808;
+	border: solid 1px #DD0000;
+	margin: 0.5em auto;
+	width: 25em;
+	padding: 0.5em;
+}
+
+
+/* This div holds primary page contents. */
+div.content {
+	opacity: 0.8;
+	background-color: #080808;
+	border: solid 1px #008CDD;
+	margin: 1.5em auto;
+	padding: 0.5em;
+	width: 75%;
+	text-align: left;
+}
+div.content p { margin-bottom: 1em; }
+
+
+/* Heading for framed areas.  The frame needs to have 0.5em padding along the top. */
+div.heading {
+	color: #000000;
+	background-color: #008CDD;
+	margin: -0.5em auto 0.7em auto;
+	padding: 0.1em 0.1em 0.1em 1em;
+	width: 75%;
+	text-align: left;
+}
+
+
+/* Heading for sub-sections. */
+p.subheading {
+	margin-bottom: 0.5em;
+	font-weight: bolder;
+}
+
+
+/* Default list with text contents. */
+ul.text {
+	list-style-type: disc;
+	margin: 0em 0em 1em 1em;
+}
+ul.text li { margin-bottom: 1.5em; }
 
