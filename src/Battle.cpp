@@ -1,6 +1,6 @@
 /* Battle.cpp
  *
- * Copyright 2006-2007 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -41,6 +41,9 @@ Battle::Battle( Game* g ) {
 	screen = game->getScreen();
 
 	hud = new HUD( game );
+
+	collisionManager = new CollisionManager();
+
 	ground = new Ground( SOLID_GROUND, game );
 
 	hero = new HeroFighter( game );
@@ -64,13 +67,14 @@ Battle::Battle( Game* g ) {
 
 Battle::~Battle() {
 	delete hud;
-	delete ground;
+	delete explosionList;
+	delete heroAmmoList;
+	delete enemyAmmoList;
 	delete hero;
 	delete playerController;
-	delete heroAmmoList;
 	delete enemies;
-	delete explosionList;
-	delete enemyAmmoList;
+	delete ground;
+	delete collisionManager;
 }
 
 

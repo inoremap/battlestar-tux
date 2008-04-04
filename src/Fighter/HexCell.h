@@ -25,6 +25,8 @@
 #ifndef HEXCELL_H_
 #define HEXCELL_H_
 
+#include "CollisionShapes/btCylinderShape.h"
+
 #include "Game.h"
 #include "IntegerVector.h"
 #include "Object.h"
@@ -86,6 +88,10 @@ class HexCell : public Object {
 				// The fighter that this cell belongs to.
 				Fighter* fighter;
 
+				// All Hex Cell objects should share the same collision shape.
+				static btCylinderShapeZ* hexCollisionShape;
+				static btCylinderShapeZ* getCollisionShape();
+
 				Game* game;
 
 	private:
@@ -94,7 +100,7 @@ class HexCell : public Object {
 };
 
 
-// Standard sizes for hex cell.
+// Standard sizes for hex cell (radii).
 static const float HEX_CELL_SIZE[3] = {
 	0.5,	// Inner width
 	0.65,	// Outer width

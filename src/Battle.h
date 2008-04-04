@@ -1,6 +1,6 @@
 /* Battle.h
  *
- * Copyright 2006-2007 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,6 +25,7 @@
 #ifndef BATTLE_H_
 #define BATTLE_H_
 
+#include "CollisionManager.h"
 #include "EnemyFighterList.h"
 #include "ExplosionList.h"
 #include "FighterAmmoList.h"
@@ -74,6 +75,9 @@ class Battle {
 				Screen* screen;
 
 				HUD* hud;
+
+				CollisionManager* collisionManager;
+
 				Ground* ground;
 
 				HeroFighter* hero;

@@ -1,6 +1,6 @@
 /* HexCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,6 +27,9 @@
 #include "Fighter.h"
 #include "HexCell.h"
 #include "HexCellList.h"
+
+// The collision shape will be created when it is requested.
+btCylinderShapeZ* HexCell::hexCollisionShape = 0;
 
 HexCell::HexCell( Fighter* f, Game* g, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
 	fighter = f;
@@ -165,5 +168,13 @@ void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {
 		glTexCoord2f( 0, 0 );
 		glVertex3f( HEX_VERTS[0][0] * outerWidth, HEX_VERTS[0][1] * outerWidth, -height );
 	glEnd();
+}
+
+
+btCylinderShapeZ* HexCell::getCollisionShape() {
+	if( hexCollisionShape == 0 )
+		hexCollisionShape = new btCylinderShapeZ(btVector3(HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2]));
+	else
+		return hexCollisionShape;
 }
 
