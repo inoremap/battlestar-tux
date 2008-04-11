@@ -35,7 +35,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	Game* game = new Game();
+	Game* game = getGame();
 	Config* config = new Config( game );
 	config->parseCommandline( argc, argv );
 	game->setConfig( config );

@@ -1,6 +1,6 @@
 /* Game.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -40,7 +40,7 @@ class TextureManager;
 /* Stores game states and information. */
 class Game {
 	public:
-				Game();
+				static Game* getGame();
 
 				// Create a new game
 				void newGame();
@@ -87,8 +87,13 @@ class Game {
 				void setScreen( Screen* s );
 
 	private:
+				// Constructor needs to be private, because Game is a singleton.
+				Game();
 				Game( const Game &game );
 				const Game & operator= ( const Game &game );
+
+				// We only need one copy of the game object.
+				static Game* game;
 
 				// Is Battlestar Tux finished?
 				bool finished;

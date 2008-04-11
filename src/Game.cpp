@@ -1,6 +1,6 @@
 /* Game.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -31,6 +31,14 @@
 #include "FighterAmmoList.h"
 #include "Game.h"
 #include "TextureManager.h"
+
+
+Game* Game::getGame() {
+	if( game == 0 )
+		game = new Game();
+
+	return game;
+}
 
 
 Game::Game() {
