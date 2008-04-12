@@ -72,7 +72,7 @@ class Fighter : public Object {
 				// One of the ship's components has been destroyed.
 				void destroyCell( HexCell* );
 
-				int getAlignment();
+				FighterAlignment getAlignment() { return align; }
 
 				inline bool hasComponents() { return true; }
 				inline ObjectList* getComponents() { return allCells; }

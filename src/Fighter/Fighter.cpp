@@ -263,9 +263,6 @@ void Fighter::destroyCell( HexCell* cell ) {
 }
 
 
-int Fighter::getAlignment() { return align; }
-
-
 float Fighter::getPower( float power ) {
 	float available = 0;
 
