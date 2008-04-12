@@ -1,6 +1,6 @@
 /* Ground.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -38,7 +38,7 @@ enum GroundType {
 /* Lowest viewable level on the screen.  It's the ground. */
 class Ground {
 	public:
-				Ground( GroundType type, Game* g );
+				Ground( GroundType type );
 				~Ground();
 
 				void Update();

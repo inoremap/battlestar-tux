@@ -1,6 +1,6 @@
 /* NewCampaignMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 /* Display new game options. */
 class NewCampaignMenu : public GUI, ButtonClickListener {
 	public:
-				NewCampaignMenu( MainMenu* menu, Game* g, int w, int h );
+				NewCampaignMenu( MainMenu* menu, int w, int h );
 				~NewCampaignMenu();
 
 				// Create all widgets and bind listeners.

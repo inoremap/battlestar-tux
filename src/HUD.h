@@ -1,6 +1,6 @@
 /* HUD.h
  *
- * Copyright 2005 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -32,7 +32,7 @@
 /* Heads Up Display - Character info/health. */
 class HUD {
 	public:
-				HUD( Game* g );
+				HUD();
 				~HUD();
 
 				// Draw the HUD

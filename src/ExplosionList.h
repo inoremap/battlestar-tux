@@ -1,6 +1,6 @@
 /* ExplosionList.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -42,7 +42,7 @@ static const int numExplosionTypes = 1;
 /* Holds, updates and draws explosion animations. */
 class ExplosionList : public List {
 	public:
-				ExplosionList( Game* );
+				ExplosionList();
 				~ExplosionList();
 
 				// Draw explosions.

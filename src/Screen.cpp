@@ -1,6 +1,6 @@
 /* Screen.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,7 +29,8 @@
 #include "Config.h"
 #include "Screen.h"
 
-Screen::Screen( Game* g ) {
+Screen::Screen() {
+	Game* game = Game::getGame();
 	screen = NULL;
 
 	// Try to initialize SDL. If it fails, then give up.
@@ -58,7 +59,7 @@ Screen::Screen( Game* g ) {
 	fovy = 70;
 	screen = SDL_SetVideoMode( width, height, 0, SDL_OPENGL );
 
-	if( g->getConfig()->getGrabInput() ) {
+	if( game->getConfig()->getGrabInput() ) {
 		// Grab the Keyboard and Mouse
 		SDL_WM_GrabInput( SDL_GRAB_ON );
 
@@ -66,7 +67,7 @@ Screen::Screen( Game* g ) {
 		SDL_ShowCursor( SDL_DISABLE );
 	}
 
-	if( g->getConfig()->getWireframe() ) {
+	if( game->getConfig()->getWireframe() ) {
 		// Draw all polygons in wireframe mode.
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	}

@@ -1,6 +1,6 @@
 /* GenerationCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -31,7 +31,7 @@
 // Create energy for the fighter to use.
 class GenerationCell : public HexCell {
 	public:
-				GenerationCell( Fighter*, Game*, const ivec2 & );
+				GenerationCell( Fighter*, const ivec2 & );
 				~GenerationCell();
 
 				void Update( int );

@@ -1,6 +1,6 @@
 /* FighterAmmo.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, float d, GLuint t, Game* g ) : Object( AMMO ) {
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, GLuint t ) : Object( AMMO ) {
 	ammoType = f;
 	damage = d;
 	texture = t;

@@ -31,9 +31,9 @@
 // The collision shape will be created when it is requested.
 btCylinderShapeZ* HexCell::hexCollisionShape = 0;
 
-HexCell::HexCell( Fighter* f, Game* g, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
+HexCell::HexCell( Fighter* f, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
 	fighter = f;
-	game = g;
+	game = Game::getGame();
 
 	cellType = type;
 	cellOffset = p;

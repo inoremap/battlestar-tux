@@ -1,6 +1,6 @@
 /* CoreCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -31,7 +31,7 @@
 // Central cell of the fighter.  All is lost when this cell is destroyed.
 class CoreCell : public HexCell {
 	public:
-				CoreCell( Fighter*, Game*, const ivec2 & );
+				CoreCell( Fighter*, const ivec2 & );
 				~CoreCell();
 
 				void Update( int );

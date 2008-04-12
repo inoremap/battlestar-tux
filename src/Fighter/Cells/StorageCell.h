@@ -1,6 +1,6 @@
 /* StorageCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -31,7 +31,7 @@
 // Store energy for the fighter to use.
 class StorageCell : public HexCell {
 	public:
-				StorageCell( Fighter*, Game*, const ivec2 & );
+				StorageCell( Fighter*, const ivec2 & );
 				~StorageCell();
 
 				void Draw();

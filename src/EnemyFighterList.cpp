@@ -1,6 +1,6 @@
 /* EnemyFighterList.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -26,7 +26,7 @@
 #include "EnemyFighterList.h"
 #include "TextureManager.h"
 
-EnemyFighterList::EnemyFighterList( Game* g ) : ObjectList( g ) {
+EnemyFighterList::EnemyFighterList() : ObjectList() {
 	// Load all enemy textures.
 	textures[0] = game->getTextureManager()->loadTexture( "data/gfx/enemy_fighter_0001-64.png" );		// BASIC_ENEMY_FIGHTER
 }

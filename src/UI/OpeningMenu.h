@@ -1,6 +1,6 @@
 /* OpeningMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 /* First menu drawn - game first starting. */
 class OpeningMenu : public GUI, ButtonClickListener {
 	public:
-				OpeningMenu( MainMenu* menu, Game* g, int w, int h );
+				OpeningMenu( MainMenu* menu, int w, int h );
 				~OpeningMenu();
 
 				// Create all widgets and bind listeners.

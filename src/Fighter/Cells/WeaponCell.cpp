@@ -1,6 +1,6 @@
 /* WeaponCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -28,7 +28,7 @@
 #include "WeaponCell.h"
 #include "TextureManager.h"
 
-WeaponCell::WeaponCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, WEAPON_CELL, pos )  {
+WeaponCell::WeaponCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, WEAPON_CELL, pos )  {
 	firing = false;
 	rechargeTime = 50;
 	chargingTime = 0;
@@ -46,7 +46,7 @@ void WeaponCell::Update( int speed ) {
 	if( isCharged() ) {
 		if( firing ) {
 			FighterAmmoList* ammoList = game->getHeroAmmoList();
-			FighterAmmo* newAmmo = new FighterAmmo( PLASMA, 100 , ammoList->getTexture(PLASMA), game );
+			FighterAmmo* newAmmo = new FighterAmmo( PLASMA, 100 , ammoList->getTexture(PLASMA) );
 
 			vec3 ammoPos = fighter->getPos();
 			ammoPos[0] += cellPosition[0];

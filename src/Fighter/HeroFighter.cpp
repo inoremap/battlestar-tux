@@ -1,6 +1,6 @@
 /* HeroFighter.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "HeroFighter.h"
 
 
-HeroFighter::HeroFighter( Game* g ) : Fighter( HEROS_FIGHTER, g ) {
+HeroFighter::HeroFighter() : Fighter( HEROS_FIGHTER ) {
 }
 
 

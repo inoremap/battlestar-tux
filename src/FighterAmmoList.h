@@ -1,6 +1,6 @@
 /* FighterAmmoList.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -43,7 +43,7 @@ static const int numFighterAmmo = 2;
 /* Holds, updates and draws the fighter's shots. */
 class FighterAmmoList : public ObjectList {
 	public:
-				FighterAmmoList( Game* );
+				FighterAmmoList();
 				virtual ~FighterAmmoList();
 
 				// Get a texture ID.

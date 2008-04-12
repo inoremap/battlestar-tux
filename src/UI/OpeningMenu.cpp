@@ -1,6 +1,6 @@
 /* OpeningMenu.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,9 +30,9 @@
 #include "OpeningMenu.h"
 #include "VerticalPane.h"
 
-OpeningMenu::OpeningMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
+OpeningMenu::OpeningMenu( MainMenu* menu, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
-	game = g;
+	game = Game::getGame();
 }
 
 

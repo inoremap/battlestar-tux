@@ -1,6 +1,6 @@
 /* PlayerFighterController.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -36,7 +36,7 @@
 // Real people controller the fighter from here.
 class PlayerFighterController : public FighterController {
 	public:
-				PlayerFighterController( Battle*, Screen*, Fighter*, Game* );
+				PlayerFighterController( Battle*, Screen*, Fighter* );
 				virtual ~PlayerFighterController();
 
 				void Update( int );

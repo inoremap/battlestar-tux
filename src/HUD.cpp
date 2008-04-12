@@ -1,6 +1,6 @@
 /* HUD.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,8 +29,8 @@
 #include "HUD.h"
 #include "TextureManager.h"
 
-HUD::HUD( Game* g ) {
-	game = g;
+HUD::HUD() {
+	game = Game::getGame();
 
 	healthTexture = shieldsTexture = game->getTextureManager()->loadTexture( "data/gfx/hud_shields-64.png", GL_NEAREST );
 }

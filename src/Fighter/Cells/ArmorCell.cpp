@@ -1,6 +1,6 @@
 /* ArmorCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "ArmorCell.h"
 #include "TextureManager.h"
 
-ArmorCell::ArmorCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, ARMOR_CELL, pos )  {
+ArmorCell::ArmorCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, ARMOR_CELL, pos )  {
 	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 

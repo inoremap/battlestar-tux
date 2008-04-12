@@ -1,6 +1,6 @@
 /* SettingsMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 /* Display list of game settings. */
 class SettingsMenu : public GUI, ButtonClickListener {
 	public:
-				SettingsMenu( MainMenu* menu, Game* g, int w, int h );
+				SettingsMenu( MainMenu* menu, int w, int h );
 				~SettingsMenu();
 
 				// Create all widgets and bind listeners.

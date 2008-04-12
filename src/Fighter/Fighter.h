@@ -1,6 +1,6 @@
 /* Fighter.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -49,7 +49,7 @@ enum FighterAlignment {
 // the cells.  This is just a logical grouping.
 class Fighter : public Object {
 	public:
-				Fighter( FighterAlignment, Game* );
+				Fighter( FighterAlignment );
 				virtual ~Fighter();
 
 				// Update fighter systems.
@@ -104,8 +104,6 @@ class Fighter : public Object {
 				HexCellList* allCells;
 
 				FighterAlignment align;
-
-				Game* game;
 
 	private:
 				Fighter( const Fighter & );

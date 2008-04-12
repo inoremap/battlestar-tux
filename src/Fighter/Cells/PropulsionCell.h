@@ -1,6 +1,6 @@
 /* PropulsionCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -33,7 +33,7 @@
 // Move the fighter.
 class PropulsionCell : public HexCell {
 	public:
-				PropulsionCell( Fighter*, Game*, const ivec2 & );
+				PropulsionCell( Fighter*, const ivec2 & );
 				~PropulsionCell();
 
 				void Update( int );

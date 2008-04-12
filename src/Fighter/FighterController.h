@@ -1,6 +1,6 @@
 /* FighterController.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 // Real people or AI controllers can use this interface.
 class FighterController {
 	public:
-				FighterController( Fighter*, Game* );
+				FighterController( Fighter* );
 				virtual ~FighterController();
 
 	protected:

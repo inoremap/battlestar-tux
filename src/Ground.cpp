@@ -1,6 +1,6 @@
 /* Ground.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,9 +30,9 @@
 #include "Vector.h"
 
 
-Ground::Ground( GroundType type, Game* g ) {
+Ground::Ground( GroundType type ) {
 	groundType = type;
-	game = g;
+	game = Game::getGame();
 	texture = game->getTextureManager()->loadTexture( "data/gfx/ground_0002-16.png" );
 
 	height = 0.0;

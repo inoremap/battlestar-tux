@@ -1,6 +1,6 @@
 /* MainMenu.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -36,10 +36,10 @@
 #include "SettingsMenu.h"
 #include "SystemMenu.h"
 
-MainMenu::MainMenu( MenuType t, Game* g ) {
+MainMenu::MainMenu( MenuType t ) {
 	currentType = nextType = t;
 	battle = NULL;
-	game = g;
+	game = Game::getGame();
 	currentMenu = NULL;
 
 	// Load normal font.
@@ -177,30 +177,30 @@ void MainMenu::GenerateMenu() {
 		case OPENING_MENU:
 		case NULL_MENU:
 		default:
-			currentMenu = new OpeningMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new OpeningMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case NEW_CAMPAIGN_MENU:
-			//currentMenu = new NewCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			//currentMenu = new NewCampaignMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			currentType = NULL_MENU;
 
-			battle = new Battle( game );
+			battle = new Battle();
 			break;
 
 		case LOAD_CAMPAIGN_MENU:
-			currentMenu = new LoadCampaignMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new LoadCampaignMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case SETTINGS_MENU:
-			currentMenu = new SettingsMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new SettingsMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case CREDITS_MENU:
-			currentMenu = new CreditsMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new CreditsMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 
 		case SYSTEM_MENU:
-			currentMenu = new SystemMenu( this, game, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
+			currentMenu = new SystemMenu( this, game->getScreen()->getWidth(), game->getScreen()->getHeight() );
 			break;
 	}
 

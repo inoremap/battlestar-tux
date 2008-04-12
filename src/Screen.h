@@ -1,6 +1,6 @@
 /* Screen.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -36,7 +36,7 @@
 class Screen {
 	public:
 				// Creates a screen in a new window.
-				Screen( Game* );
+				Screen();
 
 				// Returns true if the SDL screen hasn't been created.
 				const bool isNull();

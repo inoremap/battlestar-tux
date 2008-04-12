@@ -1,6 +1,6 @@
 /* CreditsMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 /* Display list of credits. */
 class CreditsMenu : public GUI, ButtonClickListener {
 	public:
-				CreditsMenu( MainMenu* menu, Game* g, int w, int h );
+				CreditsMenu( MainMenu* menu, int w, int h );
 				~CreditsMenu();
 
 				// Create all widgets and bind listeners.

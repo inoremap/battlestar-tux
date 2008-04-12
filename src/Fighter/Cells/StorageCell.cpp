@@ -1,6 +1,6 @@
 /* StorageCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "StorageCell.h"
 #include "TextureManager.h"
 
-StorageCell::StorageCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, STORAGE_CELL, pos )  {
+StorageCell::StorageCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, STORAGE_CELL, pos )  {
 	currentEnergy = 0;
 	maxEnergy = 0;
 

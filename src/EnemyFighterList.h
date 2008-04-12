@@ -1,6 +1,6 @@
 /* EnemyFighterList.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -40,7 +40,7 @@ static const int numEnemyTypes = 1;
 /* Holds, updates and draws enemy aircraft. */
 class EnemyFighterList : public ObjectList {
 	public:
-				EnemyFighterList( Game* );
+				EnemyFighterList();
 				~EnemyFighterList();
 
 				// Get a texture ID.

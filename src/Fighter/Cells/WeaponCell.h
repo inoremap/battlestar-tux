@@ -1,6 +1,6 @@
 /* WeaponCell.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -32,7 +32,7 @@
 // Creates projectiles to damage other units.
 class WeaponCell : public HexCell {
 	public:
-				WeaponCell( Fighter*, Game*, const ivec2 & );
+				WeaponCell( Fighter*, const ivec2 & );
 				~WeaponCell();
 
 				void Update( int );

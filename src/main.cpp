@@ -36,12 +36,12 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	Game* game = Game::getGame();
-	Config* config = new Config( game );
+	Config* config = new Config();
 	config->parseCommandline( argc, argv );
 	game->setConfig( config );
 	TextureManager* textureManager = new TextureManager();
 	game->setTextureManager( textureManager );
-	Screen* screen = new Screen( game );
+	Screen* screen = new Screen();
 	game->setScreen( screen );
 
 	// Exit if there is no screen.
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
 	// Loop - drawing until application is finished.
 	while( !game->isFinished() ) {
-		MainMenu* menu = new MainMenu( OPENING_MENU, game );
+		MainMenu* menu = new MainMenu( OPENING_MENU );
 		menu->ShowMenu();
 		delete menu;
 	}

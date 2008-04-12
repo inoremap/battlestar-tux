@@ -1,6 +1,6 @@
 /* CreditsMenu.cpp
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -31,9 +31,9 @@
 #include "Label.h"
 #include "VerticalPane.h"
 
-CreditsMenu::CreditsMenu( MainMenu* menu, Game* g, int w, int h ) : GUI( w, h, menu ) {
+CreditsMenu::CreditsMenu( MainMenu* menu, int w, int h ) : GUI( w, h, menu ) {
 	mainMenu = menu;
-	game = g;
+	game = Game::getGame();
 }
 
 

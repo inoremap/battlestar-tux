@@ -1,6 +1,6 @@
 /* FighterAmmo.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -33,7 +33,7 @@
 
 class FighterAmmo : public Object {
 	public:
-				FighterAmmo( FighterAmmoType, float, GLuint, Game* );
+				FighterAmmo( FighterAmmoType, float, GLuint );
 
 				void Draw();
 

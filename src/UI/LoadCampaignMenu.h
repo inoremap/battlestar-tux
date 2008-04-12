@@ -1,6 +1,6 @@
 /* LoadCampaignMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@
 /* Display load game options. */
 class LoadCampaignMenu : public GUI, ButtonClickListener {
 	public:
-				LoadCampaignMenu( MainMenu* menu, Game* g, int w, int h );
+				LoadCampaignMenu( MainMenu* menu, int w, int h );
 				~LoadCampaignMenu();
 
 				// Create all widgets and bind listeners.

@@ -1,6 +1,6 @@
 /* HexCellList.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -33,7 +33,7 @@
 /* List for holding ship's cell units. */
 class HexCellList : public ObjectList {
 	public:
-				HexCellList( Game* );
+				HexCellList();
 				~HexCellList();
 
 				// Draw all the hex cells.

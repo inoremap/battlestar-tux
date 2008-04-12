@@ -1,6 +1,6 @@
 /* MainMenu.h
  *
- * Copyright 2006 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -46,7 +46,7 @@ enum MenuType {
 /* Parent menu.  All other menus are spawned here. */
 class MainMenu {
 	public:
-				MainMenu( MenuType t, Game* g );
+				MainMenu( MenuType t );
 				~MainMenu();
 
 				// Show current menu.

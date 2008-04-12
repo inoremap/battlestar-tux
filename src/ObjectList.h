@@ -1,6 +1,6 @@
 /* ObjectList.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -34,7 +34,7 @@ class Object;
 /* Holds a group of physical game Objects. */
 class ObjectList : public List {
 	public:
-				ObjectList( Game* );
+				ObjectList();
 				virtual ~ObjectList();
 
 				// Update positions and states of all objects.

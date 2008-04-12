@@ -1,6 +1,6 @@
 /* CoreCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "CoreCell.h"
 #include "TextureManager.h"
 
-CoreCell::CoreCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, CORE_CELL, pos )  {
+CoreCell::CoreCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, CORE_CELL, pos )  {
 	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 

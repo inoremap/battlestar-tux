@@ -1,6 +1,6 @@
 /* ObjectList.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,8 +29,8 @@
 #include "Object.h"
 #include "ObjectList.h"
 
-ObjectList::ObjectList( Game* g ) {
-	game = g;
+ObjectList::ObjectList() {
+	game = Game::getGame();
 }
 
 

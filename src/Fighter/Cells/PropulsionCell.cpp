@@ -1,6 +1,6 @@
 /* PropulsionCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -26,7 +26,7 @@
 #include "PropulsionCell.h"
 #include "TextureManager.h"
 
-PropulsionCell::PropulsionCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, PROPULSION_CELL, pos )  {
+PropulsionCell::PropulsionCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, PROPULSION_CELL, pos )  {
 	accelerationRate = 0.001; 
 	powerRate = 10000;
 

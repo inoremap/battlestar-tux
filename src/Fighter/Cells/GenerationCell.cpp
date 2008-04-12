@@ -1,6 +1,6 @@
 /* GenerationCell.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "GenerationCell.h"
 #include "TextureManager.h"
 
-GenerationCell::GenerationCell( Fighter* f, Game* g, const ivec2 &pos  ) : HexCell( f, g, GENERATION_CELL, pos )  {
+GenerationCell::GenerationCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, GENERATION_CELL, pos )  {
 	generationRate = 0;
 	drawRate = 0;
 

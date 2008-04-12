@@ -1,6 +1,6 @@
 /* PlayerFighterController.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "PlayerFighterController.h"
 #include "WeaponSystem.h"
 
-PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter* f , Game* g ) : FighterController( f, g ) {
+PlayerFighterController::PlayerFighterController( Battle* b, Screen* s, Fighter* f ) : FighterController( f ) {
 	battle = b;
 	screen = s;
 

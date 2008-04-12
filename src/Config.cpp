@@ -1,6 +1,6 @@
 /* Config.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -27,8 +27,8 @@
 
 #include "Config.h"
 
-Config::Config( Game* g ) {
-	game = g;
+Config::Config() {
+	game = Game::getGame();
 
 	debug = false;
 	wireframe = false;

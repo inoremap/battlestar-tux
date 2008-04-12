@@ -41,7 +41,7 @@ class PlayerFighterController;
 /* The Hero's fighter is launched to battle a set of enemies. */
 class Battle {
 	public:
-				Battle( Game* g );
+				Battle();
 				~Battle();
 
 				// Update battle status.

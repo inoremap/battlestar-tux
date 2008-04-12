@@ -1,6 +1,6 @@
 /* ExplosionList.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -26,8 +26,8 @@
 #include "ExplosionList.h"
 #include "TextureManager.h"
 
-ExplosionList::ExplosionList( Game* g ) {
-	game = g;
+ExplosionList::ExplosionList() {
+	game = Game::getGame();
 
 	// Load all explosion textures.
 	textures[0] = game->getTextureManager()->loadTexture( "data/gfx/explosion_0001-128.png" );		// BASIC_EXPLOSION

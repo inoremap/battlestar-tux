@@ -1,6 +1,6 @@
 /* HexCellList.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,7 +25,7 @@
 #include "HexCell.h"
 #include "HexCellList.h"
 
-HexCellList::HexCellList( Game* g ) : ObjectList( g ) {}
+HexCellList::HexCellList() : ObjectList() {}
 
 
 HexCellList::~HexCellList() {

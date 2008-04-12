@@ -1,6 +1,6 @@
 /* WeaponSystem.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -29,7 +29,7 @@
 #include "WeaponCell.h"
 #include "WeaponSystem.h"
 
-WeaponSystem::WeaponSystem( Fighter* f, Game* g ) : Displayable( HUD ) {
+WeaponSystem::WeaponSystem( Fighter* f ) : Displayable( HUD ) {
 	fireAll = true;
 	primaryFiring = false;
 	secondaryFiring = false;
@@ -38,7 +38,7 @@ WeaponSystem::WeaponSystem( Fighter* f, Game* g ) : Displayable( HUD ) {
 	secondaryWeapons = std::vector<WeaponCell*>();
 
 	fighter = f;
-	game = g;
+	game = Game::getGame();
 
 	texture = game->getTextureManager()->loadTexture( "data/gfx/crosshairs_0001-32.png" );
 

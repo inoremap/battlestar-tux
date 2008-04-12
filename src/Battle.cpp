@@ -32,35 +32,35 @@
 #include "TextureManager.h"
 #include "Vector.h"
 
-Battle::Battle( Game* g ) {
-	game = g;
+Battle::Battle() {
+	game = Game::getGame();
 
 	aborted = false;
 	finished = false;
 
 	screen = game->getScreen();
 
-	hud = new HUD( game );
+	hud = new HUD();
 
 	collisionManager = new CollisionManager();
 
-	ground = new Ground( SOLID_GROUND, game );
+	ground = new Ground( SOLID_GROUND );
 
-	hero = new HeroFighter( game );
+	hero = new HeroFighter();
 	game->setFighter( hero );
 
-	playerController = new PlayerFighterController( this, screen, hero, game );
+	playerController = new PlayerFighterController( this, screen, hero );
 
-	heroAmmoList = new FighterAmmoList( game );
+	heroAmmoList = new FighterAmmoList();
 	game->setHeroAmmoList( heroAmmoList );
 
-	enemies = new EnemyFighterList( game );
+	enemies = new EnemyFighterList();
 	game->setEnemyFighterList( enemies );
 
-	explosionList = new ExplosionList( game );
+	explosionList = new ExplosionList();
 	game->setExplosionList( explosionList );
 
-	enemyAmmoList = new FighterAmmoList( game );
+	enemyAmmoList = new FighterAmmoList();
 	game->setEnemyAmmoList( enemyAmmoList );
 }
 

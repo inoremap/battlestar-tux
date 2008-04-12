@@ -1,6 +1,6 @@
 /* Config.h
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,7 +30,7 @@
 /* Stores game configuration. */
 class Config {
 	public:
-				Config( Game* g );
+				Config();
 				~Config();
 
 				// Read command line arguments and set

@@ -1,6 +1,6 @@
 /* FighterController.cpp
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -26,9 +26,9 @@
 #include "FighterController.h"
 #include <iostream>
 
-FighterController::FighterController( Fighter* f , Game* g ) {
+FighterController::FighterController( Fighter* f ) {
 	fighter = f;
-	game = g;
+	game = Game::getGame();
 }
 
 

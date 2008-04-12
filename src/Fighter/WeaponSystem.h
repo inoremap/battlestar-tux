@@ -1,6 +1,6 @@
 /* WeaponSystem.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -40,7 +40,7 @@ class WeaponCell;
  */
 class WeaponSystem : public Displayable {
 	public:
-				WeaponSystem( Fighter*, Game* );
+				WeaponSystem( Fighter* );
 				~WeaponSystem();
 
 				void Update( int );

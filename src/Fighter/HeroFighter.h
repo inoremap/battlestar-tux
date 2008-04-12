@@ -1,6 +1,6 @@
 /* HeroFighter.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,7 +30,7 @@
 /* The player's aircraft. */
 class HeroFighter : public Fighter {
 	public:
-				HeroFighter( Game* );
+				HeroFighter();
 				~HeroFighter();
 
 	private:

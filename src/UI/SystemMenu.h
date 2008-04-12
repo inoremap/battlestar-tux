@@ -1,6 +1,6 @@
 /* SystemMenu.h
  *
- * Copyright 2006-2007 Eliot Eshelman
+ * Copyright 2006-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -35,7 +35,7 @@
 /* Display a star system and its properties. */
 class SystemMenu : public GUI, ButtonClickListener {
 	public:
-				SystemMenu( MainMenu* menu, Game* g, int w, int h );
+				SystemMenu( MainMenu* menu, int w, int h );
 				~SystemMenu();
 
 				// Create all widgets and bind listeners.

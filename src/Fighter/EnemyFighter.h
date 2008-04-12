@@ -1,6 +1,6 @@
 /* EnemyFighter.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -30,7 +30,7 @@
 /* An enemy fighter aircraft - NPC. */
 class EnemyFighter : public Fighter {
 	public:
-				EnemyFighter( Game* );
+				EnemyFighter();
 				~EnemyFighter();
 
 	private:

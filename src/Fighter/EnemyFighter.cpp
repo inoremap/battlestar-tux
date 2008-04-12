@@ -1,6 +1,6 @@
 /* EnemyFighter.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -24,7 +24,7 @@
 
 #include "EnemyFighter.h"
 
-EnemyFighter::EnemyFighter( Game* g ) : Fighter( ENEMY_FIGHTER, g ) {
+EnemyFighter::EnemyFighter() : Fighter( ENEMY_FIGHTER ) {
 }
 
 
