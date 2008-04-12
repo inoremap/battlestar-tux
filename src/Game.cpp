@@ -33,6 +33,8 @@
 #include "TextureManager.h"
 
 
+Game* Game::game = 0;
+
 Game* Game::getGame() {
 	if( game == 0 )
 		game = new Game();
@@ -75,11 +77,6 @@ Game::Game() {
 	heroAmmoList = 0;
 	fighter = 0;
 	screen = 0;
-}
-
-
-void Game::newGame() {
-	
 }
 
 

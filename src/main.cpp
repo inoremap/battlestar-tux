@@ -1,6 +1,6 @@
 /* main.cpp
  *
- * Copyright 2005-2006 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -35,7 +35,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	Game* game = getGame();
+	Game* game = Game::getGame();
 	Config* config = new Config( game );
 	config->parseCommandline( argc, argv );
 	game->setConfig( config );

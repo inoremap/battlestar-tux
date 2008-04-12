@@ -42,9 +42,6 @@ class Game {
 	public:
 				static Game* getGame();
 
-				// Create a new game
-				void newGame();
-
 				// Game finished
 				inline bool isFinished() { return finished; }
 
