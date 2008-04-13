@@ -32,7 +32,7 @@
 // Creates projectiles to damage other units.
 class WeaponCell : public HexCell {
 	public:
-				WeaponCell( Fighter*, const ivec2 & );
+				WeaponCell();
 				~WeaponCell();
 
 				void Update( int );

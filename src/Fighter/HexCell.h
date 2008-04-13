@@ -50,12 +50,18 @@ enum HexCellType {
 // Each fighter is composed of these cell units.
 class HexCell : public Object {
 	public:
-				HexCell( Fighter*, HexCellType, const ivec2 & );
+				HexCell( HexCellType );
 				virtual ~HexCell();
 
 				virtual void Update( int );
 
 				virtual void Draw();
+
+				// Add this cell to a fighter.
+				void mount( Fighter*, const ivec2 & );
+
+				// Remove this cell from the fighter.
+				void unmount();
 
 				void destroy();
 

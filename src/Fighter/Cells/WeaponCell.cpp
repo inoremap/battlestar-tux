@@ -28,7 +28,7 @@
 #include "WeaponCell.h"
 #include "TextureManager.h"
 
-WeaponCell::WeaponCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, WEAPON_CELL, pos )  {
+WeaponCell::WeaponCell() : HexCell( WEAPON_CELL )  {
 	firing = false;
 	rechargeTime = 50;
 	chargingTime = 0;
@@ -43,6 +43,8 @@ WeaponCell::~WeaponCell() {
 
 
 void WeaponCell::Update( int speed ) {
+	assert( fighter );
+
 	if( isCharged() ) {
 		if( firing ) {
 			FighterAmmoList* ammoList = game->getHeroAmmoList();

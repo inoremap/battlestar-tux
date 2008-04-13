@@ -23,6 +23,7 @@
 
 
 #include <SDL_opengl.h>
+#include <assert.h>
 
 #include "Fighter.h"
 #include "HexCell.h"
@@ -31,23 +32,13 @@
 // The collision shape will be created when it is requested.
 btCylinderShapeZ* HexCell::hexCollisionShape = 0;
 
-HexCell::HexCell( Fighter* f, HexCellType type, const ivec2 &p  ) : Object( CELL ) {
-	fighter = f;
+HexCell::HexCell( HexCellType type ) : Object( CELL ) {
+	fighter = 0;
 	game = Game::getGame();
 
 	cellType = type;
-	cellOffset = p;
-
-	// Calculate the actual position of the cell, using the offset.
-	cellPosition = vec2(
-		// Horizontal position is just the offset times the size.
-		cellOffset[0] * 1.5 * HEX_CELL_SIZE[1],
-		// Vertical position is the offset times the size,
-		// with the possible additional offset below.
-		cellOffset[1] * 2 * HEX_CELL_SIZE[1] * HEX_VERTS[1][1]
-	);
-	if( (cellOffset[0] % 2) != 0 )
-		cellPosition[1] += HEX_CELL_SIZE[1] * HEX_VERTS[1][1];
+	cellOffset = 0;
+	cellPosition = 0;
 }
 
 
@@ -64,7 +55,34 @@ void HexCell::Draw() {
 }
 
 
-void HexCell::destroy() { fighter->destroyCell( this ); }
+void HexCell::mount( Fighter* f, const ivec2 &p ) {
+	fighter = f;
+	cellOffset = p;
+
+	// Calculate the actual position of the cell, using the offset.
+	cellPosition = vec2(
+		// Horizontal position is just the offset times the size.
+		cellOffset[0] * 1.5 * HEX_CELL_SIZE[1],
+		// Vertical position is the offset times the size,
+		// with the possible additional offset below.
+		cellOffset[1] * 2 * HEX_CELL_SIZE[1] * HEX_VERTS[1][1]
+	);
+	if( (cellOffset[0] % 2) != 0 )
+		cellPosition[1] += HEX_CELL_SIZE[1] * HEX_VERTS[1][1];
+}
+
+
+void HexCell::unmount() {
+	fighter = 0;
+	cellOffset = 0;
+	cellPosition = 0;
+}
+
+
+void HexCell::destroy() {
+	assert( fighter );
+	fighter->destroyCell( this );
+}
 
 ivec2 HexCell::getCellOffset() { return cellOffset; }
 vec2 HexCell::getCellPosition() { return cellPosition; }
@@ -72,6 +90,7 @@ HexCellType HexCell::getCellType() { return cellType; }
 
 
 vec3 HexCell::getPos() {
+	assert( fighter );
 	vec3 fighterPos = fighter->getPos();
 
 	return vec3(
@@ -81,9 +100,20 @@ vec3 HexCell::getPos() {
 	);
 }
 
-vec3 HexCell::getVel() { return fighter->getVel(); }
-vec3 HexCell::getRot() { return fighter->getRot(); }
-vec3 HexCell::getTorque() { return fighter->getTorque(); }
+vec3 HexCell::getVel() {
+	assert( fighter );
+	return fighter->getVel();
+}
+
+vec3 HexCell::getRot() {
+	assert( fighter );
+	return fighter->getRot();
+}
+
+vec3 HexCell::getTorque() {
+	assert( fighter );
+	return fighter->getTorque();
+}
 
 
 void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {

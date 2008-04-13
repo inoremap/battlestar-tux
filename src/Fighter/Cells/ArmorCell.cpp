@@ -25,7 +25,7 @@
 #include "ArmorCell.h"
 #include "TextureManager.h"
 
-ArmorCell::ArmorCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, ARMOR_CELL, pos )  {
+ArmorCell::ArmorCell() : HexCell( ARMOR_CELL )  {
 	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 

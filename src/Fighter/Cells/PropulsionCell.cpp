@@ -26,7 +26,7 @@
 #include "PropulsionCell.h"
 #include "TextureManager.h"
 
-PropulsionCell::PropulsionCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, PROPULSION_CELL, pos )  {
+PropulsionCell::PropulsionCell() : HexCell( PROPULSION_CELL )  {
 	accelerationRate = 0.001; 
 	powerRate = 10000;
 
@@ -65,6 +65,8 @@ void PropulsionCell::Draw() {
 
 
 vec3 PropulsionCell::generateAcceleration( const vec3 &accel ) {
+	assert( fighter );
+
 	vec3 actualAccel = accel;
 	float length = actualAccel.length();
 
@@ -89,6 +91,8 @@ vec3 PropulsionCell::generateAcceleration( const vec3 &accel ) {
 
 
 vec3 PropulsionCell::generateTorque( const vec3 &torque ) {
+	assert( fighter );
+
 	vec3 actualTorque = torque;
 	float length = actualTorque.length();
 

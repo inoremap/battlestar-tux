@@ -25,7 +25,7 @@
 #include "StorageCell.h"
 #include "TextureManager.h"
 
-StorageCell::StorageCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, STORAGE_CELL, pos )  {
+StorageCell::StorageCell() : HexCell( STORAGE_CELL )  {
 	currentEnergy = 0;
 	maxEnergy = 0;
 

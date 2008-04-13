@@ -25,7 +25,7 @@
 #include "CoreCell.h"
 #include "TextureManager.h"
 
-CoreCell::CoreCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, CORE_CELL, pos )  {
+CoreCell::CoreCell() : HexCell( CORE_CELL )  {
 	texture = game->getTextureManager()->loadTexture( "data/gfx/hex_cell_0001-16.png" );
 }
 

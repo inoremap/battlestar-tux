@@ -25,7 +25,7 @@
 #include "GenerationCell.h"
 #include "TextureManager.h"
 
-GenerationCell::GenerationCell( Fighter* f, const ivec2 &pos  ) : HexCell( f, GENERATION_CELL, pos )  {
+GenerationCell::GenerationCell() : HexCell( GENERATION_CELL )  {
 	generationRate = 0;
 	drawRate = 0;
 

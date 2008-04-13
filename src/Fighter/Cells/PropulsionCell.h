@@ -33,7 +33,7 @@
 // Move the fighter.
 class PropulsionCell : public HexCell {
 	public:
-				PropulsionCell( Fighter*, const ivec2 & );
+				PropulsionCell();
 				~PropulsionCell();
 
 				void Update( int );
