@@ -63,7 +63,7 @@ class ivec3 {
 					return *this;
 				}
 
-				inline bool isIdentical( const ivec3 &v ) const {
+				inline bool operator==( const ivec3 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
 						vector[1] == v.vector[1] &&
@@ -73,11 +73,7 @@ class ivec3 {
 						return false;
 				}
 
-				/* This is a BIG judgement call.  Comparisons are performed
-				 * based on vector length, without taking direction into consideration.
-				 * See isIdentical() above.
-				 */
-				inline bool operator==( const ivec3 &v ) const {
+				inline bool sameLength( const ivec3 &v ) const {
 					if ( length() == v.length() )
 						return true;
 					else
@@ -221,7 +217,7 @@ class ivec2 {
 					return *this;
 				}
 
-				inline bool isIdentical( const ivec2 &v ) const {
+				inline bool operator==( const ivec2 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
 						vector[1] == v.vector[1] &&
@@ -231,11 +227,7 @@ class ivec2 {
 						return false;
 				}
 
-				/* This is a BIG judgement call.  Comparisons are performed
-				 * based on vector length, without taking direction into consideration.
-				 * See isIdentical() above.
-				 */
-				inline bool operator==( const ivec2 &v ) const {
+				inline bool sameLength( const ivec2 &v ) const {
 					if ( length() == v.length() )
 						return true;
 					else

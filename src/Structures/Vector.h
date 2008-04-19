@@ -1,6 +1,6 @@
 /* Vector.h
  *
- * Copyright 2007 Eliot Eshelman
+ * Copyright 2007-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -33,7 +33,7 @@
 class vec3 {
 	public:
 				vec3() { vector[0] = 0.0; vector[1] = 0.0; vector[2] = 0.0; }
-				vec3( float x, float y, float z ) { vector[0] = x; vector[1] = y; vector[2] = z; }
+				vec3( const float x, const float y, const float z ) { vector[0] = x; vector[1] = y; vector[2] = z; }
 				vec3( const vec3 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; vector[2] = v.vector[2]; }
 
 				inline float length() const { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2] ); }
@@ -57,14 +57,14 @@ class vec3 {
 					return *this;
 				}
 
-				inline vec3 & operator=( float x ) {
+				inline vec3 & operator=( const float x ) {
 					vector[0] = x;
 					vector[1] = x;
 					vector[2] = x;
 					return *this;
 				}
 
-				inline bool isIdentical( const vec3 &v ) const {
+				inline bool operator==( const vec3 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
 						vector[1] == v.vector[1] &&
@@ -74,11 +74,7 @@ class vec3 {
 						return false;
 				}
 
-				/* This is a BIG judgement call.  Comparisons are performed
-				 * based on vector length, without taking direction into consideration.
-				 * See isIdentical() above.
-				 */
-				inline bool operator==( const vec3 &v ) const {
+				inline bool sameLength( const vec3 &v ) const {
 					if ( length() == v.length() )
 						return true;
 					else
@@ -127,14 +123,14 @@ class vec3 {
 					return *this;
 				}
 
-				inline vec3 & operator*=( float x ) {
+				inline vec3 & operator*=( const float x ) {
 					vector[0] *= x;
 					vector[1] *= x;
 					vector[2] *= x;
 					return *this;
 				}
 
-				inline vec3 & operator/=( float x ) {
+				inline vec3 & operator/=( const float x ) {
 					vector[0] /= x;
 					vector[1] /= x;
 					vector[2] /= x;
@@ -160,15 +156,15 @@ class vec3 {
 					);
 				}
 
-				inline friend vec3 operator*( const vec3 &v, float x ) {
+				inline friend vec3 operator*( const vec3 &v, const float x ) {
 					return vec3( v.vector[0] * x, v.vector[1] * x, v.vector[2] * x );
 				}
 
-				inline friend vec3 operator*( float x, const vec3 &v ) {
+				inline friend vec3 operator*( const float x, const vec3 &v ) {
 					return vec3( v.vector[0] * x, v.vector[1] * x, v.vector[2] * x );
 				}
 
-				inline friend vec3 operator/( const vec3 &v, float x ) {
+				inline friend vec3 operator/( const vec3 &v, const float x ) {
 					return vec3( v.vector[0] / x, v.vector[1] / x, v.vector[2] / x );
 				}
 
@@ -196,14 +192,14 @@ class vec3 {
 class vec2 {
 	public:
 				vec2() { vector[0] = 0.0; vector[1] = 0.0; }
-				vec2( float x, float y ) { vector[0] = x; vector[1] = y; }
+				vec2( const float x, const float y ) { vector[0] = x; vector[1] = y; }
 				vec2( const vec2 &v ) { vector[0] = v.vector[0]; vector[1] = v.vector[1]; }
 
 				inline float length() const { return sqrtf( vector[0]*vector[0] + vector[1]*vector[1] ); 	}
 
 				inline void display( std::ostream & out ) const { out << vector[0] << vector[1]; }
 
-				inline float & operator[]( int n ) {
+				inline float & operator[]( const int n ) {
 					if( n < 0 || n > 1 )
 						return vector[0];
 					else
@@ -216,13 +212,13 @@ class vec2 {
 					return *this;
 				}
 
-				inline vec2 & operator=( float x ) {
+				inline vec2 & operator=( const float x ) {
 					vector[0] = x;
 					vector[1] = x;
 					return *this;
 				}
 
-				inline bool isIdentical( const vec2 &v ) const {
+				inline bool operator==( const vec2 &v ) const {
 					if (
 						vector[0] == v.vector[0] &&
 						vector[1] == v.vector[1] &&
@@ -232,11 +228,7 @@ class vec2 {
 						return false;
 				}
 
-				/* This is a BIG judgement call.  Comparisons are performed
-				 * based on vector length, without taking direction into consideration.
-				 * See isIdentical() above.
-				 */
-				inline bool operator==( const vec2 &v ) const {
+				inline bool sameLength( const vec2 &v ) const {
 					if ( length() == v.length() )
 						return true;
 					else
@@ -312,15 +304,15 @@ class vec2 {
 					);
 				}
 
-				inline friend vec2 operator*( const vec2 &v, float x ) {
+				inline friend vec2 operator*( const vec2 &v, const float x ) {
 					return vec2( v.vector[0] * x, v.vector[1] * x );
 				}
 
-				inline friend vec2 operator*( float x, const vec2 &v ) {
+				inline friend vec2 operator*( const float x, const vec2 &v ) {
 					return vec2( v.vector[0] * x, v.vector[1] * x );
 				}
 
-				inline friend vec2 operator/( const vec2 &v, float x ) {
+				inline friend vec2 operator/( const vec2 &v, const float x ) {
 					return vec2( v.vector[0] / x, v.vector[1] / x );
 				}
 
