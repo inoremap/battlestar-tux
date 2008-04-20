@@ -1,6 +1,6 @@
 /* Object.cpp
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -25,22 +25,47 @@
 #include "Object.h"
 
 
-Object::Object( ObjectType t ) {
-	pos = vec3();
-	vel = vec3();
-	rot = vec3();
-	torq = vec3();
-
-	size = 0;
+Object::Object( const ObjectType t, const float m ) {
+	m_rigidBody = 0;
+	m_motionState = 0;
+	collisionManager = 0;
 	age = 0;
-	mass = 1;
+	mass = m;
 	health = 1;
 	fullHealth = 1;
 	type = t;
 }
 
 
-Object::~Object() {}
+Object::~Object() {
+	// If this Object is in the physics simulation, remove it.
+	if( collisionManager ) {
+		collisionManager->remObject( m_rigidBody );
+
+		delete m_rigidBody;
+		delete m_motionState;
+	}
+}
+
+
+void Object::addToWorld() {
+	collisionManager = CollisionManager::getCollisionManager();
+
+	btCollisionShape* collisionShape = getCollisionShape();
+
+	btVector3 localInertia( 0, 0, 0 );
+	// If the object isn't static, we need its inertia.
+	if( mass > 0 )
+		collisionShape->calculateLocalInertia( mass, localInertia );
+
+	// The object will start at (0, 0, 0)
+	m_motionState = new btDefaultMotionState();
+
+	btRigidBody::btRigidBodyConstructionInfo cInfo( mass, m_motionState, collisionShape, localInertia );
+	m_rigidBody = new btRigidBody( cInfo );
+
+	collisionManager->addObject( m_rigidBody );
+}
 
 
 void Object::Update( int speed ) {
@@ -48,34 +73,15 @@ void Object::Update( int speed ) {
 	if( health <= 0 )
 		destroy();
 
-	pos += vel * speed;
-
-	rot += torq * speed;
-	// Keep object rotations within [0.0, 360.0].
-	if( rot[0] >= 360 )
-		rot[0] = fmodf( rot[0], 360.0 );
-	if( rot[1] >= 360 )
-		rot[1] = fmodf( rot[1], 360.0 );
-	if( rot[2] >= 360 )
-		rot[2] = fmodf( rot[2], 360.0 );
-	if( rot[0] < 0 )
-		rot[0] = fmodf( rot[0], 360.0 ) + 360.0;
-	if( rot[1] < 0 )
-		rot[1] = fmodf( rot[1], 360.0 ) + 360.0;
-	if( rot[2] < 0 )
-		rot[2] = fmodf( rot[2], 360.0 ) + 360.0;
-
 	age += speed;
 }
 
 
 void Object::Draw() {
-	// The rotations are probably not what we want,
-	// but they at least offer some motion for now.
-	glTranslatef( pos[0], pos[1], pos[2] );
-	glRotatef( rot[2], 0.0, 0.0, 1.0 );
-	glRotatef( rot[1], 0.0, 1.0, 0.0 );
-	glRotatef( rot[0], 1.0, 0.0, 0.0 );
+	// Set the OpenGL modelview transforms for this object from Bullet physics.
+	btScalar m[16];
+	m_motionState->m_graphicsWorldTrans.getOpenGLMatrix( m );
+	glMultMatrixf( m );
 }
 
 
@@ -96,8 +102,36 @@ float Object::damage( float damage ) {
 void Object::destroy() { delete this; }
 
 
-void Object::accel( const vec3 &force ) { vel += force / mass; }
+void Object::accel( const vec3 &force ) {}
 
 
-void Object::torque( const vec3 &t ) { torq += t / mass; } 
+void Object::torque( const vec3 &t ) {} 
+
+
+vec3 Object::getPos() {
+	btVector3 pos = m_motionState->m_graphicsWorldTrans.getOrigin(); 
+	return vec3( pos[0], pos[1], pos[2] );
+}
+
+void Object::setPos( vec3 &v ) {
+	btVector3 btV( v[0], v[1], v[2] );
+	m_motionState->m_graphicsWorldTrans.setOrigin( btV );
+}
+
+vec3 Object::getVel() {
+	btVector3 vel = ( m_rigidBody->getWorldTransform().getBasis().transpose() *
+						m_rigidBody->getLinearVelocity() );
+	return vec3( vel[0], vel[1], vel[2] );
+}
+
+void Object::setVel( vec3 &v ) {
+	btVector3 btV( v[0], v[1], v[2] );
+	m_rigidBody->setLinearVelocity( btV );
+}
+
+vec3 Object::getRot() {
+	float x, y, z;
+	m_rigidBody->getWorldTransform().getBasis().getEuler( x, y, z );
+	return vec3( x, y, z );
+}
 

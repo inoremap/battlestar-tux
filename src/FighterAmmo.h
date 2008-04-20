@@ -26,6 +26,7 @@
 #define FIGHTERAMMO_H_
 
 #include <SDL_opengl.h>
+#include "CollisionShapes/btSphereShape.h"
 
 #include "Object.h"
 #include "FighterAmmoList.h"
@@ -43,13 +44,17 @@ class FighterAmmo : public Object {
 				FighterAmmo( const FighterAmmo & );
 				const FighterAmmo & operator= ( const FighterAmmo & );
 
-				// Constant Z position of the ammo.
-				static const float zPos = 3;
-
 				FighterAmmoType ammoType;
+
+				// Size of ammo.
+				static const float size = 1.0;
 
 				// Damage dealt by the ammo.
 				float damage;
+
+				// Ammo objects should share the same collision shape, if possible.
+				static btSphereShape* ammoCollisionShape;
+				btCollisionShape* getCollisionShape();
 
 				GLuint texture;
 };

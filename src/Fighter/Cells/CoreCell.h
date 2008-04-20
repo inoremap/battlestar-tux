@@ -31,7 +31,7 @@
 // Central cell of the fighter.  All is lost when this cell is destroyed.
 class CoreCell : public HexCell {
 	public:
-				CoreCell();
+				CoreCell( float );
 				~CoreCell();
 
 				void Update( int );

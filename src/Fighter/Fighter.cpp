@@ -32,131 +32,117 @@
 #include "WeaponSystem.h"
 
 
-Fighter::Fighter( FighterAlignment a ) : Object( FIGHTER ) {
-	pos[2] = 3;
+Fighter::Fighter( FighterAlignment a ) : Object( FIGHTER, 0 ) {
+	m_collisionShape = new btCompoundShape();
 
 	weaponSystem = new WeaponSystem( this );
 
 	allCells = new HexCellList();
 
 	ivec2 cellPos = ivec2();
-	coreCell = new CoreCell();
-	coreCell->mount( this, cellPos );
+	coreCell = new CoreCell( 10000 );
+	attachCell( coreCell, cellPos );
 	coreCell->setFullHealth( 10000 );
 	coreCell->setHealth( 10000 );
-	coreCell->setMass( 100000 );
 	allCells->addObject( coreCell );
 
 	cellPos = ivec2( 1, 0 );
-	ArmorCell* armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	ArmorCell* armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, 1 );
-	armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, 0 );
-	armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( -1, -1 );
-	armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, -1 );
-	armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 1, -1 );
-	armorCell = new ArmorCell();
-	armorCell->mount( this, cellPos );
+	armorCell = new ArmorCell( 2500 );
+	attachCell( armorCell, cellPos );
 	armorCell->setFullHealth( 1000 );
 	armorCell->setHealth( 1000 );
-	armorCell->setMass( 2500 );
 	allCells->addObject( armorCell );
 
 	cellPos = ivec2( 0, -2 );
-	GenerationCell* generationCell = new GenerationCell();
-	generationCell->mount( this, cellPos );
+	GenerationCell* generationCell = new GenerationCell( 1500 );
+	attachCell( generationCell, cellPos );
 	generationCell->setFullHealth( 200 );
 	generationCell->setHealth( 200 );
-	generationCell->setMass( 1500 );
 	generationCell->setGenerationRate( 555 );
 	allCells->addObject( generationCell );
 
 	cellPos = ivec2( -1, -2 );
-	StorageCell* storageCell = new StorageCell();
-	storageCell->mount( this, cellPos );
+	StorageCell* storageCell = new StorageCell( 2000 );
+	attachCell( storageCell, cellPos );
 	storageCell->setFullHealth( 300 );
 	storageCell->setHealth( 300 );
-	storageCell->setMass( 2000 );
 	storageCell->setMaxEnergy( 25000 );
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( 1, -2 );
-	storageCell = new StorageCell();
-	storageCell->mount( this, cellPos );
+	storageCell = new StorageCell( 2000 );
+	attachCell( storageCell, cellPos );
 	storageCell->setFullHealth( 300 );
 	storageCell->setHealth( 300 );
-	storageCell->setMass( 2000 );
 	storageCell->setMaxEnergy( 25000 );
 	allCells->addObject( storageCell );
 
 	cellPos = ivec2( -2, -1 );
-	PropulsionCell* propulsionCell = new PropulsionCell();
-	propulsionCell->mount( this, cellPos );
+	PropulsionCell* propulsionCell = new PropulsionCell( 3000 );
+	attachCell( propulsionCell, cellPos );
 	propulsionCell->setFullHealth( 500 );
 	propulsionCell->setHealth( 500 );
-	propulsionCell->setMass( 3000 );
 	propulsionCell->setAccelerationRate( 50 );
 	propulsionCell->setPowerRate( 250 );
 	allCells->addObject( propulsionCell );
 
 	cellPos = ivec2( 2, -1 );
-	propulsionCell = new PropulsionCell();
-	propulsionCell->mount( this, cellPos );
+	propulsionCell = new PropulsionCell( 3000 );
+	attachCell( propulsionCell, cellPos );
 	propulsionCell->setFullHealth( 500 );
 	propulsionCell->setHealth( 500 );
-	propulsionCell->setMass( 3000 );
 	propulsionCell->setAccelerationRate( 50 );
 	propulsionCell->setPowerRate( 250 );
 	allCells->addObject( propulsionCell );
 
 	cellPos = ivec2( -2, 1 );
-	WeaponCell* weaponCell = new WeaponCell();
-	weaponCell->mount( this, cellPos );
+	WeaponCell* weaponCell = new WeaponCell( 2000 );
+	attachCell( weaponCell, cellPos );
 	weaponCell->setFullHealth( 750 );
 	weaponCell->setHealth( 750 );
-	weaponCell->setMass( 2000 );
 	weaponSystem->addPrimaryWeapon( weaponCell );
 	allCells->addObject( weaponCell );
 
 	cellPos = ivec2( 2, 1 );
-	weaponCell = new WeaponCell();
-	weaponCell->mount( this, cellPos );
+	weaponCell = new WeaponCell( 2000 );
+	attachCell( weaponCell, cellPos );
 	weaponCell->setFullHealth( 750 );
 	weaponCell->setHealth( 750 );
-	weaponCell->setMass( 2000 );
 	weaponSystem->addSecondaryWeapon( weaponCell );
 	allCells->addObject( weaponCell );
 
@@ -165,6 +151,7 @@ Fighter::Fighter( FighterAlignment a ) : Object( FIGHTER ) {
 
 
 Fighter::~Fighter() {
+	delete m_collisionShape;
 	delete weaponSystem;
 	delete allCells;
 }
@@ -174,39 +161,6 @@ void Fighter::Update( int speed ) {
 	Object::Update( speed );
 	weaponSystem->Update( speed );
 	allCells->UpdateObjects();
-
-	// Determine difference between fighter angle and target angle.
-	vec3 target = weaponSystem->getTarget();
-	vec2 posDiff = vec2();
-	posDiff[0] = target[0] - pos[0];
-	posDiff[1] = target[1] - pos[1];
-	float targetAngle = (180 / M_PI) * atanf (
-		fabsf( posDiff[0]/posDiff[1] )
-	);
-	// Lower two quadrants.
-	if( target[1] < pos[1] ) {
-		// Third quadrant.
-		if( target[0] < pos[0] )
-			targetAngle = 180 - targetAngle;
-		// Fourth quadrant.
-		else
-			targetAngle = 180 + targetAngle;
-	}
-	// Upper two quadrants.
-	else {
-		// Second quadrant - do nothing.
-		// First quadrant.
-		if( target[0] > pos[0] )
-			targetAngle = 360 - targetAngle;
-	}
-	// Rotate fighter towards target.
-	float diff = targetAngle - rot[2];
-	if( diff > 180 )
-		setRotation( diff - 360 );
-	else if( diff < -180 )
-		setRotation( diff + 360 );
-	else
-		setRotation( diff );
 
 
 	// Move any remaining power to storage.
@@ -262,7 +216,55 @@ float Fighter::getHealth() { return coreCell->getHealth(); }
 float Fighter::getFullHealth() { return coreCell->getFullHealth(); }
 
 
-void Fighter::detachCell( HexCell* cell ) { allCells->remObject( cell ); }
+bool Fighter::attachCell( HexCell* newCell, ivec2 &cellOffset ) {
+	// Ensure there isn't already a cell in this position
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell ) {
+		if( cell->getCellOffset() == cellOffset )
+			return false;
+
+		cell = (HexCell*) cell->getNext();
+	}
+
+	// Calculate the actual position of the cell, using the offset.
+	vec2 cellPosition = vec2(
+		// Horizontal position is just the offset times the size.
+		cellOffset[0] * 1.5 * HEX_CELL_SIZE[1],
+		// Vertical position is the offset times the size,
+		// with the possible additional offset below.
+		cellOffset[1] * 2 * HEX_CELL_SIZE[1] * HEX_VERTS[1][1]
+	);
+	if( (cellOffset[0] % 2) != 0 )
+		cellPosition[1] += HEX_CELL_SIZE[1] * HEX_VERTS[1][1];
+
+	newCell->mount( this, cellOffset, cellPosition );
+
+	mass += newCell->getMass();
+
+	// Add cell to Fighter's collision shape
+	addCellShape( newCell );
+
+	return true;
+}
+
+
+void Fighter::detachCell( HexCell* oldCell ) {
+	oldCell->unmount();
+	allCells->remObject( oldCell );
+	oldCell->addToWorld();
+
+	mass -= oldCell->getMass();
+
+	// Recreate Fighter's collision shape omitting this object
+	delete m_collisionShape;
+	m_collisionShape = new btCompoundShape();
+	HexCell* cell = (HexCell*) allCells->getRoot();
+	while( cell ) {
+		addCellShape( cell );
+
+		cell = (HexCell*) cell->getNext();
+	}
+}
 
 
 void Fighter::destroyCell( HexCell* cell ) {
@@ -270,8 +272,19 @@ void Fighter::destroyCell( HexCell* cell ) {
 	if( cell->getCellType() == CORE_CELL ) {
 	}
 
-	allCells->remObject( cell );
+	detachCell( cell );
 	delete cell;
+}
+
+
+void Fighter::addCellShape( HexCell* newCell ) {
+	// Find the position of the cell in the fighter.
+	vec2 cellPosition = newCell->getCellPosition();
+	btTransform tr;
+	tr.setIdentity();
+	btVector3 btV( cellPosition[0], cellPosition[1], 0 );
+	tr.setOrigin( btV );
+	m_collisionShape->addChildShape( tr, newCell->getCollisionShape() );
 }
 
 
@@ -339,43 +352,6 @@ void Fighter::setPropulsion( const vec3 &p ) {
 
 
 void Fighter::setRotation( const float rotation ) {
-	vec3 rotationNeeded = vec3();
-
-	// Try to rotate the fighter - we don't actually want it to try to fully
-	// rotate in the course of one frame - even if it's possible.
-	rotationNeeded[2] = fmodf( rotation, 3 );
-
-	// If the ship is really close, we need to lock it down.
-	if( fabsf(rotation) <= 1.0 && fabsf(torq[2]) <= 0.4 ) {
-		rot[2] += rotation;
-		rotationNeeded[2] = 0;
-		torq[2] = 0;
-	}
-	// Find out if the ship has overshot the target.  If not,
-	// and the ship is nearing the target, we'll slow down.
-	else if( ! (torq[2] > 0 && rotation < 0) &&	! (torq[2] < 0 && rotation > 0) ) {
-		if( fabsf(torq[2] * 10) > fabsf(rotation) )
-			rotationNeeded[2] /= - fabsf(torq[2] * 10) / fabsf(rotation);
-	}
-	// If we're close to the target, we need to approach it slowly.
-	// This will eliminate any last possibility of "jittering".
-	else if( fabsf(rotation) <= 6.0 && fabsf(rotationNeeded[2]) >= 1.0 ) {
-		rotationNeeded[2] /= (10 / fabsf(rotation));
-	}
-
-	// Effects of explosions may also be dampened here.
-	// If X and Y rotations are not 0, the ship is being buffetted.
-	if( rot[0] != 0 )
-		rotationNeeded[0] = - rot[0] / 2;
-	if( rot[1] != 0 )
-		rotationNeeded[1] = - rot[1] / 2;
-
-	HexCell* cell = (HexCell*) allCells->getRoot();
-	while( cell && rotationNeeded.length() != 0 ) {
-		if( cell->getCellType() == PROPULSION_CELL )
-			rotationNeeded -= ((PropulsionCell*) cell)->generateTorque( rotationNeeded );
-
-		cell = (HexCell*) cell->getNext();
-	}
+	// TODO: rotate fighter using propulsion cells
 }
 

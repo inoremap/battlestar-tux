@@ -25,7 +25,7 @@
 #include "GenerationCell.h"
 #include "TextureManager.h"
 
-GenerationCell::GenerationCell() : HexCell( GENERATION_CELL )  {
+GenerationCell::GenerationCell( float m ) : HexCell( GENERATION_CELL, m )  {
 	generationRate = 0;
 	drawRate = 0;
 

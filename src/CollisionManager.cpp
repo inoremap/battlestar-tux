@@ -25,6 +25,16 @@
 #include "CollisionManager.h"
 
 
+CollisionManager* CollisionManager::collisionManager = 0;
+
+CollisionManager* CollisionManager::getCollisionManager() {
+	if( collisionManager == 0 )
+		collisionManager = new CollisionManager();
+
+	return collisionManager;
+}
+
+
 CollisionManager::CollisionManager() {
 	collision_configuration = new btDefaultCollisionConfiguration();
 	collision_dispatcher = new btCollisionDispatcher(collision_configuration);
@@ -42,4 +52,21 @@ CollisionManager::~CollisionManager() {
 	delete broadphase;
 	delete collision_dispatcher;
 	delete collision_configuration;
+
+	collisionManager = 0;
 }
+
+
+void CollisionManager::Update() {
+	dynamics_world->stepSimulation( 1.f/60.f, 0 );
+}
+
+
+void CollisionManager::addObject( btRigidBody* body ) {
+	dynamics_world->addRigidBody( body );
+}
+
+void CollisionManager::remObject( btRigidBody* body ) {
+	dynamics_world->removeRigidBody( body );
+}
+

@@ -41,6 +41,7 @@ class TextureManager;
 class Game {
 	public:
 				static Game* getGame();
+				~Game();
 
 				// Game finished
 				inline bool isFinished() { return finished; }

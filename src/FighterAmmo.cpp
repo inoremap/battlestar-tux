@@ -25,23 +25,13 @@
 #include "FighterAmmo.h"
 #include "FighterAmmoList.h"
 
-FighterAmmo::FighterAmmo( FighterAmmoType f, float d, GLuint t ) : Object( AMMO ) {
+// The collision shape will be created when it is requested.
+btSphereShape* FighterAmmo::ammoCollisionShape = 0;
+
+FighterAmmo::FighterAmmo( FighterAmmoType f, float d, GLuint t ) : Object( AMMO, 10 ) {
 	ammoType = f;
 	damage = d;
 	texture = t;
-
-	pos[2] = zPos;
-
-	switch( ammoType ) {
-		default:
-		case LASER:
-			size = 1;
-			break;
-
-		case PLASMA:
-			size = 0.75;
-			break;
-	}
 }
 
 
@@ -68,5 +58,13 @@ void FighterAmmo::Draw() {
 	glEnd();
 
 	glPopMatrix();
+}
+
+
+btCollisionShape* FighterAmmo::getCollisionShape() {
+	if( ammoCollisionShape == 0 )
+		ammoCollisionShape = new btSphereShape( size );
+
+	return ammoCollisionShape;
 }
 

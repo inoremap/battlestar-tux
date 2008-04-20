@@ -42,7 +42,7 @@ void FighterController::accel( vec3 &f ) {
 
 
 void FighterController::decelerate( float f ) {
-	fighter->setPropulsion( f * (vec3() - fighter->getVel()) );
+	// TODO: slow fighter
 }
 
 

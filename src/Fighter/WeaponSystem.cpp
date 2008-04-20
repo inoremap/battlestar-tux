@@ -41,9 +41,6 @@ WeaponSystem::WeaponSystem( Fighter* f ) : Displayable( HUD ) {
 	game = Game::getGame();
 
 	texture = game->getTextureManager()->loadTexture( "data/gfx/crosshairs_0001-32.png" );
-
-	pos = fighter->getPos();
-	pos[1] += 5;
 }
 
 
@@ -55,7 +52,9 @@ WeaponSystem::~WeaponSystem() {
 void WeaponSystem::Update( int speed ) {
 	Displayable::Update( speed );
 
-	// The rotation of the crosshairs should match the fighter.
+	// The rotation and position of the crosshairs should match the fighter.
+	pos = fighter->getPos();
+	pos[1] += 5;
 	rot[2] = fighter->getRot()[2];
 
 	// The weapon cell status is updated by the fighter, not here.

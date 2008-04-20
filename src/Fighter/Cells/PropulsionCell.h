@@ -33,7 +33,7 @@
 // Move the fighter.
 class PropulsionCell : public HexCell {
 	public:
-				PropulsionCell();
+				PropulsionCell( float );
 				~PropulsionCell();
 
 				void Update( int );

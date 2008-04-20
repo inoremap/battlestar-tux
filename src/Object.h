@@ -1,6 +1,6 @@
 /* Object.h
  *
- * Copyright 2005-2007 Eliot Eshelman
+ * Copyright 2005-2008 Eliot Eshelman
  * battlestartux@6by9.net
  *
  *
@@ -26,7 +26,12 @@
 #define OBJECT_H_
 
 #include <SDL_opengl.h>
+#include "CollisionShapes/btCollisionShape.h"
+#include "Dynamics/btRigidBody.h"
+#include "btDefaultMotionState.h"
 
+
+#include "CollisionManager.h"
 #include "ListItem.h"
 #include "Vector.h"
 
@@ -46,8 +51,11 @@ enum ObjectType {
 /* Any object which has a physical presence should inherit this. */
 class Object : public ListItem {
 	public:
-				Object( ObjectType );
+				Object( const ObjectType, const float );
 				virtual ~Object();
+
+				// Initialize Object's physical presence and add to world.
+				void addToWorld();
 
 				// Update object positioning and other data.
 				virtual void Update( int );
@@ -73,39 +81,18 @@ class Object : public ListItem {
 				// Apply a torque to the object.
 				void torque( const vec3 & );
 
-				// The maximum length of the object along any plane at any angle.
-				// This needs to be updated if the object ever changes size.
-				// The size is used to determine the sphere-boundary for collision detection.
-				void setSize( float s ) { size = s; }
-
-				// Statically set the position of the object.
-				// You don't normally do this.
-				void setPos( const vec3 &p ) { pos = p; }
-
-				// Statically set the velocity of the object.
-				// You don't normally do this.
-				void setVel( const vec3 &v ) { vel = v; }
-
-				// Statically set the rotational position of the object.
-				// You don't normally do this.
-				void setRot( const vec3 &r ) { rot = r; }
-
-				// Statically set the angular momentum of the object.
-				// You don't normally do this.
-				void setTorque( const vec3 &t ) { torq = t; }
-
-				void setMass( float m ) { mass = m; }
-
 				void setHealth( float h ) { health = h; }
 				void setFullHealth( float h ) { fullHealth = h; }
 
 				void setType( ObjectType t ) { type = t; }
 
-				virtual float getSize() { return size; }
-				virtual vec3 getPos() { return pos; }
-				virtual vec3 getVel() { return vel; }
-				virtual vec3 getRot() { return rot; }
-				virtual vec3 getTorque() { return torq; }
+				// Position and orientation are provided by Bullet physics.
+				virtual vec3 getPos();
+				virtual void setPos( vec3 & );
+				virtual vec3 getVel();
+				virtual void setVel( vec3 & );
+				virtual vec3 getRot();
+
 				virtual unsigned int getAge() { return age; }
 				virtual float getMass() { return mass; }
 				virtual float getHealth() { return health; }
@@ -119,25 +106,16 @@ class Object : public ListItem {
 
 
 	protected:
-				// Position (X, Y, Z) at center of object (meters).
-				vec3 pos;
+				// Bullet physics library handles all dynamics and collisions.
+				btRigidBody* m_rigidBody;
+				btDefaultMotionState* m_motionState;
+				CollisionManager* collisionManager;
 
-				// Velocity (X, Y, Z)
-				// Number of units to move in each direction each frame.
-				// Remember that the game runs at 50 FPS, regardless of what the
-				// user's screen is actually displaying.
-				vec3 vel;
+				// All objects need to define their collision shape.
+				// It is best for that shape to be static, so that all instances
+				// may share the same object.
+				virtual btCollisionShape* getCollisionShape() = 0;
 
-				// Rotation (Degrees)
-				// The angular position of the object (counter-clockwise).
-				vec3 rot;
-
-				// Torque (Degrees)
-				// The angular velocity of the object (counter-clockwise).
-				vec3 torq;
-
-				// Maximum size of object.
-				float size;
 
 				// Age of object in frames
 				unsigned int age;

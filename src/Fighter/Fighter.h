@@ -26,6 +26,7 @@
 #define FIGHTER_H_
 
 #include <SDL_opengl.h>
+#include "CollisionShapes/btCompoundShape.h"
 
 #include "CoreCell.h"
 #include "Game.h"
@@ -64,6 +65,10 @@ class Fighter : public Object {
 				float getHealth();
 				float getFullHealth();
 
+				// Connect a new ship component onto this fighter at specified position.
+				// If that position is already taken, function will return false.
+				bool attachCell( HexCell*, ivec2 & );
+
 				// One of the ship's components is no longer a part of the ship.
 				// Usually this happens when a cell becomes disconnected and
 				// floats away.  The cell itself remains intact.
@@ -80,6 +85,11 @@ class Fighter : public Object {
 				inline WeaponSystem* getWeaponSystem() { return weaponSystem; }
 
 	protected:
+				// Fighter's collision shape depends on what cells are attached.
+				btCompoundShape* m_collisionShape;
+				btCollisionShape* getCollisionShape() { return m_collisionShape; }
+				void addCellShape( HexCell* );
+
 				// Ship components can get power here.
 				// Returns the amount of power obtained.
 				float getPower( float );

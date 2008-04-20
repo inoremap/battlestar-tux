@@ -31,7 +31,7 @@
 // Create energy for the fighter to use.
 class GenerationCell : public HexCell {
 	public:
-				GenerationCell();
+				GenerationCell( float );
 				~GenerationCell();
 
 				void Update( int );

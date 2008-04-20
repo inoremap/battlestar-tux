@@ -50,7 +50,7 @@ enum HexCellType {
 // Each fighter is composed of these cell units.
 class HexCell : public Object {
 	public:
-				HexCell( HexCellType );
+				HexCell( HexCellType, const float );
 				virtual ~HexCell();
 
 				virtual void Update( int );
@@ -58,7 +58,7 @@ class HexCell : public Object {
 				virtual void Draw();
 
 				// Add this cell to a fighter.
-				void mount( Fighter*, const ivec2 & );
+				void mount( Fighter*, const ivec2 &, const vec2 & );
 
 				// Remove this cell from the fighter.
 				void unmount();
@@ -72,9 +72,10 @@ class HexCell : public Object {
 				// The motion of the cell is dictated by the fighter,
 				// so we need to override the default functions.
 				vec3 getPos();
+				void setPos( const vec3 &v ) {}
 				vec3 getVel();
+				void setVel( const vec3 &v ) {}
 				vec3 getRot();
-				vec3 getTorque();
 
 	protected:
 				// Draw the hexagon.
@@ -96,13 +97,16 @@ class HexCell : public Object {
 
 				// All Hex Cell objects should share the same collision shape.
 				static btCylinderShapeZ* hexCollisionShape;
-				static btCylinderShapeZ* getCollisionShape();
+				btCollisionShape* getCollisionShape();
 
 				Game* game;
 
 	private:
 				HexCell( const HexCell & );
 				const HexCell & operator= ( const HexCell & );
+
+
+	friend class Fighter;
 };
 
 

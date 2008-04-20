@@ -32,7 +32,7 @@
 // The collision shape will be created when it is requested.
 btCylinderShapeZ* HexCell::hexCollisionShape = 0;
 
-HexCell::HexCell( HexCellType type ) : Object( CELL ) {
+HexCell::HexCell( HexCellType type, const float m ) : Object( CELL, m ) {
 	fighter = 0;
 	game = Game::getGame();
 
@@ -55,20 +55,10 @@ void HexCell::Draw() {
 }
 
 
-void HexCell::mount( Fighter* f, const ivec2 &p ) {
+void HexCell::mount( Fighter* f, const ivec2 &offset, const vec2 &position ) {
 	fighter = f;
-	cellOffset = p;
-
-	// Calculate the actual position of the cell, using the offset.
-	cellPosition = vec2(
-		// Horizontal position is just the offset times the size.
-		cellOffset[0] * 1.5 * HEX_CELL_SIZE[1],
-		// Vertical position is the offset times the size,
-		// with the possible additional offset below.
-		cellOffset[1] * 2 * HEX_CELL_SIZE[1] * HEX_VERTS[1][1]
-	);
-	if( (cellOffset[0] % 2) != 0 )
-		cellPosition[1] += HEX_CELL_SIZE[1] * HEX_VERTS[1][1];
+	cellOffset = offset;
+	cellPosition = position;
 }
 
 
@@ -108,11 +98,6 @@ vec3 HexCell::getVel() {
 vec3 HexCell::getRot() {
 	assert( fighter );
 	return fighter->getRot();
-}
-
-vec3 HexCell::getTorque() {
-	assert( fighter );
-	return fighter->getTorque();
 }
 
 
@@ -201,10 +186,10 @@ void HexCell::drawHex( float innerWidth, float outerWidth, float height ) {
 }
 
 
-btCylinderShapeZ* HexCell::getCollisionShape() {
+btCollisionShape* HexCell::getCollisionShape() {
 	if( hexCollisionShape == 0 )
 		hexCollisionShape = new btCylinderShapeZ(btVector3(HEX_CELL_SIZE[0], HEX_CELL_SIZE[1], HEX_CELL_SIZE[2]));
-	else
-		return hexCollisionShape;
+
+	return hexCollisionShape;
 }
 

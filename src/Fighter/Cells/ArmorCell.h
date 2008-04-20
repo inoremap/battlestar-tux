@@ -31,7 +31,7 @@
 // Protective armor unit for the fighter.
 class ArmorCell : public HexCell {
 	public:
-				ArmorCell();
+				ArmorCell( float );
 				~ArmorCell();
 
 				void Draw();

@@ -31,7 +31,7 @@
 // Store energy for the fighter to use.
 class StorageCell : public HexCell {
 	public:
-				StorageCell();
+				StorageCell( float );
 				~StorageCell();
 
 				void Draw();

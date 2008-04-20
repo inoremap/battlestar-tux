@@ -80,6 +80,11 @@ Game::Game() {
 }
 
 
+Game::~Game() {
+	game = 0;
+}
+
+
 void Game::pause() {
 	if( paused ) {
 		if( config->getGrabInput() ) {

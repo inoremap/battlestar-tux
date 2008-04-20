@@ -25,7 +25,7 @@
 #include "StorageCell.h"
 #include "TextureManager.h"
 
-StorageCell::StorageCell() : HexCell( STORAGE_CELL )  {
+StorageCell::StorageCell( float m ) : HexCell( STORAGE_CELL, m )  {
 	currentEnergy = 0;
 	maxEnergy = 0;
 

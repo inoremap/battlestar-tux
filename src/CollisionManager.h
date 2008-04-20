@@ -39,13 +39,25 @@
  */
 class CollisionManager {
 	public:
-				CollisionManager();
+				static CollisionManager* getCollisionManager();
 				~CollisionManager();
 
+				// Update simulation status.
+				void Update();
+
+				// Add an object to the simulation.
+				void addObject( btRigidBody* );
+
+				// Remove an object from the simulation.
+				void remObject( btRigidBody* );
 
 	private:
+				// Constructor needs to be private, because Game is a singleton.
+				CollisionManager();
 				CollisionManager( const CollisionManager & );
 				const CollisionManager & operator= ( const CollisionManager & );
+
+				static CollisionManager* collisionManager;
 
 				btDefaultCollisionConfiguration* collision_configuration;
 				btCollisionDispatcher* collision_dispatcher;

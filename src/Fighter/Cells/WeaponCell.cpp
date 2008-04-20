@@ -28,7 +28,7 @@
 #include "WeaponCell.h"
 #include "TextureManager.h"
 
-WeaponCell::WeaponCell() : HexCell( WEAPON_CELL )  {
+WeaponCell::WeaponCell( float m ) : HexCell( WEAPON_CELL, m )  {
 	firing = false;
 	rechargeTime = 50;
 	chargingTime = 0;

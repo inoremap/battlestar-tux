@@ -42,11 +42,12 @@ Battle::Battle() {
 
 	hud = new HUD();
 
-	collisionManager = new CollisionManager();
+	collisionManager = CollisionManager::getCollisionManager();
 
 	ground = new Ground( SOLID_GROUND );
 
 	hero = new HeroFighter();
+	hero->addToWorld();
 	game->setFighter( hero );
 
 	playerController = new PlayerFighterController( this, screen, hero );
@@ -85,9 +86,6 @@ void Battle::Update() {
 		heroAmmoList->UpdateObjects();
 		enemyAmmoList->UpdateObjects();
 
-		heroAmmoList->CheckCollisions( enemies );
-		enemyAmmoList->CheckCollisions( hero );
-
 		explosionList->Update( speed );
 
 		hero->Update( speed );
@@ -95,8 +93,6 @@ void Battle::Update() {
 			FinishBattle();
 
 		enemies->UpdateObjects();
-
-		enemies->CheckCollisions( hero );
 
 		ground->Update();
 	}
@@ -119,7 +115,7 @@ void Battle::Draw() {
 	glLoadIdentity();
 	glTranslatef( -heroPos[0], -heroPos[1], -30 );
 
-	ground->Draw();
+	//ground->Draw();
 	//draw ground units?
 	enemyAmmoList->DrawObjects();
 	heroAmmoList->DrawObjects();

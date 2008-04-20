@@ -26,7 +26,7 @@
 #include "PropulsionCell.h"
 #include "TextureManager.h"
 
-PropulsionCell::PropulsionCell() : HexCell( PROPULSION_CELL )  {
+PropulsionCell::PropulsionCell( float m ) : HexCell( PROPULSION_CELL, m )  {
 	accelerationRate = 0.001; 
 	powerRate = 10000;
 
