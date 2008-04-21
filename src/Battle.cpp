@@ -46,8 +46,10 @@ Battle::Battle() {
 
 	ground = new Ground( SOLID_GROUND );
 
+	vec3 startPos( 0, 0, 3 );
 	hero = new HeroFighter();
 	hero->addToWorld();
+	hero->setPos( startPos );
 	game->setFighter( hero );
 
 	playerController = new PlayerFighterController( this, screen, hero );
@@ -115,7 +117,7 @@ void Battle::Draw() {
 	glLoadIdentity();
 	glTranslatef( -heroPos[0], -heroPos[1], -30 );
 
-	//ground->Draw();
+	ground->Draw();
 	//draw ground units?
 	enemyAmmoList->DrawObjects();
 	heroAmmoList->DrawObjects();
