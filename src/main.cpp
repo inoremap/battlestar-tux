@@ -1,12 +1,10 @@
 #include "Input.h"
 #include "Simulation.h"
 
+
+// Ogre and CEGUI includes
 #include "Ogre.h"
-
-// needed to be able to create the CEGUI renderer interface
 #include "OgreCEGUIRenderer.h"
-
-// CEGUI includes
 #include "CEGUISystem.h"
 #include "CEGUIInputEvent.h"
 #include "CEGUIWindow.h"
@@ -18,14 +16,8 @@
 // GUI sheet handlers
 #include "MainMenuDlg.h"
 
-#if defined(WIN32)
-#include "windows.h"
 
-INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-#else
 int main (int argc, char *argv[]) {
-#endif
-
 	Ogre::Root *ogre;
 	Ogre::RenderWindow *window;
 	Ogre::SceneManager *sceneMgr;
@@ -74,10 +66,9 @@ int main (int argc, char *argv[]) {
 	opts["vsync"] = "false";
 
 	// create a rendering window with the title "CDK"
-	window = ogre->createRenderWindow("CDK", 1024, 768, false, &opts);
+	window = ogre->createRenderWindow("Battlestar T.U.X.", 1024, 768, false, &opts);
 
-	// since this is basically a CEGUI app, we can use the ST_GENERIC scene manager for now; in a later article 
-	// we'll see how to change this
+	// the ST_GENERIC scene manager is generic and not necessarily optimal
 	sceneMgr = ogre->createSceneManager(Ogre::ST_GENERIC);
 	camera = sceneMgr->createCamera("camera");
 	camera->setNearClipDistance(5);
@@ -124,7 +115,6 @@ int main (int argc, char *argv[]) {
 
 	// this next bit is for the sake of the input handler
 	unsigned long hWnd;
-	// WINDOW is generic to all platforms now as of Eihort
 	window->getCustomAttribute("WINDOW", &hWnd);
 
 	// set up the input handlers
@@ -144,10 +134,6 @@ int main (int argc, char *argv[]) {
 		
 		handler->capture();
 
-		// run the message pump (uncomment for Dagon)
-		//Ogre::PlatformManager::getSingleton().messagePump(window);
-
-		// run the message pump (uncomment for Eihort)
 		Ogre::WindowEventUtilities::messagePump();
 
 		ogre->renderOneFrame();
