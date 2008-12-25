@@ -57,9 +57,12 @@ SET(	BATTLESTAR_TUX_LIBRARIES
 
 SET(	BATTLESTAR_TUX_SOURCES
 
-	MainMenuDlg.cpp
-	Input.cpp
-	Simulation.cpp
+	GameManager.cpp
+	GameState.cpp
+	InputManager.cpp
+	IntroState.cpp
+	PauseState.cpp
+	PlayState.cpp
 )
 
 ADD_EXECUTABLE(	battlestarTUX
