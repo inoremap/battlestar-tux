@@ -105,25 +105,20 @@ void GameManager::startGame( GameState *gameState ) {
 		WindowEventUtilities::messagePump();
 		// Render next frame
         mOgre->renderOneFrame();
-
-        // Deal with platform specific issues
-        //PlatformManager::getSingletonPtr()->messagePump( mRenderWindow );
-		//MYmessagePump( mRenderWindow );
-
-		//WindowEventUtilities::addWindowEventListener(mRenderWindow, this);
     }
 }
 
 
 bool GameManager::loadConfiguration( void ) {
 	//TODO: load config options from file
-	std::string requestedRenderer = "OpenGL Rendering Subsystem";
 	int width = 1024;
 	int height = 768;
 	bool fullscreen = false;
-	std::cerr << "what??" << std::endl;
+
+
 	// User may select their preferred renderer.  We will try to find it here.
-	// Run through the list of available renderers and choose selected option.
+	mOgre->loadPlugin("/usr/local/lib/OGRE/RenderSystem_GL");
+	std::string requestedRenderer = "OpenGL Rendering Subsystem";
 	mOgre->setRenderSystem(mOgre->getRenderSystemByName(requestedRenderer));
 
     // Initialise and create a default rendering window
