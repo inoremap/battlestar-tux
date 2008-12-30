@@ -20,7 +20,7 @@ using namespace Ogre;
 
 GameManager* GameManager::mGameManager;
 
-GameManager::GameManager( void ) :
+GameManager::GameManager() :
     mOgre( 0 ),
     mInputMgr( 0 ),
     mIntroState( 0 ),
@@ -29,7 +29,7 @@ GameManager::GameManager( void ) :
     bShutdown( false ) {
 }
 
-GameManager::~GameManager( void ) {
+GameManager::~GameManager() {
     // Clean up all the states
     while( !mStates.empty() ) {
         mStates.back()->exit();
@@ -109,7 +109,7 @@ void GameManager::startGame( GameState *gameState ) {
 }
 
 
-bool GameManager::loadConfiguration( void ) {
+bool GameManager::loadConfiguration() {
 	//TODO: load config options from file
 	int width = 1024;
 	int height = 768;
@@ -135,7 +135,7 @@ bool GameManager::loadConfiguration( void ) {
     return true;
 }
 
-void GameManager::setupResources( void ) {
+void GameManager::setupResources() {
     // Load resource path - materials and textures found here.
 	ResourceGroupManager::getSingleton().addResourceLocation(
 			"resources", "FileSystem", "General", true);
@@ -177,7 +177,7 @@ void GameManager::popState() {
     }
 }
 
-void GameManager::requestShutdown( void ) {
+void GameManager::requestShutdown() {
     bShutdown = true;
 }
 
@@ -216,7 +216,7 @@ bool GameManager::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id
     return true;
 }
 
-GameManager* GameManager::getSingletonPtr( void ) {
+GameManager* GameManager::getSingletonPtr() {
     if( !mGameManager ) {
         mGameManager = new GameManager();
     }

@@ -14,10 +14,10 @@
 
 class InputManager : public OIS::KeyListener, OIS::MouseListener, OIS::JoyStickListener {
 public:
-    virtual ~InputManager( void );
+    virtual ~InputManager();
 
     void initialise( Ogre::RenderWindow *renderWindow );
-    void capture( void );
+    void capture();
 
     void addKeyListener( OIS::KeyListener *keyListener, const std::string& instanceName );
     void addMouseListener( OIS::MouseListener *mouseListener, const std::string& instanceName );
@@ -31,22 +31,22 @@ public:
     void removeMouseListener( OIS::MouseListener *mouseListener );
     void removeJoystickListener( OIS::JoyStickListener *joystickListener );
 
-    void removeAllListeners( void );
-    void removeAllKeyListeners( void );
-    void removeAllMouseListeners( void );
-    void removeAllJoystickListeners( void );
+    void removeAllListeners();
+    void removeAllKeyListeners();
+    void removeAllMouseListeners();
+    void removeAllJoystickListeners();
 
     void setWindowExtents( int width, int height );
 
-    OIS::Mouse*    getMouse( void );
-    OIS::Keyboard* getKeyboard( void );
+    OIS::Mouse*    getMouse();
+    OIS::Keyboard* getKeyboard();
     OIS::JoyStick* getJoystick( unsigned int index );
 
-    int getNumOfJoysticks( void );
+    int getNumOfJoysticks();
 
-    static InputManager* getSingletonPtr( void );
+    static InputManager* getSingletonPtr();
 private:
-    InputManager( void );
+    InputManager();
     InputManager( const InputManager& ) { }
     InputManager & operator = ( const InputManager& );
 

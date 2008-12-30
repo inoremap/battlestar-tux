@@ -13,13 +13,13 @@
 
 class PlayState : public GameState {
 public:
-    ~PlayState( void );
+    ~PlayState();
 
-    void enter( void );
-    void exit( void );
+    void enter();
+    void exit();
 
-    void pause( void );
-    void resume( void );
+    void pause();
+    void resume();
     void update( unsigned long lTimeElapsed );
 
     void keyPressed( const OIS::KeyEvent &e );
@@ -29,9 +29,9 @@ public:
     void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
-    static PlayState* getSingletonPtr( void );
+    static PlayState* getSingletonPtr();
 private:
-    PlayState( void ) { }
+    PlayState() { }
     PlayState( const PlayState& ) { }
     PlayState & operator = ( const PlayState& );
 

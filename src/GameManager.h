@@ -21,24 +21,24 @@ class GameState;
 
 class GameManager : public OIS::KeyListener, OIS::MouseListener ,  public Ogre::WindowEventListener {
 public:
-    ~GameManager( void );
+    ~GameManager();
 
     void startGame( GameState *gameState );
 
     void changeState( GameState *gameState );
     void pushState( GameState *gameState );
-    void popState( void );
-    void requestShutdown( void );
+    void popState();
+    void requestShutdown();
 
-    static GameManager* getSingletonPtr( void );
+    static GameManager* getSingletonPtr();
 
 private:
-    GameManager( void );
+    GameManager();
     GameManager( const GameManager& ) { }
     GameManager & operator = ( const GameManager& );
 
-    bool loadConfiguration( void );
-    void setupResources( void );
+    bool loadConfiguration();
+    void setupResources();
 
     bool keyPressed( const OIS::KeyEvent &e );
     bool keyReleased( const OIS::KeyEvent &e );

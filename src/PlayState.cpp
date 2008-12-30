@@ -5,7 +5,7 @@ using namespace Ogre;
 
 PlayState* PlayState::mPlayState;
 
-void PlayState::enter( void ) {
+void PlayState::enter() {
     mRoot             = Root::getSingletonPtr();
     mOverlayMgr       = OverlayManager::getSingletonPtr();
     mInputDevice      = InputManager::getSingletonPtr()->getKeyboard();
@@ -28,7 +28,7 @@ void PlayState::enter( void ) {
     mInfoInstruction->setCaption( "Press space for pause" );
 }
 
-void PlayState::exit( void ) {
+void PlayState::exit() {
     mInfoOverlay->hide();
     mPlayOverlay->hide();
     mMouseOverlay->hide();
@@ -38,13 +38,13 @@ void PlayState::exit( void ) {
     mRoot->getAutoCreatedWindow()->removeAllViewports();
 }
 
-void PlayState::pause( void ) {
+void PlayState::pause() {
     mInfoOverlay->hide();
     mPlayOverlay->hide();
     mMouseOverlay->hide();
 }
 
-void PlayState::resume( void ) {
+void PlayState::resume() {
     mInfoOverlay->show();
     mPlayOverlay->show();
     mMouseOverlay->show();
@@ -82,7 +82,7 @@ void PlayState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) 
 void PlayState::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
 }
 
-PlayState* PlayState::getSingletonPtr( void ) {
+PlayState* PlayState::getSingletonPtr() {
     if( !mPlayState ) {
         mPlayState = new PlayState();
     }

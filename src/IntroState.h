@@ -10,13 +10,13 @@
 
 class IntroState : public GameState {
 public:
-    ~IntroState( void );
+    ~IntroState();
 
-    void enter( void );
-    void exit( void );
+    void enter();
+    void exit();
 
-    void pause( void );
-    void resume( void );
+    void pause();
+    void resume();
     void update( unsigned long lTimeElapsed );
 
     void keyPressed( const OIS::KeyEvent &e );
@@ -26,9 +26,9 @@ public:
     void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
-    static IntroState* getSingletonPtr( void );
+    static IntroState* getSingletonPtr();
 private:
-    IntroState( void ) { }
+    IntroState() { }
     IntroState( const IntroState& ) { }
     IntroState & operator = ( const IntroState& );
 

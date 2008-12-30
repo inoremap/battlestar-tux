@@ -20,13 +20,13 @@
 
 class GameState {
 public:
-    ~GameState( void ) { }
+    ~GameState() { }
 
-    virtual void enter( void )  = 0;
-    virtual void exit( void )   = 0;
+    virtual void enter()  = 0;
+    virtual void exit()   = 0;
 
-    virtual void pause( void )  = 0;
-    virtual void resume( void ) = 0;
+    virtual void pause()  = 0;
+    virtual void resume() = 0;
     virtual void update( unsigned long lTimeElapsed ) = 0;
     
     virtual void keyPressed( const OIS::KeyEvent &e )  = 0;
@@ -38,10 +38,10 @@ public:
 
     void changeState( GameState *state );
     void pushState( GameState *state );
-    void popState( void );
-    void requestShutdown( void );
+    void popState();
+    void requestShutdown();
 protected:
-    GameState( void ) { }
+    GameState() { }
 private:
     GameState( const GameState& ) { }
     GameState & operator = ( const GameState& );

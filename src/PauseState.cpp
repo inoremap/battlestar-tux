@@ -4,7 +4,7 @@ using namespace Ogre;
 
 PauseState* PauseState::mPauseState;
 
-void PauseState::enter( void ) {
+void PauseState::enter() {
     mRoot            = Root::getSingletonPtr();
     mOverlayMgr      = OverlayManager::getSingletonPtr();
     mViewport        = mRoot->getAutoCreatedWindow()->getViewport( 0 );
@@ -23,19 +23,19 @@ void PauseState::enter( void ) {
     mInfoInstruction->setCaption( "Press space to return" );
 }
 
-void PauseState::exit( void ) {
+void PauseState::exit() {
     mInfoOverlay->hide();
     mPauseOverlay->hide();
     mMouseOverlay->hide();
 }
 
-void PauseState::pause( void ) {
+void PauseState::pause() {
     mInfoOverlay->hide();
     mPauseOverlay->hide();
     mMouseOverlay->hide();
 }
 
-void PauseState::resume( void ) {
+void PauseState::resume() {
     mInfoOverlay->show();
     mPauseOverlay->show();
     mMouseOverlay->show();
@@ -71,7 +71,7 @@ void PauseState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id )
 void PauseState::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
 }
 
-PauseState* PauseState::getSingletonPtr( void ) {
+PauseState* PauseState::getSingletonPtr() {
     if( !mPauseState ) {
         mPauseState = new PauseState();
     }

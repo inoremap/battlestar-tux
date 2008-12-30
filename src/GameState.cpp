@@ -10,11 +10,11 @@ void GameState::pushState( GameState *state ) {
     GameManager::getSingletonPtr()->pushState( state ); 
 }
 
-void GameState::popState( void ) { 
+void GameState::popState() { 
     GameManager::getSingletonPtr()->popState(); 
 }
 
-void GameState::requestShutdown( void ) {
+void GameState::requestShutdown() {
     GameManager::getSingletonPtr()->requestShutdown();
 }
 

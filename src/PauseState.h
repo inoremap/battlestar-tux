@@ -10,13 +10,13 @@
 
 class PauseState : public GameState {
 public:
-    ~PauseState( void ) { }
+    ~PauseState() { }
 
-    void enter( void );
-    void exit( void );
+    void enter();
+    void exit();
 
-    void pause( void );
-    void resume( void );
+    void pause();
+    void resume();
     void update( unsigned long lTimeElapsed );
 
     void keyPressed( const OIS::KeyEvent &e );
@@ -26,9 +26,9 @@ public:
     void mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
-    static PauseState* getSingletonPtr( void );
+    static PauseState* getSingletonPtr();
 private:
-    PauseState( void ) { }
+    PauseState() { }
     PauseState( const PauseState& ) { }
     PauseState & operator = ( const PauseState& );
 

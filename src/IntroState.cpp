@@ -4,7 +4,7 @@ using namespace Ogre;
 
 IntroState* IntroState::mIntroState;
 
-void IntroState::enter( void ) {
+void IntroState::enter() {
     mRoot         = Root::getSingletonPtr();
     mOverlayMgr   = OverlayManager::getSingletonPtr();
     mSceneMgr     = mRoot->getSceneManager( "ST_GENERIC" );
@@ -16,7 +16,7 @@ void IntroState::enter( void ) {
     mIntroOverlay->show();
 }
 
-void IntroState::exit( void ) {
+void IntroState::exit() {
     mIntroOverlay->hide();
     
     mSceneMgr->clearScene();
@@ -24,11 +24,11 @@ void IntroState::exit( void ) {
     mRoot->getAutoCreatedWindow()->removeAllViewports();
 }
 
-void IntroState::pause( void ) {
+void IntroState::pause() {
     mIntroOverlay->hide();
 }
 
-void IntroState::resume( void ) {
+void IntroState::resume() {
     mIntroOverlay->show();
 }
 
@@ -58,7 +58,7 @@ void IntroState::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id 
     this->changeState( PlayState::getSingletonPtr() );
 }
 
-IntroState* IntroState::getSingletonPtr( void ) {
+IntroState* IntroState::getSingletonPtr() {
     if( !mIntroState ) {
         mIntroState = new IntroState();
     }

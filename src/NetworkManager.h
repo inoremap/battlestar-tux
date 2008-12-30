@@ -3,24 +3,24 @@
 
 class NetworkManager {
 public:
-    virtual ~NetworkManager( void );
+    virtual ~NetworkManager();
 
 	void initialise( NETWORK_TYPE eType );
 
-    void connect( void );
-	void disconnect( void );
+    void connect();
+	void disconnect();
     void updateNetworkSystem( unsigned long lTimeElapsed );
 
-    void sendText( void );
-	void sendObject( void );
+    void sendText();
+	void sendObject();
 
-	void receiveText( void );
-    void reveiveObject( void );
+	void receiveText();
+    void reveiveObject();
 
-	bool isConnected( void );
-    NETWORK_TYPE getLocalType( void );
+	bool isConnected();
+    NETWORK_TYPE getLocalType();
 
-    static NetworkManager* getSingletonPtr( void );
+    static NetworkManager* getSingletonPtr();
 
     typedef enum {
         NETWORK_TYPE_HOST_LAN,
@@ -32,12 +32,12 @@ public:
         NETWORK_TYPE_UNDEFINED
     } NETWORK_TYPE;
 private:
-    NetworkManager( void );
+    NetworkManager();
     NetworkManager( const NetworkManager& ) { }
     NetworkManager & operator = ( const NetworkManager& );
 
-	void sendPacket( void );
-	void receivePacket( void );
+	void sendPacket();
+	void receivePacket();
 
     NETWORK_TYPE eLocalType;
 

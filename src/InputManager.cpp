@@ -2,13 +2,13 @@
 
 InputManager *InputManager::mInputManager=NULL;
 
-InputManager::InputManager( void ) :
+InputManager::InputManager() :
     mMouse( 0 ),
     mKeyboard( 0 ),
     mInputSystem( 0 ) {
 }
 
-InputManager::~InputManager( void ) {
+InputManager::~InputManager() {
     if( mInputSystem ) {
         if( mMouse ) {
             mInputSystem->destroyInputObject( mMouse );
@@ -102,7 +102,7 @@ void InputManager::initialise( Ogre::RenderWindow *renderWindow ) {
     }
 }
 
-void InputManager::capture( void ) {
+void InputManager::capture() {
     // Need to capture / update each device every frame
     if( mMouse ) {
         mMouse->capture();
@@ -226,21 +226,21 @@ void InputManager::removeJoystickListener( OIS::JoyStickListener *joystickListen
     }
 }
 
-void InputManager::removeAllListeners( void ) {
+void InputManager::removeAllListeners() {
     mKeyListeners.clear();
     mMouseListeners.clear();
     mJoystickListeners.clear();
 }
 
-void InputManager::removeAllKeyListeners( void ) {
+void InputManager::removeAllKeyListeners() {
     mKeyListeners.clear();
 }
 
-void InputManager::removeAllMouseListeners( void ) {
+void InputManager::removeAllMouseListeners() {
     mMouseListeners.clear();
 }
 
-void InputManager::removeAllJoystickListeners( void ) {
+void InputManager::removeAllJoystickListeners() {
     mJoystickListeners.clear();
 }
 
@@ -251,11 +251,11 @@ void InputManager::setWindowExtents( int width, int height ) {
     mouseState.height = height;
 }
 
-OIS::Mouse* InputManager::getMouse( void ) {
+OIS::Mouse* InputManager::getMouse() {
     return mMouse;
 }
 
-OIS::Keyboard* InputManager::getKeyboard( void ) {
+OIS::Keyboard* InputManager::getKeyboard() {
     return mKeyboard;
 }
 
@@ -268,7 +268,7 @@ OIS::JoyStick* InputManager::getJoystick( unsigned int index ) {
     return 0;
 }
 
-int InputManager::getNumOfJoysticks( void ) {
+int InputManager::getNumOfJoysticks() {
     // Cast to keep compiler happy ^^
     return (int) mJoysticks.size();
 }
@@ -373,7 +373,7 @@ bool InputManager::buttonReleased( const OIS::JoyStickEvent &e, int button ) {
     return true;
 }
 
-InputManager* InputManager::getSingletonPtr( void ) {
+InputManager* InputManager::getSingletonPtr() {
     if( !mInputManager ) {
         mInputManager = new InputManager();
     }
