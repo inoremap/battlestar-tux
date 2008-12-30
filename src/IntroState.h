@@ -19,12 +19,8 @@
 #ifndef IntroState_H
 #define IntroState_H
 
-#ifndef PlayState_H
 #include "PlayState.h"
-#endif
-#ifndef GameState_H
 #include "GameState.h"
-#endif
 
 class IntroState : public GameState {
 public:
@@ -45,6 +41,7 @@ public:
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
     static IntroState* getSingletonPtr();
+
 private:
     IntroState() { }
     IntroState( const IntroState& ) { }
@@ -59,5 +56,6 @@ private:
 
     static IntroState    *mIntroState;
 };
+
 #endif
 

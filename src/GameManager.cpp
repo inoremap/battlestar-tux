@@ -20,19 +20,10 @@
 #include "OgreWindowEventUtilities.h"
 #include "OgreException.h"
 
-#ifndef PlayState_H
 #include "PlayState.h"
-#endif
-#ifndef GameState_H
 #include "GameState.h"
-#endif
-#ifndef IntroState_H
 #include "IntroState.h"
-#endif
-#ifndef PauseState_H
 #include "PauseState.h"
-#endif
-
 
 using namespace Ogre;
 

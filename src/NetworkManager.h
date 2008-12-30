@@ -49,6 +49,7 @@ public:
         NETWORK_TYPE_DEDICATED_INET,
         NETWORK_TYPE_UNDEFINED
     } NETWORK_TYPE;
+
 private:
     NetworkManager();
     NetworkManager( const NetworkManager& ) { }
@@ -61,4 +62,6 @@ private:
 
     static NetworkManaget *mNetworkManager;
 };
+
 #endif
+

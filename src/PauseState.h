@@ -19,12 +19,8 @@
 #ifndef PauseState_H
 #define PauseState_H
 
-#ifndef PlayState_H
 #include "PlayState.h"
-#endif
-#ifndef GameState_H
 #include "GameState.h"
-#endif
 
 class PauseState : public GameState {
 public:
@@ -45,6 +41,7 @@ public:
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
     static PauseState* getSingletonPtr();
+
 private:
     PauseState() { }
     PauseState( const PauseState& ) { }
@@ -63,5 +60,6 @@ private:
 
     static PauseState    *mPauseState;
 };
+
 #endif
 

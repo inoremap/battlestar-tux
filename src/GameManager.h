@@ -19,21 +19,14 @@
 #ifndef GameManager_H
 #define GameManager_H
 
-#include <Ogre.h>//#include <OgreRoot.h>
+#include <Ogre.h>
 #include <OgreConfigFile.h>
-//#include <OgreRenderWindow.h>
-//#include <OgrePlatformManager.h>//yys
 #include <OgreWindowEventUtilities.h>
 
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
-//#include <OISMouse.h>
-//#include <OISKeyboard.h>
 
-
-#ifndef InputManager_H
 #include "InputManager.h"
-#endif
 
 class GameState;
 
@@ -77,4 +70,6 @@ private:
     std::vector<GameState*> mStates;
     static GameManager *mGameManager;
 };
+
 #endif
+

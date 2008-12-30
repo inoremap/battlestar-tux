@@ -18,7 +18,7 @@
 
 #include "InputManager.h"
 
-InputManager *InputManager::mInputManager=NULL;
+InputManager *InputManager::mInputManager;
 
 InputManager::InputManager() :
     mMouse( 0 ),

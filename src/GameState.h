@@ -19,22 +19,14 @@
 #ifndef GameState_H
 #define GameState_H
 
-#include <Ogre.h>//#include <OgreRoot.h>
-//#include <OgreRenderWindow.h>
-//#include <OgreOverlayElement.h>
-//#include <OgreOverlayManager.h>
+#include <Ogre.h>
 #include <OgreStringConverter.h>
 
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
-//#include <OISMouse.h>
-//#include <OISKeyboard.h>
-#ifndef GameManager_H
+
 #include "GameManager.h"
-#endif
-#ifndef InputManager_H
 #include "InputManager.h"
-#endif
 
 class GameState {
 public:
@@ -58,11 +50,14 @@ public:
     void pushState( GameState *state );
     void popState();
     void requestShutdown();
+
 protected:
     GameState() { }
+
 private:
     GameState( const GameState& ) { }
     GameState & operator = ( const GameState& );
 };
+
 #endif
 

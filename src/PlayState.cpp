@@ -16,8 +16,9 @@
  */
 
 
-#include "PlayState.h"
 #include <OgreTextureUnitState.h>
+
+#include "PlayState.h"
 
 using namespace Ogre;
 

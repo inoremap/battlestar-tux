@@ -19,15 +19,10 @@
 #ifndef InputManager_H
 #define InputManager_H
 
-#include <Ogre.h>//#include <OgreRenderWindow.h>
+#include <Ogre.h>
+
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
-/*
-#include <OISMouse.h>
-#include <OISKeyboard.h>
-#include <OISJoyStick.h>
-#include <OISInputManager.h>
-*/
 
 
 class InputManager : public OIS::KeyListener, OIS::MouseListener, OIS::JoyStickListener {
@@ -103,5 +98,6 @@ private:
 
     static InputManager *mInputManager;
 };
+
 #endif
 

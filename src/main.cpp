@@ -18,13 +18,8 @@
 
 #include <Ogre.h>
 
-#ifndef GameManager_H
 #include "GameManager.h"
-#endif
-
-#ifndef IntroState_H
 #include "IntroState.h"
-#endif
 
 
 int main( int argc, char **argv ) {

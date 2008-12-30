@@ -19,15 +19,10 @@
 #ifndef PlayState_H
 #define PlayState_H
 
-#include <Ogre.h>//#include <OgreCamera.h>
+#include <Ogre.h>
 
-
-#ifndef GameState_H
 #include "GameState.h"
-#endif
-#ifndef PauseState_H
 #include "PauseState.h"
-#endif
 
 class PlayState : public GameState {
 public:
@@ -48,6 +43,7 @@ public:
     void mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
 
     static PlayState* getSingletonPtr();
+
 private:
     PlayState() { }
     PlayState( const PlayState& ) { }
@@ -69,5 +65,6 @@ private:
 
     static PlayState *mPlayState;
 };
+
 #endif
 
