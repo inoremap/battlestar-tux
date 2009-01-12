@@ -72,7 +72,7 @@ GameManager::~GameManager() {
 }
 
 void GameManager::startGame( GameState *gameState ) {
-    mOgre = new Root("", "", "~/.battlestartux/battlestartux.log");
+    mOgre = new Root("resources/plugins.cfg", "resources/ogre.cfg");
 
     // Setup states
     mIntroState = IntroState::getSingletonPtr();
@@ -86,7 +86,7 @@ void GameManager::startGame( GameState *gameState ) {
     // Setup input
     mInputMgr = InputManager::getSingletonPtr();
     mInputMgr->initialise( mRenderWindow );
-	WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
+    WindowEventUtilities::addWindowEventListener( mRenderWindow, this );
 
     mInputMgr->addKeyListener( this, "GameManager" );
     mInputMgr->addMouseListener( this, "GameManager" );
@@ -111,29 +111,21 @@ void GameManager::startGame( GameState *gameState ) {
         // Update current state
         mStates.back()->update( lTimeSinceLastFrame );
 
-		WindowEventUtilities::messagePump();
-		// Render next frame
+        WindowEventUtilities::messagePump();
+        // Render next frame
         mOgre->renderOneFrame();
     }
 }
 
 
 bool GameManager::loadConfiguration() {
-	//TODO: load config options from file
-	int width = 1024;
-	int height = 768;
-	bool fullscreen = false;
-
-
-	// User may select their preferred renderer.  We will try to find it here.
-	mOgre->loadPlugin("/usr/local/lib/OGRE/RenderSystem_GL");
-	std::string requestedRenderer = "OpenGL Rendering Subsystem";
-	mOgre->setRenderSystem(mOgre->getRenderSystemByName(requestedRenderer));
+    // User may select their preferred renderer.  We will try to find it here.
+    if (!mOgre->restoreConfig() && !mOgre->showConfigDialog())
+        throw new Ogre::Exception(52, "User canceled the config dialog!", "BattlestarTUX::GameManager::loadConfiguration()");
 
     // Initialise and create a default rendering window
-	std::string appName = "Battlestar T.U.X.";
-    mRenderWindow = mOgre->initialise(false);
-    mRenderWindow = mOgre->createRenderWindow(appName, width, height, fullscreen);
+    std::string appName = "Battlestar T.U.X.";
+    mRenderWindow = mOgre->initialise(true, appName);
 
     // Initialise resources
     ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -146,8 +138,23 @@ bool GameManager::loadConfiguration() {
 
 void GameManager::setupResources() {
     // Load resource path - materials and textures found here.
-	ResourceGroupManager::getSingleton().addResourceLocation(
-			"resources", "FileSystem", "General", true);
+    String secName, typeName, archName;
+    ConfigFile cf;
+    cf.load("resources/resources.cfg");
+
+    ConfigFile::SectionIterator seci = cf.getSectionIterator();
+    while (seci.hasMoreElements())
+    {
+        secName = seci.peekNextKey();
+        ConfigFile::SettingsMultiMap *settings = seci.getNext();
+        ConfigFile::SettingsMultiMap::iterator i;
+        for (i = settings->begin(); i != settings->end(); ++i)
+        {
+            typeName = i->first;
+            archName = i->second;
+            ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+        }
+    }
 }
 
 void GameManager::changeState( GameState *gameState ) {

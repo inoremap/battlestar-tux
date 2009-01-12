@@ -48,8 +48,8 @@ InputManager::~InputManager() {
             mJoysticks.clear();
         }
 
-		//yys
-		//mInputSystem->destroyInputSystem();
+        //yys
+        //mInputSystem->destroyInputSystem();
         OIS::InputManager::destroyInputSystem(mInputSystem);//
 
         mInputSystem = 0;
@@ -69,54 +69,35 @@ void InputManager::initialise( Ogre::RenderWindow *renderWindow ) {
         std::ostringstream windowHndStr;
 
         // Get window handle
-#if defined OIS_WIN32_PLATFORM
         renderWindow->getCustomAttribute( "WINDOW", &windowHnd );
-#elif defined OIS_LINUX_PLATFORM
-        renderWindow->getCustomAttribute( "GLXWINDOW", &windowHnd );
-#endif
 
         // Fill parameter list
-        windowHndStr << windowHnd;//windowHndStr << (unsigned int) windowHnd;
+        windowHndStr << windowHnd;
         paramList.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );
 
         // Create inputsystem
-        mInputSystem = OIS::
-			InputManager::
-			createInputSystem( paramList );
-
-//-----------------------
-        // If possible create a buffered keyboard
-//        if( mInputSystem->numKeyBoards() > 0 ) {
-            mKeyboard = static_cast<OIS::Keyboard*>( mInputSystem->createInputObject( OIS::OISKeyboard, true ) );
-            mKeyboard->setEventCallback( this );
-//        }
-//-----------------------
-        // If possible create a buffered mouse
-//        if( mInputSystem->numMice() > 0 ) {
-            mMouse = static_cast<OIS::Mouse*>( mInputSystem->createInputObject( OIS::OISMouse, true ) );
-            mMouse->setEventCallback( this );
-
-            // Get window size
-            unsigned int width, height, depth;
-            int left, top;
-            renderWindow->getMetrics( width, height, depth, left, top );
-
-            // Set mouse region
-            this->setWindowExtents( width, height );
- //       }
-//-----------------------
- /*       // If possible create all joysticks in buffered mode
-        if( mInputSystem->numJoysticks() > 0 ) {
-            mJoysticks.resize( mInputSystem->numJoysticks() );
-
-            itJoystick    = mJoysticks.begin();
-            itJoystickEnd = mJoysticks.end();
-            for(; itJoystick != itJoystickEnd; ++itJoystick ) {
-                (*itJoystick) = static_cast<OIS::JoyStick*>( mInputSystem->createInputObject( OIS::OISJoyStick, true ) );
-                (*itJoystick)->setEventCallback( this );
-            }
+        mInputSystem = OIS::InputManager::createInputSystem( paramList );
+        try {
+	        mKeyboard = static_cast<OIS::Keyboard*>( mInputSystem->createInputObject( OIS::OISKeyboard, true ) );
+	        mKeyboard->setEventCallback( this );
+	
+	        mMouse = static_cast<OIS::Mouse*>( mInputSystem->createInputObject( OIS::OISMouse, true ) );
+	        mMouse->setEventCallback( this );
+	
+	        // Get window size
+	        unsigned int width, height, depth;
+	        int left, top;
+	        renderWindow->getMetrics( width, height, depth, left, top );
+	
+	        // Set mouse region
+	        this->setWindowExtents( width, height );
+	
+	        // TODO: create joystick(s)
         }
-*/
+        catch (const OIS::Exception &e)
+	    {
+	        throw new Ogre::Exception(42, e.eText, "BattlestarTUX::InputManager::initialise()");
+	    }
     }
 }
 

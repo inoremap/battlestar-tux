@@ -23,19 +23,19 @@ class NetworkManager {
 public:
     virtual ~NetworkManager();
 
-	void initialise( NETWORK_TYPE eType );
+    void initialise( NETWORK_TYPE eType );
 
     void connect();
-	void disconnect();
+    void disconnect();
     void updateNetworkSystem( unsigned long lTimeElapsed );
 
     void sendText();
-	void sendObject();
+    void sendObject();
 
-	void receiveText();
+    void receiveText();
     void reveiveObject();
 
-	bool isConnected();
+    bool isConnected();
     NETWORK_TYPE getLocalType();
 
     static NetworkManager* getSingletonPtr();
@@ -55,8 +55,8 @@ private:
     NetworkManager( const NetworkManager& ) { }
     NetworkManager & operator = ( const NetworkManager& );
 
-	void sendPacket();
-	void receivePacket();
+    void sendPacket();
+    void receivePacket();
 
     NETWORK_TYPE eLocalType;
 
