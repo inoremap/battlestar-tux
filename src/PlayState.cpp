@@ -72,7 +72,6 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-    // Update wat je moet updaten
 }
 
 void PlayState::keyPressed( const OIS::KeyEvent &e ) {
@@ -89,10 +88,8 @@ void PlayState::keyReleased( const OIS::KeyEvent &e ) {
 
 void PlayState::mouseMoved( const OIS::MouseEvent &e ) {
     const OIS::MouseState &mouseState = e.state;
-    //mMousePointer->setTop( mouseStat.abY );
-    //mMousePointer->setLeft( mouseState.abX );
-    mMousePointer->setTop( mouseState.Y.abs );//yys  mouseState.abY
-    mMousePointer->setLeft( mouseState.X.abs );//yys mouseState.abX
+    mMousePointer->setTop( mouseState.Y.abs );
+    mMousePointer->setLeft( mouseState.X.abs );
 }
 
 void PlayState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {

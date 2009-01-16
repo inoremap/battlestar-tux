@@ -51,7 +51,6 @@ void IntroState::resume() {
 }
 
 void IntroState::update( unsigned long lTimeElapsed ) {
-    // Update wat je moet updaten
 }
 
 void IntroState::keyPressed( const OIS::KeyEvent &e ) {

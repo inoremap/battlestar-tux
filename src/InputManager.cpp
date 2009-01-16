@@ -48,8 +48,6 @@ InputManager::~InputManager() {
             mJoysticks.clear();
         }
 
-        //yys
-        //mInputSystem->destroyInputSystem();
         OIS::InputManager::destroyInputSystem(mInputSystem);//
 
         mInputSystem = 0;
@@ -268,7 +266,6 @@ OIS::JoyStick* InputManager::getJoystick( unsigned int index ) {
 }
 
 int InputManager::getNumOfJoysticks() {
-    // Cast to keep compiler happy ^^
     return (int) mJoysticks.size();
 }
 

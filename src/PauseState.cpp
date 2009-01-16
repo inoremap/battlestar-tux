@@ -62,7 +62,6 @@ void PauseState::resume() {
 }
 
 void PauseState::update( unsigned long lTimeElapsed ) {
-    // Update wat je moet updaten
 }
 
 void PauseState::keyPressed( const OIS::KeyEvent &e ) {
@@ -79,8 +78,8 @@ void PauseState::keyReleased( const OIS::KeyEvent &e ) {
 
 void PauseState::mouseMoved( const OIS::MouseEvent &e ) {
     const OIS::MouseState &mouseState = e.state;
-    mMousePointer->setTop( mouseState.Y.abs );//yys  mouseState.abY
-    mMousePointer->setLeft( mouseState.X.abs );//yys mouseState.abX
+    mMousePointer->setTop( mouseState.Y.abs );
+    mMousePointer->setLeft( mouseState.X.abs );
 }
 
 void PauseState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
