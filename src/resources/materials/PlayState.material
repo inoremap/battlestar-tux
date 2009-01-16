@@ -9,7 +9,7 @@ material PlayState
 
             texture_unit
             {
-                texture PlayState.jpg
+                texture PlayState.png
             }
         }
     }

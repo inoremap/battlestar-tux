@@ -9,7 +9,7 @@ material IntroState
 
             texture_unit
             {
-                texture IntroState.jpg
+                texture IntroState.png
             }
         }
     }
