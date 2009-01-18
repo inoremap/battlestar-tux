@@ -30,7 +30,7 @@ int main( int argc, char **argv ) {
         gameManager->startGame( IntroState::getSingletonPtr() );
     }
     catch ( Ogre::Exception &ex ) {
-        std::cerr << "An exception has occured: " << ex.getFullDescription();
+        std::cerr << "An exception has occurred: " << ex.getFullDescription();
     }
 
     delete gameManager;
