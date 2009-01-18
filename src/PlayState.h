@@ -55,11 +55,9 @@ private:
     Ogre::Viewport       *mViewport;
     Ogre::OverlayManager *mOverlayMgr;
     Ogre::Overlay        *mInfoOverlay;
-    Ogre::Overlay        *mPlayOverlay;
     Ogre::Overlay        *mMouseOverlay;
     Ogre::OverlayElement *mMousePointer;
     Ogre::OverlayElement *mInfoInstruction;
-    Ogre::OverlayElement *mInfoNotification;
 
     OIS::Keyboard        *mInputDevice;
 

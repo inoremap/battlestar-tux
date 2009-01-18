@@ -33,15 +33,12 @@ void PlayState::enter() {
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
 
     mInfoOverlay      = mOverlayMgr->getByName( "Overlay/Info" );
-    mPlayOverlay      = mOverlayMgr->getByName( "Overlay/PlayState" );
     mMouseOverlay     = mOverlayMgr->getByName( "Overlay/MousePointer" );
 
     mInfoInstruction  = mOverlayMgr->getOverlayElement( "Info/Instruction" );
-    mInfoNotification = mOverlayMgr->getOverlayElement( "Info/Notification" );
     mMousePointer     = mOverlayMgr->getOverlayElement( "MousePointer/Pointer" );
 
     mInfoOverlay->show();
-    mPlayOverlay->show();
     mMouseOverlay->show();
 
     mInfoInstruction->setCaption( "Press space for pause" );
@@ -49,7 +46,6 @@ void PlayState::enter() {
 
 void PlayState::exit() {
     mInfoOverlay->hide();
-    mPlayOverlay->hide();
     mMouseOverlay->hide();
 
     mSceneMgr->clearScene();
@@ -59,13 +55,11 @@ void PlayState::exit() {
 
 void PlayState::pause() {
     mInfoOverlay->hide();
-    mPlayOverlay->hide();
     mMouseOverlay->hide();
 }
 
 void PlayState::resume() {
     mInfoOverlay->show();
-    mPlayOverlay->show();
     mMouseOverlay->show();
 
     mInfoInstruction->setCaption( "Press space for pause" );
