@@ -32,16 +32,27 @@ void PlayState::enter() {
     mCamera           = mSceneMgr->createCamera( "PlayCamera" );
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
 
+    // Configure lighting
+    mSceneMgr->setAmbientLight(ColourValue( 1, 1, 1 ));
+    mViewport->setBackgroundColour(ColourValue(0.3, 0.3, 0.3));
+
+    // Configure overlays
     mInfoOverlay      = mOverlayMgr->getByName( "Overlay/Info" );
     mMouseOverlay     = mOverlayMgr->getByName( "Overlay/MousePointer" );
-
     mInfoInstruction  = mOverlayMgr->getOverlayElement( "Info/Instruction" );
     mMousePointer     = mOverlayMgr->getOverlayElement( "MousePointer/Pointer" );
-
+    mInfoInstruction->setCaption( "Press space for pause" );
     mInfoOverlay->show();
     mMouseOverlay->show();
 
-    mInfoInstruction->setCaption( "Press space for pause" );
+    // Create player's ship
+    Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
+    SceneNode *playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode" );
+    playerNode->attachObject(player);
+
+    // Configure camera
+    mCamera->setPosition(Vector3(1, 1, 1));
+    mCamera->lookAt(Vector3(0, 0, 0));
 }
 
 void PlayState::exit() {
@@ -66,6 +77,7 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
+	mCamera->rotate(Vector3(0.5, 0.5, 0), Radian(0.1));
 }
 
 void PlayState::keyPressed( const OIS::KeyEvent &e ) {

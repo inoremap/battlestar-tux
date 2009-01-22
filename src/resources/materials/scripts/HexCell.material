@@ -1,0 +1,14 @@
+material HexCell
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			ambient 0.250000 0.250000 0.250000 1.000000
+			diffuse 0.000000 0.342462 0.800000 1.000000
+			specular 0.726022 0.726022 0.726022 1.000000 8.750000
+			emissive 0.000000 0.000000 0.000000 1.000000
+		}
+	}
+}
