@@ -32,6 +32,16 @@ void PlayState::enter() {
     mCamera           = mSceneMgr->createCamera( "PlayCamera" );
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
 
+    // Configure camera
+    mCamera->setAspectRatio(
+    		Real(mViewport->getActualWidth()) /
+    		Real(mViewport->getActualHeight())
+    		);
+    mCamera->setPosition(Vector3(30, 30, 30));
+    // TODO: poor clipping distances impinge performance
+    mCamera->setNearClipDistance(Real(20));
+    mCamera->setFarClipDistance(Real(0));
+
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue( 1, 1, 1 ));
     mViewport->setBackgroundColour(ColourValue(0.3, 0.3, 0.3));
@@ -49,10 +59,7 @@ void PlayState::enter() {
     Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
     SceneNode *playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode" );
     playerNode->attachObject(player);
-
-    // Configure camera
-    mCamera->setPosition(Vector3(1, 1, 1));
-    mCamera->lookAt(Vector3(0, 0, 0));
+    mCamera->lookAt(playerNode->getPosition());
 }
 
 void PlayState::exit() {
@@ -77,7 +84,6 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-	mCamera->rotate(Vector3(0.5, 0.5, 0), Radian(0.1));
 }
 
 void PlayState::keyPressed( const OIS::KeyEvent &e ) {
