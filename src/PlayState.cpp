@@ -37,14 +37,19 @@ void PlayState::enter() {
     		Real(mViewport->getActualWidth()) /
     		Real(mViewport->getActualHeight())
     		);
-    mCamera->setPosition(Vector3(30, 30, 30));
+    mCamera->setPosition(Vector3(0, 0, 30));
     // TODO: poor clipping distances impinge performance
     mCamera->setNearClipDistance(Real(20));
     mCamera->setFarClipDistance(Real(0));
 
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue( 1, 1, 1 ));
-    mViewport->setBackgroundColour(ColourValue(0.3, 0.3, 0.3));
+    mViewport->setBackgroundColour(ColourValue(105.0/255, 105.0/255, 105.0/255));
+    mLight = mSceneMgr->createLight("SunLight");
+    mLight->setType(Light::LT_DIRECTIONAL);
+    mLight->setDiffuseColour(ColourValue(0.85, 0.85, 0.75));
+    mLight->setSpecularColour(ColourValue(0.35, 0.35, 0.25));
+    mLight->setDirection(Vector3( 0, -1, -1 ));
 
     // Configure overlays
     mInfoOverlay      = mOverlayMgr->getByName( "Overlay/Info" );
