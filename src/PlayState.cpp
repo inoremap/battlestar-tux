@@ -43,12 +43,12 @@ void PlayState::enter() {
     mCamera->setFarClipDistance(Real(0));
 
     // Configure lighting
-    mSceneMgr->setAmbientLight(ColourValue( 1, 1, 1 ));
+    mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
     mViewport->setBackgroundColour(ColourValue(105.0/255, 105.0/255, 105.0/255));
     mLight = mSceneMgr->createLight("SunLight");
     mLight->setType(Light::LT_DIRECTIONAL);
-    mLight->setDiffuseColour(ColourValue(0.85, 0.85, 0.75));
-    mLight->setSpecularColour(ColourValue(0.35, 0.35, 0.25));
+    mLight->setDiffuseColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
+    mLight->setSpecularColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
     mLight->setDirection(Vector3( 0, -1, -1 ));
 
     // Configure overlays
@@ -89,6 +89,12 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
+    Ogre::ColourValue newColor = mInfoInstruction->getColour();
+    if(newColor.a > 0)
+        newColor.a -= 0.001;
+    else
+        newColor.a = 0;
+    mInfoInstruction->setColour(newColor);
 }
 
 void PlayState::keyPressed( const OIS::KeyEvent &e ) {

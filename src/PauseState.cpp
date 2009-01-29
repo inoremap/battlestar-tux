@@ -39,6 +39,9 @@ void PauseState::enter() {
     mMouseOverlay->show();
 
     mInfoInstruction->setCaption( "Press space to return" );
+    Ogre::ColourValue newColor = mInfoInstruction->getColour();
+    newColor.a = 1;
+    mInfoInstruction->setColour(newColor);
 }
 
 void PauseState::exit() {
@@ -59,6 +62,9 @@ void PauseState::resume() {
     mMouseOverlay->show();
 
     mInfoInstruction->setCaption( "Press space to return" );
+    Ogre::ColourValue newColor = mInfoInstruction->getColour();
+    newColor.a = 1;
+    mInfoInstruction->setColour(newColor);
 }
 
 void PauseState::update( unsigned long lTimeElapsed ) {
