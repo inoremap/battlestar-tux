@@ -44,7 +44,7 @@ void PlayState::enter() {
 
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
-    mViewport->setBackgroundColour(ColourValue(105.0/255, 105.0/255, 105.0/255));
+    mViewport->setBackgroundColour(ColourValue(55.0/255, 140.0/255, 230.0/255));
     mLight = mSceneMgr->createLight("SunLight");
     mLight->setType(Light::LT_DIRECTIONAL);
     mLight->setDiffuseColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
