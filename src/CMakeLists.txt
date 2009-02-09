@@ -2,7 +2,7 @@
 #
 # Source cmake configuration file - assemble project.
 #
-# Copyright (C) 2006-2008 Eliot Eshelman <battlestartux@6by9.net>
+# Copyright (C) 2006-2009 Eliot Eshelman <battlestartux@6by9.net>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -14,6 +14,12 @@
 #
 #
 ## YOU DO NOT NEED TO MODIFY THIS FILE ##
+
+
+SUBDIRS(
+	lib/btOgre
+	lib/bullet
+)
 
 
 # OGRE
@@ -30,7 +36,12 @@ INCLUDE_DIRECTORIES(
 	${BATTLESTAR_TUX_SOURCE_DIR}/src
 
 	# Libraries included with Battlestar TUX
-	#${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/btOgre
+	# Libraries that make up Bullet Physics
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletCollision
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/LinearMath
 
 	# Libraries not included with Battlestar TUX
 	${OGRE_INCLUDE_DIR}
@@ -40,13 +51,18 @@ INCLUDE_DIRECTORIES(
 
 LINK_DIRECTORIES(
 	# Libraries included with Battlestar TUX
-	#${BATTLESTAR_TUX_BINARY_DIR}/src/lib/bullet
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/btOgre
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/bullet
 )
 
 SET(	BATTLESTAR_TUX_LIBRARIES
 
 	# Libraries included with Battlestar TUX
-	#FTGL
+	BTOGRE
+	# Libraries that make up Bullet Physics
+	BulletDynamics
+	BulletCollision
+	LinearMath
 
 	# Libraries not included with Battlestar TUX
 	${OGRE_LIBRARY}
