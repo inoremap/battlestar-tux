@@ -21,6 +21,7 @@
 
 #include <Ogre.h>
 
+#include "btBulletDynamicsCommon.h"
 #include "GameState.h"
 #include "PauseState.h"
 
@@ -63,6 +64,18 @@ private:
     OIS::Keyboard        *mInputDevice;
 
     static PlayState *mPlayState;
+
+    Ogre::SceneNode *playerNode;
+
+    btAxisSweep3 *broadphase;
+    btDefaultCollisionConfiguration *collisionConfiguration;
+    btCollisionDispatcher *dispatcher;
+    btSequentialImpulseConstraintSolver *solver;
+    btDiscreteDynamicsWorld *dynamicsWorld;
+    btCollisionShape *groundShape;
+    btRigidBody *groundRigidBody;
+    btBvhTriangleMeshShape *hexCellShape;
+    btRigidBody *hexCellRigidBody;
 };
 
 #endif

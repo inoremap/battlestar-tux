@@ -18,6 +18,9 @@
 
 #include <OgreTextureUnitState.h>
 
+#include "btBulletDynamicsCommon.h"
+#include "BtOgrePG.h"
+#include "BtOgreGP.h"
 #include "PlayState.h"
 
 using namespace Ogre;
@@ -39,8 +42,8 @@ void PlayState::enter() {
     		);
     mCamera->setPosition(Vector3(0, 0, 30));
     // TODO: poor clipping distances impinge performance
-    mCamera->setNearClipDistance(Real(20));
-    mCamera->setFarClipDistance(Real(0));
+    mCamera->setNearClipDistance(Real(5));
+    mCamera->setFarClipDistance(Real(100));
 
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
@@ -60,11 +63,44 @@ void PlayState::enter() {
     mInfoOverlay->show();
     mMouseOverlay->show();
 
+
+    //// Initialize Bullet physics/collisions
+    btVector3 worldAabbMin(-10000, -10000, -10000);
+    btVector3 worldAabbMax(10000, 10000, 10000);
+    int maxProxies = 1024;
+    broadphase = new btAxisSweep3(worldAabbMin, worldAabbMax, maxProxies);
+
+    collisionConfiguration = new btDefaultCollisionConfiguration();
+    dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+    solver = new btSequentialImpulseConstraintSolver;
+
+    dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+
+    dynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+
+    groundShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
+    btDefaultMotionState *groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
+    btRigidBody::btRigidBodyConstructionInfo
+            groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
+    groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    dynamicsWorld->addRigidBody(groundRigidBody);
+    //// End Bullet physics/collisions
+
+
     // Create player's ship
     Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
-    SceneNode *playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode" );
+    playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode", Vector3(0, 50, 0) );
     playerNode->attachObject(player);
-    mCamera->lookAt(playerNode->getPosition());
+    BtOgre::StaticMeshToShapeConverter converter(player);
+    hexCellShape = converter.createTrimesh();
+    btScalar mass = 5;
+    btVector3 inertia;
+    hexCellShape->calculateLocalInertia(mass, inertia);
+    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(playerNode);
+    hexCellRigidBody = new btRigidBody(mass, state, hexCellShape, inertia);
+    dynamicsWorld->addRigidBody(hexCellRigidBody);
 }
 
 void PlayState::exit() {
@@ -74,6 +110,26 @@ void PlayState::exit() {
     mSceneMgr->clearScene();
     mSceneMgr->destroyAllCameras();
     mRoot->getAutoCreatedWindow()->removeAllViewports();
+
+    //// Cleanup Bullet physics simulation
+    dynamicsWorld->removeRigidBody(hexCellRigidBody);
+    delete hexCellRigidBody->getMotionState();
+    delete hexCellRigidBody;
+
+    dynamicsWorld->removeRigidBody(groundRigidBody);
+    delete groundRigidBody->getMotionState();
+    delete groundRigidBody;
+
+    delete hexCellShape;
+
+    delete groundShape;
+
+    delete dynamicsWorld;
+    delete solver;
+    delete collisionConfiguration;
+    delete dispatcher;
+    delete broadphase;
+    //// End Bullet physics simulation cleanup
 }
 
 void PlayState::pause() {
@@ -89,6 +145,16 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
+    dynamicsWorld->stepSimulation(1/60.f,10);
+    mCamera->lookAt(playerNode->getPosition());
+
+    btTransform trans;
+    hexCellRigidBody->getMotionState()->getWorldTransform(trans);
+    std::cout << "Player position: ("
+        << trans.getOrigin().getX() << ", "
+        << trans.getOrigin().getY() << ", "
+        << trans.getOrigin().getZ() << ")" << std::endl;
+
     Ogre::ColourValue newColor = mInfoInstruction->getColour();
     if(newColor.a > 0)
         newColor.a -= 0.001;
