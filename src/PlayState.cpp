@@ -40,10 +40,11 @@ void PlayState::enter() {
     		Real(mViewport->getActualWidth()) /
     		Real(mViewport->getActualHeight())
     		);
-    mCamera->setPosition(Vector3(0, 0, 30));
+    mCamera->setPosition(Vector3(30, 30, 30));
     // TODO: poor clipping distances impinge performance
     mCamera->setNearClipDistance(Real(5));
     mCamera->setFarClipDistance(Real(100));
+    mCamera->lookAt(0,0,0);
 
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
@@ -88,6 +89,49 @@ void PlayState::enter() {
     dynamicsWorld->addRigidBody(groundRigidBody);
     //// End Bullet physics/collisions
 
+
+    // Draw Origin with X, Y, Z Axes
+    ManualObject* xAxis = mSceneMgr->createManualObject("xAxis");
+    SceneNode* xAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("xAxisNode");
+    MaterialPtr xAxisMaterial = MaterialManager::getSingleton().create("xAxisMaterial","debugger");
+    xAxisMaterial->setReceiveShadows(false);
+    xAxisMaterial->getTechnique(0)->setLightingEnabled(true);
+    xAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(1,0,0,0);
+    xAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(1,0,0);
+    xAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(1,0,0);
+    xAxis->begin("xAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
+    xAxis->position(0, 0, 0);
+    xAxis->position(10, 0, 0);
+    xAxis->end();
+    xAxisNode->attachObject(xAxis);
+    // Y axis
+    ManualObject* yAxis = mSceneMgr->createManualObject("yAxis");
+    SceneNode* yAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("yAxisNode");
+    MaterialPtr yAxisMaterial = MaterialManager::getSingleton().create("yAxisMaterial","debugger");
+    yAxisMaterial->setReceiveShadows(false);
+    yAxisMaterial->getTechnique(0)->setLightingEnabled(true);
+    yAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,1,0,0);
+    yAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(0,1,0);
+    yAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,1,0);
+    yAxis->begin("yAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
+    yAxis->position(0, 0, 0);
+    yAxis->position(0, 10, 0);
+    yAxis->end();
+    yAxisNode->attachObject(yAxis);
+    // Z axis
+    ManualObject* zAxis = mSceneMgr->createManualObject("zAxis");
+    SceneNode* zAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("zAxisNode");
+    MaterialPtr zAxisMaterial = MaterialManager::getSingleton().create("zAxisMaterial","debugger");
+    zAxisMaterial->setReceiveShadows(false);
+    zAxisMaterial->getTechnique(0)->setLightingEnabled(true);
+    zAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,0,1,0);
+    zAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(0,0,1);
+    zAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,0,1);
+    zAxis->begin("zAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
+    zAxis->position(0, 0, 0);
+    zAxis->position(0, 0, 10);
+    zAxis->end();
+    zAxisNode->attachObject(zAxis);
 
     // Create player's ship
     Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
@@ -146,14 +190,6 @@ void PlayState::resume() {
 
 void PlayState::update( unsigned long lTimeElapsed ) {
     dynamicsWorld->stepSimulation(1/60.f,10);
-    mCamera->lookAt(playerNode->getPosition());
-
-    btTransform trans;
-    hexCellRigidBody->getMotionState()->getWorldTransform(trans);
-    std::cout << "Player position: ("
-        << trans.getOrigin().getX() << ", "
-        << trans.getOrigin().getY() << ", "
-        << trans.getOrigin().getZ() << ")" << std::endl;
 
     Ogre::ColourValue newColor = mInfoInstruction->getColour();
     if(newColor.a > 0)
