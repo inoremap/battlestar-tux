@@ -18,9 +18,6 @@
 
 #include <OgreTextureUnitState.h>
 
-#include "btBulletDynamicsCommon.h"
-#include "BtOgrePG.h"
-#include "BtOgreGP.h"
 #include "PlayState.h"
 
 using namespace Ogre;
@@ -40,7 +37,7 @@ void PlayState::enter() {
     		Real(mViewport->getActualWidth()) /
     		Real(mViewport->getActualHeight())
     		);
-    mCamera->setPosition(Vector3(30, 30, 30));
+    mCamera->setPosition(Vector3(10, 10, 10));
     // TODO: poor clipping distances impinge performance
     mCamera->setNearClipDistance(Real(5));
     mCamera->setFarClipDistance(Real(100));
@@ -80,6 +77,8 @@ void PlayState::enter() {
 
     dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
+    mBtDebugDrawer = new BtOgre::DebugDrawer(mSceneMgr->getRootSceneNode(), dynamicsWorld);
+    dynamicsWorld->setDebugDrawer(mBtDebugDrawer);
 
     groundShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
     btDefaultMotionState *groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
@@ -135,10 +134,9 @@ void PlayState::enter() {
 
     // Create player's ship
     Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
-    playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode", Vector3(0, 50, 0) );
+    playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode", Vector3(0, 10, 0) );
     playerNode->attachObject(player);
-    BtOgre::StaticMeshToShapeConverter converter(player);
-    hexCellShape = converter.createTrimesh();
+    hexCellShape = new btCylinderShapeZ(btVector3(1.3,1.3,0.3));
     btScalar mass = 5;
     btVector3 inertia;
     hexCellShape->calculateLocalInertia(mass, inertia);
@@ -190,6 +188,7 @@ void PlayState::resume() {
 
 void PlayState::update( unsigned long lTimeElapsed ) {
     dynamicsWorld->stepSimulation(1/60.f,10);
+    mBtDebugDrawer->step();
 
     Ogre::ColourValue newColor = mInfoInstruction->getColour();
     if(newColor.a > 0)

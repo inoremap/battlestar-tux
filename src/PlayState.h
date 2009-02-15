@@ -22,6 +22,8 @@
 #include <Ogre.h>
 
 #include "btBulletDynamicsCommon.h"
+#include "BtOgrePG.h"
+#include "BtOgreGP.h"
 #include "GameState.h"
 #include "PauseState.h"
 
@@ -72,9 +74,10 @@ private:
     btCollisionDispatcher *dispatcher;
     btSequentialImpulseConstraintSolver *solver;
     btDiscreteDynamicsWorld *dynamicsWorld;
+    BtOgre::DebugDrawer *mBtDebugDrawer;
     btCollisionShape *groundShape;
     btRigidBody *groundRigidBody;
-    btBvhTriangleMeshShape *hexCellShape;
+    btCollisionShape *hexCellShape;
     btRigidBody *hexCellRigidBody;
 };
 
