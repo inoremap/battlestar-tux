@@ -17,14 +17,7 @@
 #define _BtOgreShapes_H_
 
 #include "btBulletDynamicsCommon.h"
-#include "OgreSimpleRenderable.h"
-#include "OgreCamera.h"
-#include "OgreHardwareBufferManager.h"
 #include "OgreManualObject.h"
-#include "OgreMaterialManager.h"
-#include "OgreTechnique.h"
-#include "OgrePass.h"
-
 #include "OgreLogManager.h"
 
 namespace BtOgre
