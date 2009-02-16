@@ -90,47 +90,18 @@ void PlayState::enter() {
 
 
     // Draw Origin with X, Y, Z Axes
-    ManualObject* xAxis = mSceneMgr->createManualObject("xAxis");
-    SceneNode* xAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("xAxisNode");
-    MaterialPtr xAxisMaterial = MaterialManager::getSingleton().create("xAxisMaterial","debugger");
-    xAxisMaterial->setReceiveShadows(false);
-    xAxisMaterial->getTechnique(0)->setLightingEnabled(true);
-    xAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(1,0,0,0);
-    xAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(1,0,0);
-    xAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(1,0,0);
-    xAxis->begin("xAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
-    xAxis->position(0, 0, 0);
-    xAxis->position(10, 0, 0);
-    xAxis->end();
-    xAxisNode->attachObject(xAxis);
-    // Y axis
-    ManualObject* yAxis = mSceneMgr->createManualObject("yAxis");
-    SceneNode* yAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("yAxisNode");
-    MaterialPtr yAxisMaterial = MaterialManager::getSingleton().create("yAxisMaterial","debugger");
-    yAxisMaterial->setReceiveShadows(false);
-    yAxisMaterial->getTechnique(0)->setLightingEnabled(true);
-    yAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,1,0,0);
-    yAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(0,1,0);
-    yAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,1,0);
-    yAxis->begin("yAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
-    yAxis->position(0, 0, 0);
-    yAxis->position(0, 10, 0);
-    yAxis->end();
-    yAxisNode->attachObject(yAxis);
-    // Z axis
-    ManualObject* zAxis = mSceneMgr->createManualObject("zAxis");
-    SceneNode* zAxisNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("zAxisNode");
-    MaterialPtr zAxisMaterial = MaterialManager::getSingleton().create("zAxisMaterial","debugger");
-    zAxisMaterial->setReceiveShadows(false);
-    zAxisMaterial->getTechnique(0)->setLightingEnabled(true);
-    zAxisMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,0,1,0);
-    zAxisMaterial->getTechnique(0)->getPass(0)->setAmbient(0,0,1);
-    zAxisMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,0,1);
-    zAxis->begin("zAxisMaterial", Ogre::RenderOperation::OT_LINE_LIST);
-    zAxis->position(0, 0, 0);
-    zAxis->position(0, 0, 10);
-    zAxis->end();
-    zAxisNode->attachObject(zAxis);
+    ManualObject* axes = mSceneMgr->createManualObject("Axes");
+    SceneNode* axesNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("AxesNode");
+    axes->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+    axes->position(0,0,0);    axes->colour(1,0,0);
+    axes->position(10,0,0);   axes->colour(1,0,0);
+    axes->position(0,0,0);    axes->colour(0,1,0);
+    axes->position(0,10,0);   axes->colour(0,1,0);
+    axes->position(0,0,0);    axes->colour(0,0,1);
+    axes->position(0,0,10);   axes->colour(0,0,1);
+    axes->end();
+    axesNode->attachObject(axes);
+
 
     // Create player's ship
     Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
