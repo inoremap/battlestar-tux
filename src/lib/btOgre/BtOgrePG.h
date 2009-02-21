@@ -3,7 +3,7 @@
  *
  *       Filename:  BtOgrePG.h
  *
- *    Description:  The part of BtOgre that handles information transfer from Bullet to 
+ *    Description:  The part of BtOgre that handles information transfer from Bullet to
  *                  Ogre (like updating graphics object positions).
  *
  *        Version:  1.0
@@ -25,7 +25,7 @@ namespace BtOgre {
 
 //A MotionState is Bullet's way of informing you about updates to an object.
 //Pass this MotionState to a btRigidBody to have your SceneNode updated automaticaly.
-class RigidBodyState : public btMotionState 
+class RigidBodyState : public btMotionState
 {
     public:
 	RigidBodyState(const btTransform &transform, Ogre::SceneNode *node)
@@ -40,26 +40,26 @@ class RigidBodyState : public btMotionState
 	{
 	}
 
-	virtual ~RigidBodyState() 
+	virtual ~RigidBodyState()
 	{
 	}
 
-	void setNode(Ogre::SceneNode *node) 
+	void setNode(Ogre::SceneNode *node)
 	{
 	    mNode = node;
 	}
 
-	virtual void getWorldTransform(btTransform &retVal) const 
+	virtual void getWorldTransform(btTransform &retVal) const
 	{
 	    retVal = mTransform;
 	}
 
-	void setKinematicPos(btTransform &transform) 
+	void setKinematicPos(btTransform &transform)
 	{
 	    mTransform = transform;
 	}
 
-	virtual void setWorldTransform(const btTransform &transform) 
+	virtual void setWorldTransform(const btTransform &transform)
 	{
 	    if (mNode == NULL)
 		return;
