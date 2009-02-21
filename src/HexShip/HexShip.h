@@ -19,9 +19,8 @@
 #ifndef HexShip_H
 #define HexShip_H
 
+#include <btBulletDynamicsCommon.h>
 #include <Ogre.h>
-
-#include "btBulletDynamicsCommon.h"
 
 class HexShip {
 public:
@@ -34,6 +33,7 @@ private:
     HexShip( const HexShip& );
     HexShip & operator = ( const HexShip& );
 
+    Ogre::Entity *mHexShip;
     Ogre::SceneNode *mHexShipNode;
     btCollisionShape *mHexCellShape;
     btRigidBody *mHexCellRigidBody;

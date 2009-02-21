@@ -19,8 +19,8 @@
 #ifndef PauseState_H
 #define PauseState_H
 
-#include "PlayState.h"
 #include "GameState.h"
+#include "PlayState.h"
 
 class PauseState : public GameState {
 public:

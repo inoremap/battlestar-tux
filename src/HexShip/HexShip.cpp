@@ -20,13 +20,13 @@
 #include "PhysicsManager.h"
 
 HexShip::HexShip() {
-    Ogre::SceneManager *mSceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
+    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
     // Create player's ship
-    Ogre::Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
-    mHexShipNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerHexShipNode", Ogre::Vector3(0, 10, 0) );
-    mHexShipNode->attachObject(player);
+    mHexShip = sceneMgr->createEntity( "Player", "HexCell.mesh" );
+    mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerHexShipNode", Ogre::Vector3(0, 10, 0) );
+    mHexShipNode->attachObject(mHexShip);
     mHexCellShape = new btCylinderShapeZ(btVector3(1.3,1.3,0.3));
     btScalar mass = 5;
     btVector3 inertia;
@@ -37,10 +37,6 @@ HexShip::HexShip() {
 }
 
 HexShip::~HexShip() {
-    Ogre::SceneManager *mSceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
-    mSceneMgr->destroySceneNode("PlayerHexShipNode");
-    mSceneMgr->destroyEntity("Player");
-
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
     btDynamicsWorld->removeRigidBody(mHexCellRigidBody);
     delete mHexCellRigidBody->getMotionState();

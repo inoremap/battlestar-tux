@@ -19,9 +19,9 @@
 #ifndef PhysicsManager_H
 #define PhysicsManager_H
 
-#include "btBulletDynamicsCommon.h"
-#include "BtOgrePG.h"
-#include "BtOgreGP.h"
+#include <btBulletDynamicsCommon.h>
+#include <BtOgrePG.h>
+#include <BtOgreGP.h>
 
 class PhysicsManager {
 public:

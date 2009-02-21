@@ -16,14 +16,14 @@
  */
 
 
-#include "GameManager.h"
-#include "OgreWindowEventUtilities.h"
-#include "OgreException.h"
+#include <OgreWindowEventUtilities.h>
+#include <OgreException.h>
 
-#include "PlayState.h"
+#include "GameManager.h"
 #include "GameState.h"
 #include "IntroState.h"
 #include "PauseState.h"
+#include "PlayState.h"
 
 using namespace Ogre;
 

@@ -19,8 +19,8 @@
 #ifndef IntroState_H
 #define IntroState_H
 
-#include "PlayState.h"
 #include "GameState.h"
+#include "PlayState.h"
 
 class IntroState : public GameState {
 public:
