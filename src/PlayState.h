@@ -21,11 +21,10 @@
 
 #include <Ogre.h>
 
-#include "btBulletDynamicsCommon.h"
-#include "BtOgrePG.h"
-#include "BtOgreGP.h"
 #include "GameState.h"
+#include "HexShip.h"
 #include "PauseState.h"
+#include "PhysicsManager.h"
 
 class PlayState : public GameState {
 public:
@@ -65,20 +64,11 @@ private:
 
     OIS::Keyboard        *mInputDevice;
 
+    PhysicsManager *mPhysicsManager;
+
+    HexShip *mPlayer;
+
     static PlayState *mPlayState;
-
-    Ogre::SceneNode *playerNode;
-
-    btAxisSweep3 *broadphase;
-    btDefaultCollisionConfiguration *collisionConfiguration;
-    btCollisionDispatcher *dispatcher;
-    btSequentialImpulseConstraintSolver *solver;
-    btDiscreteDynamicsWorld *dynamicsWorld;
-    BtOgre::DebugDrawer *mBtDebugDrawer;
-    btCollisionShape *groundShape;
-    btRigidBody *groundRigidBody;
-    btCollisionShape *hexCellShape;
-    btRigidBody *hexCellRigidBody;
 };
 
 #endif

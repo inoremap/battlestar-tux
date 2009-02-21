@@ -61,34 +61,6 @@ void PlayState::enter() {
     mInfoOverlay->show();
     mMouseOverlay->show();
 
-
-    //// Initialize Bullet physics/collisions
-    btVector3 worldAabbMin(-10000, -10000, -10000);
-    btVector3 worldAabbMax(10000, 10000, 10000);
-    int maxProxies = 1024;
-    broadphase = new btAxisSweep3(worldAabbMin, worldAabbMax, maxProxies);
-
-    collisionConfiguration = new btDefaultCollisionConfiguration();
-    dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-    solver = new btSequentialImpulseConstraintSolver;
-
-    dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
-    dynamicsWorld->setGravity(btVector3(0, -10, 0));
-
-    mBtDebugDrawer = new BtOgre::DebugDrawer(mSceneMgr->getRootSceneNode(), dynamicsWorld);
-    dynamicsWorld->setDebugDrawer(mBtDebugDrawer);
-
-    groundShape = new btStaticPlaneShape(btVector3(0,1,0), 1);
-    btDefaultMotionState *groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
-    btRigidBody::btRigidBodyConstructionInfo
-            groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
-    groundRigidBody = new btRigidBody(groundRigidBodyCI);
-    dynamicsWorld->addRigidBody(groundRigidBody);
-    //// End Bullet physics/collisions
-
-
     // Draw Origin with X, Y, Z Axes
     ManualObject* axes = mSceneMgr->createManualObject("Axes");
     SceneNode* axesNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("AxesNode");
@@ -102,18 +74,10 @@ void PlayState::enter() {
     axes->end();
     axesNode->attachObject(axes);
 
+    // Initialize Bullet physics simulation
+    mPhysicsManager = PhysicsManager::getSingletonPtr();
 
-    // Create player's ship
-    Entity *player = mSceneMgr->createEntity( "Player", "HexCell.mesh" );
-    playerNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerNode", Vector3(0, 10, 0) );
-    playerNode->attachObject(player);
-    hexCellShape = new btCylinderShapeZ(btVector3(1.3,1.3,0.3));
-    btScalar mass = 5;
-    btVector3 inertia;
-    hexCellShape->calculateLocalInertia(mass, inertia);
-    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(playerNode);
-    hexCellRigidBody = new btRigidBody(mass, state, hexCellShape, inertia);
-    dynamicsWorld->addRigidBody(hexCellRigidBody);
+    mPlayer = new HexShip();
 }
 
 void PlayState::exit() {
@@ -124,25 +88,7 @@ void PlayState::exit() {
     mSceneMgr->destroyAllCameras();
     mRoot->getAutoCreatedWindow()->removeAllViewports();
 
-    //// Cleanup Bullet physics simulation
-    dynamicsWorld->removeRigidBody(hexCellRigidBody);
-    delete hexCellRigidBody->getMotionState();
-    delete hexCellRigidBody;
-
-    dynamicsWorld->removeRigidBody(groundRigidBody);
-    delete groundRigidBody->getMotionState();
-    delete groundRigidBody;
-
-    delete hexCellShape;
-
-    delete groundShape;
-
-    delete dynamicsWorld;
-    delete solver;
-    delete collisionConfiguration;
-    delete dispatcher;
-    delete broadphase;
-    //// End Bullet physics simulation cleanup
+    delete mPlayer;
 }
 
 void PlayState::pause() {
@@ -158,8 +104,8 @@ void PlayState::resume() {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-    dynamicsWorld->stepSimulation(1/60.f,10);
-    mBtDebugDrawer->step();
+    mPhysicsManager->update(lTimeElapsed);
+    mPlayer->update(lTimeElapsed);
 
     Ogre::ColourValue newColor = mInfoInstruction->getColour();
     if(newColor.a > 0)

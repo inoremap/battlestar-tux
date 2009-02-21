@@ -34,6 +34,7 @@ FIND_PACKAGE(OIS REQUIRED)
 INCLUDE_DIRECTORIES(
 	# Directories in Battlestar TUX project
 	${BATTLESTAR_TUX_SOURCE_DIR}/src
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/HexShip
 
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/btOgre
@@ -78,7 +79,9 @@ SET(	BATTLESTAR_TUX_SOURCES
 	InputManager.cpp
 	IntroState.cpp
 	PauseState.cpp
+	PhysicsManager.cpp
 	PlayState.cpp
+	HexShip/HexShip.cpp
 )
 
 ADD_EXECUTABLE(	battlestarTUX
