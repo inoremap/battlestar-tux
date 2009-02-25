@@ -60,7 +60,6 @@ protected:
 	Ogre::SceneNode *mNode;
 	btDynamicsWorld *mWorld;
 	Ogre::ManualObject *mLineDrawer;
-	Ogre::MaterialPtr mLineMaterial;
 	bool mDebugOn;
 
 public:
