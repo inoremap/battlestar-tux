@@ -22,7 +22,7 @@
 #include <Ogre.h>
 
 #include "GameState.h"
-#include "HexShip.h"
+#include "HexShip/HexShip.h"
 #include "PauseState.h"
 #include "PhysicsManager.h"
 
