@@ -34,7 +34,7 @@ PhysicsManager::PhysicsManager() {
 
      mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mBroadphase, mSolver, mCollisionConfiguration);
 
-     mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+     mDynamicsWorld->setGravity(btVector3(0, 0, 0));
 
      // Setup Bullet physics debug drawing
      mBtDebugDrawer = new BtOgre::DebugDrawer(
