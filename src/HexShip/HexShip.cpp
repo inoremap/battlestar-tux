@@ -19,16 +19,18 @@
 #include "PlayState.h"
 #include "PhysicsManager.h"
 
-HexShip::HexShip() {
+HexShip::HexShip() { HexShip("HexShip", Ogre::Vector3(0,0,0)); }
+
+HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
     // Create player's ship
-    mHexShip = sceneMgr->createEntity( "Player", "HexCell.mesh" );
-    mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode( "PlayerHexShipNode", Ogre::Vector3(0, 10, 0) );
+    mHexShip = sceneMgr->createEntity(name, "HexCell.mesh");
+    mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node", pos);
     mHexShipNode->attachObject(mHexShip);
     mHexCellShape = new btCylinderShapeZ(btVector3(1.3,1.3,0.3));
-    btScalar mass = 5;
+    btScalar mass = 1;
     btVector3 inertia;
     mHexCellShape->calculateLocalInertia(mass, inertia);
     BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexShipNode);

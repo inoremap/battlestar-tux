@@ -77,7 +77,8 @@ void PlayState::enter() {
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
-    mPlayer = new HexShip();
+    mPlayer = new HexShip("Player", Vector3(0,10,0));
+    HexShip* ai = new HexShip("A.I.", Vector3(2,5,0));
 }
 
 void PlayState::exit() {

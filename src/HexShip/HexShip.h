@@ -25,13 +25,14 @@
 class HexShip {
 public:
     HexShip();
+    HexShip(const Ogre::String& name, const Ogre::Vector3& pos);
     ~HexShip();
 
-    void update( unsigned long lTimeElapsed );
+    void update(unsigned long lTimeElapsed);
 
 private:
-    HexShip( const HexShip& );
-    HexShip & operator = ( const HexShip& );
+    HexShip(const HexShip&);
+    HexShip & operator = (const HexShip&);
 
     Ogre::Entity *mHexShip;
     Ogre::SceneNode *mHexShipNode;
