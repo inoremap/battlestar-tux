@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Ogre.h>
+#include <BtOgreExtras.h>
+
 #include "HexShip.h"
 #include "PlayState.h"
 #include "PhysicsManager.h"
@@ -48,4 +51,9 @@ HexShip::~HexShip() {
 
 
 void HexShip::update( unsigned long lTimeElapsed ) {
+}
+
+
+void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
+    mHexCellRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
 }

@@ -32,26 +32,6 @@ void PlayState::enter() {
     mCamera           = mSceneMgr->createCamera( "PlayCamera" );
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
 
-    // Configure camera
-    mCamera->setAspectRatio(
-    		Real(mViewport->getActualWidth()) /
-    		Real(mViewport->getActualHeight())
-    		);
-    mCamera->setPosition(Vector3(10, 10, 10));
-    // TODO: poor clipping distances impinge performance
-    mCamera->setNearClipDistance(Real(5));
-    mCamera->setFarClipDistance(Real(100));
-    mCamera->lookAt(0,0,0);
-
-    // Configure lighting
-    mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
-    mViewport->setBackgroundColour(ColourValue(55.0/255, 140.0/255, 230.0/255));
-    mLight = mSceneMgr->createLight("SunLight");
-    mLight->setType(Light::LT_DIRECTIONAL);
-    mLight->setDiffuseColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
-    mLight->setSpecularColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
-    mLight->setDirection(Vector3( 0, -1, -1 ));
-
     // Configure overlays
     mInfoOverlay      = mOverlayMgr->getByName( "Overlay/Info" );
     mMouseOverlay     = mOverlayMgr->getByName( "Overlay/MousePointer" );
@@ -74,11 +54,34 @@ void PlayState::enter() {
     axes->end();
     axesNode->attachObject(axes);
 
+
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
     mPlayer = new HexShip("Player", Vector3(0,10,0));
     HexShip* ai = new HexShip("A.I.", Vector3(2,5,0));
+
+
+    // Configure camera
+    mCamera->setAspectRatio(
+            Real(mViewport->getActualWidth()) /
+            Real(mViewport->getActualHeight())
+            );
+    mCamera->setPosition(Vector3(10, 10, 10));
+    // TODO: poor clipping distances impinge performance
+    mCamera->setNearClipDistance(Real(5));
+    mCamera->setFarClipDistance(Real(100));
+    mCamera->setAutoTracking(true, mPlayer->getOgreNode());
+
+    // Configure lighting
+    mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
+    mViewport->setBackgroundColour(ColourValue(55.0/255, 140.0/255, 230.0/255));
+    mLight = mSceneMgr->createLight("SunLight");
+    mLight->setType(Light::LT_DIRECTIONAL);
+    mLight->setDiffuseColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
+    mLight->setSpecularColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
+    mLight->setDirection(Vector3( 0, -1, -1 ));
+
 }
 
 void PlayState::exit() {

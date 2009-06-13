@@ -30,6 +30,10 @@ public:
 
     void update(unsigned long lTimeElapsed);
 
+    void applyCentralImpulse(const Ogre::Vector3& impulse);
+
+    Ogre::SceneNode* getOgreNode() { return mHexShipNode; }
+
 private:
     HexShip(const HexShip&);
     HexShip & operator = (const HexShip&);
