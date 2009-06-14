@@ -58,7 +58,7 @@ void PlayState::enter() {
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
-    mPlayer = new HexShip("Player", Vector3(0,10,0));
+    mPlayer = new HexShip("Player", Vector3(0,2,0));
     HexShip* ai = new HexShip("A.I.", Vector3(2,5,0));
 
 
@@ -67,11 +67,15 @@ void PlayState::enter() {
             Real(mViewport->getActualWidth()) /
             Real(mViewport->getActualHeight())
             );
-    mCamera->setPosition(Vector3(10, 10, 10));
     // TODO: poor clipping distances impinge performance
     mCamera->setNearClipDistance(Real(5));
     mCamera->setFarClipDistance(Real(100));
+    // Attach to player's ship and track.
+    mPlayer->getOgreNode()->attachObject(mCamera);
     mCamera->setAutoTracking(true, mPlayer->getOgreNode());
+    // Set camera distance from player.
+    mCamera->setPosition(Vector3(0.1, 30, 0));
+
 
     // Configure lighting
     mSceneMgr->setAmbientLight(ColourValue(150.0/255, 150.0/255, 150.0/255));
@@ -81,7 +85,6 @@ void PlayState::enter() {
     mLight->setDiffuseColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
     mLight->setSpecularColour(ColourValue(255.0/255, 239.0/255, 162.0/255));
     mLight->setDirection(Vector3( 0, -1, -1 ));
-
 }
 
 void PlayState::exit() {
