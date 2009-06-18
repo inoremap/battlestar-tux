@@ -58,9 +58,17 @@ void PlayState::enter() {
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
-    mPlayer = new HexShip("Player", Vector3(0,2,0));
-    HexShip* ai = new HexShip("A.I.", Vector3(2,5,0));
+    mPlayer = new HexShip("Player", Vector3(-2,2,-2));
 
+    String aiName = "AI";
+    for(int i=0; i<9; i++) {
+        for(int n=0; n<9; n++) {
+            new HexShip(aiName + "-" +
+                    StringConverter::toString(i) + "-" +
+                    StringConverter::toString(n),
+                    Vector3(i*4, 2, n*4));
+        }
+    }
 
     // Configure camera
     mCamera->setAspectRatio(
@@ -74,7 +82,7 @@ void PlayState::enter() {
     mPlayer->getOgreNode()->attachObject(mCamera);
     mCamera->setAutoTracking(true, mPlayer->getOgreNode());
     // Set camera distance from player.
-    mCamera->setPosition(Vector3(0.1, 30, 0));
+    mCamera->setPosition(Vector3(0.1, 50, 0));
 
 
     // Configure lighting
@@ -123,6 +131,22 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 }
 
 void PlayState::keyPressed( const OIS::KeyEvent &e ) {
+    switch(e.key) {
+    case OIS::KC_U:
+        mPlayer->applyCentralImpulse(Vector3(0,0,-10));
+        break;
+    case OIS::KC_A:
+        mPlayer->applyCentralImpulse(Vector3(0,0,10));
+        break;
+    case OIS::KC_COMMA:
+        mPlayer->applyCentralImpulse(Vector3(-10,0,0));
+        break;
+    case OIS::KC_O:
+        mPlayer->applyCentralImpulse(Vector3(10,0,0));
+        break;
+    default:
+        break;
+    }
 }
 
 void PlayState::keyReleased( const OIS::KeyEvent &e ) {
