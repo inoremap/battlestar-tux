@@ -32,12 +32,14 @@ HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
     mHexShip = sceneMgr->createEntity(name, "HexCell.mesh");
     mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node", pos);
     mHexShipNode->attachObject(mHexShip);
-    mHexCellShape = new btCylinderShapeZ(btVector3(1.3,1.3,0.3));
+    mHexCellShape = new btCylinderShapeX(btVector3(1.3,1.3,0.3));
     btScalar mass = 1;
     btVector3 inertia;
     mHexCellShape->calculateLocalInertia(mass, inertia);
     BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexShipNode);
     mHexCellRigidBody = new btRigidBody(mass, state, mHexCellShape, inertia);
+    // Limit all HexShips to a single "gameplay" plane
+    mHexCellRigidBody->setLinearFactor(btVector3(1,0,1));
     btDynamicsWorld->addRigidBody(mHexCellRigidBody);
 }
 
