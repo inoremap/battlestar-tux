@@ -19,32 +19,41 @@ email: projectileman@yahoo.com
 http://gimpact.sf.net
 */
 
-
 #include "btGeneric6DofConstraint.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "LinearMath/btTransformUtil.h"
+#include "LinearMath/btTransformUtil.h"
 #include <new>
+
+
+
+#define D6_USE_OBSOLETE_METHOD false
 
 
 btGeneric6DofConstraint::btGeneric6DofConstraint()
 :btTypedConstraint(D6_CONSTRAINT_TYPE),
 m_useLinearReferenceFrameA(true),
-m_useSolveConstraintObsolete(true)
+m_useSolveConstraintObsolete(D6_USE_OBSOLETE_METHOD)
 {
 }
+
+
 
 btGeneric6DofConstraint::btGeneric6DofConstraint(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB, bool useLinearReferenceFrameA)
 : btTypedConstraint(D6_CONSTRAINT_TYPE, rbA, rbB)
 , m_frameInA(frameInA)
 , m_frameInB(frameInB),
 m_useLinearReferenceFrameA(useLinearReferenceFrameA),
-m_useSolveConstraintObsolete(true)
+m_useSolveConstraintObsolete(D6_USE_OBSOLETE_METHOD)
 {
 
 }
 
 
+
 #define GENERIC_D6_DISABLE_WARMSTARTING 1
+
+
 
 btScalar btGetMatrixElem(const btMatrix3x3& mat, int index);
 btScalar btGetMatrixElem(const btMatrix3x3& mat, int index)
@@ -53,6 +62,8 @@ btScalar btGetMatrixElem(const btMatrix3x3& mat, int index)
 	int j = index/3;
 	return mat[i][j];
 }
+
+
 
 ///MatrixToEulerXYZ from http://www.geometrictools.com/LibFoundation/Mathematics/Wm4Matrix3.inl.html
 bool	matrixToEulerXYZ(const btMatrix3x3& mat,btVector3& xyz);
@@ -63,9 +74,10 @@ bool	matrixToEulerXYZ(const btMatrix3x3& mat,btVector3& xyz)
 	//	//       -cx*cz*sy+sx*sz  cz*sx+cx*sy*sz  cx*cy
 	//
 
-	if (btGetMatrixElem(mat,2) < btScalar(1.0))
+	btScalar fi = btGetMatrixElem(mat,2);
+	if (fi < btScalar(1.0f))
 	{
-		if (btGetMatrixElem(mat,2) > btScalar(-1.0))
+		if (fi > btScalar(-1.0f))
 		{
 			xyz[0] = btAtan2(-btGetMatrixElem(mat,5),btGetMatrixElem(mat,8));
 			xyz[1] = btAsin(btGetMatrixElem(mat,2));
@@ -87,17 +99,11 @@ bool	matrixToEulerXYZ(const btMatrix3x3& mat,btVector3& xyz)
 		xyz[0] = btAtan2(btGetMatrixElem(mat,3),btGetMatrixElem(mat,4));
 		xyz[1] = SIMD_HALF_PI;
 		xyz[2] = 0.0;
-
 	}
-
-
 	return false;
 }
 
-
-
 //////////////////////////// btRotationalLimitMotor ////////////////////////////////////
-
 
 int btRotationalLimitMotor::testLimitValue(btScalar test_value)
 {
@@ -124,6 +130,7 @@ int btRotationalLimitMotor::testLimitValue(btScalar test_value)
 	return 0;
 
 }
+
 
 
 btScalar btRotationalLimitMotor::solveAngularLimits(
@@ -186,8 +193,8 @@ btScalar btRotationalLimitMotor::solveAngularLimits(
 
 
 	// sort with accumulated impulses
-	btScalar	lo = btScalar(-1e30);
-	btScalar	hi = btScalar(1e30);
+	btScalar	lo = btScalar(-BT_LARGE_FLOAT);
+	btScalar	hi = btScalar(BT_LARGE_FLOAT);
 
 	btScalar oldaccumImpulse = m_accumulatedImpulse;
 	btScalar sum = oldaccumImpulse + clippedMotorImpulse;
@@ -211,7 +218,43 @@ btScalar btRotationalLimitMotor::solveAngularLimits(
 
 //////////////////////////// End btRotationalLimitMotor ////////////////////////////////////
 
+
+
+
 //////////////////////////// btTranslationalLimitMotor ////////////////////////////////////
+
+
+int btTranslationalLimitMotor::testLimitValue(int limitIndex, btScalar test_value)
+{
+	btScalar loLimit = m_lowerLimit[limitIndex];
+	btScalar hiLimit = m_upperLimit[limitIndex];
+	if(loLimit > hiLimit)
+	{
+		m_currentLimit[limitIndex] = 0;//Free from violation
+		m_currentLimitError[limitIndex] = btScalar(0.f);
+		return 0;
+	}
+
+	if (test_value < loLimit)
+	{
+		m_currentLimit[limitIndex] = 2;//low limit violation
+		m_currentLimitError[limitIndex] =  test_value - loLimit;
+		return 2;
+	}
+	else if (test_value> hiLimit)
+	{
+		m_currentLimit[limitIndex] = 1;//High limit violation
+		m_currentLimitError[limitIndex] = test_value - hiLimit;
+		return 1;
+	};
+
+	m_currentLimit[limitIndex] = 0;//Free from violation
+	m_currentLimitError[limitIndex] = btScalar(0.f);
+	return 0;
+}
+
+
+
 btScalar btTranslationalLimitMotor::solveLinearAxis(
 	btScalar timeStep,
 	btScalar jacDiagABInv,
@@ -242,8 +285,8 @@ btScalar btTranslationalLimitMotor::solveLinearAxis(
 
 	//positional error (zeroth order error)
 	btScalar depth = -(pointInA - pointInB).dot(axis_normal_on_a);
-	btScalar	lo = btScalar(-1e30);
-	btScalar	hi = btScalar(1e30);
+	btScalar	lo = btScalar(-BT_LARGE_FLOAT);
+	btScalar	hi = btScalar(BT_LARGE_FLOAT);
 
 	btScalar minLimit = m_lowerLimit[limit_index];
 	btScalar maxLimit = m_upperLimit[limit_index];
@@ -300,19 +343,10 @@ btScalar btTranslationalLimitMotor::solveLinearAxis(
 
 //////////////////////////// btTranslationalLimitMotor ////////////////////////////////////
 
-
-
-
-
-
 void btGeneric6DofConstraint::calculateAngleInfo()
 {
 	btMatrix3x3 relative_frame = m_calculatedTransformA.getBasis().inverse()*m_calculatedTransformB.getBasis();
-
 	matrixToEulerXYZ(relative_frame,m_calculatedAxisAngleDiff);
-
-
-
 	// in euler angle mode we do not actually constrain the angular velocity
 	// along the axes axis[0] and axis[2] (although we do use axis[1]) :
 	//
@@ -327,7 +361,6 @@ void btGeneric6DofConstraint::calculateAngleInfo()
 	// GetInfo1 then take the derivative. to prove this for angle[2] it is
 	// easier to take the euler rate expression for d(angle[2])/dt with respect
 	// to the components of w and set that to 0.
-
 	btVector3 axis0 = m_calculatedTransformB.getBasis().getColumn(0);
 	btVector3 axis2 = m_calculatedTransformA.getBasis().getColumn(2);
 
@@ -335,27 +368,22 @@ void btGeneric6DofConstraint::calculateAngleInfo()
 	m_calculatedAxis[0] = m_calculatedAxis[1].cross(axis2);
 	m_calculatedAxis[2] = axis0.cross(m_calculatedAxis[1]);
 
-
-	//    if(m_debugDrawer)
-	//    {
-	//
-	//    	char buff[300];
-	//		sprintf(buff,"\n X: %.2f ; Y: %.2f ; Z: %.2f ",
-	//		m_calculatedAxisAngleDiff[0],
-	//		m_calculatedAxisAngleDiff[1],
-	//		m_calculatedAxisAngleDiff[2]);
-	//    	m_debugDrawer->reportErrorWarning(buff);
-	//    }
+	m_calculatedAxis[0].normalize();
+	m_calculatedAxis[1].normalize();
+	m_calculatedAxis[2].normalize();
 
 }
+
+
 
 void btGeneric6DofConstraint::calculateTransforms()
 {
 	m_calculatedTransformA = m_rbA.getCenterOfMassTransform() * m_frameInA;
 	m_calculatedTransformB = m_rbB.getCenterOfMassTransform() * m_frameInB;
-
+	calculateLinearInfo();
 	calculateAngleInfo();
 }
+
 
 
 void btGeneric6DofConstraint::buildLinearJacobian(
@@ -374,6 +402,8 @@ void btGeneric6DofConstraint::buildLinearJacobian(
         m_rbB.getInvMass());
 }
 
+
+
 void btGeneric6DofConstraint::buildAngularJacobian(
 	btJacobianEntry & jacAngular,const btVector3 & jointAxisW)
 {
@@ -385,14 +415,18 @@ void btGeneric6DofConstraint::buildAngularJacobian(
 
 }
 
+
+
 bool btGeneric6DofConstraint::testAngularLimitMotor(int axis_index)
 {
 	btScalar angle = m_calculatedAxisAngleDiff[axis_index];
-
+	m_angularLimits[axis_index].m_currentPosition = angle;
 	//test limits
 	m_angularLimits[axis_index].testLimitValue(angle);
 	return m_angularLimits[axis_index].needApplyTorques();
 }
+
+
 
 void btGeneric6DofConstraint::buildJacobian()
 {
@@ -452,6 +486,8 @@ void btGeneric6DofConstraint::buildJacobian()
 	}
 }
 
+
+
 void btGeneric6DofConstraint::getInfo1 (btConstraintInfo1* info)
 {
 	if (m_useSolveConstraintObsolete)
@@ -462,257 +498,69 @@ void btGeneric6DofConstraint::getInfo1 (btConstraintInfo1* info)
 	{
 		//prepare constraint
 		calculateTransforms();
-		info->m_numConstraintRows = 3;
-		info->nub = 3;//??
-		//test angular limits
-		for (int i=0;i<3 ;i++ )
+		info->m_numConstraintRows = 0;
+		info->nub = 6;
+		int i;
+		//test linear limits
+		for(i = 0; i < 3; i++)
 		{
-			//if(i==2) continue;
+			if(m_linearLimits.needApplyForce(i))
+			{
+				info->m_numConstraintRows++;
+				info->nub--;
+			}
+		}
+		//test angular limits
+		for (i=0;i<3 ;i++ )
+		{
 			if(testAngularLimitMotor(i))
 			{
 				info->m_numConstraintRows++;
+				info->nub--;
 			}
 		}
 	}
 }
 
+
+
 void btGeneric6DofConstraint::getInfo2 (btConstraintInfo2* info)
 {
 	btAssert(!m_useSolveConstraintObsolete);
-
 	int row = setLinearLimits(info);
 	setAngularLimits(info, row);
 }
 
+
+
 int btGeneric6DofConstraint::setLinearLimits(btConstraintInfo2* info)
 {
-
 	btGeneric6DofConstraint * d6constraint = this;
-
-	//retrieve matrices
-	btTransform body0_trans;
-	body0_trans = m_rbA.getCenterOfMassTransform();
-
-	btTransform body1_trans;
-
-	body1_trans = m_rbB.getCenterOfMassTransform();
-
-	// anchor points in global coordinates with respect to body PORs.
-
-	int s = info->rowskip;
-
-	// set jacobian
-	info->m_J1linearAxis[0] = 1;
-	info->m_J1linearAxis[s+1] = 1;
-	info->m_J1linearAxis[2*s+2] = 1;
-
-	/*for (int i=0;i<3;i++)
+	int row = 0;
+	//solve linear limits
+	btRotationalLimitMotor limot;
+	for (int i=0;i<3 ;i++ )
 	{
-		if (m_useLinearReferenceFrameA)
-		{
-			btVector3* linear_axis = (btVector3* )&info->m_J1linearAxis[s*i];
-			*linear_axis = m_calculatedTransformA.getBasis().getColumn(i);
-		}
-		else
-		{
-			btVector3* linear_axis = (btVector3* )&info->m_J1linearAxis[s*i];
-			*linear_axis = m_calculatedTransformB.getBasis().getColumn(i);
+		if(m_linearLimits.needApplyForce(i))
+		{ // re-use rotational motor code
+			limot.m_bounce = btScalar(0.f);
+			limot.m_currentLimit = m_linearLimits.m_currentLimit[i];
+			limot.m_currentPosition = m_linearLimits.m_currentLinearDiff[i];
+			limot.m_currentLimitError  = m_linearLimits.m_currentLimitError[i];
+			limot.m_damping  = m_linearLimits.m_damping;
+			limot.m_enableMotor  = m_linearLimits.m_enableMotor[i];
+			limot.m_ERP  = m_linearLimits.m_restitution;
+			limot.m_hiLimit  = m_linearLimits.m_upperLimit[i];
+			limot.m_limitSoftness  = m_linearLimits.m_limitSoftness;
+			limot.m_loLimit  = m_linearLimits.m_lowerLimit[i];
+			limot.m_maxLimitForce  = btScalar(0.f);
+			limot.m_maxMotorForce  = m_linearLimits.m_maxMotorForce[i];
+			limot.m_targetVelocity  = m_linearLimits.m_targetVelocity[i];
+			btVector3 axis = m_calculatedTransformA.getBasis().getColumn(i);
+			row += get_limit_motor_info2(&limot, &m_rbA, &m_rbB, info, row, axis, 0);
 		}
 	}
-	*/
-
-
-
-	btVector3 a1,a2;
-
-	a1 = body0_trans.getBasis()*d6constraint->getFrameOffsetA().getOrigin();
-
-	{
-		btVector3* angular0 = (btVector3*)(info->m_J1angularAxis);
-		btVector3* angular1 = (btVector3*)(info->m_J1angularAxis+info->rowskip);
-		btVector3* angular2 = (btVector3*)(info->m_J1angularAxis+2*info->rowskip);
-		btVector3 a1neg = -a1;
-		a1neg.getSkewSymmetricMatrix(angular0,angular1,angular2);
-	}
-
-	/*info->m_J2linearAxis[0] = -1;
-	info->m_J2linearAxis[s+1] = -1;
-	info->m_J2linearAxis[2*s+2] = -1;
-	*/
-
-	a2 = body1_trans.getBasis()*d6constraint->getFrameOffsetB().getOrigin();
-
-	{
-		btVector3* angular0 = (btVector3*)(info->m_J2angularAxis);
-		btVector3* angular1 = (btVector3*)(info->m_J2angularAxis+info->rowskip);
-		btVector3* angular2 = (btVector3*)(info->m_J2angularAxis+2*info->rowskip);
-		a2.getSkewSymmetricMatrix(angular0,angular1,angular2);
-	}
-
-	// set right hand side
-	btScalar k = info->fps * info->erp;
-	for (int j=0; j<3; j++)
-	{
-		info->m_constraintError[s*j] = k * (a2[j] + body1_trans.getOrigin()[j] -	a1[j] - body0_trans.getOrigin()[j]);
-	}
-
-	return 3;
-
-}
-
-
-/*! \pre testLimitValue must be called on limot*/
-int bt_get_limit_motor_info2(
-	btRotationalLimitMotor * limot,
-	btRigidBody * body0, btRigidBody * body1,
-	btTypedConstraint::btConstraintInfo2 *info, int row, btVector3& ax1, int rotational)
-{
-
-
-    int srow = row * info->rowskip;
-
-    // if the joint is powered, or has joint limits, add in the extra row
-    int powered = limot->m_enableMotor;
-    int limit = limot->m_currentLimit;
-
-    if (powered || limit)
-    {
-        btScalar *J1 = rotational ? info->m_J1angularAxis : info->m_J1linearAxis;
-        btScalar *J2 = rotational ? info->m_J2angularAxis : 0;//info->m_J2linearAxis;
-
-        J1[srow+0] = ax1[0];
-        J1[srow+1] = ax1[1];
-        J1[srow+2] = ax1[2];
-        if (body1)
-        {
-            J2[srow+0] = -ax1[0];
-            J2[srow+1] = -ax1[1];
-            J2[srow+2] = -ax1[2];
-        }
-
-        // linear limot torque decoupling step:
-        //
-        // if this is a linear limot (e.g. from a slider), we have to be careful
-        // that the linear constraint forces (+/- ax1) applied to the two bodies
-        // do not create a torque couple. in other words, the points that the
-        // constraint force is applied at must lie along the same ax1 axis.
-        // a torque couple will result in powered or limited slider-jointed free
-        // bodies from gaining angular momentum.
-        // the solution used here is to apply the constraint forces at the point
-        // halfway between the body centers. there is no penalty (other than an
-        // extra tiny bit of computation) in doing this adjustment. note that we
-        // only need to do this if the constraint connects two bodies.
-
-        btVector3 ltd;	// Linear Torque Decoupling vector (a torque)
-        if (!rotational && body1)
-        {
-            btVector3 c;
-            c[0]=btScalar(0.5)*(body1->getCenterOfMassPosition()[0]
-            				-body0->getCenterOfMassPosition()[0]);
-            c[1]=btScalar(0.5)*(body1->getCenterOfMassPosition()[1]
-            				-body0->getCenterOfMassPosition()[1]);
-            c[2]=btScalar(0.5)*(body1->getCenterOfMassPosition()[2]
-            				-body0->getCenterOfMassPosition()[2]);
-
-			ltd = c.cross(ax1);
-
-            info->m_J1angularAxis[srow+0] = ltd[0];
-            info->m_J1angularAxis[srow+1] = ltd[1];
-            info->m_J1angularAxis[srow+2] = ltd[2];
-            info->m_J2angularAxis[srow+0] = ltd[0];
-            info->m_J2angularAxis[srow+1] = ltd[1];
-            info->m_J2angularAxis[srow+2] = ltd[2];
-        }
-
-        // if we're limited low and high simultaneously, the joint motor is
-        // ineffective
-
-        if (limit && (limot->m_loLimit == limot->m_hiLimit)) powered = 0;
-
-        if (powered)
-        {
-            info->cfm[srow] = 0.0f;//limot->m_normalCFM;
-            if (! limit)
-            {
-                info->m_constraintError[srow] = limot->m_targetVelocity;
-                info->m_lowerLimit[srow] = -limot->m_maxMotorForce;
-                info->m_upperLimit[srow] = limot->m_maxMotorForce;
-            }
-        }
-
-        if (limit)
-        {
-            btScalar k = info->fps * limot->m_ERP;
-            info->m_constraintError[srow] = -k * limot->m_currentLimitError;
-            info->cfm[srow] = 0.0f;//limot->m_stopCFM;
-
-            if (limot->m_loLimit == limot->m_hiLimit)
-            {
-                // limited low and high simultaneously
-                info->m_lowerLimit[srow] = -SIMD_INFINITY;
-                info->m_upperLimit[srow] = SIMD_INFINITY;
-            }
-            else
-            {
-                if (limit == 1)
-                {
-                    // low limit
-                    info->m_lowerLimit[srow] = 0;
-                    info->m_upperLimit[srow] = SIMD_INFINITY;
-                }
-                else
-                {
-                    // high limit
-                    info->m_lowerLimit[srow] = -SIMD_INFINITY;
-                    info->m_upperLimit[srow] = 0;
-                }
-
-                // deal with bounce
-                if (limot->m_bounce > 0)
-                {
-                    // calculate joint velocity
-                    btScalar vel;
-                    if (rotational)
-                    {
-                        vel = body0->getAngularVelocity().dot(ax1);
-                        if (body1)
-                            vel -= body1->getAngularVelocity().dot(ax1);
-                    }
-                    else
-                    {
-                        vel = body0->getLinearVelocity().dot(ax1);
-                        if (body1)
-                            vel -= body1->getLinearVelocity().dot(ax1);
-                    }
-
-                    // only apply bounce if the velocity is incoming, and if the
-                    // resulting c[] exceeds what we already have.
-                    if (limit == 1)
-                    {
-                        // low limit
-                        if (vel < 0)
-                        {
-                            btScalar newc = -limot->m_bounce* vel;
-                            if (newc > info->m_constraintError[srow]) 
-								info->m_constraintError[srow] = newc;
-                        }
-                    }
-                    else
-                    {
-                        // high limit - all those computations are reversed
-                        if (vel > 0)
-                        {
-                            btScalar newc = -limot->m_bounce * vel;
-                            if (newc < info->m_constraintError[srow]) 
-								info->m_constraintError[srow] = newc;
-                        }
-                    }
-                }
-            }
-        }
-        return 1;
-    }
-    else return 0;
+	return row;
 }
 
 
@@ -724,11 +572,10 @@ int btGeneric6DofConstraint::setAngularLimits(btConstraintInfo2 *info, int row_o
 	//solve angular limits
 	for (int i=0;i<3 ;i++ )
 	{
-		//if(i==2) continue;
 		if(d6constraint->getRotationalLimitMotor(i)->needApplyTorques())
 		{
 			btVector3 axis = d6constraint->getAxis(i);
-			row += bt_get_limit_motor_info2(
+			row += get_limit_motor_info2(
 				d6constraint->getRotationalLimitMotor(i),
 				&m_rbA,
 				&m_rbB,
@@ -739,7 +586,6 @@ int btGeneric6DofConstraint::setAngularLimits(btConstraintInfo2 *info, int row_o
 	return row;
 }
 
-///////////////////limit motor support
 
 
 void btGeneric6DofConstraint::solveConstraintObsolete(btSolverBody& bodyA,btSolverBody& bodyB,btScalar	timeStep)
@@ -801,21 +647,34 @@ void btGeneric6DofConstraint::solveConstraintObsolete(btSolverBody& bodyA,btSolv
 	}
 }
 
+
+
 void	btGeneric6DofConstraint::updateRHS(btScalar	timeStep)
 {
 	(void)timeStep;
 
 }
 
+
+
 btVector3 btGeneric6DofConstraint::getAxis(int axis_index) const
 {
 	return m_calculatedAxis[axis_index];
 }
 
-btScalar btGeneric6DofConstraint::getAngle(int axis_index) const
+
+btScalar	btGeneric6DofConstraint::getRelativePivotPosition(int axisIndex) const
 {
-	return m_calculatedAxisAngleDiff[axis_index];
+	return m_calculatedLinearDiff[axisIndex];
 }
+
+
+btScalar btGeneric6DofConstraint::getAngle(int axisIndex) const
+{
+	return m_calculatedAxisAngleDiff[axisIndex];
+}
+
+
 
 void btGeneric6DofConstraint::calcAnchorPos(void)
 {
@@ -834,5 +693,154 @@ void btGeneric6DofConstraint::calcAnchorPos(void)
 	const btVector3& pB = m_calculatedTransformB.getOrigin();
 	m_AnchorPos = pA * weight + pB * (btScalar(1.0) - weight);
 	return;
-} // btGeneric6DofConstraint::calcAnchorPos()
+}
+
+
+
+void btGeneric6DofConstraint::calculateLinearInfo()
+{
+	m_calculatedLinearDiff = m_calculatedTransformB.getOrigin() - m_calculatedTransformA.getOrigin();
+	m_calculatedLinearDiff = m_calculatedTransformA.getBasis().inverse() * m_calculatedLinearDiff;
+	for(int i = 0; i < 3; i++)
+	{
+		m_linearLimits.m_currentLinearDiff[i] = m_calculatedLinearDiff[i];
+		m_linearLimits.testLimitValue(i, m_calculatedLinearDiff[i]);
+	}
+}
+
+
+
+int btGeneric6DofConstraint::get_limit_motor_info2(
+	btRotationalLimitMotor * limot,
+	btRigidBody * body0, btRigidBody * body1,
+	btConstraintInfo2 *info, int row, btVector3& ax1, int rotational)
+{
+    int srow = row * info->rowskip;
+    int powered = limot->m_enableMotor;
+    int limit = limot->m_currentLimit;
+    if (powered || limit)
+    {   // if the joint is powered, or has joint limits, add in the extra row
+        btScalar *J1 = rotational ? info->m_J1angularAxis : info->m_J1linearAxis;
+        btScalar *J2 = rotational ? info->m_J2angularAxis : 0;
+        J1[srow+0] = ax1[0];
+        J1[srow+1] = ax1[1];
+        J1[srow+2] = ax1[2];
+        if(rotational)
+        {
+            J2[srow+0] = -ax1[0];
+            J2[srow+1] = -ax1[1];
+            J2[srow+2] = -ax1[2];
+        }
+        if((!rotational))
+        {
+			btVector3 ltd;	// Linear Torque Decoupling vector
+			btVector3 c = m_calculatedTransformB.getOrigin() - body0->getCenterOfMassPosition();
+			ltd = c.cross(ax1);
+            info->m_J1angularAxis[srow+0] = ltd[0];
+            info->m_J1angularAxis[srow+1] = ltd[1];
+            info->m_J1angularAxis[srow+2] = ltd[2];
+
+			c = m_calculatedTransformB.getOrigin() - body1->getCenterOfMassPosition();
+			ltd = -c.cross(ax1);
+			info->m_J2angularAxis[srow+0] = ltd[0];
+            info->m_J2angularAxis[srow+1] = ltd[1];
+            info->m_J2angularAxis[srow+2] = ltd[2];
+        }
+        // if we're limited low and high simultaneously, the joint motor is
+        // ineffective
+        if (limit && (limot->m_loLimit == limot->m_hiLimit)) powered = 0;
+        info->m_constraintError[srow] = btScalar(0.f);
+        if (powered)
+        {
+            info->cfm[srow] = 0.0f;
+            if(!limit)
+            {
+				btScalar tag_vel = rotational ? limot->m_targetVelocity : -limot->m_targetVelocity;
+
+				btScalar mot_fact = getMotorFactor(	limot->m_currentPosition, 
+													limot->m_loLimit,
+													limot->m_hiLimit, 
+													tag_vel, 
+													info->fps * info->erp);
+				info->m_constraintError[srow] += mot_fact * limot->m_targetVelocity;
+                info->m_lowerLimit[srow] = -limot->m_maxMotorForce;
+                info->m_upperLimit[srow] = limot->m_maxMotorForce;
+            }
+        }
+        if(limit)
+        {
+            btScalar k = info->fps * limot->m_ERP;
+			if(!rotational)
+			{
+				info->m_constraintError[srow] += k * limot->m_currentLimitError;
+			}
+			else
+			{
+				info->m_constraintError[srow] += -k * limot->m_currentLimitError;
+			}
+            info->cfm[srow] = 0.0f;
+            if (limot->m_loLimit == limot->m_hiLimit)
+            {   // limited low and high simultaneously
+                info->m_lowerLimit[srow] = -SIMD_INFINITY;
+                info->m_upperLimit[srow] = SIMD_INFINITY;
+            }
+            else
+            {
+                if (limit == 1)
+                {
+                    info->m_lowerLimit[srow] = 0;
+                    info->m_upperLimit[srow] = SIMD_INFINITY;
+                }
+                else
+                {
+                    info->m_lowerLimit[srow] = -SIMD_INFINITY;
+                    info->m_upperLimit[srow] = 0;
+                }
+                // deal with bounce
+                if (limot->m_bounce > 0)
+                {
+                    // calculate joint velocity
+                    btScalar vel;
+                    if (rotational)
+                    {
+                        vel = body0->getAngularVelocity().dot(ax1);
+                        if (body1)
+                            vel -= body1->getAngularVelocity().dot(ax1);
+                    }
+                    else
+                    {
+                        vel = body0->getLinearVelocity().dot(ax1);
+                        if (body1)
+                            vel -= body1->getLinearVelocity().dot(ax1);
+                    }
+                    // only apply bounce if the velocity is incoming, and if the
+                    // resulting c[] exceeds what we already have.
+                    if (limit == 1)
+                    {
+                        if (vel < 0)
+                        {
+                            btScalar newc = -limot->m_bounce* vel;
+                            if (newc > info->m_constraintError[srow]) 
+								info->m_constraintError[srow] = newc;
+                        }
+                    }
+                    else
+                    {
+                        if (vel > 0)
+                        {
+                            btScalar newc = -limot->m_bounce * vel;
+                            if (newc < info->m_constraintError[srow]) 
+								info->m_constraintError[srow] = newc;
+                        }
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+    else return 0;
+}
+
+
+
 

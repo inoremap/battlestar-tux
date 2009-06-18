@@ -108,6 +108,9 @@ protected:
 		return proxy0;
 	}
 
+	///reset broadphase internal structures, to ensure determinism/reproducability
+	virtual void resetPool(btDispatcher* dispatcher);
+
 
 	void	validate();
 
@@ -150,8 +153,8 @@ public:
 	///will add some transform later
 	virtual void getBroadphaseAabb(btVector3& aabbMin,btVector3& aabbMax) const
 	{
-		aabbMin.setValue(-1e30f,-1e30f,-1e30f);
-		aabbMax.setValue(1e30f,1e30f,1e30f);
+		aabbMin.setValue(-BT_LARGE_FLOAT,-BT_LARGE_FLOAT,-BT_LARGE_FLOAT);
+		aabbMax.setValue(BT_LARGE_FLOAT,BT_LARGE_FLOAT,BT_LARGE_FLOAT);
 	}
 
 	virtual void	printStats()

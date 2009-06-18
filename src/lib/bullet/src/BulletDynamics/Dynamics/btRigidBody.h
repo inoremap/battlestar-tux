@@ -45,9 +45,11 @@ class btRigidBody  : public btCollisionObject
 	btVector3		m_linearVelocity;
 	btVector3		m_angularVelocity;
 	btScalar		m_inverseMass;
-	btScalar		m_angularFactor;
+	btVector3		m_angularFactor;
+	btVector3		m_linearFactor;
 
 	btVector3		m_gravity;	
+	btVector3		m_gravity_acceleration;
 	btVector3		m_invInertiaLocal;
 	btVector3		m_totalForce;
 	btVector3		m_totalTorque;
@@ -181,7 +183,7 @@ public:
 
 	const btVector3&	getGravity() const
 	{
-		return m_gravity;
+		return m_gravity_acceleration;
 	}
 
 	void			setDamping(btScalar lin_damping, btScalar ang_damping);
@@ -218,6 +220,14 @@ public:
 	
 	void			setMassProps(btScalar mass, const btVector3& inertia);
 	
+	const btVector3& getLinearFactor() const
+	{
+		return m_linearFactor;
+	}
+	void setLinearFactor(const btVector3& linearFactor)
+	{
+		m_linearFactor = linearFactor;
+	}
 	btScalar		getInvMass() const { return m_inverseMass; }
 	const btMatrix3x3& getInvInertiaTensorWorld() const { 
 		return m_invInertiaTensorWorld; 
@@ -229,10 +239,20 @@ public:
 
 	void			applyCentralForce(const btVector3& force)
 	{
-		m_totalForce += force;
+		m_totalForce += force*m_linearFactor;
 	}
+
+	const btVector3& getTotalForce()
+	{
+		return m_totalForce;
+	};
+
+	const btVector3& getTotalTorque()
+	{
+		return m_totalTorque;
+	};
     
-	const btVector3& getInvInertiaDiagLocal()
+	const btVector3& getInvInertiaDiagLocal() const
 	{
 		return m_invInertiaLocal;
 	};
@@ -250,23 +270,23 @@ public:
 
 	void	applyTorque(const btVector3& torque)
 	{
-		m_totalTorque += torque;
+		m_totalTorque += torque*m_angularFactor;
 	}
 	
 	void	applyForce(const btVector3& force, const btVector3& rel_pos) 
 	{
 		applyCentralForce(force);
-		applyTorque(rel_pos.cross(force)*m_angularFactor);
+		applyTorque(rel_pos.cross(force*m_linearFactor));
 	}
 	
 	void applyCentralImpulse(const btVector3& impulse)
 	{
-		m_linearVelocity += impulse * m_inverseMass;
+		m_linearVelocity += impulse *m_linearFactor * m_inverseMass;
 	}
 	
   	void applyTorqueImpulse(const btVector3& torque)
 	{
-			m_angularVelocity += m_invInertiaTensorWorld * torque;
+			m_angularVelocity += m_invInertiaTensorWorld * torque * m_angularFactor;
 	}
 	
 	void applyImpulse(const btVector3& impulse, const btVector3& rel_pos) 
@@ -276,7 +296,7 @@ public:
 			applyCentralImpulse(impulse);
 			if (m_angularFactor)
 			{
-				applyTorqueImpulse(rel_pos.cross(impulse)*m_angularFactor);
+				applyTorqueImpulse(rel_pos.cross(impulse*m_linearFactor));
 			}
 		}
 	}
@@ -286,10 +306,10 @@ public:
 	{
 		if (m_inverseMass != btScalar(0.))
 		{
-			m_linearVelocity += linearComponent*impulseMagnitude;
+			m_linearVelocity += linearComponent*m_linearFactor*impulseMagnitude;
 			if (m_angularFactor)
 			{
-				m_angularVelocity += angularComponent*impulseMagnitude*m_angularFactor;
+				m_angularVelocity += angularComponent*m_angularFactor*impulseMagnitude;
 			}
 		}
 	}
@@ -439,11 +459,16 @@ public:
 	int	m_contactSolverType;
 	int	m_frictionSolverType;
 
-	void	setAngularFactor(btScalar angFac)
+	void	setAngularFactor(const btVector3& angFac)
 	{
 		m_angularFactor = angFac;
 	}
-	btScalar	getAngularFactor() const
+
+	void	setAngularFactor(btScalar angFac)
+	{
+		m_angularFactor.setValue(angFac,angFac,angFac);
+	}
+	const btVector3&	getAngularFactor() const
 	{
 		return m_angularFactor;
 	}

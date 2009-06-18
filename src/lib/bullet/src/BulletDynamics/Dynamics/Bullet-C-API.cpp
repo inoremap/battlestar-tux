@@ -110,16 +110,16 @@ void           plDeleteDynamicsWorld(plDynamicsWorldHandle world)
 void	plStepSimulation(plDynamicsWorldHandle world,	plReal	timeStep)
 {
 	btDynamicsWorld* dynamicsWorld = reinterpret_cast< btDynamicsWorld* >(world);
-	assert(dynamicsWorld);
+	btAssert(dynamicsWorld);
 	dynamicsWorld->stepSimulation(timeStep);
 }
 
 void plAddRigidBody(plDynamicsWorldHandle world, plRigidBodyHandle object)
 {
 	btDynamicsWorld* dynamicsWorld = reinterpret_cast< btDynamicsWorld* >(world);
-	assert(dynamicsWorld);
+	btAssert(dynamicsWorld);
 	btRigidBody* body = reinterpret_cast< btRigidBody* >(object);
-	assert(body);
+	btAssert(body);
 
 	dynamicsWorld->addRigidBody(body);
 }
@@ -127,9 +127,9 @@ void plAddRigidBody(plDynamicsWorldHandle world, plRigidBodyHandle object)
 void plRemoveRigidBody(plDynamicsWorldHandle world, plRigidBodyHandle object)
 {
 	btDynamicsWorld* dynamicsWorld = reinterpret_cast< btDynamicsWorld* >(world);
-	assert(dynamicsWorld);
+	btAssert(dynamicsWorld);
 	btRigidBody* body = reinterpret_cast< btRigidBody* >(object);
-	assert(body);
+	btAssert(body);
 
 	dynamicsWorld->removeRigidBody(body);
 }
@@ -142,7 +142,7 @@ plRigidBodyHandle plCreateRigidBody(	void* user_data,  float mass, plCollisionSh
 	trans.setIdentity();
 	btVector3 localInertia(0,0,0);
 	btCollisionShape* shape = reinterpret_cast<btCollisionShape*>( cshape);
-	assert(shape);
+	btAssert(shape);
 	if (mass)
 	{
 		shape->calculateLocalInertia(mass,localInertia);
@@ -158,7 +158,7 @@ plRigidBodyHandle plCreateRigidBody(	void* user_data,  float mass, plCollisionSh
 void plDeleteRigidBody(plRigidBodyHandle cbody)
 {
 	btRigidBody* body = reinterpret_cast< btRigidBody* >(cbody);
-	assert(body);
+	btAssert(body);
 	btAlignedFree( body);
 }
 
@@ -181,12 +181,12 @@ plCollisionShapeHandle plNewBoxShape(plReal x, plReal y, plReal z)
 plCollisionShapeHandle plNewCapsuleShape(plReal radius, plReal height)
 {
 	//capsule is convex hull of 2 spheres, so use btMultiSphereShape
-	btVector3 inertiaHalfExtents(radius,height,radius);
+	
 	const int numSpheres = 2;
 	btVector3 positions[numSpheres] = {btVector3(0,height,0),btVector3(0,-height,0)};
 	btScalar radi[numSpheres] = {radius,radius};
 	void* mem = btAlignedAlloc(sizeof(btMultiSphereShape),16);
-	return (plCollisionShapeHandle) new (mem)btMultiSphereShape(inertiaHalfExtents,positions,radi,numSpheres);
+	return (plCollisionShapeHandle) new (mem)btMultiSphereShape(positions,radi,numSpheres);
 }
 plCollisionShapeHandle plNewConeShape(plReal radius, plReal height)
 {
@@ -262,13 +262,13 @@ void		plAddVertex(plCollisionShapeHandle cshape, plReal x,plReal y,plReal z)
 void plDeleteShape(plCollisionShapeHandle cshape)
 {
 	btCollisionShape* shape = reinterpret_cast<btCollisionShape*>( cshape);
-	assert(shape);
+	btAssert(shape);
 	btAlignedFree(shape);
 }
 void plSetScaling(plCollisionShapeHandle cshape, plVector3 cscaling)
 {
 	btCollisionShape* shape = reinterpret_cast<btCollisionShape*>( cshape);
-	assert(shape);
+	btAssert(shape);
 	btVector3 scaling(cscaling[0],cscaling[1],cscaling[2]);
 	shape->setLocalScaling(scaling);	
 }
@@ -293,6 +293,14 @@ void plSetOrientation(plRigidBodyHandle object, const plQuaternion orientation)
 	btTransform worldTrans = body->getWorldTransform();
 	worldTrans.setRotation(orn);
 	body->setWorldTransform(worldTrans);
+}
+
+void	plSetOpenGLMatrix(plRigidBodyHandle object, plReal* matrix)
+{
+	btRigidBody* body = reinterpret_cast< btRigidBody* >(object);
+	btAssert(body);
+	btTransform& worldTrans = body->getWorldTransform();
+	worldTrans.setFromOpenGLMatrix(matrix);
 }
 
 void	plGetOpenGLMatrix(plRigidBodyHandle object, plReal* matrix)

@@ -21,15 +21,13 @@ class btIDebugDraw;
 #include "btContactConstraint.h"
 #include "btSolverBody.h"
 #include "btSolverConstraint.h"
+#include "btTypedConstraint.h"
 
 
-
-///The btSequentialImpulseConstraintSolver uses a Propagation Method and Sequentially applies impulses
-///The approach is the 3D version of Erin Catto's GDC 2006 tutorial. See http://www.gphysics.com
-///Although Sequential Impulse is more intuitive, it is mathematically equivalent to Projected Successive Overrelaxation (iterative LCP)
-///Applies impulses for combined restitution and penetration recovery and to simulate friction
+///The btSequentialImpulseConstraintSolver is a fast SIMD implementation of the Projected Gauss Seidel (iterative LCP) method.
 class btSequentialImpulseConstraintSolver : public btConstraintSolver
 {
+protected:
 
 	btAlignedObjectArray<btSolverBody>	m_tmpSolverBodyPool;
 	btConstraintArray			m_tmpSolverContactConstraintPool;
@@ -37,8 +35,8 @@ class btSequentialImpulseConstraintSolver : public btConstraintSolver
 	btConstraintArray			m_tmpSolverContactFrictionConstraintPool;
 	btAlignedObjectArray<int>	m_orderTmpConstraintPool;
 	btAlignedObjectArray<int>	m_orderFrictionConstraintPool;
+	btAlignedObjectArray<btTypedConstraint::btConstraintInfo1> m_tmpConstraintSizesPool;
 
-protected:
 	btSolverConstraint&	addFrictionConstraint(const btVector3& normalAxis,int solverBodyIdA,int solverBodyIdB,int frictionIndex,btManifoldPoint& cp,const btVector3& rel_pos1,const btVector3& rel_pos2,btCollisionObject* colObj0,btCollisionObject* colObj1, btScalar relaxation);
 	
 	///m_btSeed2 is used for re-arranging the constraint rows. improves convergence/quality of friction
@@ -47,11 +45,18 @@ protected:
 	void	initSolverBody(btSolverBody* solverBody, btCollisionObject* collisionObject);
 	btScalar restitutionCurve(btScalar rel_vel, btScalar restitution);
 
+	void	convertContact(btPersistentManifold* manifold,const btContactSolverInfo& infoGlobal);
+
+
+	void	resolveSplitPenetrationSIMD(
+        btSolverBody& body1,
+        btSolverBody& body2,
+        const btSolverConstraint& contactConstraint);
+
 	void	resolveSplitPenetrationImpulseCacheFriendly(
         btSolverBody& body1,
         btSolverBody& body2,
-        const btSolverConstraint& contactConstraint,
-        const btContactSolverInfo& solverInfo);
+        const btSolverConstraint& contactConstraint);
 
 	//internal method
 	int	getOrInitSolverBody(btCollisionObject& body);

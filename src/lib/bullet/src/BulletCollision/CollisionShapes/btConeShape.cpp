@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -60,7 +60,7 @@ void	btConeShape::setConeUpIndex(int upIndex)
 			m_coneIndices[2] = 1;
 		break;
 	default:
-		assert(0);
+		btAssert(0);
 	};
 }
 

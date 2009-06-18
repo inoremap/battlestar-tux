@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -35,7 +35,7 @@ btConvexShape::~btConvexShape()
 static btVector3 convexHullSupport (const btVector3& localDir, const btVector3* points, int numPoints, const btVector3& localScaling)
 {
 	btVector3 supVec(btScalar(0.),btScalar(0.),btScalar(0.));
-	btScalar newDot,maxDot = btScalar(-1e30);
+	btScalar newDot,maxDot = btScalar(-BT_LARGE_FLOAT);
 
 	btVector3 vec0(localDir.getX(),localDir.getY(),localDir.getZ());
 	btVector3 vec = vec0;
@@ -154,14 +154,13 @@ btVector3 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual (const btV
 		btVector3 vec0(localDir.getX(),localDir.getY(),localDir.getZ());
 
 		btCapsuleShape* capsuleShape = (btCapsuleShape*)this;
-		btVector3 halfExtents = capsuleShape->getImplicitShapeDimensions();
 		btScalar halfHeight = capsuleShape->getHalfHeight();
 		int capsuleUpAxis = capsuleShape->getUpAxis();
 
 		btScalar radius = capsuleShape->getRadius();
 		btVector3 supVec(0,0,0);
 
-		btScalar maxDot(btScalar(-1e30));
+		btScalar maxDot(btScalar(-BT_LARGE_FLOAT));
 
 		btVector3 vec = vec0;
 		btScalar lenSqr = vec.length2();
@@ -301,8 +300,8 @@ void btConvexShape::getAabbNonVirtual (const btTransform& t, btVector3& aabbMin,
     case SPHERE_SHAPE_PROXYTYPE:
 	{
 		btSphereShape* sphereShape = (btSphereShape*)this;
-		float radius = sphereShape->getImplicitShapeDimensions().getX();// * convexShape->getLocalScaling().getX();
-		float margin = radius + sphereShape->getMarginNonVirtual();
+		btScalar radius = sphereShape->getImplicitShapeDimensions().getX();// * convexShape->getLocalScaling().getX();
+		btScalar margin = radius + sphereShape->getMarginNonVirtual();
 		const btVector3& center = t.getOrigin();
 		btVector3 extent(margin,margin,margin);
 		aabbMin = center - extent;
@@ -314,7 +313,7 @@ void btConvexShape::getAabbNonVirtual (const btTransform& t, btVector3& aabbMin,
 	case BOX_SHAPE_PROXYTYPE:
 	{
 		btBoxShape* convexShape = (btBoxShape*)this;
-		float margin=convexShape->getMarginNonVirtual();
+		btScalar margin=convexShape->getMarginNonVirtual();
 		btVector3 halfExtents = convexShape->getImplicitShapeDimensions();
 		halfExtents += btVector3(margin,margin,margin);
 		btMatrix3x3 abs_b = t.getBasis().absolute();  
@@ -361,7 +360,7 @@ void btConvexShape::getAabbNonVirtual (const btTransform& t, btVector3& aabbMin,
 	case CONVEX_POINT_CLOUD_SHAPE_PROXYTYPE:
 	case CONVEX_HULL_SHAPE_PROXYTYPE:
 	{
-		btPolyhedralConvexShape* convexHullShape = (btPolyhedralConvexShape*)this;
+		btPolyhedralConvexAabbCachingShape* convexHullShape = (btPolyhedralConvexAabbCachingShape*)this;
 		btScalar margin = convexHullShape->getMarginNonVirtual();
 		convexHullShape->getNonvirtualAabb (t, aabbMin, aabbMax, margin);
 	}

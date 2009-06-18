@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2007 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -12,6 +12,7 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+
 ///btDbvtBroadphase implementation by Nathanael Presson
 #ifndef BT_DBVT_BROADPHASE_H
 #define BT_DBVT_BROADPHASE_H
@@ -24,7 +25,7 @@ subject to the following restrictions:
 //
 
 #define	DBVT_BP_PROFILE					0
-#define DBVT_BP_SORTPAIRS				1
+//#define DBVT_BP_SORTPAIRS				1
 #define DBVT_BP_PREVENTFALSEUPDATE		0
 #define DBVT_BP_ACCURATESLEEPING		0
 #define DBVT_BP_ENABLE_BENCHMARK		0
@@ -114,6 +115,21 @@ struct	btDbvtBroadphase : btBroadphaseInterface
 	void							getBroadphaseAabb(btVector3& aabbMin,btVector3& aabbMax) const;
 	void							printStats();
 	static void						benchmark(btBroadphaseInterface*);
+
+	void	setVelocityPrediction(btScalar prediction)
+	{
+		m_prediction = prediction;
+	}
+	btScalar getVelocityPrediction() const
+	{
+		return m_prediction;
+	}
+	
+	void	performDeferredRemoval(btDispatcher* dispatcher);
+
+	///reset broadphase internal structures, to ensure determinism/reproducability
+	virtual void resetPool(btDispatcher* dispatcher);
+
 };
 
 #endif

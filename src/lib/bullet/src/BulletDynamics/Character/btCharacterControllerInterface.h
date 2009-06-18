@@ -17,18 +17,20 @@ subject to the following restrictions:
 #define CHARACTER_CONTROLLER_INTERFACE_H
 
 #include "LinearMath/btVector3.h"
+#include "BulletDynamics/Dynamics/btActionInterface.h"
 
 class btCollisionShape;
 class btRigidBody;
 class btCollisionWorld;
 
-class btCharacterControllerInterface
+class btCharacterControllerInterface : public btActionInterface
 {
 public:
 	btCharacterControllerInterface () {};
 	virtual ~btCharacterControllerInterface () {};
 	
 	virtual void	setWalkDirection(const btVector3& walkDirection) = 0;
+	virtual void	setVelocityForTimeInterval(const btVector3& velocity, btScalar timeInterval) = 0;
 	virtual void	reset () = 0;
 	virtual void	warp (const btVector3& origin) = 0;
 

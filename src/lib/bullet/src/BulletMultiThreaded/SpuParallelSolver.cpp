@@ -641,3 +641,4 @@ void SolverTaskScheduler::flushTasks()
 		m_numBusyTasks--;
 	}
 }
+

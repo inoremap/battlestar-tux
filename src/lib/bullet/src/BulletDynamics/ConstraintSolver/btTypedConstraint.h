@@ -21,13 +21,15 @@ class btRigidBody;
 #include "btSolverConstraint.h"
 struct  btSolverBody;
 
+
+
+
 enum btTypedConstraintType
 {
 	POINT2POINT_CONSTRAINT_TYPE,
 	HINGE_CONSTRAINT_TYPE,
 	CONETWIST_CONSTRAINT_TYPE,
 	D6_CONSTRAINT_TYPE,
-	VEHICLE_CONSTRAINT_TYPE,
 	SLIDER_CONSTRAINT_TYPE
 };
 
@@ -36,6 +38,7 @@ class btTypedConstraint
 {
 	int	m_userConstraintType;
 	int	m_userConstraintId;
+	bool m_needsFeedback;
 
 	btTypedConstraintType m_constraintType;
 
@@ -50,7 +53,11 @@ protected:
 	btRigidBody&	m_rbA;
 	btRigidBody&	m_rbB;
 	btScalar	m_appliedImpulse;
+	btScalar	m_dbgDrawSize;
 
+	btVector3	m_appliedLinearImpulse;
+	btVector3	m_appliedAngularImpulseA;
+	btVector3	m_appliedAngularImpulseB;
 
 public:
 
@@ -90,19 +97,35 @@ public:
 		// note that the returned indexes are relative to the first index of
 		// the constraint.
 		int *findex;
+		// number of solver iterations
+		int m_numIterations;
 	};
 
+	///internal method used by the constraint solver, don't use them directly
 	virtual void	buildJacobian() = 0;
 
+	///internal method used by the constraint solver, don't use them directly
 	virtual	void	setupSolverConstraint(btConstraintArray& ca, int solverBodyA,int solverBodyB, btScalar timeStep)
 	{
 	}
+	
+	///internal method used by the constraint solver, don't use them directly
 	virtual void getInfo1 (btConstraintInfo1* info)=0;
 
+	///internal method used by the constraint solver, don't use them directly
 	virtual void getInfo2 (btConstraintInfo2* info)=0;
 
+	///internal method used by the constraint solver, don't use them directly
+	void	internalSetAppliedImpulse(btScalar appliedImpulse)
+	{
+		m_appliedImpulse = appliedImpulse;
+	}
+
+	///internal method used by the constraint solver, don't use them directly
 	virtual	void	solveConstraintObsolete(btSolverBody& bodyA,btSolverBody& bodyB,btScalar	timeStep) = 0;
 
+	///internal method used by the constraint solver, don't use them directly
+	btScalar getMotorFactor(btScalar pos, btScalar lowLim, btScalar uppLim, btScalar vel, btScalar timeFact);
 	
 	const btRigidBody& getRigidBodyA() const
 	{
@@ -147,16 +170,78 @@ public:
 		return m_userConstraintId;   
 	} 
 
+	bool	needsFeedback() const
+	{
+		return m_needsFeedback;
+	}
+
+	///enableFeedback will allow to read the applied linear and angular impulse
+	///use getAppliedImpulse, getAppliedLinearImpulse and getAppliedAngularImpulse to read feedback information
+	void	enableFeedback(bool needsFeedback)
+	{
+		m_needsFeedback = needsFeedback;
+	}
+
+	///getAppliedImpulse is an estimated total applied impulse. 
+	///This feedback could be used to determine breaking constraints or playing sounds.
 	btScalar	getAppliedImpulse() const
 	{
+		btAssert(m_needsFeedback);
 		return m_appliedImpulse;
 	}
+
+	const btVector3& getAppliedLinearImpulse() const
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedLinearImpulse;
+	}
+
+	btVector3& getAppliedLinearImpulse()
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedLinearImpulse;
+	}
+
+	const btVector3& getAppliedAngularImpulseA() const
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedAngularImpulseA;
+	}
+
+	btVector3& getAppliedAngularImpulseA()
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedAngularImpulseA;
+	}
+
+	const btVector3& getAppliedAngularImpulseB() const
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedAngularImpulseB;
+	}
+
+	btVector3& getAppliedAngularImpulseB()
+	{
+		btAssert(m_needsFeedback);
+		return m_appliedAngularImpulseB;
+	}
+
+	
 
 	btTypedConstraintType getConstraintType () const
 	{
 		return m_constraintType;
 	}
-
+	
+	void setDbgDrawSize(btScalar dbgDrawSize)
+	{
+		m_dbgDrawSize = dbgDrawSize;
+	}
+	btScalar getDbgDrawSize()
+	{
+		return m_dbgDrawSize;
+	}
+	
 };
 
 #endif //TYPED_CONSTRAINT_H

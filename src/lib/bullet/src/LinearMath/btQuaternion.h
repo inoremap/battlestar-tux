@@ -58,7 +58,7 @@ public:
 	void setRotation(const btVector3& axis, const btScalar& angle)
 	{
 		btScalar d = axis.length();
-		assert(d != btScalar(0.0));
+		btAssert(d != btScalar(0.0));
 		btScalar s = btSin(angle * btScalar(0.5)) / d;
 		setValue(axis.x() * s, axis.y() * s, axis.z() * s, 
 			btCos(angle * btScalar(0.5)));
@@ -177,7 +177,7 @@ public:
    * @param s The inverse scale factor */
 	btQuaternion operator/(const btScalar& s) const
 	{
-		assert(s != btScalar(0.0));
+		btAssert(s != btScalar(0.0));
 		return *this * (btScalar(1.0) / s);
 	}
 
@@ -185,7 +185,7 @@ public:
    * @param s The scale factor */
 	btQuaternion& operator/=(const btScalar& s) 
 	{
-		assert(s != btScalar(0.0));
+		btAssert(s != btScalar(0.0));
 		return *this *= btScalar(1.0) / s;
 	}
 
@@ -199,7 +199,7 @@ public:
 	btScalar angle(const btQuaternion& q) const 
 	{
 		btScalar s = btSqrt(length2() * q.length2());
-		assert(s != btScalar(0.0));
+		btAssert(s != btScalar(0.0));
 		return btAcos(dot(q) / s);
 	}
   /**@brief Return the angle of rotation represented by this quaternion */
@@ -209,8 +209,17 @@ public:
 		return s;
 	}
 
+	/**@brief Return the axis of the rotation represented by this quaternion */
+	btVector3 getAxis() const
+	{
+		btScalar s_squared = btScalar(1.) - btPow(m_floats[3], btScalar(2.));
+		if (s_squared < btScalar(10.) * SIMD_EPSILON) //Check for divide by zero
+			return btVector3(1.0, 0.0, 0.0);  // Arbitrary
+		btScalar s = btSqrt(s_squared);
+		return btVector3(m_floats[0] / s, m_floats[1] / s, m_floats[2] / s);
+	}
 
-  /**@brief Return the inverse of this quaternion */
+	/**@brief Return the inverse of this quaternion */
 	btQuaternion inverse() const
 	{
 		return btQuaternion(-m_floats[0], -m_floats[1], -m_floats[2], m_floats[3]);
@@ -273,6 +282,12 @@ public:
 		{
 			return *this;
 		}
+	}
+
+	static const btQuaternion&	getIdentity()
+	{
+		static const btQuaternion identityQuat(btScalar(0.),btScalar(0.),btScalar(0.),btScalar(1.));
+		return identityQuat;
 	}
 
 	SIMD_FORCE_INLINE const btScalar& getW() const { return m_floats[3]; }

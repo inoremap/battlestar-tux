@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -12,8 +12,10 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
-
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
+
+
+btScalar gContactThresholdFactor=btScalar(0.02);
 
 
 /*
@@ -42,10 +44,10 @@ void	btCollisionShape::getBoundingSphere(btVector3& center,btScalar& radius) con
 	center = (aabbMin+aabbMax)*btScalar(0.5);
 }
 
+
 btScalar	btCollisionShape::getContactBreakingThreshold() const
 {
-	///@todo make this 0.1 configurable
-	return getAngularMotionDisc() * btScalar(0.1);
+	return getAngularMotionDisc() * gContactThresholdFactor;
 }
 btScalar	btCollisionShape::getAngularMotionDisc() const
 {

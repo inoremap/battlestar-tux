@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -27,16 +27,31 @@ ATTRIBUTE_ALIGNED16( struct)	btIndexedMesh
 {
 	BT_DECLARE_ALIGNED_ALLOCATOR();
 
-	int			m_numTriangles;
-	const unsigned char *		m_triangleIndexBase;
-	int			m_triangleIndexStride;
-	int			m_numVertices;
-	const unsigned char *		m_vertexBase;
-	int			m_vertexStride;
-	// The index type is set when adding an indexed mesh to the
-	// btTriangleIndexVertexArray, do not set it manually
-	PHY_ScalarType		m_indexType;
-	int			pad;
+   int                     m_numTriangles;
+   const unsigned char *   m_triangleIndexBase;
+   int                     m_triangleIndexStride;
+   int                     m_numVertices;
+   const unsigned char *   m_vertexBase;
+   int                     m_vertexStride;
+
+   // The index type is set when adding an indexed mesh to the
+   // btTriangleIndexVertexArray, do not set it manually
+   PHY_ScalarType m_indexType;
+
+   // The vertex type has a default type similar to Bullet's precision mode (float or double)
+   // but can be set manually if you for example run Bullet with double precision but have
+   // mesh data in single precision..
+   PHY_ScalarType m_vertexType;
+
+
+   btIndexedMesh()
+      {
+#ifdef BT_USE_DOUBLE_PRECISION
+      m_vertexType = PHY_DOUBLE;
+#else // BT_USE_DOUBLE_PRECISION
+      m_vertexType = PHY_FLOAT;
+#endif // BT_USE_DOUBLE_PRECISION
+      }
 }
 ;
 
@@ -52,9 +67,9 @@ ATTRIBUTE_ALIGNED16( class) btTriangleIndexVertexArray : public btStridingMeshIn
 protected:
 	IndexedMeshArray	m_indexedMeshes;
 	int m_pad[2];
-	int m_hasAabb; // using int instead of bool to maintain alignment
-	btVector3 m_aabbMin;
-	btVector3 m_aabbMax;
+	mutable int m_hasAabb; // using int instead of bool to maintain alignment
+	mutable btVector3 m_aabbMin;
+	mutable btVector3 m_aabbMax;
 
 public:
 
@@ -106,7 +121,7 @@ public:
 	virtual void	preallocateIndices(int numindices){(void) numindices;}
 
 	virtual bool	hasPremadeAabb() const;
-	virtual void	setPremadeAabb(const btVector3& aabbMin, const btVector3& aabbMax );
+	virtual void	setPremadeAabb(const btVector3& aabbMin, const btVector3& aabbMax ) const;
 	virtual void	getPremadeAabb(btVector3* aabbMin, btVector3* aabbMax ) const;
 
 }

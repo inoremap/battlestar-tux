@@ -69,6 +69,7 @@ btCollisionWorld::~btCollisionWorld()
 			//
 			getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs(bp,m_dispatcher1);
 			getBroadphase()->destroyProxy(bp,m_dispatcher1);
+			collisionObject->setBroadphaseHandle(0);
 		}
 	}
 
@@ -118,6 +119,39 @@ void	btCollisionWorld::addCollisionObject(btCollisionObject* collisionObject,sho
 
 
 
+void	btCollisionWorld::updateSingleAabb(btCollisionObject* colObj)
+{
+	btVector3 minAabb,maxAabb;
+	colObj->getCollisionShape()->getAabb(colObj->getWorldTransform(), minAabb,maxAabb);
+	//need to increase the aabb for contact thresholds
+	btVector3 contactThreshold(gContactBreakingThreshold,gContactBreakingThreshold,gContactBreakingThreshold);
+	minAabb -= contactThreshold;
+	maxAabb += contactThreshold;
+
+	btBroadphaseInterface* bp = (btBroadphaseInterface*)m_broadphasePairCache;
+
+	//moving objects should be moderately sized, probably something wrong if not
+	if ( colObj->isStaticObject() || ((maxAabb-minAabb).length2() < btScalar(1e12)))
+	{
+		bp->setAabb(colObj->getBroadphaseHandle(),minAabb,maxAabb, m_dispatcher1);
+	} else
+	{
+		//something went wrong, investigate
+		//this assert is unwanted in 3D modelers (danger of loosing work)
+		colObj->setActivationState(DISABLE_SIMULATION);
+
+		static bool reportMe = true;
+		if (reportMe && m_debugDrawer)
+		{
+			reportMe = false;
+			m_debugDrawer->reportErrorWarning("Overflow in AABB, object removed from simulation");
+			m_debugDrawer->reportErrorWarning("If you can reproduce this, please email bugs@continuousphysics.com\n");
+			m_debugDrawer->reportErrorWarning("Please include above information, your Platform, version of OS.\n");
+			m_debugDrawer->reportErrorWarning("Thanks.\n");
+		}
+	}
+}
+
 void	btCollisionWorld::updateAabbs()
 {
 	BT_PROFILE("updateAabbs");
@@ -130,38 +164,9 @@ void	btCollisionWorld::updateAabbs()
 		//only update aabb of active objects
 		if (colObj->isActive())
 		{
-			btVector3 minAabb,maxAabb;
-			colObj->getCollisionShape()->getAabb(colObj->getWorldTransform(), minAabb,maxAabb);
-			//need to increase the aabb for contact thresholds
-			btVector3 contactThreshold(gContactBreakingThreshold,gContactBreakingThreshold,gContactBreakingThreshold);
-			minAabb -= contactThreshold;
-			maxAabb += contactThreshold;
-
-			btBroadphaseInterface* bp = (btBroadphaseInterface*)m_broadphasePairCache;
-
-			//moving objects should be moderately sized, probably something wrong if not
-			if ( colObj->isStaticObject() || ((maxAabb-minAabb).length2() < btScalar(1e12)))
-			{
-				bp->setAabb(colObj->getBroadphaseHandle(),minAabb,maxAabb, m_dispatcher1);
-			} else
-			{
-				//something went wrong, investigate
-				//this assert is unwanted in 3D modelers (danger of loosing work)
-				colObj->setActivationState(DISABLE_SIMULATION);
-
-				static bool reportMe = true;
-				if (reportMe && m_debugDrawer)
-				{
-					reportMe = false;
-					m_debugDrawer->reportErrorWarning("Overflow in AABB, object removed from simulation");
-					m_debugDrawer->reportErrorWarning("If you can reproduce this, please email bugs@continuousphysics.com\n");
-					m_debugDrawer->reportErrorWarning("Please include above information, your Platform, version of OS.\n");
-					m_debugDrawer->reportErrorWarning("Thanks.\n");
-				}
-			}
+			updateSingleAabb(colObj);
 		}
 	}
-
 }
 
 
@@ -291,12 +296,16 @@ void	btCollisionWorld::rayTestSingle(const btTransform& rayFromTrans,const btTra
 					btCollisionObject*	m_collisionObject;
 					btTriangleMeshShape*	m_triangleMesh;
 
+               btTransform m_colObjWorldTransform;
+
 					BridgeTriangleRaycastCallback( const btVector3& from,const btVector3& to,
-						btCollisionWorld::RayResultCallback* resultCallback, btCollisionObject* collisionObject,btTriangleMeshShape*	triangleMesh):
-						btTriangleRaycastCallback(from,to),
+						btCollisionWorld::RayResultCallback* resultCallback, btCollisionObject* collisionObject,btTriangleMeshShape*	triangleMesh,const btTransform& colObjWorldTransform):
+                  //@BP Mod
+						btTriangleRaycastCallback(from,to, resultCallback->m_flags),
 							m_resultCallback(resultCallback),
 							m_collisionObject(collisionObject),
-							m_triangleMesh(triangleMesh)
+							m_triangleMesh(triangleMesh),
+                     m_colObjWorldTransform(colObjWorldTransform)
 						{
 						}
 
@@ -307,19 +316,21 @@ void	btCollisionWorld::rayTestSingle(const btTransform& rayFromTrans,const btTra
 						shapeInfo.m_shapePart = partId;
 						shapeInfo.m_triangleIndex = triangleIndex;
 
+                  btVector3 hitNormalWorld = m_colObjWorldTransform.getBasis() * hitNormalLocal;
+
 						btCollisionWorld::LocalRayResult rayResult
 						(m_collisionObject,
 							&shapeInfo,
-							hitNormalLocal,
+							hitNormalWorld,
 							hitFraction);
 
-						bool	normalInWorldSpace = false;
+						bool	normalInWorldSpace = true;
 						return m_resultCallback->addSingleResult(rayResult,normalInWorldSpace);
 					}
 
 				};
 
-				BridgeTriangleRaycastCallback rcb(rayFromLocal,rayToLocal,&resultCallback,collisionObject,triangleMesh);
+				BridgeTriangleRaycastCallback rcb(rayFromLocal,rayToLocal,&resultCallback,collisionObject,triangleMesh,colObjWorldTransform);
 				rcb.m_hitFraction = resultCallback.m_closestHitFraction;
 				triangleMesh->performRaycast(&rcb,rayFromLocal,rayToLocal);
 			} else
@@ -340,12 +351,16 @@ void	btCollisionWorld::rayTestSingle(const btTransform& rayFromTrans,const btTra
 					btCollisionObject*	m_collisionObject;
 					btConcaveShape*	m_triangleMesh;
 
+               btTransform m_colObjWorldTransform;
+
 					BridgeTriangleRaycastCallback( const btVector3& from,const btVector3& to,
-						btCollisionWorld::RayResultCallback* resultCallback, btCollisionObject* collisionObject,btConcaveShape*	triangleMesh):
-						btTriangleRaycastCallback(from,to),
+						btCollisionWorld::RayResultCallback* resultCallback, btCollisionObject* collisionObject,btConcaveShape*	triangleMesh, const btTransform& colObjWorldTransform):
+                  //@BP Mod
+                  btTriangleRaycastCallback(from,to, resultCallback->m_flags),
 							m_resultCallback(resultCallback),
 							m_collisionObject(collisionObject),
-							m_triangleMesh(triangleMesh)
+							m_triangleMesh(triangleMesh),
+                     m_colObjWorldTransform(colObjWorldTransform)
 						{
 						}
 
@@ -356,22 +371,22 @@ void	btCollisionWorld::rayTestSingle(const btTransform& rayFromTrans,const btTra
 						shapeInfo.m_shapePart = partId;
 						shapeInfo.m_triangleIndex = triangleIndex;
 
+                  btVector3 hitNormalWorld = m_colObjWorldTransform.getBasis() * hitNormalLocal;
+
 						btCollisionWorld::LocalRayResult rayResult
 						(m_collisionObject,
 							&shapeInfo,
-							hitNormalLocal,
+							hitNormalWorld,
 							hitFraction);
 
-						bool	normalInWorldSpace = false;
+						bool	normalInWorldSpace = true;
 						return m_resultCallback->addSingleResult(rayResult,normalInWorldSpace);
-
-
 					}
 
 				};
 
 
-				BridgeTriangleRaycastCallback	rcb(rayFromLocal,rayToLocal,&resultCallback,collisionObject,concaveShape);
+				BridgeTriangleRaycastCallback	rcb(rayFromLocal,rayToLocal,&resultCallback,collisionObject,concaveShape, colObjWorldTransform);
 				rcb.m_hitFraction = resultCallback.m_closestHitFraction;
 
 				btVector3 rayAabbMinLocal = rayFromLocal;
@@ -636,10 +651,10 @@ struct btSingleRayCallback : public btBroadphaseRayCallback
 		btVector3 rayDir = (rayToWorld-rayFromWorld);
 
 		rayDir.normalize ();
-		///what about division by zero? --> just set rayDirection[i] to INF/1e30
-		m_rayDirectionInverse[0] = rayDir[0] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[0];
-		m_rayDirectionInverse[1] = rayDir[1] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[1];
-		m_rayDirectionInverse[2] = rayDir[2] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[2];
+		///what about division by zero? --> just set rayDirection[i] to INF/BT_LARGE_FLOAT
+		m_rayDirectionInverse[0] = rayDir[0] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[0];
+		m_rayDirectionInverse[1] = rayDir[1] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[1];
+		m_rayDirectionInverse[2] = rayDir[2] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[2];
 		m_signs[0] = m_rayDirectionInverse[0] < 0.0;
 		m_signs[1] = m_rayDirectionInverse[1] < 0.0;
 		m_signs[2] = m_rayDirectionInverse[2] < 0.0;
@@ -663,7 +678,7 @@ struct btSingleRayCallback : public btBroadphaseRayCallback
 		{
 			//RigidcollisionObject* collisionObject = ctrl->GetRigidcollisionObject();
 			//btVector3 collisionObjectAabbMin,collisionObjectAabbMax;
-			
+#if 0
 #ifdef RECALCULATE_AABB
 			btVector3 collisionObjectAabbMin,collisionObjectAabbMax;
 			collisionObject->getCollisionShape()->getAabb(collisionObject->getWorldTransform(),collisionObjectAabbMin,collisionObjectAabbMax);
@@ -671,6 +686,7 @@ struct btSingleRayCallback : public btBroadphaseRayCallback
 			//getBroadphase()->getAabb(collisionObject->getBroadphaseHandle(),collisionObjectAabbMin,collisionObjectAabbMax);
 			const btVector3& collisionObjectAabbMin = collisionObject->getBroadphaseHandle()->m_aabbMin;
 			const btVector3& collisionObjectAabbMax = collisionObject->getBroadphaseHandle()->m_aabbMax;
+#endif
 #endif
 			//btScalar hitLambda = m_resultCallback.m_closestHitFraction;
 			//culling already done by broadphase
@@ -728,10 +744,10 @@ struct btSingleSweepCallback : public btBroadphaseRayCallback
 	{
 		btVector3 unnormalizedRayDir = (m_convexToTrans.getOrigin()-m_convexFromTrans.getOrigin());
 		btVector3 rayDir = unnormalizedRayDir.normalized();
-		///what about division by zero? --> just set rayDirection[i] to INF/1e30
-		m_rayDirectionInverse[0] = rayDir[0] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[0];
-		m_rayDirectionInverse[1] = rayDir[1] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[1];
-		m_rayDirectionInverse[2] = rayDir[2] == btScalar(0.0) ? btScalar(1e30) : btScalar(1.0) / rayDir[2];
+		///what about division by zero? --> just set rayDirection[i] to INF/BT_LARGE_FLOAT
+		m_rayDirectionInverse[0] = rayDir[0] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[0];
+		m_rayDirectionInverse[1] = rayDir[1] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[1];
+		m_rayDirectionInverse[2] = rayDir[2] == btScalar(0.0) ? btScalar(BT_LARGE_FLOAT) : btScalar(1.0) / rayDir[2];
 		m_signs[0] = m_rayDirectionInverse[0] < 0.0;
 		m_signs[1] = m_rayDirectionInverse[1] < 0.0;
 		m_signs[2] = m_rayDirectionInverse[2] < 0.0;

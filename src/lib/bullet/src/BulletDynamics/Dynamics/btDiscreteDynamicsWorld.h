@@ -1,6 +1,6 @@
 /*
 Bullet Continuous Collision Detection and Physics Library
-Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
+Copyright (c) 2003-2009 Erwin Coumans  http://bulletphysics.org
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
@@ -13,6 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
+
 #ifndef BT_DISCRETE_DYNAMICS_WORLD_H
 #define BT_DISCRETE_DYNAMICS_WORLD_H
 
@@ -23,10 +24,8 @@ class btOverlappingPairCache;
 class btConstraintSolver;
 class btSimulationIslandManager;
 class btTypedConstraint;
+class btActionInterface;
 
-
-class btRaycastVehicle;
-class btCharacterControllerInterface;
 class btIDebugDraw;
 #include "LinearMath/btAlignedObjectArray.h"
 
@@ -43,6 +42,8 @@ protected:
 
 	btAlignedObjectArray<btTypedConstraint*> m_constraints;
 
+	btAlignedObjectArray<btRigidBody*> m_nonStaticRigidBodies;
+
 	btVector3	m_gravity;
 
 	//for variable timesteps
@@ -51,13 +52,10 @@ protected:
 
 	bool	m_ownsIslandManager;
 	bool	m_ownsConstraintSolver;
+	bool	m_synchronizeAllMotionStates;
 
+	btAlignedObjectArray<btActionInterface*>	m_actions;
 	
-	btAlignedObjectArray<btRaycastVehicle*>	m_vehicles;
-	
-	btAlignedObjectArray<btCharacterControllerInterface*> m_characters;
-	
-
 	int	m_profileTimings;
 
 	virtual void	predictUnconstraintMotion(btScalar timeStep);
@@ -70,9 +68,7 @@ protected:
 	
 	void	updateActivationState(btScalar timeStep);
 
-	void	updateVehicles(btScalar timeStep);
-
-	void	updateCharacters(btScalar timeStep);
+	void	updateActions(btScalar timeStep);
 
 	void	startProfiling(btScalar timeStep);
 
@@ -105,15 +101,10 @@ public:
 
 	virtual void	removeConstraint(btTypedConstraint* constraint);
 
-	virtual void	addVehicle(btRaycastVehicle* vehicle);
+	virtual void	addAction(btActionInterface*);
 
-	virtual void	removeVehicle(btRaycastVehicle* vehicle);
+	virtual void	removeAction(btActionInterface*);
 	
-	virtual void	addCharacter(btCharacterControllerInterface* character);
-
-	virtual void	removeCharacter(btCharacterControllerInterface* character);
-		
-
 	btSimulationIslandManager*	getSimulationIslandManager()
 	{
 		return m_islandManager;
@@ -130,6 +121,7 @@ public:
 	}
 
 	virtual void	setGravity(const btVector3& gravity);
+
 	virtual btVector3 getGravity () const;
 
 	virtual void	addRigidBody(btRigidBody* body);
@@ -139,6 +131,8 @@ public:
 	virtual void	removeRigidBody(btRigidBody* body);
 
 	void	debugDrawObject(const btTransform& worldTransform, const btCollisionShape* shape, const btVector3& color);
+
+	void	debugDrawConstraint(btTypedConstraint* constraint);
 
 	virtual void	debugDrawWorld();
 
@@ -167,6 +161,30 @@ public:
 	virtual void	setNumTasks(int numTasks)
 	{
         (void) numTasks;
+	}
+
+	///obsolete, use updateActions instead
+	virtual void updateVehicles(btScalar timeStep)
+	{
+		updateActions(timeStep);
+	}
+
+	///obsolete, use addAction instead
+	virtual void	addVehicle(btActionInterface* vehicle);
+	///obsolete, use removeAction instead
+	virtual void	removeVehicle(btActionInterface* vehicle);
+	///obsolete, use addAction instead
+	virtual void	addCharacter(btActionInterface* character);
+	///obsolete, use removeAction instead
+	virtual void	removeCharacter(btActionInterface* character);
+
+	void	setSynchronizeAllMotionStates(bool synchronizeAll)
+	{
+		m_synchronizeAllMotionStates = synchronizeAll;
+	}
+	bool getSynchronizeAllMotionStates() const
+	{
+		return m_synchronizeAllMotionStates;
 	}
 
 };

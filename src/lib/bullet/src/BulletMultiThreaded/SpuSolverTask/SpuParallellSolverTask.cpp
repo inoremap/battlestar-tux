@@ -224,14 +224,14 @@ static void setupSpuBody (btCollisionObject* collisionObject, btSolverBody* solv
 
 	if (rb)
 	{
-		solverBody->m_invMass = rb->getInvMass();
+		solverBody->m_invMass.setValue(rb->getInvMass(),rb->getInvMass(),rb->getInvMass());
 		solverBody->m_originalBody = rb;
 		solverBody->m_angularFactor = rb->getAngularFactor();
 	} else
 	{
-		solverBody->m_invMass = 0.f;
+		solverBody->m_invMass.setValue(0,0,0);
 		solverBody->m_originalBody = 0;
-		solverBody->m_angularFactor = 1.f;
+		solverBody->m_angularFactor.setValue(1,1,1);
 	}
 	
 }
@@ -439,8 +439,8 @@ static void SpuResolveSingleConstraintRowGeneric(btSolverBody& body1,btSolverBod
 	__m128 upperMinApplied = _mm_sub_ps(upperLimit1,cpAppliedImp);
 	deltaImpulse = _mm_or_ps( _mm_and_ps(resultUpperLess, deltaImpulse), _mm_andnot_ps(resultUpperLess, upperMinApplied) );
 	c.m_appliedImpulse = _mm_or_ps( _mm_and_ps(resultUpperLess, c.m_appliedImpulse), _mm_andnot_ps(resultUpperLess, upperLimit1) );
-	__m128	linearComponentA = _mm_mul_ps(c.m_contactNormal.mVec128,_mm_set1_ps(body1.m_invMass));
-	__m128	linearComponentB = _mm_mul_ps(c.m_contactNormal.mVec128,_mm_set1_ps(body2.m_invMass));
+	__m128	linearComponentA = _mm_mul_ps(c.m_contactNormal.mVec128,body1.m_invMass.mVec128);
+	__m128	linearComponentB = _mm_mul_ps(c.m_contactNormal.mVec128,body2.m_invMass.mVec128);
 	__m128 impulseMagnitude = deltaImpulse;
 	body1.m_deltaLinearVelocity.mVec128 = _mm_add_ps(body1.m_deltaLinearVelocity.mVec128,_mm_mul_ps(linearComponentA,impulseMagnitude));
 	body1.m_deltaAngularVelocity.mVec128 = _mm_add_ps(body1.m_deltaAngularVelocity.mVec128 ,_mm_mul_ps(c.m_angularComponentA.mVec128,impulseMagnitude));
@@ -1238,7 +1238,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 									vel = vel1 - vel2;
 									rel_vel = cp.m_normalWorldOnB.dot(vel);
 
-									constraint.m_penetration = cp.getDistance();///btScalar(infoGlobal.m_numIterations);
+									btScalar penetration = cp.getDistance();///btScalar(infoGlobal.m_numIterations);
 									constraint.m_friction = cp.m_combinedFriction;
 									float rest =  - rel_vel * cp.m_combinedRestitution;
 									if (rest <= btScalar(0.))
@@ -1251,7 +1251,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 									btScalar erp = taskDesc.m_commandData.m_manifoldSetup.m_solverInfo.m_erp;
 									btScalar timeStep = taskDesc.m_commandData.m_manifoldSetup.m_solverInfo.m_timeStep;
 																	
-									constraint.m_restitution = rest;
+									btScalar restitution = rest;
 									constraint.m_appliedImpulse = cp.m_appliedImpulse*taskDesc.m_commandData.m_manifoldSetup.m_solverInfo.m_warmstartingFactor;
 									if (constraint.m_appliedImpulse!= 0.f)
 									{
@@ -1271,8 +1271,8 @@ void processSolverTask(void* userPtr, void* lsMemory)
 										rel_vel = vel1Dotn-vel2Dotn;
 
 										btScalar positionalError = 0.f;
-										positionalError = -constraint.m_penetration * erp/timeStep;
-										btScalar	velocityError = constraint.m_restitution - rel_vel;// * damping;
+										positionalError = -penetration * erp/timeStep;
+										btScalar	velocityError = restitution - rel_vel;// * damping;
 										btScalar  penetrationImpulse = positionalError*constraint.m_jacDiagABInv;
 										btScalar velocityImpulse = velocityError *constraint.m_jacDiagABInv;
 										constraint.m_rhs = penetrationImpulse+velocityImpulse;
@@ -1339,9 +1339,9 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 										btScalar positionalError = 0.f;
 										positionalError = 0;
-										constraint.m_restitution=0.f;
+										btScalar restitution=0.f;
 
-										btSimdScalar velocityError = constraint.m_restitution - rel_vel;
+										btSimdScalar velocityError = restitution - rel_vel;
 										btSimdScalar	velocityImpulse = velocityError * btSimdScalar(constraint.m_jacDiagABInv);
 										constraint.m_rhs = velocityImpulse;
 										constraint.m_cfm = 0.f;
@@ -1386,9 +1386,9 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 										btScalar positionalError = 0.f;
 										positionalError = 0;
-										constraint.m_restitution=0.f;
+										btScalar restitution=0.f;
 
-										btSimdScalar velocityError = constraint.m_restitution - rel_vel;
+										btSimdScalar velocityError = restitution - rel_vel;
 										btSimdScalar	velocityImpulse = velocityError * btSimdScalar(constraint.m_jacDiagABInv);
 										constraint.m_rhs = velocityImpulse;
 										constraint.m_cfm = 0.f;
@@ -1876,7 +1876,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 						// DMA the constraints
 						{
-							int dmaSize = sizeof(btSolverConstraint)*packetSize;
+							int dmaSize = sizeof(btSolverConstraint)*(int)packetSize;
 							uint64_t dmaPpuAddress2 = reinterpret_cast<uint64_t> (taskDesc.m_solverData.m_solverConstraintList + constraintListOffset);
 							cellDmaLargeGet(constraints, dmaPpuAddress2, dmaSize, DMA_TAG(1), 0, 0);
 						}
@@ -1895,7 +1895,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 						
 						// Write back the constraints for accumulated stuff
 						{
-							int dmaSize = sizeof(btSolverConstraint)*packetSize;
+							int dmaSize = sizeof(btSolverConstraint)*(int)packetSize;
 							uint64_t dmaPpuAddress2 = reinterpret_cast<uint64_t> (taskDesc.m_solverData.m_solverConstraintList + constraintListOffset);					
 							cellDmaLargePut(constraints, dmaPpuAddress2, dmaSize, DMA_TAG(1), 0, 0);
 						}
@@ -1923,7 +1923,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 						// DMA the constraints
 						{
-							int dmaSize = sizeof(btSolverConstraint)*packetSize*3;
+							int dmaSize = sizeof(btSolverConstraint)*(int)packetSize*3;
 							uint64_t dmaPpuAddress2 = reinterpret_cast<uint64_t> (taskDesc.m_solverData.m_solverInternalConstraintList + constraintListOffset);
 							cellDmaLargeGet(internalConstraints, dmaPpuAddress2, dmaSize, DMA_TAG(1), 0, 0);
 						}
@@ -1966,7 +1966,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 						// Write back the constraints for accumulated stuff
 						{
-							int dmaSize = sizeof(btSolverConstraint)*packetSize*3;
+							int dmaSize = sizeof(btSolverConstraint)*(int)packetSize*3;
 							uint64_t dmaPpuAddress2 = reinterpret_cast<uint64_t> (taskDesc.m_solverData.m_solverInternalConstraintList + constraintListOffset);					
 							cellDmaLargePut(internalConstraints, dmaPpuAddress2, dmaSize, DMA_TAG(1), 0, 0);
 						}
@@ -2107,7 +2107,7 @@ void processSolverTask(void* userPtr, void* lsMemory)
 
 						// DMA the constraints
 						{
-							int dmaSize = sizeof(btSolverConstraint)*packetSize*3;
+							int dmaSize = sizeof(btSolverConstraint)*(int)packetSize*3;
 							uint64_t dmaPpuAddress2 = reinterpret_cast<uint64_t> (taskDesc.m_solverData.m_solverInternalConstraintList + constraintListOffset);
 							cellDmaLargeGet(internalConstraints, dmaPpuAddress2, dmaSize, DMA_TAG(1), 0, 0);
 						}

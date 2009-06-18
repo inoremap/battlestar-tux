@@ -107,7 +107,7 @@ void btGjkPairDetector::getClosestPoints(const ClosestPointInput& input,Result& 
 	m_lastUsedMethod = -1;
 
 	{
-		btScalar squaredDistance = SIMD_INFINITY;
+		btScalar squaredDistance = BT_LARGE_FLOAT;
 		btScalar delta = btScalar(0.);
 		
 		btScalar margin = marginA + marginB;
@@ -150,7 +150,8 @@ void btGjkPairDetector::getClosestPoints(const ClosestPointInput& input,Result& 
 			// potential exit, they don't overlap
 			if ((delta > btScalar(0.0)) && (delta * delta > squaredDistance * input.m_maximumDistanceSquared)) 
 			{
-				checkPenetration = false;
+				checkSimplex=true;
+				//checkPenetration = false;
 				break;
 			}
 
