@@ -41,6 +41,7 @@ INCLUDE_DIRECTORIES(
 	# Libraries that make up Bullet Physics
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics/ConstraintSolver
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletCollision
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/LinearMath
 

@@ -29,7 +29,8 @@ public:
 
     void update( unsigned long lTimeElapsed );
 
-    btDiscreteDynamicsWorld *getDynamicsWorld() { return mDynamicsWorld; }
+    btDiscreteDynamicsWorld* getDynamicsWorld() { return mDynamicsWorld; }
+    btRigidBody* getGroundRigidBody() { return mGroundRigidBody; }
 
     static PhysicsManager* getSingletonPtr();
 
@@ -47,6 +48,9 @@ private:
     BtOgre::DebugDrawer *mBtDebugDrawer;
 
     // Ground upon which the game falls.
+    // In bullet, objects need a static object upon which to base their
+    // motion constraints.  If there isn't a real ground (such as outer space),
+    // this should be an imaginary plane below the gameplay.
     btCollisionShape *mGroundShape;
     btRigidBody *mGroundRigidBody;
 

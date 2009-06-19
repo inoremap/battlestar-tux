@@ -15,6 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <btGeneric6DofConstraint.h>
 #include <Ogre.h>
 #include <BtOgreExtras.h>
 
@@ -32,15 +33,30 @@ HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
     mHexShip = sceneMgr->createEntity(name, "HexCell.mesh");
     mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node", pos);
     mHexShipNode->attachObject(mHexShip);
-    mHexCellShape = new btCylinderShapeX(btVector3(1.3,1.3,0.3));
+    mHexCellShape = new btCylinderShape(btVector3(1.3,0.3,1.3));
     btScalar mass = 1;
     btVector3 inertia;
     mHexCellShape->calculateLocalInertia(mass, inertia);
     BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexShipNode);
     mHexCellRigidBody = new btRigidBody(mass, state, mHexCellShape, inertia);
+    mHexCellRigidBody->setDamping(0.1, 0.5);
+    btDynamicsWorld->addRigidBody(mHexCellRigidBody);
+
     // Limit all HexShips to a single "gameplay" plane
     mHexCellRigidBody->setLinearFactor(btVector3(1,0,1));
-    btDynamicsWorld->addRigidBody(mHexCellRigidBody);
+    // Limit rotations of HexShips to keep them close to the plane
+    btRigidBody *mGround = PhysicsManager::getSingletonPtr()->getGroundRigidBody();
+    btGeneric6DofConstraint* smallTilt = new btGeneric6DofConstraint(
+            *mHexCellRigidBody,
+            *mGround,
+            btTransform::getIdentity(),
+            btTransform::getIdentity(),
+            true);
+    smallTilt->setLinearLowerLimit(btVector3(1,1,1));
+    smallTilt->setLinearUpperLimit(btVector3(0,0,0));
+    smallTilt->setAngularLowerLimit(btVector3(0,0,0));
+    smallTilt->setAngularUpperLimit(btVector3(0,0,0));
+    btDynamicsWorld->addConstraint(smallTilt);
 }
 
 HexShip::~HexShip() {
