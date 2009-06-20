@@ -73,5 +73,6 @@ void HexShip::update( unsigned long lTimeElapsed ) {
 
 
 void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
+    mHexCellRigidBody->activate(true);
     mHexCellRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
 }
