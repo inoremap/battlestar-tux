@@ -1,5 +1,5 @@
 /* Battlestar TUX
- * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
+ * Copyright (C) 2009 Eliot Eshelman <battlestartux@6by9.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,38 +16,36 @@
  */
 
 
-#ifndef HexShip_H
-#define HexShip_H
+#ifndef HexCell_H
+#define HexCell_H
 
-#include <assert.h>
+#include <btBulletDynamicsCommon.h>
 #include <Ogre.h>
-#include <vector>
 
-#include "HexCell.h"
-
-class HexShip {
+class HexCell {
 public:
-    HexShip();
-    HexShip(const Ogre::String& name, const Ogre::Vector3& pos);
-    ~HexShip();
+    HexCell();
+    HexCell(const Ogre::String& name, const Ogre::Vector3& pos);
+    ~HexCell();
 
     void update(unsigned long lTimeElapsed);
 
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
-    // Since the HexShip itself is not an Ogre object, we will use the OgreNode
-    // of the core HexCell when one is needed.
-    Ogre::SceneNode* getOgreNode() {
-        assert(coreCell);
-        return coreCell->getOgreNode();
-    }
+    Ogre::SceneNode* getOgreNode() { return mHexCellNode; }
+
+    static btCollisionShape* getCollisionShapePtr();
 
 private:
-    HexShip(const HexShip&);
-    HexShip & operator = (const HexShip&);
+    HexCell(const HexCell&);
+    HexCell & operator = (const HexCell&);
 
-    HexCell* coreCell;
-    std::vector<HexCell*> shipCells;
+    Ogre::Entity *mHexCell;
+    Ogre::SceneNode *mHexCellNode;
+    btRigidBody *mHexCellRigidBody;
+
+    // All HexCells can share the collision shapes.
+    static btCollisionShape *mHexCellShape;
 };
 
 #endif

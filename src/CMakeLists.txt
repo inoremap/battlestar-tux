@@ -82,6 +82,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	PauseState.cpp
 	PhysicsManager.cpp
 	PlayState.cpp
+	HexShip/HexCell.cpp
 	HexShip/HexShip.cpp
 )
 

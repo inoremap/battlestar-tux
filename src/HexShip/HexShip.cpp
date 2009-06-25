@@ -15,56 +15,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <btGeneric6DofConstraint.h>
+#include <assert.h>
 #include <Ogre.h>
-#include <BtOgreExtras.h>
 
 #include "HexShip.h"
-#include "PlayState.h"
-#include "PhysicsManager.h"
+
 
 HexShip::HexShip() { HexShip("HexShip", Ogre::Vector3(0,0,0)); }
 
 HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
-    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
-    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
-
-    // Create player's ship
-    mHexShip = sceneMgr->createEntity(name, "HexCell.mesh");
-    mHexShipNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node", pos);
-    mHexShipNode->attachObject(mHexShip);
-    mHexCellShape = new btCylinderShape(btVector3(1.3,0.3,1.3));
-    btScalar mass = 1;
-    btVector3 inertia;
-    mHexCellShape->calculateLocalInertia(mass, inertia);
-    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexShipNode);
-    mHexCellRigidBody = new btRigidBody(mass, state, mHexCellShape, inertia);
-    mHexCellRigidBody->setDamping(0.1, 0.5);
-    btDynamicsWorld->addRigidBody(mHexCellRigidBody);
-
-    // Limit all HexShips to a single "gameplay" plane
-    mHexCellRigidBody->setLinearFactor(btVector3(1,0,1));
-    // Limit rotations of HexShips to keep them close to the plane
-    btRigidBody *mGround = PhysicsManager::getSingletonPtr()->getGroundRigidBody();
-    btGeneric6DofConstraint* smallTilt = new btGeneric6DofConstraint(
-            *mHexCellRigidBody,
-            *mGround,
-            btTransform::getIdentity(),
-            btTransform::getIdentity(),
-            true);
-    smallTilt->setLinearLowerLimit(btVector3(1,1,1));
-    smallTilt->setLinearUpperLimit(btVector3(0,0,0));
-    smallTilt->setAngularLowerLimit(btVector3(0,0,0));
-    smallTilt->setAngularUpperLimit(btVector3(0,0,0));
-    btDynamicsWorld->addConstraint(smallTilt);
+    coreCell = new HexCell(name + "CoreCell", pos);
 }
 
 HexShip::~HexShip() {
-    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
-    btDynamicsWorld->removeRigidBody(mHexCellRigidBody);
-    delete mHexCellRigidBody->getMotionState();
-    delete mHexCellRigidBody;
-    delete mHexCellShape;
+    delete coreCell;
 }
 
 
@@ -73,6 +37,7 @@ void HexShip::update( unsigned long lTimeElapsed ) {
 
 
 void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
-    mHexCellRigidBody->activate(true);
-    mHexCellRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
+    assert(coreCell);
+    coreCell->applyCentralImpulse(impulse);
 }
+
