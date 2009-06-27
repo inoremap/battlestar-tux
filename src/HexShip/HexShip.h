@@ -25,28 +25,58 @@
 
 #include "HexCell.h"
 
+/** Spacecraft/Aircraft constructed from multiple HexCells.
+ *
+ * Capabilities of the ship are determined by the collective capabilities of
+ * the HexCells.  Each HexCell may provide one or more capabilities, with
+ * advanced HexCells providing a larger multitude of capabilities.
+ */
 class HexShip {
 public:
-    HexShip();
+    /** Create new HexShip with a single (core) HexCell.
+     *
+     * @param name Unique name of ship.
+     * @param pos Initial position of ship.
+     */
     HexShip(const Ogre::String& name, const Ogre::Vector3& pos);
+
+    /// Default destructor.
     ~HexShip();
 
+    /// Update ship (and all child objects) for a new frame.
     void update(unsigned long lTimeElapsed);
 
+    /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
-    // Since the HexShip itself is not an Ogre object, we will use the OgreNode
-    // of the core HexCell when one is needed.
+    /** Get Ogre::SceneNode at center of HexShip.
+     *
+     * @attention Since the HexShip itself is not an Ogre object, we will use
+     * the Ogre node of the core HexCell when one is needed.
+     */
     Ogre::SceneNode* getOgreNode() {
         assert(coreCell);
         return coreCell->getOgreNode();
     }
 
 private:
+    HexShip();
     HexShip(const HexShip&);
     HexShip & operator = (const HexShip&);
 
+    /** Reference to ship's central HexCell.
+     *
+     * A ship will be destroyed along with its core cell.
+     */
     HexCell* coreCell;
+
+    /** Collection of all cells in a ship.
+     *
+     * @remark Although a separate reference is kept to the core cell, this cell
+     * is also included in shipCells.  The core cell often performs some of the
+     * same tasks as other cells, so it will be implicitly included in ship
+     * energy, propulsion updates, etc.
+     */
     std::vector<HexCell*> shipCells;
 };
 

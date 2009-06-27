@@ -21,8 +21,6 @@
 #include "HexShip.h"
 
 
-HexShip::HexShip() { HexShip("HexShip", Ogre::Vector3(0,0,0)); }
-
 HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
     coreCell = new HexCell(name + "CoreCell", pos);
 }
