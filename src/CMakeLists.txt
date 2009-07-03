@@ -19,6 +19,7 @@
 SUBDIRS(
 	lib/btOgre
 	lib/bullet
+    lib/tinyxml
 )
 
 
@@ -44,6 +45,8 @@ INCLUDE_DIRECTORIES(
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics/ConstraintSolver
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletCollision
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/LinearMath
+    # TinyXML library
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/tinyxml
 
 	# Libraries not included with Battlestar TUX
 	${OGRE_INCLUDE_DIR}
@@ -55,6 +58,7 @@ LINK_DIRECTORIES(
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/btOgre
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/bullet
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/tinyxml
 )
 
 SET(	BATTLESTAR_TUX_LIBRARIES
@@ -65,6 +69,8 @@ SET(	BATTLESTAR_TUX_LIBRARIES
 	BulletDynamics
 	BulletCollision
 	LinearMath
+    # TinyXML library
+    TINYXML
 
 	# Libraries not included with Battlestar TUX
 	${OGRE_LIBRARY}
