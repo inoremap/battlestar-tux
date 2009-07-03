@@ -59,6 +59,9 @@ public:
         return coreCell->getOgreNode();
     }
 
+    /// Get total ship mass.
+    float getMass() { return mMass; }
+
 private:
     HexShip();
     HexShip(const HexShip&);
@@ -78,6 +81,9 @@ private:
      * energy, propulsion updates, etc.
      */
     std::vector<HexCell*> shipCells;
+
+    /// Total mass of ship, including all cells.
+    float mMass;
 };
 
 #endif
