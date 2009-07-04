@@ -78,6 +78,21 @@ void HexCell::applyCentralImpulse(const Ogre::Vector3& impulse) {
 }
 
 
+void HexCell::toXml(TiXmlElement* node) const {
+    TiXmlElement* cellNode = new TiXmlElement("HexCell");
+
+    //node->SetAttribute("name", mName);
+    //node->SetDoubleAttribute("mass", mMass);
+
+    // If a valid XML element wasn't passed, return one.
+    // If a valid XML element was passed, link to it.
+    if(!node)
+        node = cellNode;
+    else
+        node->LinkEndChild(cellNode);
+}
+
+
 btCollisionShape* HexCell::getCollisionShapePtr() {
     if( !mHexCellShape ) {
         mHexCellShape = new btCylinderShape(btVector3(1.3,0.3,1.3));

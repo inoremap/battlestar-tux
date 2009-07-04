@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <Ogre.h>
+#include <tinyxml.h>
 #include <vector>
 
 #include "HexCell.h"
@@ -49,6 +50,16 @@ public:
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
+    /** Build XML structure with ship data/attributes.
+     *
+     * @param node XML element to add data to.  If node is NULL, a new node
+     * will be automatically created.
+     *
+     * @attention This function creates a new TiXmlElement object, but will
+     * rely on the caller to delete the object.
+     */
+    void toXml(TiXmlElement* node) const;
+
     /** Get Ogre::SceneNode at center of HexShip.
      *
      * @attention Since the HexShip itself is not an Ogre object, we will use
@@ -65,7 +76,7 @@ public:
 private:
     HexShip();
     HexShip(const HexShip&);
-    HexShip & operator = (const HexShip&);
+    HexShip& operator=(const HexShip&);
 
     /** Reference to ship's central HexCell.
      *
@@ -85,6 +96,18 @@ private:
     /// Total mass of ship, including all cells.
     float mMass;
 };
+
+
+inline std::ostream & operator<<(std::ostream& out, HexShip* ship) {
+    TiXmlElement* node = NULL;
+    ship->toXml(node);
+
+    out << node;
+    delete node;
+
+    return out;
+}
+
 
 #endif
 

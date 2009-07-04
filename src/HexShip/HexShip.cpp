@@ -39,3 +39,22 @@ void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
     coreCell->applyCentralImpulse(impulse);
 }
 
+
+void HexShip::toXml(TiXmlElement* node) const {
+    TiXmlElement* shipNode = new TiXmlElement("HexShip");
+
+    //shipNode->SetAttribute("name", mName);
+
+    std::vector<HexCell*>::const_iterator iter;
+    for(iter = shipCells.begin(); iter != shipCells.end(); iter++) {
+        (*iter)->toXml(shipNode);
+    }
+
+    // If a valid XML element wasn't passed, return one.
+    // If a valid XML element was passed, link to it.
+    if(!node)
+        node = shipNode;
+    else
+        node->LinkEndChild(shipNode);
+}
+

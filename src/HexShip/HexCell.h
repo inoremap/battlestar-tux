@@ -21,6 +21,7 @@
 
 #include <btBulletDynamicsCommon.h>
 #include <Ogre.h>
+#include <tinyxml.h>
 
 /** HexCells are the basic building blocks of a HexShip craft.
  *
@@ -47,6 +48,16 @@ public:
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
+    /** Build XML structure with cell data/attributes.
+     *
+     * @param node XML element to add data to.  If node is NULL, a new node
+     * will be automatically created.
+     *
+     * @attention This function creates a new TiXmlElement object, but will
+     * rely on the caller to delete the object.
+     */
+    void toXml(TiXmlElement* node) const;
+
     /// Get the Ogre::SceneNode representing this cell.
     Ogre::SceneNode* getOgreNode() { return mHexCellNode; }
 
@@ -56,7 +67,7 @@ public:
 private:
     HexCell();
     HexCell(const HexCell&);
-    HexCell & operator = (const HexCell&);
+    HexCell& operator=(const HexCell&);
 
     /// Ogre object controlling this cell.
     Ogre::Entity *mHexCell;
@@ -70,6 +81,18 @@ private:
     /// HexCell collision shape - shared by all HexCell instances.
     static btCollisionShape *mHexCellShape;
 };
+
+
+inline std::ostream & operator<<(std::ostream& out, HexCell* cell) {
+    TiXmlElement* node = NULL;
+    cell->toXml(node);
+
+    out << node;
+    delete node;
+
+    return out;
+}
+
 
 #endif
 
