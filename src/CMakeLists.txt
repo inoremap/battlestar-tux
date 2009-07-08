@@ -90,6 +90,7 @@ SET(	BATTLESTAR_TUX_SOURCES
 	PlayState.cpp
 	HexShip/HexCell.cpp
 	HexShip/HexShip.cpp
+    XmlEntity.cpp
 )
 
 ADD_EXECUTABLE(	battlestarTUX

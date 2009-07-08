@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "HexCell.h"
+#include "XmlEntity.h"
 
 /** Spacecraft/Aircraft constructed from multiple HexCells.
  *
@@ -32,7 +33,7 @@
  * the HexCells.  Each HexCell may provide one or more capabilities, with
  * advanced HexCells providing a larger multitude of capabilities.
  */
-class HexShip {
+class HexShip : public XmlEntity {
 public:
     /** Create new HexShip with a single (core) HexCell.
      *
@@ -50,14 +51,7 @@ public:
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
-    /** Build XML structure with ship data/attributes.
-     *
-     * @param node XML element to add data to.  If node is NULL, a new node
-     * will be automatically created.
-     *
-     * @attention This function creates a new TiXmlElement object, but will
-     * rely on the caller to delete the object.
-     */
+    /// Build XML structure with ship data/attributes.
     void toXml(TiXmlElement* node) const;
 
     /** Get Ogre::SceneNode at center of HexShip.
@@ -96,17 +90,6 @@ private:
     /// Total mass of ship, including all cells.
     float mMass;
 };
-
-
-inline std::ostream & operator<<(std::ostream& out, HexShip* ship) {
-    TiXmlElement* node = NULL;
-    ship->toXml(node);
-
-    out << node;
-    delete node;
-
-    return out;
-}
 
 
 #endif
