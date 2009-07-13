@@ -24,20 +24,22 @@
 
 btCollisionShape* HexCell::mHexCellShape;
 
-HexCell::HexCell() { HexCell("HexCell", Ogre::Vector3(0,0,0)); }
-
-HexCell::HexCell(const Ogre::String& name, const Ogre::Vector3& pos) {
+HexCell::HexCell(const std::string& name, const float mass, const float hitPoints, const Ogre::Vector3& pos) :
+    mName(name),
+    mMass(mass),
+    mMaxHp(hitPoints),
+    mHp(hitPoints)
+{
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
     // Create hex cell
-    mHexCell = sceneMgr->createEntity(name, "HexCell.mesh");
-    mHexCellNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node", pos);
+    mHexCell = sceneMgr->createEntity(mName, "HexCell.mesh");
+    mHexCellNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", pos);
     mHexCellNode->attachObject(mHexCell);
     btCollisionShape *hexCellShape = getCollisionShapePtr();
     BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexCellNode);
-    btScalar mass = 1;
-    mHexCellRigidBody = new btRigidBody(mass, state, hexCellShape);
+    mHexCellRigidBody = new btRigidBody(mMass, state, hexCellShape);
     mHexCellRigidBody->setDamping(0.1, 0.5);
     btDynamicsWorld->addRigidBody(mHexCellRigidBody);
 
@@ -71,6 +73,11 @@ HexCell::~HexCell() {
 void HexCell::update( unsigned long lTimeElapsed ) {
 }
 
+
+void HexCell::destroy() {
+    //TODO: Create explosion and detach this cell from the ship.
+    //Once the explosion has finished, this cell may be deleted.
+}
 
 void HexCell::applyCentralImpulse(const Ogre::Vector3& impulse) {
     mHexCellRigidBody->activate(true);

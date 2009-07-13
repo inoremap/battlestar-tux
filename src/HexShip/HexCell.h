@@ -21,6 +21,7 @@
 
 #include <btBulletDynamicsCommon.h>
 #include <Ogre.h>
+#include <string.h>
 #include <tinyxml.h>
 
 #include "XmlEntity.h"
@@ -37,15 +38,22 @@ public:
      *
      * @param name Unique name of cell.
      * The cell's Ogre::SceneNode's name is name+"Node".
+     * @param mass Mass of this cell (kg).
+     * @param hitPoints Maximum possible hitpoints this cell can sustain.
      * @param pos Initial position of cell.
      */
-    HexCell(const Ogre::String& name, const Ogre::Vector3& pos);
+    HexCell(const std::string& name, const float mass, const float hitPoints, const Ogre::Vector3& pos);
 
     /// Default destructor.
     ~HexCell();
 
     /// Update cell for a new frame.
     void update(unsigned long lTimeElapsed);
+
+    /** This cell has been destroyed.  Queue any explosions and destructive
+     * events that follow the destruction of the cell.
+     */
+    void destroy();
 
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
@@ -75,6 +83,17 @@ private:
 
     /// HexCell collision shape - shared by all HexCell instances.
     static btCollisionShape *mHexCellShape;
+
+    /// Unique name of this cell.
+    std::string mName;
+
+    /// Mass of this cell (kg).
+    float mMass;
+
+    /// Maximum possible hitpoints this cell can sustain.
+    float mMaxHp;
+    /// Current number of hitpoints remaining.
+    float mHp;
 };
 
 

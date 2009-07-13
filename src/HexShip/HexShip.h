@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <Ogre.h>
+#include <string.h>
 #include <tinyxml.h>
 #include <vector>
 
@@ -40,7 +41,7 @@ public:
      * @param name Unique name of ship.
      * @param pos Initial position of ship.
      */
-    HexShip(const Ogre::String& name, const Ogre::Vector3& pos);
+    HexShip(const std::string& name, const Ogre::Vector3& pos);
 
     /// Default destructor.
     ~HexShip();
@@ -60,8 +61,8 @@ public:
      * the Ogre node of the core HexCell when one is needed.
      */
     Ogre::SceneNode* getOgreNode() {
-        assert(coreCell);
-        return coreCell->getOgreNode();
+        assert(mCoreCell);
+        return mCoreCell->getOgreNode();
     }
 
     /// Get total ship mass.
@@ -76,18 +77,21 @@ private:
      *
      * A ship will be destroyed along with its core cell.
      */
-    HexCell* coreCell;
+    HexCell* mCoreCell;
 
     /** Collection of all cells in a ship.
      *
      * @remark Although a separate reference is kept to the core cell, this cell
-     * is also included in shipCells.  The core cell often performs some of the
+     * is also included in mShipCells.  The core cell often performs some of the
      * same tasks as other cells, so it will be implicitly included in ship
      * energy, propulsion updates, etc.
      */
-    std::vector<HexCell*> shipCells;
+    std::vector<HexCell*> mShipCells;
 
-    /// Total mass of ship, including all cells.
+    /// Unique name of this ship.
+    std::string mName;
+
+    /// Total mass of ship, including all cells (kg).
     float mMass;
 };
 

@@ -21,12 +21,14 @@
 #include "HexShip.h"
 
 
-HexShip::HexShip(const Ogre::String& name, const Ogre::Vector3& pos) {
-    coreCell = new HexCell(name + "CoreCell", pos);
+HexShip::HexShip(const std::string& name, const Ogre::Vector3& pos) :
+    mName(name)
+{
+    mCoreCell = new HexCell(name + "CoreCell", 1, 1000, pos);
 }
 
 HexShip::~HexShip() {
-    delete coreCell;
+    delete mCoreCell;
 }
 
 
@@ -35,8 +37,8 @@ void HexShip::update( unsigned long lTimeElapsed ) {
 
 
 void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
-    assert(coreCell);
-    coreCell->applyCentralImpulse(impulse);
+    assert(mCoreCell);
+    mCoreCell->applyCentralImpulse(impulse);
 }
 
 
@@ -46,7 +48,7 @@ void HexShip::toXml(TiXmlElement* node) const {
     //shipNode->SetAttribute("name", mName);
 
     std::vector<HexCell*>::const_iterator iter;
-    for(iter = shipCells.begin(); iter != shipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
         (*iter)->toXml(shipNode);
     }
 
