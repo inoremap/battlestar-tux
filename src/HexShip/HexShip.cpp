@@ -16,29 +16,49 @@
  */
 
 #include <assert.h>
+#include <btGeneric6DofConstraint.h>
 #include <Ogre.h>
+#include <BtOgreExtras.h>
 
 #include "HexShip.h"
+#include "PhysicsManager.h"
 
 
 HexShip::HexShip(const std::string& name, const Ogre::Vector3& pos) :
     mName(name),
     mShipCells()
 {
-    mCoreCell = new HexCell(name + "CoreCell", 1, 1000);
-    //TODO: Create actual ship and add core cell.
+    mMass = 0;
+
+    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
+    mOgreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", pos);
 }
 
 HexShip::~HexShip() {
     delete mCoreCell;
+
+    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+    btDynamicsWorld->removeRigidBody(mHexShipRigidBody);
+    delete mHexShipRigidBody->getMotionState();
+    delete mHexShipRigidBody;
+
+    delete mOgreNode;
 }
 
 
-void HexShip::addHexCell(HexCell* cell, const Ogre::Vector2& pos) {
-    cell->setPosition(pos);
+void HexShip::addHexCell(HexCell* cell, const Ogre::Vector3& offset) {
+    // Calculate world position of cell using provided offset.
+    cell->attachCell(this, offset);
     mShipCells.push_back(cell);
 
+    mMass += cell->getMass();
     rebuildCollisionHull();
+}
+
+
+void HexShip::addCoreHexCell(HexCell* cell, const Ogre::Vector3& offset) {
+    mCoreCell = cell;
+    this->addHexCell(cell, offset);
 }
 
 
@@ -52,17 +72,25 @@ void HexShip::removeHexCell(HexCell* cell) {
             mShipCells.erase(iter);
     }
 
+    mMass -= cell->getMass();
     rebuildCollisionHull();
+
+    cell->separateCell();
 }
 
 
 void HexShip::update( unsigned long lTimeElapsed ) {
+    // Update each HexCell
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        (*iter)->update(mOgreNode->getPosition(), lTimeElapsed);
+    }
 }
 
 
 void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
-    assert(mCoreCell);
-    mCoreCell->applyCentralImpulse(impulse);
+    mHexShipRigidBody->activate(true);
+    mHexShipRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
 }
 
 
@@ -86,6 +114,44 @@ void HexShip::toXml(TiXmlElement* node) const {
 
 
 void HexShip::rebuildCollisionHull() {
-    //TODO: Rebuild compound collision shape.
+    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+
+    // If the collision shape already exists, remove it and create a new one.
+    if(mHexShipRigidBody) {
+        btDynamicsWorld->removeRigidBody(mHexShipRigidBody);
+        delete mHexShipRigidBody->getMotionState();
+        delete mHexShipRigidBody;
+    }
+
+    mHexShipShape = new btCompoundShape();
+
+    // Add the collision shape of each HexCell.
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        btTransform cellShapeTrans(btQuaternion(),
+                BtOgre::Convert::toBullet((*iter)->getOffset()));
+        mHexShipShape->addChildShape(cellShapeTrans, (*iter)->getCollisionShapePtr());
+    }
+
+    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mOgreNode);
+    mHexShipRigidBody = new btRigidBody(mMass, state, mHexShipShape);
+    mHexShipRigidBody->setDamping(0.1, 0.5);
+    btDynamicsWorld->addRigidBody(mHexShipRigidBody);
+
+    // Limit all HexShips to a single "gameplay" plane
+    mHexShipRigidBody->setLinearFactor(btVector3(1,0,1));
+    // Limit rotations of HexShips to keep them close to the plane
+    btRigidBody *mGround = PhysicsManager::getSingletonPtr()->getGroundRigidBody();
+    btGeneric6DofConstraint* smallTilt = new btGeneric6DofConstraint(
+            *mHexShipRigidBody,
+            *mGround,
+            btTransform::getIdentity(),
+            btTransform::getIdentity(),
+            true);
+    smallTilt->setLinearLowerLimit(btVector3(1,1,1));
+    smallTilt->setLinearUpperLimit(btVector3(0,0,0));
+    smallTilt->setAngularLowerLimit(btVector3(0,0,0));
+    smallTilt->setAngularUpperLimit(btVector3(0,0,0));
+    btDynamicsWorld->addConstraint(smallTilt);
 }
 

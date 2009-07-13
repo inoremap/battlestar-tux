@@ -18,6 +18,8 @@
 
 #include <OgreTextureUnitState.h>
 
+#include "HexCell.h"
+#include "HexShip.h"
 #include "PlayState.h"
 
 using namespace Ogre;
@@ -59,6 +61,8 @@ void PlayState::enter() {
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
     mPlayer = new HexShip("Player", Vector3(-2,2,-2));
+    HexCell* coreCell = new HexCell("PlayerShip", 1, 1000);
+    mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(2, 0, 2));
 
     String aiName = "AI";
     for(int i=0; i<9; i++) {

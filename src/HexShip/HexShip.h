@@ -49,9 +49,12 @@ public:
     /** Add a HexCell to this HexShip.
      *
      * @param cell Cell to add to the ship.
-     * @param pos Position of this cell in the ship.
+     * @param offset Offset (from the core cell) of this new cell.
      */
-    void addHexCell(HexCell* cell, const Ogre::Vector2& pos);
+    void addHexCell(HexCell* cell, const Ogre::Vector3& offset);
+
+    /// Add a Core HexCell to this HexShip.
+    void addCoreHexCell(HexCell* cell, const Ogre::Vector3& offset);
 
     /** Remove a HexCell from this HexShip.
      *
@@ -71,15 +74,8 @@ public:
     /// Build XML structure with ship data/attributes.
     void toXml(TiXmlElement* node) const;
 
-    /** Get Ogre::SceneNode at center of HexShip.
-     *
-     * @attention Since the HexShip itself is not an Ogre object, we will use
-     * the Ogre node of the core HexCell when one is needed.
-     */
-    Ogre::SceneNode* getOgreNode() {
-        assert(mCoreCell);
-        return mCoreCell->getOgreNode();
-    }
+    /// Get Ogre::SceneNode at center of HexShip.
+    Ogre::SceneNode* getOgreNode() { return mOgreNode; }
 
     /// Get ship's name.
     const std::string& getName() const { return mName; }
@@ -98,6 +94,15 @@ private:
      * the compound collision shape of the ship must be recreated.
      */
     void rebuildCollisionHull();
+
+    /// Ogre node controlling this ship.
+    Ogre::SceneNode *mOgreNode;
+
+    /// Bullet object physically simulating this ship.
+    btRigidBody *mHexShipRigidBody;
+
+    /// HexShip collision shape - assembled from HexCell shapes.
+    btCompoundShape *mHexShipShape;
 
     /** Reference to ship's central HexCell.
      *

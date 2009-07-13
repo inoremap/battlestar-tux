@@ -26,6 +26,9 @@
 
 #include "XmlEntity.h"
 
+class HexShip;
+
+
 /** HexCells are the basic building blocks of a HexShip craft.
  *
  * Each HexCell can provide one or more capabilities, and is visually displayed
@@ -48,6 +51,8 @@ public:
 
     /// Update cell for a new frame.
     void update(unsigned long lTimeElapsed);
+    /// When the cell is part of a ship, its position will be updated as well.
+    void update(const Ogre::Vector3& shipPos, unsigned long lTimeElapsed);
 
     /** Apply damage to this cell.
      *
@@ -60,14 +65,24 @@ public:
      */
     void destroy();
 
-    /// HACK: forces should come from propulsion cells or object collisions.
-    void applyCentralImpulse(const Ogre::Vector3& impulse);
+    /** Attach this HexCell to a HexShip.  Indicates that this cell should
+     * cease managing its own movement and collisions.
+     *
+     * @param ship The HexShip this cell has been attached to.
+     * @param offset Indicates the offset (from the core cell) of this cell.
+     */
+    void attachCell(HexShip* ship, const Ogre::Vector3& offset);
+
+    /** Separate this HexCell from its HexShip.  Requires the HexCell to create
+     * its own btRigidBody to manage collisions and movement.
+     */
+    void separateCell();
 
     /// Build XML structure with cell data/attributes.
     void toXml(TiXmlElement* node) const;
 
     /// Get the Ogre::SceneNode representing this cell.
-    Ogre::SceneNode* getOgreNode() { return mHexCellNode; }
+    Ogre::SceneNode* getOgreNode() { return mOgreNode; }
 
     /// Get (and create, if necessary) the HexCell Bullet collision object.
     static btCollisionShape* getCollisionShapePtr();
@@ -84,23 +99,26 @@ public:
     /// Get cell's current hitpoints.
     float getHp() const { return mHp; }
 
-    /// Set cell's position in HexShip.
-    void setPosition(const Ogre::Vector2& pos) { mPosition = pos; }
-    /// Get cell's position in HexShip.
-    const Ogre::Vector2& getPosition() const { return mPosition; }
+    /// Get this cell's offset within the HexShip.
+    const Ogre::Vector3& getOffset() const { return mOffset; }
 
 private:
     HexCell();
     HexCell(const HexCell&);
     HexCell& operator=(const HexCell&);
 
-    /// Ogre object controlling this cell.
-    Ogre::Entity *mHexCell;
+    /// Ogre object visually representing this cell.
+    Ogre::Entity *mOgreEntity;
 
-    /// Ogre node visually representing this cell.
-    Ogre::SceneNode *mHexCellNode;
+    /// Ogre node controlling this cell.
+    Ogre::SceneNode *mOgreNode;
 
-    /// Bullet object physically simulating this cell.
+    /** Bullet object physically simulating this cell.
+     *
+     * @attention When this HexCell is part of a larger HexShip, the ship will
+     * manage all collisions and motion states, so this cell will not have a
+     * rigidbody.  Only when the cell is on its own will it need this rigidbody.
+     */
     btRigidBody *mHexCellRigidBody;
 
     /// HexCell collision shape - shared by all HexCell instances.
@@ -117,8 +135,11 @@ private:
     /// Current number of hitpoints remaining.
     float mHp;
 
-    /// Position of this cell in the HexShip.
-    Ogre::Vector2 mPosition;
+    /// The HexShip this cell is attached to (if any).
+    HexShip* mShip;
+
+    /// Offset of this cell within the HexShip (if this cell is part of a ship).
+    Ogre::Vector3 mOffset;
 };
 
 

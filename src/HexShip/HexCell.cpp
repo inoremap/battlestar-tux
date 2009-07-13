@@ -20,27 +20,102 @@
 #include <BtOgreExtras.h>
 
 #include "HexCell.h"
+#include "HexShip.h"
 #include "PhysicsManager.h"
 
 btCollisionShape* HexCell::mHexCellShape;
+
 
 HexCell::HexCell(const std::string& name, const float mass, const float hitPoints) :
     mName(name),
     mMass(mass),
     mMaxHp(hitPoints),
-    mHp(hitPoints)
+    mHp(hitPoints),
+    mOffset()
 {
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
-    // Create hex cell
-    Ogre::Vector3 pos(0,0,0);
-    mHexCell = sceneMgr->createEntity(mName, "HexCell.mesh");
-    mHexCellNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", pos);
-    mHexCellNode->attachObject(mHexCell);
-    btCollisionShape *hexCellShape = getCollisionShapePtr();
-    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mHexCellNode);
-    mHexCellRigidBody = new btRigidBody(mMass, state, hexCellShape);
+    // Create HexCell visual entity.
+    mOgreEntity = sceneMgr->createEntity(mName, "HexCell.mesh");
+    mOgreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", Ogre::Vector3());
+    mOgreNode->attachObject(mOgreEntity);
+
+    mHexCellRigidBody = NULL;
+    mShip = NULL;
+}
+
+
+HexCell::~HexCell() {
+    // Delete the Bullet collision object, if this cell had one.
+    if(mHexCellRigidBody) {
+        btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+        btDynamicsWorld->removeRigidBody(mHexCellRigidBody);
+        delete mHexCellRigidBody->getMotionState();
+        delete mHexCellRigidBody;
+    }
+
+    delete mOgreNode;
+    delete mOgreEntity;
+}
+
+
+void HexCell::update( unsigned long lTimeElapsed ) {
+}
+
+
+void HexCell::update(const Ogre::Vector3& shipPos, unsigned long lTimeElapsed) {
+    //XXX: This will only set position, not orientation.
+    mOgreNode->setPosition(shipPos + mOffset);
+    this->update(lTimeElapsed);
+}
+
+
+void HexCell::damage(const float hitpoints) {
+    mHp -= hitpoints;
+
+    // This cell has been destroyed if there are no remaining hitpoints.
+    if(mHp <= 0)
+        destroy();
+}
+
+
+void HexCell::destroy() {
+    //TODO: Create explosion and detach this cell from the ship.
+    //Once the explosion has finished, this cell may be deleted.
+}
+
+
+void HexCell::attachCell(HexShip* ship, const Ogre::Vector3& offset) {
+    // If this cell has been managing its own collisions, we must cease.
+    if(mHexCellRigidBody) {
+        btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+        btDynamicsWorld->removeRigidBody(mHexCellRigidBody);
+        delete mHexCellRigidBody->getMotionState();
+        delete mHexCellRigidBody;
+        mHexCellRigidBody = NULL;
+    }
+
+    mShip = ship;
+    mOffset = offset;
+
+    mOgreNode->setPosition(mShip->getOgreNode()->getPosition() + mOffset);
+}
+
+
+void HexCell::separateCell() {
+    // This HexCell should not already have a rigidbody, as this would indicate
+    // that this function was called multiple times.
+    assert(!mHexCellRigidBody);
+
+    mShip = NULL;
+    mOffset = Ogre::Vector3();
+
+    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+
+    // Add this individual HexCell to the collision world.
+    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(mOgreNode);
+    mHexCellRigidBody = new btRigidBody(mMass, state, this->getCollisionShapePtr());
     mHexCellRigidBody->setDamping(0.1, 0.5);
     btDynamicsWorld->addRigidBody(mHexCellRigidBody);
 
@@ -59,38 +134,6 @@ HexCell::HexCell(const std::string& name, const float mass, const float hitPoint
     smallTilt->setAngularLowerLimit(btVector3(0,0,0));
     smallTilt->setAngularUpperLimit(btVector3(0,0,0));
     btDynamicsWorld->addConstraint(smallTilt);
-}
-
-HexCell::~HexCell() {
-    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
-    btDynamicsWorld->removeRigidBody(mHexCellRigidBody);
-    delete mHexCellRigidBody->getMotionState();
-    delete mHexCellRigidBody;
-
-    //XXX: delete OGRE objects
-}
-
-
-void HexCell::update( unsigned long lTimeElapsed ) {
-}
-
-
-void HexCell::damage(const float hitpoints) {
-    mHp -= hitpoints;
-
-    // This cell has been destroyed if there are no remaining hitpoints.
-    if(mHp <= 0)
-        destroy();
-}
-
-void HexCell::destroy() {
-    //TODO: Create explosion and detach this cell from the ship.
-    //Once the explosion has finished, this cell may be deleted.
-}
-
-void HexCell::applyCentralImpulse(const Ogre::Vector3& impulse) {
-    mHexCellRigidBody->activate(true);
-    mHexCellRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
 }
 
 
