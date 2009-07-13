@@ -22,13 +22,37 @@
 
 
 HexShip::HexShip(const std::string& name, const Ogre::Vector3& pos) :
-    mName(name)
+    mName(name),
+    mShipCells()
 {
-    mCoreCell = new HexCell(name + "CoreCell", 1, 1000, pos);
+    mCoreCell = new HexCell(name + "CoreCell", 1, 1000);
+    //TODO: Create actual ship and add core cell.
 }
 
 HexShip::~HexShip() {
     delete mCoreCell;
+}
+
+
+void HexShip::addHexCell(HexCell* cell, const Ogre::Vector2& pos) {
+    cell->setPosition(pos);
+    mShipCells.push_back(cell);
+
+    rebuildCollisionHull();
+}
+
+
+void HexShip::removeHexCell(HexCell* cell) {
+    assert(cell != mCoreCell);
+
+    // Find and remove the correct HexCell.
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        if(*iter == cell)
+            mShipCells.erase(iter);
+    }
+
+    rebuildCollisionHull();
 }
 
 
@@ -58,5 +82,10 @@ void HexShip::toXml(TiXmlElement* node) const {
         node = shipNode;
     else
         node->LinkEndChild(shipNode);
+}
+
+
+void HexShip::rebuildCollisionHull() {
+    //TODO: Rebuild compound collision shape.
 }
 

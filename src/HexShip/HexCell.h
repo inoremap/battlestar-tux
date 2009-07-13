@@ -40,15 +40,20 @@ public:
      * The cell's Ogre::SceneNode's name is name+"Node".
      * @param mass Mass of this cell (kg).
      * @param hitPoints Maximum possible hitpoints this cell can sustain.
-     * @param pos Initial position of cell.
      */
-    HexCell(const std::string& name, const float mass, const float hitPoints, const Ogre::Vector3& pos);
+    HexCell(const std::string& name, const float mass, const float hitPoints);
 
     /// Default destructor.
     ~HexCell();
 
     /// Update cell for a new frame.
     void update(unsigned long lTimeElapsed);
+
+    /** Apply damage to this cell.
+     *
+     * @param hitpoints The amount of damage applied to this cell.
+     */
+    void damage(const float hitpoints);
 
     /** This cell has been destroyed.  Queue any explosions and destructive
      * events that follow the destruction of the cell.
@@ -66,6 +71,23 @@ public:
 
     /// Get (and create, if necessary) the HexCell Bullet collision object.
     static btCollisionShape* getCollisionShapePtr();
+
+    /// Get cell's name.
+    const std::string& getName() const { return mName; }
+
+    /// Get cell's mass.
+    float getMass() const { return mMass; }
+
+    /// Get cell's maximum hitpoints.
+    float getMaxHp() const { return mMaxHp; }
+
+    /// Get cell's current hitpoints.
+    float getHp() const { return mHp; }
+
+    /// Set cell's position in HexShip.
+    void setPosition(const Ogre::Vector2& pos) { mPosition = pos; }
+    /// Get cell's position in HexShip.
+    const Ogre::Vector2& getPosition() const { return mPosition; }
 
 private:
     HexCell();
@@ -94,6 +116,9 @@ private:
     float mMaxHp;
     /// Current number of hitpoints remaining.
     float mHp;
+
+    /// Position of this cell in the HexShip.
+    Ogre::Vector2 mPosition;
 };
 
 

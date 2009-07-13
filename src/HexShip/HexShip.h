@@ -46,6 +46,22 @@ public:
     /// Default destructor.
     ~HexShip();
 
+    /** Add a HexCell to this HexShip.
+     *
+     * @param cell Cell to add to the ship.
+     * @param pos Position of this cell in the ship.
+     */
+    void addHexCell(HexCell* cell, const Ogre::Vector2& pos);
+
+    /** Remove a HexCell from this HexShip.
+     *
+     * @param cell Cell to remove from the ship.
+     *
+     * @remark This operation does not destroy the cell, but simply detaches
+     * it from the ship.  The cell will likely slowly drift away.
+     */
+    void removeHexCell(HexCell* cell);
+
     /// Update ship (and all child objects) for a new frame.
     void update(unsigned long lTimeElapsed);
 
@@ -65,13 +81,23 @@ public:
         return mCoreCell->getOgreNode();
     }
 
+    /// Get ship's name.
+    const std::string& getName() const { return mName; }
+
     /// Get total ship mass.
-    float getMass() { return mMass; }
+    float getMass() const { return mMass; }
 
 private:
     HexShip();
     HexShip(const HexShip&);
     HexShip& operator=(const HexShip&);
+
+    /** Reevaluate and rebuild the collision hull of the HexShip.
+     *
+     * When the shape of the ship changes (when cells are added or removed),
+     * the compound collision shape of the ship must be recreated.
+     */
+    void rebuildCollisionHull();
 
     /** Reference to ship's central HexCell.
      *

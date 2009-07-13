@@ -24,7 +24,7 @@
 
 btCollisionShape* HexCell::mHexCellShape;
 
-HexCell::HexCell(const std::string& name, const float mass, const float hitPoints, const Ogre::Vector3& pos) :
+HexCell::HexCell(const std::string& name, const float mass, const float hitPoints) :
     mName(name),
     mMass(mass),
     mMaxHp(hitPoints),
@@ -34,6 +34,7 @@ HexCell::HexCell(const std::string& name, const float mass, const float hitPoint
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
     // Create hex cell
+    Ogre::Vector3 pos(0,0,0);
     mHexCell = sceneMgr->createEntity(mName, "HexCell.mesh");
     mHexCellNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", pos);
     mHexCellNode->attachObject(mHexCell);
@@ -73,6 +74,14 @@ HexCell::~HexCell() {
 void HexCell::update( unsigned long lTimeElapsed ) {
 }
 
+
+void HexCell::damage(const float hitpoints) {
+    mHp -= hitpoints;
+
+    // This cell has been destroyed if there are no remaining hitpoints.
+    if(mHp <= 0)
+        destroy();
+}
 
 void HexCell::destroy() {
     //TODO: Create explosion and detach this cell from the ship.
