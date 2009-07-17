@@ -34,7 +34,6 @@ HexCell::HexCell(const std::string& name, const float mass, const float hitPoint
     mOffset()
 {
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
-    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
 
     // Create HexCell visual entity.
     mOgreEntity = sceneMgr->createEntity(mName, "HexCell.mesh");
@@ -55,8 +54,7 @@ HexCell::~HexCell() {
         delete mHexCellRigidBody;
     }
 
-    delete mOgreNode;
-    delete mOgreEntity;
+    //XXX: removing mOgreNode causes segfault.  Memory leak.
 }
 
 

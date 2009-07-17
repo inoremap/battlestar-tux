@@ -30,19 +30,27 @@ HexShip::HexShip(const std::string& name, const Ogre::Vector3& pos) :
 {
     mMass = 0;
 
+    mHexShipRigidBody = NULL;
+    mHexShipShape = NULL;
+
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     mOgreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", pos);
 }
 
 HexShip::~HexShip() {
-    delete mCoreCell;
-
     btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
     btDynamicsWorld->removeRigidBody(mHexShipRigidBody);
     delete mHexShipRigidBody->getMotionState();
     delete mHexShipRigidBody;
 
-    delete mOgreNode;
+    // Clean up all hex cells
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end();) {
+        delete *iter;
+        iter = mShipCells.erase(iter);
+    }
+
+    //XXX: removing mOgreNode causes segfault.  Memory leak.
 }
 
 
@@ -68,8 +76,10 @@ void HexShip::removeHexCell(HexCell* cell) {
     // Find and remove the correct HexCell.
     std::vector<HexCell*>::iterator iter;
     for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
-        if(*iter == cell)
+        if(*iter == cell) {
             mShipCells.erase(iter);
+            break;
+        }
     }
 
     mMass -= cell->getMass();
@@ -128,7 +138,8 @@ void HexShip::rebuildCollisionHull() {
     // Add the collision shape of each HexCell.
     std::vector<HexCell*>::iterator iter;
     for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
-        btTransform cellShapeTrans(btQuaternion(),
+        btTransform cellShapeTrans(
+                btQuaternion(),
                 BtOgre::Convert::toBullet((*iter)->getOffset()));
         mHexShipShape->addChildShape(cellShapeTrans, (*iter)->getCollisionShapePtr());
     }

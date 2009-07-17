@@ -60,17 +60,18 @@ void PlayState::enter() {
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
-    mPlayer = new HexShip("Player", Vector3(-2,2,-2));
-    HexCell* coreCell = new HexCell("PlayerShip", 1, 1000);
+    mPlayer = new HexShip("PlayerShip", Vector3(-2,2,-2));
+    HexCell* coreCell = new HexCell("PlayerShip:CoreCell", 1, 1000);
     mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(2, 0, 2));
 
-    String aiName = "AI";
     for(int i=0; i<9; i++) {
         for(int n=0; n<9; n++) {
-            new HexShip(aiName + "-" +
-                    StringConverter::toString(i) + "-" +
-                    StringConverter::toString(n),
-                    Vector3(i*4, 2, n*4));
+            String aiName = "AI";
+            aiName += "-" + StringConverter::toString(i) + "-" +
+                    StringConverter::toString(n);
+            HexShip* ai = new HexShip(aiName, Vector3(i*8, 2, n*8));
+            coreCell = new HexCell(aiName + ":CoreCell", 1, 1000);
+            ai->addCoreHexCell(coreCell, Ogre::Vector3(0,0,0));
         }
     }
 
