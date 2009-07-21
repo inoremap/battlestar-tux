@@ -62,9 +62,12 @@ void HexCell::update( unsigned long lTimeElapsed ) {
 }
 
 
-void HexCell::update(const Ogre::Vector3& shipPos, unsigned long lTimeElapsed) {
-    //XXX: This will only set position, not orientation.
-    mOgreNode->setPosition(shipPos + mOffset);
+void HexCell::update( const Ogre::Quaternion& shipQuat,
+                      const Ogre::Vector3& shipPos,
+                      unsigned long lTimeElapsed) {
+    mOgreNode->setOrientation(shipQuat);
+    mOgreNode->setPosition(shipPos);
+    mOgreNode->translate(mOffset, Ogre::Node::TS_LOCAL);
     this->update(lTimeElapsed);
 }
 
