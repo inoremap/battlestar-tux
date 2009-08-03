@@ -62,7 +62,7 @@ void PlayState::enter() {
 
     mPlayer = new HexShip("PlayerShip", Vector3(-2,2,-2));
     HexCell* coreCell = new HexCell("PlayerShip:CoreCell", 1, 1000);
-    mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(2, 0, 2));
+    mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(0, 0, 0));
 
     for(int i=0; i<9; i++) {
         for(int n=0; n<9; n++) {

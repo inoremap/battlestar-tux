@@ -37,7 +37,7 @@ HexCell::HexCell(const std::string& name, const float mass, const float hitPoint
 
     // Create HexCell visual entity.
     mOgreEntity = sceneMgr->createEntity(mName, "HexCell.mesh");
-    mOgreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", Ogre::Vector3());
+    mOgreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(mName + "Node", Ogre::Vector3(8, 2, 8));
     mOgreNode->attachObject(mOgreEntity);
 
     mHexCellRigidBody = NULL;
@@ -59,16 +59,6 @@ HexCell::~HexCell() {
 
 
 void HexCell::update( unsigned long lTimeElapsed ) {
-}
-
-
-void HexCell::update( const Ogre::Quaternion& shipQuat,
-                      const Ogre::Vector3& shipPos,
-                      unsigned long lTimeElapsed) {
-    mOgreNode->setOrientation(shipQuat);
-    mOgreNode->setPosition(shipPos);
-    mOgreNode->translate(mOffset, Ogre::Node::TS_LOCAL);
-    this->update(lTimeElapsed);
 }
 
 
@@ -100,7 +90,12 @@ void HexCell::attachCell(HexShip* ship, const Ogre::Vector3& offset) {
     mShip = ship;
     mOffset = offset;
 
-    mOgreNode->setPosition(mShip->getOgreNode()->getPosition() + mOffset);
+    // Cell's visual representation will be detached from the root scene node
+    // and attached to the HexShip's node.
+    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
+    sceneMgr->getRootSceneNode()->removeChild(mOgreNode);
+    mShip->getOgreNode()->addChild(mOgreNode);
+    mOgreNode->setPosition(mOffset);
 }
 
 
@@ -108,6 +103,19 @@ void HexCell::separateCell() {
     // This HexCell should not already have a rigidbody, as this would indicate
     // that this function was called multiple times.
     assert(!mHexCellRigidBody);
+
+    // Cell's visual representation will be detached from the HexShip's node
+    // and attached to the root scene node.
+    Ogre::Node* shipNode = mShip->getOgreNode();
+    shipNode->removeChild(mOgreNode);
+    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
+    sceneMgr->getRootSceneNode()->addChild(mOgreNode);
+
+    // Detaching from the HexShip zeroes the orientation and position.
+    // These will be reinstated using the current values from the HexShip.
+    mOgreNode->setOrientation(shipNode->getOrientation());
+    mOgreNode->setPosition(shipNode->getPosition());
+    mOgreNode->translate(mOffset, Ogre::Node::TS_LOCAL);
 
     mShip = NULL;
     mOffset = Ogre::Vector3();

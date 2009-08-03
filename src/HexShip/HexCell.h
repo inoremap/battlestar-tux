@@ -51,8 +51,6 @@ public:
 
     /// Update cell for a new frame.
     void update(unsigned long lTimeElapsed);
-    /// When the cell is part of a ship, its position and orientation will be updated as well.
-    void update(const Ogre::Quaternion& shipQuat, const Ogre::Vector3& shipPos, unsigned long lTimeElapsed);
 
     /** Apply damage to this cell.
      *

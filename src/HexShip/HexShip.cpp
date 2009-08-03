@@ -92,11 +92,8 @@ void HexShip::removeHexCell(HexCell* cell) {
 void HexShip::update( unsigned long lTimeElapsed ) {
     // Update each HexCell
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
-        (*iter)->update(mOgreNode->getOrientation(),
-                        mOgreNode->getPosition(),
-                        lTimeElapsed);
-    }
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++)
+        (*iter)->update(lTimeElapsed);
 }
 
 
