@@ -60,19 +60,26 @@ void PlayState::enter() {
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
+    // Add player's ship
     mPlayer = new HexShip("PlayerShip", Vector3(-2,2,-2));
     HexCell* coreCell = new HexCell("PlayerShip:CoreCell", 1, 1000);
     mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(0, 0, 0));
 
-    for(int i=0; i<9; i++) {
-        for(int n=0; n<9; n++) {
-            String aiName = "AI";
-            aiName += "-" + StringConverter::toString(i) + "-" +
-                    StringConverter::toString(n);
-            HexShip* ai = new HexShip(aiName, Vector3(i*8, 2, n*8));
-            coreCell = new HexCell(aiName + ":CoreCell", 1, 1000);
-            ai->addCoreHexCell(coreCell, Ogre::Vector3(0,0,0));
-        }
+    // Add AI ship
+    HexShip* ai = new HexShip("AI", Vector3(8, 2, 0));
+    coreCell = new HexCell("AI:CoreCell", 1, 2000);
+    ai->addCoreHexCell(coreCell, Ogre::Vector3(0,0,0));
+    for(int i=0; i<4; i++) {
+        String aiName = "AI";
+        aiName += "-Row1-" + StringConverter::toString(i);
+        HexCell* cell = new HexCell(aiName + ":Cell", 1, 1000);
+        ai->addHexCell(cell, Ogre::Vector3(2.25, 0, i*2.6 + 1.3 - 2*2.6));
+    }
+    for(int i=0; i<4; i++) {
+        String aiName = "AI";
+        aiName += "-Row2-" + StringConverter::toString(i);
+        HexCell* cell = new HexCell(aiName + ":Cell", 1, 1000);
+        ai->addHexCell(cell, Ogre::Vector3(-2.25, 0, i*2.6 + 1.3 - 2*2.6));
     }
 
     // Configure camera
