@@ -131,8 +131,12 @@ public:
 	// overrides
     virtual void	buildJacobian();
     virtual void getInfo1 (btConstraintInfo1* info);
+
+	void getInfo1NonVirtual(btConstraintInfo1* info);
 	
 	virtual void getInfo2 (btConstraintInfo2* info);
+
+	void getInfo2NonVirtual(btConstraintInfo2* info, const btTransform& transA, const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB, btScalar rbAinvMass,btScalar rbBinvMass);
 
     virtual	void	solveConstraintObsolete(btSolverBody& bodyA,btSolverBody& bodyB,btScalar	timeStep);
 	
@@ -151,9 +155,9 @@ public:
     btScalar getUpperLinLimit() { return m_upperLinLimit; }
     void setUpperLinLimit(btScalar upperLimit) { m_upperLinLimit = upperLimit; }
     btScalar getLowerAngLimit() { return m_lowerAngLimit; }
-    void setLowerAngLimit(btScalar lowerLimit) { m_lowerAngLimit = lowerLimit; }
+    void setLowerAngLimit(btScalar lowerLimit) { m_lowerAngLimit = btNormalizeAngle(lowerLimit); }
     btScalar getUpperAngLimit() { return m_upperAngLimit; }
-    void setUpperAngLimit(btScalar upperLimit) { m_upperAngLimit = upperLimit; }
+    void setUpperAngLimit(btScalar upperLimit) { m_upperAngLimit = btNormalizeAngle(upperLimit); }
 	bool getUseLinearReferenceFrameA() { return m_useLinearReferenceFrameA; }
 	btScalar getSoftnessDirLin() { return m_softnessDirLin; }
 	btScalar getRestitutionDirLin() { return m_restitutionDirLin; }
@@ -215,13 +219,13 @@ public:
     void	buildJacobianInt(btRigidBody& rbA, btRigidBody& rbB, const btTransform& frameInA, const btTransform& frameInB);
     void	solveConstraintInt(btRigidBody& rbA, btSolverBody& bodyA,btRigidBody& rbB, btSolverBody& bodyB);
 	// shared code used by ODE solver
-	void	calculateTransforms(void);
-	void	testLinLimits(void);
+	void	calculateTransforms(const btTransform& transA,const btTransform& transB);
+	void	testLinLimits();
 	void	testLinLimits2(btConstraintInfo2* info);
-	void	testAngLimits(void);
+	void	testAngLimits();
 	// access for PE Solver
-	btVector3 getAncorInA(void);
-	btVector3 getAncorInB(void);
+	btVector3 getAncorInA();
+	btVector3 getAncorInB();
 };
 
 

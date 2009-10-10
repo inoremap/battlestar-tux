@@ -12,6 +12,10 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+
+/// 2009 March: btGeneric6DofConstraint refactored by Roman Ponomarev
+/// Added support for generic constraint solver through getInfo1/getInfo2 methods
+
 /*
 2007-09-09
 btGeneric6DofConstraint Refactored by Francisco Le?n
@@ -65,8 +69,8 @@ public:
         m_targetVelocity = 0;
         m_maxMotorForce = 0.1f;
         m_maxLimitForce = 300.0f;
-        m_loLimit = -SIMD_INFINITY;
-        m_hiLimit = SIMD_INFINITY;
+        m_loLimit = 1.0f;
+        m_hiLimit = -1.0f;
         m_ERP = 0.5f;
         m_bounce = 0.0f;
         m_damping = 1.0f;
@@ -289,9 +293,9 @@ protected:
     }
 
 
-	int setAngularLimits(btConstraintInfo2 *info, int row_offset);
+	int setAngularLimits(btConstraintInfo2 *info, int row_offset,const btTransform& transA,const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB,const btVector3& angVelA,const btVector3& angVelB);
 
-	int setLinearLimits(btConstraintInfo2 *info);
+	int setLinearLimits(btConstraintInfo2 *info,const btTransform& transA,const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB,const btVector3& angVelA,const btVector3& angVelB);
 
     void buildLinearJacobian(
         btJacobianEntry & jacLinear,const btVector3 & normalWorld,
@@ -321,7 +325,9 @@ public:
 	Calcs the global transform for the joint offset for body A an B, and also calcs the agle differences between the bodies.
 	\sa btGeneric6DofConstraint.getCalculatedTransformA , btGeneric6DofConstraint.getCalculatedTransformB, btGeneric6DofConstraint.calculateAngleInfo
 	*/
-    void calculateTransforms();
+    void calculateTransforms(const btTransform& transA,const btTransform& transB);
+
+	void calculateTransforms();
 
 	//! Gets the global transform of the offset for body A
     /*!
@@ -368,7 +374,12 @@ public:
 
 	virtual void getInfo1 (btConstraintInfo1* info);
 
+	void getInfo1NonVirtual (btConstraintInfo1* info);
+
 	virtual void getInfo2 (btConstraintInfo2* info);
+
+	void getInfo2NonVirtual (btConstraintInfo2* info,const btTransform& transA,const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB,const btVector3& angVelA,const btVector3& angVelB);
+
 
     virtual	void	solveConstraintObsolete(btSolverBody& bodyA,btSolverBody& bodyB,btScalar	timeStep);
 
@@ -412,16 +423,14 @@ public:
 
     void	setAngularLowerLimit(const btVector3& angularLower)
     {
-        m_angularLimits[0].m_loLimit = angularLower.getX();
-        m_angularLimits[1].m_loLimit = angularLower.getY();
-        m_angularLimits[2].m_loLimit = angularLower.getZ();
+		for(int i = 0; i < 3; i++) 
+			m_angularLimits[i].m_loLimit = btNormalizeAngle(angularLower[i]);
     }
 
     void	setAngularUpperLimit(const btVector3& angularUpper)
     {
-        m_angularLimits[0].m_hiLimit = angularUpper.getX();
-        m_angularLimits[1].m_hiLimit = angularUpper.getY();
-        m_angularLimits[2].m_hiLimit = angularUpper.getZ();
+		for(int i = 0; i < 3; i++)
+			m_angularLimits[i].m_hiLimit = btNormalizeAngle(angularUpper[i]);
     }
 
 	//! Retrieves the angular limit informacion
@@ -446,6 +455,8 @@ public:
     	}
     	else
     	{
+			lo = btNormalizeAngle(lo);
+			hi = btNormalizeAngle(hi);
     		m_angularLimits[axis-3].m_loLimit = lo;
     		m_angularLimits[axis-3].m_hiLimit = hi;
     	}
@@ -468,19 +479,10 @@ public:
         return m_angularLimits[limitIndex-3].isLimited();
     }
 
-    const btRigidBody& getRigidBodyA() const
-    {
-        return m_rbA;
-    }
-    const btRigidBody& getRigidBodyB() const
-    {
-        return m_rbB;
-    }
-
 	virtual void calcAnchorPos(void); // overridable
 
 	int get_limit_motor_info2(	btRotationalLimitMotor * limot,
-								btRigidBody * body0, btRigidBody * body1,
+								const btTransform& transA,const btTransform& transB,const btVector3& linVelA,const btVector3& linVelB,const btVector3& angVelA,const btVector3& angVelB,
 								btConstraintInfo2 *info, int row, btVector3& ax1, int rotational);
 
 
