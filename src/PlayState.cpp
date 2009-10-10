@@ -18,6 +18,7 @@
 
 #include <OgreTextureUnitState.h>
 
+#include "EnergyCell.h"
 #include "HexCell.h"
 #include "HexShip.h"
 #include "PlayState.h"
@@ -64,6 +65,8 @@ void PlayState::enter() {
     mPlayer = new HexShip("PlayerShip", Vector3(-2,2,-2));
     HexCell* coreCell = new HexCell("PlayerShip:CoreCell", 1, 1000);
     mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(0, 0, 0));
+    EnergyCell* energyCell = new EnergyCell("PlayerShip:EnergyCell", 1, 500, 100, 500);
+    mPlayer->addHexCell(energyCell, Ogre::Vector3(2.25, 0, 2.6 + 1.3 - 2*2.6));
 
     // Add AI ship
     HexShip* ai = new HexShip("AI", Vector3(8, 2, 0));
