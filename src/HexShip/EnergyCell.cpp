@@ -32,7 +32,7 @@ EnergyCell::EnergyCell(const std::string& name, const float mass, const float hi
 void EnergyCell::update(unsigned long lTimeElapsed) {
     // All the energy generated this frame will be stored.
     // Any remaining energy is lost.
-    mEnergyStorage += mGenerationRate * lTimeElapsed;
+    mEnergyStorage += mGenerationRate * (lTimeElapsed/1000);
     if(mEnergyStorage > mMaxEnergyStorage)
         mEnergyStorage = mMaxEnergyStorage;
 }
