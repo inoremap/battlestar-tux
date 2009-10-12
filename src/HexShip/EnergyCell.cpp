@@ -30,15 +30,13 @@ EnergyCell::EnergyCell(const std::string& name, const float mass, const float hi
 
 
 void EnergyCell::update(unsigned long lTimeElapsed) {
-    // All the energy generated this frame will be stored.
+    // All the energy generated this frame will be stored if possible.
     // Any remaining energy is lost.
-    mEnergyStorage += mGenerationRate * (lTimeElapsed/1000);
-    if(mEnergyStorage > mMaxEnergyStorage)
-        mEnergyStorage = mMaxEnergyStorage;
+    storeEnergy(mGenerationRate * (lTimeElapsed/1000.f));
 }
 
 
-float EnergyCell::getEnergy(const float energyNeeded) {
+float EnergyCell::getEnergy(const float energyNeeded, const bool needAllRequested) {
     float available = 0;
 
     // The needed energy will be taken from storage.
@@ -47,8 +45,10 @@ float EnergyCell::getEnergy(const float energyNeeded) {
         available = energyNeeded;
     }
     else {
-        available = mEnergyStorage;
-        mEnergyStorage = 0;
+        if(! needAllRequested) {
+            available = mEnergyStorage;
+            mEnergyStorage = 0;
+        }
     }
 
     return available;
