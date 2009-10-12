@@ -50,18 +50,18 @@ public:
     ~HexCell();
 
     /// Update cell for a new frame.
-    void update(unsigned long lTimeElapsed);
+    virtual void update(unsigned long lTimeElapsed) { }
 
     /** Apply damage to this cell.
      *
      * @param hitpoints The amount of damage applied to this cell.
      */
-    void damage(const float hitpoints);
+    virtual void damage(const float hitpoints);
 
     /** This cell has been destroyed.  Queue any explosions and destructive
      * events that follow the destruction of the cell.
      */
-    void destroy();
+    virtual void destroy();
 
     /** Attach this HexCell to a HexShip.  Indicates that this cell should
      * cease managing its own movement and collisions.
@@ -100,7 +100,7 @@ public:
     /// Get this cell's offset within the HexShip.
     const Ogre::Vector3& getOffset() const { return mOffset; }
 
-private:
+protected:
     HexCell();
     HexCell(const HexCell&);
     HexCell& operator=(const HexCell&);

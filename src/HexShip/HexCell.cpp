@@ -58,10 +58,6 @@ HexCell::~HexCell() {
 }
 
 
-void HexCell::update( unsigned long lTimeElapsed ) {
-}
-
-
 void HexCell::damage(const float hitpoints) {
     mHp -= hitpoints;
 
