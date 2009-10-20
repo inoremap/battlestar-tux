@@ -49,12 +49,15 @@ public:
     /** Add a HexCell to this HexShip.
      *
      * @param cell Cell to add to the ship.
-     * @param offset Offset (from the core cell) of this new cell.
+     * @param offsetX X-offset (from the core cell) of this new cell.
+     * @param offsetY Y-offset (from the core cell) of this new cell.
+     *
+     * @remark X and Y offsets are measured in units the size of one HexCell.
      */
-    void addHexCell(HexCell* cell, const Ogre::Vector3& offset);
+    void addHexCell(HexCell* cell, const int offsetX, const int offsetY);
 
     /// Add a Core HexCell to this HexShip.
-    void addCoreHexCell(HexCell* cell, const Ogre::Vector3& offset);
+    void addCoreHexCell(HexCell* cell, const int offsetX, const int offsetY);
 
     /** Remove a HexCell from this HexShip.
      *

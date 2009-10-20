@@ -54,8 +54,17 @@ HexShip::~HexShip() {
 }
 
 
-void HexShip::addHexCell(HexCell* cell, const Ogre::Vector3& offset) {
-    // Calculate world position of cell using provided offset.
+void HexShip::addHexCell(HexCell* cell, const int offsetX, const int offsetY) {
+    // Calculate world position of cell using provided cell-sized offsets.
+    float compensateZ = 0.0;
+    if(offsetX % 2)
+        compensateZ = 1.3;
+
+    Ogre::Vector3 offset(
+            2.25 * (float) offsetX,
+            0,
+            2.6 * (float) offsetY + compensateZ);
+
     cell->attachCell(this, offset);
     mShipCells.push_back(cell);
 
@@ -64,9 +73,9 @@ void HexShip::addHexCell(HexCell* cell, const Ogre::Vector3& offset) {
 }
 
 
-void HexShip::addCoreHexCell(HexCell* cell, const Ogre::Vector3& offset) {
+void HexShip::addCoreHexCell(HexCell* cell, const int offsetX, const int offsetY) {
     mCoreCell = cell;
-    this->addHexCell(cell, offset);
+    this->addHexCell(cell, offsetX, offsetY);
 }
 
 

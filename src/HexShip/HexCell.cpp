@@ -73,7 +73,7 @@ void HexCell::destroy() {
 }
 
 
-void HexCell::attachCell(HexShip* ship, const Ogre::Vector3& offset) {
+void HexCell::attachCell(HexShip* ship, const Ogre::Vector3 offset) {
     // If this cell has been managing its own collisions, we must cease.
     if(mHexCellRigidBody) {
         btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();

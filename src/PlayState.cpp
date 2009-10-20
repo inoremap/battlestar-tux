@@ -62,27 +62,24 @@ void PlayState::enter() {
     mPhysicsManager = PhysicsManager::getSingletonPtr();
 
     // Add player's ship
-    mPlayer = new HexShip("PlayerShip", Vector3(-2,2,-2));
+    mPlayer = new HexShip("PlayerShip", Vector3(0,2,0));
     HexCell* coreCell = new HexCell("PlayerShip:CoreCell", 1, 1000);
-    mPlayer->addCoreHexCell(coreCell, Ogre::Vector3(0, 0, 0));
+    mPlayer->addCoreHexCell(coreCell, 0, 0);
     EnergyCell* energyCell = new EnergyCell("PlayerShip:EnergyCell", 1, 500, 100, 500);
-    mPlayer->addHexCell(energyCell, Ogre::Vector3(2.25, 0, 2.6 + 1.3 - 2*2.6));
+    mPlayer->addHexCell(energyCell, 0, 1);
 
     // Add AI ship
-    HexShip* ai = new HexShip("AI", Vector3(8, 2, 0));
+    HexShip* ai = new HexShip("AI", Vector3(15, 2, 0));
     coreCell = new HexCell("AI:CoreCell", 1, 2000);
-    ai->addCoreHexCell(coreCell, Ogre::Vector3(0,0,0));
-    for(int i=0; i<4; i++) {
-        String aiName = "AI";
-        aiName += "-Row1-" + StringConverter::toString(i);
-        HexCell* cell = new HexCell(aiName + ":Cell", 1, 1000);
-        ai->addHexCell(cell, Ogre::Vector3(2.25, 0, i*2.6 + 1.3 - 2*2.6));
-    }
-    for(int i=0; i<4; i++) {
-        String aiName = "AI";
-        aiName += "-Row2-" + StringConverter::toString(i);
-        HexCell* cell = new HexCell(aiName + ":Cell", 1, 1000);
-        ai->addHexCell(cell, Ogre::Vector3(-2.25, 0, i*2.6 + 1.3 - 2*2.6));
+    ai->addCoreHexCell(coreCell, 0, 0);
+    for(int i=-1; i<=1; i++) {
+        for(int n=0; n<=2; n++) {
+            String aiName = "AI";
+            aiName += "-Row-" + StringConverter::toString(n)
+                    + "-Column-" + StringConverter::toString(i);
+            HexCell* cell = new HexCell(aiName + ":Cell", 1, 1000);
+            ai->addHexCell(cell, i, n);
+        }
     }
 
     // Configure camera

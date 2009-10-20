@@ -69,7 +69,7 @@ public:
      * @param ship The HexShip this cell has been attached to.
      * @param offset Indicates the offset (from the core cell) of this cell.
      */
-    void attachCell(HexShip* ship, const Ogre::Vector3& offset);
+    void attachCell(HexShip* ship, const Ogre::Vector3 offset);
 
     /** Separate this HexCell from its HexShip.  Requires the HexCell to create
      * its own btRigidBody to manage collisions and movement.
