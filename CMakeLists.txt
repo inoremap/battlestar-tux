@@ -2,7 +2,7 @@
 #
 # Top-level cmake configuration file.
 #
-# Copyright (C) 2006 Eliot Eshelman <battlestartux@6by9.net>
+# Copyright (C) 2006-2009 Eliot Eshelman <battlestartux@6by9.net>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -14,6 +14,8 @@
 #
 #
 ## YOU DO NOT NEED TO MODIFY THIS FILE ##
+
+cmake_minimum_required(VERSION 2.6)
 
 PROJECT(BATTLESTAR_TUX)
 

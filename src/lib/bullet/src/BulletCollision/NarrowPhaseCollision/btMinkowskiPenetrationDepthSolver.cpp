@@ -14,13 +14,10 @@ subject to the following restrictions:
 */
 
 #include "btMinkowskiPenetrationDepthSolver.h"
-#include "BulletCollision/CollisionShapes/btMinkowskiSumShape.h"
 #include "BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.h"
 #include "BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
 #include "BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h"
-
-
-
+#include "BulletCollision/CollisionShapes/btConvexShape.h"
 
 #define NUM_UNITSPHERE_POINTS 42
 static btVector3	sPenetrationDirections[NUM_UNITSPHERE_POINTS+MAX_PREFERRED_PENETRATION_DIRECTIONS*2] = 
@@ -73,7 +70,7 @@ btVector3(btScalar(0.162456) , btScalar(0.499995),btScalar(0.850654))
 bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& simplexSolver,
 												   const btConvexShape* convexA,const btConvexShape* convexB,
 												   const btTransform& transA,const btTransform& transB,
-												   btVector3& v, btPoint3& pa, btPoint3& pb,
+												   btVector3& v, btVector3& pa, btVector3& pb,
 												   class btIDebugDraw* debugDraw,btStackAlloc* stackAlloc
 												   )
 {
@@ -81,6 +78,7 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 	(void)stackAlloc;
 	(void)v;
 	
+	bool check2d= convexA->isConvex2d() && convexB->isConvex2d();
 
 	struct btIntermediateResult : public btDiscreteCollisionDetectorInterface::Result
 	{
@@ -94,10 +92,13 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 		btScalar m_depth;
 		bool	m_hasResult;
 
-		virtual void setShapeIdentifiers(int partId0,int index0,	int partId1,int index1)
+		virtual void setShapeIdentifiersA(int partId0,int index0)
 		{
 			(void)partId0;
 			(void)index0;
+		}
+		virtual void setShapeIdentifiersB(int partId1,int index1)
+		{
 			(void)partId1;
 			(void)index1;
 		}
@@ -111,13 +112,15 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 	};
 
 	//just take fixed number of orientation, and sample the penetration depth in that direction
-	btScalar minProj = btScalar(1e30);
+	btScalar minProj = btScalar(BT_LARGE_FLOAT);
 	btVector3 minNorm(btScalar(0.), btScalar(0.), btScalar(0.));
 	btVector3 minA,minB;
 	btVector3 seperatingAxisInA,seperatingAxisInB;
 	btVector3 pInA,qInB,pWorld,qWorld,w;
 
+#ifndef __SPU__
 #define USE_BATCHED_SUPPORT 1
+#endif
 #ifdef USE_BATCHED_SUPPORT
 
 	btVector3	supportVerticesABatch[NUM_UNITSPHERE_POINTS+MAX_PREFERRED_PENETRATION_DIRECTIONS*2];
@@ -130,7 +133,7 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 
 	for (i=0;i<numSampleDirections;i++)
 	{
-		const btVector3& norm = sPenetrationDirections[i];
+		btVector3 norm = sPenetrationDirections[i];
 		seperatingAxisInABatch[i] =  (-norm) * transA.getBasis() ;
 		seperatingAxisInBBatch[i] =  norm   * transB.getBasis() ;
 	}
@@ -171,35 +174,51 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 
 
 
+
 	convexA->batchedUnitVectorGetSupportingVertexWithoutMargin(seperatingAxisInABatch,supportVerticesABatch,numSampleDirections);
 	convexB->batchedUnitVectorGetSupportingVertexWithoutMargin(seperatingAxisInBBatch,supportVerticesBBatch,numSampleDirections);
 
 	for (i=0;i<numSampleDirections;i++)
 	{
-		const btVector3& norm = sPenetrationDirections[i];
-		seperatingAxisInA = seperatingAxisInABatch[i];
-		seperatingAxisInB = seperatingAxisInBBatch[i];
-
-		pInA = supportVerticesABatch[i];
-		qInB = supportVerticesBBatch[i];
-
-		pWorld = transA(pInA);	
-		qWorld = transB(qInB);
-		w	= qWorld - pWorld;
-		btScalar delta = norm.dot(w);
-		//find smallest delta
-		if (delta < minProj)
+		btVector3 norm = sPenetrationDirections[i];
+		if (check2d)
 		{
-			minProj = delta;
-			minNorm = norm;
-			minA = pWorld;
-			minB = qWorld;
+			norm[2] = 0.f;
+		}
+		if (norm.length2()>0.01)
+		{
+
+			seperatingAxisInA = seperatingAxisInABatch[i];
+			seperatingAxisInB = seperatingAxisInBBatch[i];
+
+			pInA = supportVerticesABatch[i];
+			qInB = supportVerticesBBatch[i];
+
+			pWorld = transA(pInA);	
+			qWorld = transB(qInB);
+			if (check2d)
+			{
+				pWorld[2] = 0.f;
+				qWorld[2] = 0.f;
+			}
+
+			w	= qWorld - pWorld;
+			btScalar delta = norm.dot(w);
+			//find smallest delta
+			if (delta < minProj)
+			{
+				minProj = delta;
+				minNorm = norm;
+				minA = pWorld;
+				minB = qWorld;
+			}
 		}
 	}	
 #else
 
 	int numSampleDirections = NUM_UNITSPHERE_POINTS;
 
+#ifndef __SPU__
 	{
 		int numPDA = convexA->getNumPreferredPenetrationDirections();
 		if (numPDA)
@@ -229,14 +248,15 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 			}
 		}
 	}
+#endif // __SPU__
 
 	for (int i=0;i<numSampleDirections;i++)
 	{
 		const btVector3& norm = sPenetrationDirections[i];
 		seperatingAxisInA = (-norm)* transA.getBasis();
 		seperatingAxisInB = norm* transB.getBasis();
-		pInA = convexA->localGetSupportingVertexWithoutMargin(seperatingAxisInA);
-		qInB = convexB->localGetSupportingVertexWithoutMargin(seperatingAxisInB);
+		pInA = convexA->localGetSupportVertexWithoutMarginNonVirtual(seperatingAxisInA);
+		qInB = convexB->localGetSupportVertexWithoutMarginNonVirtual(seperatingAxisInB);
 		pWorld = transA(pInA);	
 		qWorld = transB(qInB);
 		w	= qWorld - pWorld;
@@ -254,13 +274,14 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 
 	//add the margins
 
-	minA += minNorm*convexA->getMargin();
-	minB -= minNorm*convexB->getMargin();
+	minA += minNorm*convexA->getMarginNonVirtual();
+	minB -= minNorm*convexB->getMarginNonVirtual();
 	//no penetration
 	if (minProj < btScalar(0.))
 		return false;
 
-	minProj += (convexA->getMargin() + convexB->getMargin());
+	btScalar extraSeparation = 0.5f;///scale dependent
+	minProj += extraSeparation+(convexA->getMarginNonVirtual() + convexB->getMarginNonVirtual());
 
 
 
@@ -298,9 +319,10 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 
 	input.m_transformA = displacedTrans;
 	input.m_transformB = transB;
-	input.m_maximumDistanceSquared = btScalar(1e30);//minProj;
+	input.m_maximumDistanceSquared = btScalar(BT_LARGE_FLOAT);//minProj;
 	
 	btIntermediateResult res;
+	gjkdet.setCachedSeperatingAxis(-minNorm);
 	gjkdet.getClosestPoints(input,res,debugDraw);
 
 	btScalar correctedMinNorm = minProj - res.m_depth;
@@ -309,12 +331,14 @@ bool btMinkowskiPenetrationDepthSolver::calcPenDepth(btSimplexSolverInterface& s
 	//the penetration depth is over-estimated, relax it
 	btScalar penetration_relaxation= btScalar(1.);
 	minNorm*=penetration_relaxation;
+	
 
 	if (res.m_hasResult)
 	{
 
 		pa = res.m_pointInWorld - minNorm * correctedMinNorm;
 		pb = res.m_pointInWorld;
+		v = minNorm;
 		
 #ifdef DEBUG_DRAW
 		if (debugDraw)

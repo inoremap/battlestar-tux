@@ -2,7 +2,7 @@
 #
 # Source cmake configuration file - assemble project.
 #
-# Copyright (C) 2006-2008 Eliot Eshelman <battlestartux@6by9.net>
+# Copyright (C) 2006-2009 Eliot Eshelman <battlestartux@6by9.net>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -15,135 +15,83 @@
 #
 ## YOU DO NOT NEED TO MODIFY THIS FILE ##
 
+
 SUBDIRS(
+	lib/btOgre
 	lib/bullet
-	lib/ftgl
-	lib/tinyxml
+    lib/tinyxml
 )
 
-# OpenGL includes OpenGL and GLU
-FIND_PACKAGE(OpenGL REQUIRED)
 
-# SDL Simple Media Library
-FIND_PACKAGE(SDL REQUIRED)
-FIND_PACKAGE(SDL_image REQUIRED)
+# OGRE
+SET(OGRE_DIR ${CMAKE_MODULE_PATH})
+FIND_PACKAGE(OGRE REQUIRED)
 
-# FreeType Fonts
-SET(FREETYPE_DIR ${CMAKE_MODULE_PATH})
-FIND_PACKAGE(FREETYPE REQUIRED)
+# OIS
+SET(OIS_DIR ${CMAKE_MODULE_PATH})
+FIND_PACKAGE(OIS REQUIRED)
+
 
 INCLUDE_DIRECTORIES(
 	# Directories in Battlestar TUX project
 	${BATTLESTAR_TUX_SOURCE_DIR}/src
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Fighter/Cells
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Procedural
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Structures
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/UI/Primitives
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/Universe
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/HexShip
 
 	# Libraries included with Battlestar TUX
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/ftgl
-	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/tinyxml
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/btOgre
 	# Libraries that make up Bullet Physics
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics/ConstraintSolver
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletCollision
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/LinearMath
+    # TinyXML library
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/tinyxml
 
 	# Libraries not included with Battlestar TUX
-	${FREETYPE_INCLUDE_DIR}
-	${OPENGL_INCLUDE_DIR}
-	${SDL_INCLUDE_DIR}
-	${SDLIMAGE_INCLUDE_DIR}
+	${OGRE_INCLUDE_DIR}
+	${CEGUI_INCLUDE_DIR}
+	${OIS_INCLUDE_DIR}
 )
 
 LINK_DIRECTORIES(
 	# Libraries included with Battlestar TUX
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/btOgre
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/bullet
-	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/ftgl
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/tinyxml
 )
 
 SET(	BATTLESTAR_TUX_LIBRARIES
 
 	# Libraries included with Battlestar TUX
-	FTGL
-	TINYXML
+	BTOGRE
 	# Libraries that make up Bullet Physics
-	LibBulletDynamics
-	LibBulletCollision
-	LibLinearMath
+	BulletDynamics
+	BulletCollision
+	LinearMath
+    # TinyXML library
+    TINYXML
 
 	# Libraries not included with Battlestar TUX
-	${FREETYPE_LIBRARY}
-	${OPENGL_LIBRARY}
-	${SDL_LIBRARY}
-	${SDLIMAGE_LIBRARY}
+	${OGRE_LIBRARY}
+	${CEGUI_LIBRARY}
+	${CEGUIRENDERER_LIBRARY}
+	${OIS_LIBRARY}
 )
 
 SET(	BATTLESTAR_TUX_SOURCES
 
-	Battle.cpp
-	Config.cpp
-	CollisionManager.cpp
-	Displayable.cpp
-	DisplayableList.cpp
-	EnemyFighterList.cpp
-	Explosion.cpp
-	ExplosionList.cpp
-	Fighter/EnemyFighter.cpp
-	Fighter/Fighter.cpp
-	Fighter/FighterController.cpp
-	Fighter/HexCell.cpp
-	Fighter/HexCellList.cpp
-	Fighter/HeroFighter.cpp
-	Fighter/PlayerFighterController.cpp
-	Fighter/WeaponSystem.cpp
-	Fighter/Cells/ArmorCell.cpp
-	Fighter/Cells/CoreCell.cpp
-	Fighter/Cells/GenerationCell.cpp
-	Fighter/Cells/PropulsionCell.cpp
-	Fighter/Cells/StorageCell.cpp
-	Fighter/Cells/WeaponCell.cpp
-	FighterAmmo.cpp
-	FighterAmmoList.cpp
-	Game.cpp
-	Ground.cpp
-	HUD.cpp
-	Object.cpp
-	ObjectList.cpp
-	Particle.cpp
-	ParticleGenerator.cpp
-	Procedural/Simplex.cpp
-	Procedural/Textures.cpp
-	Pulse.cpp
-	Screen.cpp
-	Structures/List.cpp
-	Structures/ListItem.cpp
-	Structures/StringArray.cpp
-	TextureManager.cpp
-	UI/CreditsMenu.cpp
-	UI/GUI.cpp
-	UI/LoadCampaignMenu.cpp
-	UI/MainMenu.cpp
-	UI/NewCampaignMenu.cpp
-	UI/OpeningMenu.cpp
-	UI/SettingsMenu.cpp
-	UI/SystemMenu.cpp
-	UI/Primitives/Button.cpp
-	UI/Primitives/HorizontalContainer.cpp
-	UI/Primitives/HorizontalPane.cpp
-	UI/Primitives/Label.cpp
-	UI/Primitives/PlanetButton.cpp
-	UI/Primitives/VerticalContainer.cpp
-	UI/Primitives/VerticalPane.cpp
-	UI/Primitives/Widget.cpp
-	Universe/Planet.cpp
-	Universe/SolarSystem.cpp
-	Universe/SpaceGroup.cpp
-	Universe/SpaceObject.cpp
+	GameManager.cpp
+	GameState.cpp
+	InputManager.cpp
+	IntroState.cpp
+	PauseState.cpp
+	PhysicsManager.cpp
+	PlayState.cpp
+	HexShip/EnergyCell.cpp
+	HexShip/HexCell.cpp
+	HexShip/HexShip.cpp
+    XmlEntity.cpp
 )
 
 ADD_EXECUTABLE(	battlestarTUX
@@ -152,17 +100,12 @@ ADD_EXECUTABLE(	battlestarTUX
 )
 TARGET_LINK_LIBRARIES(battlestarTUX ${BATTLESTAR_TUX_LIBRARIES})
 
-ADD_EXECUTABLE(	testTUX
-		${BATTLESTAR_TUX_SOURCES}
-		test.cpp
-)
-TARGET_LINK_LIBRARIES(testTUX ${BATTLESTAR_TUX_LIBRARIES})
 
 # Copy binary data (graphics, sounds, fonts, etc) to executable directory.
 # If this is an in-source build, the copy isn't necessary.
 IF( NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
 	EXECUTE_PROCESS(
-		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data
+		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
 		RESULT_VARIABLE NULL
 		OUTPUT_VARIABLE NULL
 	)

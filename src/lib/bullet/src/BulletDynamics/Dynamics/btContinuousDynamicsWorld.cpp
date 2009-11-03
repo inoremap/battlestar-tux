@@ -48,6 +48,10 @@ void	btContinuousDynamicsWorld::internalSingleStepSimulation( btScalar timeStep)
 	
 	startProfiling(timeStep);
 	
+	if(0 != m_internalPreTickCallback) {
+		(*m_internalPreTickCallback)(this, timeStep);
+	}
+
 
 	///update aabbs information
 	updateAabbs();
@@ -77,7 +81,6 @@ void	btContinuousDynamicsWorld::internalSingleStepSimulation( btScalar timeStep)
 	solveConstraints(getSolverInfo());
 	
 	///CallbackTriggers();
-
 	calculateTimeOfImpacts(timeStep);
 
 	btScalar toi = dispatchInfo.m_timeOfImpact;
@@ -91,11 +94,13 @@ void	btContinuousDynamicsWorld::internalSingleStepSimulation( btScalar timeStep)
 	integrateTransforms(timeStep * toi);
 
 	///update vehicle simulation
-	updateVehicles(timeStep);
-
+	updateActions(timeStep);
 
 	updateActivationState( timeStep );
 	
+	if(0 != m_internalTickCallback) {
+		(*m_internalTickCallback)(this, timeStep);
+	}
 }
 
 void	btContinuousDynamicsWorld::calculateTimeOfImpacts(btScalar timeStep)
@@ -105,7 +110,7 @@ void	btContinuousDynamicsWorld::calculateTimeOfImpacts(btScalar timeStep)
 		
 		///'toi' is the global smallest time of impact. However, we just calculate the time of impact for each object individually.
 		///so we handle the case moving versus static properly, and we cheat for moving versus moving
-		float toi = 1.f;
+		btScalar toi = 1.f;
 		
 	
 		btDispatcherInfo& dispatchInfo = getDispatchInfo();
@@ -143,12 +148,12 @@ void	btContinuousDynamicsWorld::updateTemporalAabbs(btScalar timeStep)
 			const btVector3& linvel = body->getLinearVelocity();
 
 			//make the AABB temporal
-			float temporalAabbMaxx = temporalAabbMax.getX();
-			float temporalAabbMaxy = temporalAabbMax.getY();
-			float temporalAabbMaxz = temporalAabbMax.getZ();
-			float temporalAabbMinx = temporalAabbMin.getX();
-			float temporalAabbMiny = temporalAabbMin.getY();
-			float temporalAabbMinz = temporalAabbMin.getZ();
+			btScalar temporalAabbMaxx = temporalAabbMax.getX();
+			btScalar temporalAabbMaxy = temporalAabbMax.getY();
+			btScalar temporalAabbMaxz = temporalAabbMax.getZ();
+			btScalar temporalAabbMinx = temporalAabbMin.getX();
+			btScalar temporalAabbMiny = temporalAabbMin.getY();
+			btScalar temporalAabbMinz = temporalAabbMin.getZ();
 
 			// add linear motion
 			btVector3 linMotion = linvel*timeStep;
@@ -186,5 +191,6 @@ void	btContinuousDynamicsWorld::updateTemporalAabbs(btScalar timeStep)
 
 
 }
+
 
 

@@ -1,63 +1,39 @@
-/* main.cpp
+/* Battlestar TUX
+ * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
  *
- * Copyright 2005-2008 Eliot Eshelman
- * battlestartux@6by9.net
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  This file is part of Battlestar Tux.
- *
- *  Battlestar Tux is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; version 2 of the License.
- *
- *  Battlestar Tux is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Battlestar Tux; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 
-#include <SDL.h>
-#include <math.h>
+#include <Ogre.h>
 
-#include "Config.h"
-#include "Game.h"
-#include "MainMenu.h"
-#include "Screen.h"
-#include "TextureManager.h"
+#include "GameManager.h"
+#include "IntroState.h"
 
-using namespace std;
 
-int main(int argc, char* argv[])
-{
-	Game* game = Game::getGame();
-	Config* config = new Config();
-	config->parseCommandline( argc, argv );
-	game->setConfig( config );
-	TextureManager* textureManager = new TextureManager();
-	game->setTextureManager( textureManager );
-	Screen* screen = new Screen();
-	game->setScreen( screen );
+int main( int argc, char **argv ) {
+    GameManager *gameManager = GameManager::getSingletonPtr();
 
-	// Exit if there is no screen.
-	if( screen->isNull() ) {
-		game->exitBT();
-		return 1;
-	}
+    try {
+        // Initialize the game and open the introduction screen.
+        gameManager->startGame( IntroState::getSingletonPtr() );
+    }
+    catch ( Ogre::Exception &ex ) {
+        std::cerr << "An exception has occurred: " << ex.getFullDescription();
+    }
 
-	// Loop - drawing until application is finished.
-	while( !game->isFinished() ) {
-		MainMenu* menu = new MainMenu( OPENING_MENU );
-		menu->ShowMenu();
-		delete menu;
-	}
-
-	SDL_Quit();
-
+    delete gameManager;
     return 0;
 }
+

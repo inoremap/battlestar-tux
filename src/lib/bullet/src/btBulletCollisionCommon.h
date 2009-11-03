@@ -43,14 +43,17 @@ subject to the following restrictions:
 
 ///Narrowphase Collision Detector
 #include "BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h"
-#include "BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h"
+
+//btSphereBoxCollisionAlgorithm is broken, use gjk for now
+//#include "BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 
 ///Dispatching and generation of collision pairs (broadphase)
 #include "BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
 #include "BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"
 #include "BulletCollision/BroadphaseCollision/btAxisSweep3.h"
-
+#include "BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h"
+#include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 
 ///Math library & Utils
 #include "LinearMath/btQuaternion.h"
