@@ -43,15 +43,3 @@ ADD_EXECUTABLE(	battlestarTUX-server
 )
 TARGET_LINK_LIBRARIES(battlestarTUX-server ${BATTLESTAR_TUX_SERVER_LIBRARIES})
 
-
-# Copy binary data (graphics, sounds, fonts, etc) to executable directory.
-# If this is an in-source build, the copy isn't necessary.
-IF( NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
-	EXECUTE_PROCESS(
-		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
-		RESULT_VARIABLE NULL
-		OUTPUT_VARIABLE NULL
-	)
-	MESSAGE( STATUS "Copying data files." )
-ENDIF( NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
-
