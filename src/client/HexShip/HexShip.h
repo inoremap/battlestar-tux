@@ -74,6 +74,17 @@ public:
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
+
+    /** Obtain energy from an EnergyCell for use by another part of the ship.
+     *
+     * @param energy The amount of energy needed.
+     * @param needAllRequested Does the caller need the full amount requested?
+     * Return 0 if the full amount is not available.
+     * @return The amount of energy the ship is able to provide.
+     */
+    float getEnergy(const float energy, const bool needAllRequested = true);
+
+
     /// Build XML structure with ship data/attributes.
     void toXml(TiXmlElement* node) const;
 

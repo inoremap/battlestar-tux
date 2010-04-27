@@ -29,6 +29,16 @@
 class HexShip;
 
 
+/** HexCells are available in various flavors.  We must able to tell them apart.
+ */
+enum HexCellType {
+    CORE_CELL,
+    DEFAULT_CELL,
+    ENERGY_CELL,
+    WEAPON_CELL
+};
+
+
 /** HexCells are the basic building blocks of a HexShip craft.
  *
  * Each HexCell can provide one or more capabilities, and is visually displayed
@@ -43,8 +53,9 @@ public:
      * The cell's Ogre::SceneNode's name is name+"Node".
      * @param mass Mass of this cell (kg).
      * @param hitPoints Maximum possible hitpoints this cell can sustain.
+     * @param cellType Flavor of HexCell (energy, weapon, etc).
      */
-    HexCell(const std::string& name, const float mass, const float hitPoints);
+    HexCell(const std::string& name, const float mass, const float hitPoints, const HexCellType cellType = DEFAULT_CELL);
 
     /// Default destructor.
     ~HexCell();
@@ -85,6 +96,9 @@ public:
     /// Get (and create, if necessary) the HexCell Bullet collision object.
     static btCollisionShape* getCollisionShapePtr();
 
+    /// Get cell's HexCellType.
+    HexCellType getCellType() const { return mCellType; }
+
     /// Get cell's name.
     const std::string& getName() const { return mName; }
 
@@ -121,6 +135,9 @@ protected:
 
     /// HexCell collision shape - shared by all HexCell instances.
     static btCollisionShape *mHexCellShape;
+
+    /// HexCell type of this cell.
+    HexCellType mCellType;
 
     /// Unique name of this cell.
     std::string mName;

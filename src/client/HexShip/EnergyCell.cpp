@@ -24,7 +24,7 @@ EnergyCell::EnergyCell(const std::string& name, const float mass, const float hi
     mGenerationRate(generationRate),
     mMaxEnergyStorage(energyStorage),
     mEnergyStorage(0),
-    HexCell(name, mass, hitPoints)
+    HexCell(name, mass, hitPoints, ENERGY_CELL)
 {
 }
 

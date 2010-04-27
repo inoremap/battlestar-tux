@@ -20,6 +20,7 @@
 #include <Ogre.h>
 #include <BtOgreExtras.h>
 
+#include "EnergyCell.h"
 #include "HexShip.h"
 #include "PhysicsManager.h"
 
@@ -113,6 +114,27 @@ void HexShip::update( unsigned long lTimeElapsed ) {
 void HexShip::applyCentralImpulse(const Ogre::Vector3& impulse) {
     mHexShipRigidBody->activate(true);
     mHexShipRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(impulse));
+}
+
+
+float HexShip::getEnergy(const float energyNeeded, const bool needAllRequested) {
+    float available = 0;
+
+    // Check all EnergyCells for energy.
+    //XXX: If needAllRequested is true, but each individual cell doesn't have
+    //enough energy, this loop will return 0.
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        EnergyCell* cell = dynamic_cast<EnergyCell*> (*iter);
+        if(cell) {
+            available += cell->getEnergy(energyNeeded - available, needAllRequested);
+
+            if(available == energyNeeded)
+                break;
+        }
+    }
+
+    return available;
 }
 
 

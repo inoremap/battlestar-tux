@@ -26,7 +26,8 @@
 btCollisionShape* HexCell::mHexCellShape;
 
 
-HexCell::HexCell(const std::string& name, const float mass, const float hitPoints) :
+HexCell::HexCell(const std::string& name, const float mass, const float hitPoints, const HexCellType cellType) :
+    mCellType(cellType),
     mName(name),
     mMass(mass),
     mMaxHp(hitPoints),
