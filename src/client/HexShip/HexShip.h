@@ -1,5 +1,5 @@
 /* Battlestar TUX
- * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
+ * Copyright (C) 2008-2010 Eliot Eshelman <battlestartux@6by9.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
  */
 class HexShip : public XmlEntity {
 public:
-    /** Create new HexShip with a single (core) HexCell.
+    /** Create new HexShip with an Ogre node.  All HexCells are added later.
      *
      * @param name Unique name of ship.
      * @param pos Initial position of ship.

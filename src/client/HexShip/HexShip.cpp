@@ -1,5 +1,5 @@
 /* Battlestar TUX
- * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
+ * Copyright (C) 2008-2010 Eliot Eshelman <battlestartux@6by9.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,10 @@ HexShip::~HexShip() {
 
 
 void HexShip::addHexCell(HexCell* cell, const int offsetX, const int offsetY) {
+    // Although cells are added with 2D coordinates, the game is 3D.
+    // In the game world, the ground plane is along the X and Z axis, with Y
+    // pointing into the sky.  So Y offset is actually used for the Z position.
+
     // Calculate world position of cell using provided cell-sized offsets.
     float compensateZ = 0.0;
     if(offsetX % 2)
