@@ -63,6 +63,7 @@ SET(	BATTLESTAR_TUX_CLIENT_SOURCES
 	HexShip/EnergyCell.cpp
 	HexShip/HexCell.cpp
 	HexShip/HexShip.cpp
+    HexShip/WeaponCell.cpp
     XmlEntity.cpp
 )
 

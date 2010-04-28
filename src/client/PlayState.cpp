@@ -19,6 +19,7 @@
 #include <OgreTextureUnitState.h>
 
 #include "EnergyCell.h"
+#include "WeaponCell.h"
 #include "HexCell.h"
 #include "HexShip.h"
 #include "PlayState.h"
@@ -67,6 +68,8 @@ void PlayState::enter() {
     mPlayer->addCoreHexCell(coreCell, 0, 0);
     EnergyCell* energyCell = new EnergyCell("PlayerShip:EnergyCell", 1, 500, 100, 500);
     mPlayer->addHexCell(energyCell, 0, 1);
+    WeaponCell* weaponCell = new WeaponCell("PlayerShip:WeaponCell", 1, 300, 50, 50, 0.1);
+    mPlayer->addHexCell(weaponCell, 0, -1);
 
     // Add AI ship
     HexShip* ai = new HexShip("AI", Vector3(15, 2, 0));
@@ -162,11 +165,15 @@ void PlayState::keyPressed( const OIS::KeyEvent &e ) {
 }
 
 void PlayState::keyReleased( const OIS::KeyEvent &e ) {
-    if( e.key == OIS::KC_SPACE ) {
+    switch(e.key) {
+    case OIS::KC_SPACE:
         this->pushState( PauseState::getSingletonPtr() );
-    }
-    else if( e.key == OIS::KC_ESCAPE ) {
+        break;
+    case OIS::KC_ESCAPE:
         this->requestShutdown();
+        break;
+    default:
+        break;
     }
 }
 
@@ -177,9 +184,13 @@ void PlayState::mouseMoved( const OIS::MouseEvent &e ) {
 }
 
 void PlayState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    if(id == OIS::MB_Left)
+        mPlayer->fireWeapons(true);
 }
 
 void PlayState::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    if(id == OIS::MB_Left)
+        mPlayer->fireWeapons(false);
 }
 
 PlayState* PlayState::getSingletonPtr() {

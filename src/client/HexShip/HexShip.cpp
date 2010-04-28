@@ -21,6 +21,7 @@
 #include <BtOgreExtras.h>
 
 #include "EnergyCell.h"
+#include "WeaponCell.h"
 #include "HexShip.h"
 #include "PhysicsManager.h"
 
@@ -135,6 +136,21 @@ float HexShip::getEnergy(const float energyNeeded, const bool needAllRequested) 
     }
 
     return available;
+}
+
+
+void HexShip::fireWeapons(const bool fire) {
+    // Instruct all weapon cells to fire or stop firing.
+    std::vector<HexCell*>::iterator iter;
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        WeaponCell* cell = dynamic_cast<WeaponCell*> (*iter);
+        if(cell) {
+            if(fire)
+                cell->startFiring();
+            else
+                cell->stopFiring();
+        }
+    }
 }
 
 

@@ -84,6 +84,8 @@ public:
      */
     float getEnergy(const float energy, const bool needAllRequested = true);
 
+    /// Start or stop firing weapons.
+    void fireWeapons(const bool fire);
 
     /// Build XML structure with ship data/attributes.
     void toXml(TiXmlElement* node) const;
