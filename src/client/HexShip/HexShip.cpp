@@ -157,7 +157,7 @@ void HexShip::fireWeapons(const bool fire) {
 void HexShip::toXml(TiXmlElement* node) const {
     TiXmlElement* shipNode = new TiXmlElement("HexShip");
 
-    //shipNode->SetAttribute("name", mName);
+    shipNode->SetAttribute("name", mName);
 
     std::vector<HexCell*>::const_iterator iter;
     for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {

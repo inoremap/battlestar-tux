@@ -146,8 +146,10 @@ void HexCell::separateCell() {
 void HexCell::toXml(TiXmlElement* node) const {
     TiXmlElement* cellNode = new TiXmlElement("HexCell");
 
-    //node->SetAttribute("name", mName);
-    //node->SetDoubleAttribute("mass", mMass);
+    node->SetAttribute("name", mName);
+    node->SetDoubleAttribute("mass", mMass);
+    node->SetDoubleAttribute("maxHP", mMaxHp);
+    node->SetDoubleAttribute("hp", mHp);
 
     // If a valid XML element wasn't passed, return one.
     // If a valid XML element was passed, link to it.
