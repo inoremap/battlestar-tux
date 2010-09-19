@@ -22,35 +22,36 @@
 
 WeaponCell::WeaponCell(const std::string& name, const float mass, const float hitPoints,
         const float damagePoints, const float energyRequired,
-        const unsigned long restTime) :
+        const unsigned long restTime, const WeaponCellType weaponType) :
+    mWeaponCellType(weaponType),
     mDamagePoints(damagePoints),
     mEnergyRequired(energyRequired),
     mRestTime(restTime),
+    bFiring(false),
+    bEnergized(false),
     HexCell(name, mass, hitPoints, WEAPON_CELL)
 {
 }
 
 
 void WeaponCell::update(unsigned long lTimeElapsed) {
-    mTotalRestedTime += lTimeElapsed;
+    // If the weapon is not currently running, rest.
+    if(! bEnergized)
+        mTotalRestedTime += lTimeElapsed;
 
     if(bFiring) {
         // Ensure the weapon has rested long enough to fire.
-        if(mTotalRestedTime >= mRestTime)
-            activateWeapon();
-    }
-}
+        if(mTotalRestedTime >= mRestTime) {
+            // Ensure there's enough energy available to fire.
+            float energy = mShip->getEnergy(mEnergyRequired, true);
+            if(energy) {
+                // Generate an ammo object and send it on its way.
+                activateWeapon();
 
-
-void WeaponCell::activateWeapon() {
-    // Ensure there's enough energy available to fire.
-    float energy = mShip->getEnergy(mEnergyRequired, true);
-    if(energy) {
-        // Generate an ammo object and send it on its way.
-        std::cout << "Weapons fire!" << std::endl;
-
-        // Start resting the weapon.
-        mTotalRestedTime = 0;
+                // Start resting the weapon.
+                mTotalRestedTime = 0;
+            }
+        }
     }
 }
 

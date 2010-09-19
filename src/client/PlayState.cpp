@@ -19,7 +19,7 @@
 #include <OgreTextureUnitState.h>
 
 #include "EnergyCell.h"
-#include "WeaponCell.h"
+#include "BoltWeaponCell.h"
 #include "HexCell.h"
 #include "HexShip.h"
 #include "PlayState.h"
@@ -68,7 +68,7 @@ void PlayState::enter() {
     mPlayer->addCoreHexCell(coreCell, 0, 0);
     EnergyCell* energyCell = new EnergyCell("PlayerShip:EnergyCell", 1, 500, 100, 500);
     mPlayer->addHexCell(energyCell, 0, 1);
-    WeaponCell* weaponCell = new WeaponCell("PlayerShip:WeaponCell", 1, 300, 50, 50, 0.1 * 1000);
+    WeaponCell* weaponCell = new BoltWeaponCell("PlayerShip:BoltCell", 1, 300, 50, 50, 0.1 * 1000);
     mPlayer->addHexCell(weaponCell, 0, -1);
 
     // Add AI ship

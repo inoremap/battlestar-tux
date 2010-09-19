@@ -30,6 +30,7 @@ INCLUDE_DIRECTORIES(
 	# Directories in Battlestar TUX project
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/client
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/client/HexShip
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/client/HexShip/WeaponCells
 )
 
 
@@ -64,6 +65,7 @@ SET(	BATTLESTAR_TUX_CLIENT_SOURCES
 	HexShip/HexCell.cpp
 	HexShip/HexShip.cpp
     HexShip/WeaponCell.cpp
+    HexShip/WeaponCells/BoltWeaponCell.cpp
     XmlEntity.cpp
 )
 

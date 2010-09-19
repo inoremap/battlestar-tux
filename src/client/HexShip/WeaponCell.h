@@ -24,7 +24,20 @@
 #include "HexCell.h"
 
 
-/** WeaponCells deal damage to opposing units.
+/** Weapons are available in various flavors.  We must able to tell them apart.
+ */
+enum WeaponCellType {
+    POINT_WEAPON,   // Laser beams, lightning, neutron beams, etc.
+    BOLT_WEAPON     // Plasma balls, nanites, mines, etc.
+};
+
+
+/** Weapons are destructive elements of the game.
+ *
+ * Each weapon inherits from WeaponCell and defines its own special behavior.
+ * Some weapon types, such as BOLT, generate child objects (projectiles), while
+ * others operate without creating additional objects.  Weapons do participate
+ * in collisions - either through ray casting or dynamics.
  */
 class WeaponCell : public HexCell {
 public:
@@ -40,24 +53,30 @@ public:
      */
     WeaponCell(const std::string& name, const float mass, const float hitPoints,
                 const float damagePoints, const float energyRequired,
-                const unsigned long restTime);
+                const unsigned long restTime, const WeaponCellType weaponType);
 
     /// Update cell for a new frame.
-    void update(unsigned long lTimeElapsed);
+    virtual void update(unsigned long lTimeElapsed);
 
     /// Start firing the weapon.
-    void startFiring() { bFiring = true; }
+    virtual void startFiring() { bFiring = true; }
 
     /// Stop firing the weapon.
-    void stopFiring() { bFiring = false; }
+    virtual void stopFiring() { bFiring = false; }
 
-private:
+    /// Get weapon type.
+    WeaponCellType getWeaponCellType() const { return mWeaponCellType; }
+
+protected:
     WeaponCell();
     WeaponCell(const WeaponCell&);
     WeaponCell& operator=(const WeaponCell&);
 
     /// The actual activation of the weapon - consume energy and do damage.
-    void activateWeapon();
+    virtual void activateWeapon() = 0;
+
+    /// Type of weapon.
+    WeaponCellType mWeaponCellType;
 
     /** Amount of damage the weapon deals.
      *
@@ -85,8 +104,17 @@ private:
     /// How long the weapon has been resting since the last fire.
     unsigned long mTotalRestedTime;
 
-    /// Is the weapon currently firing?
+    /// Is the weapon currently set to fire?
     bool bFiring;
+
+    /** Is the weapon currently energized?
+     *
+     * For bolt weapons, this unlikely to ever be true (the weapon is done being
+     * energized as soon as the bold leaves.
+     *
+     * For point weapons, this is true until the beam has ceased.
+     */
+    bool bEnergized;
 };
 
 
