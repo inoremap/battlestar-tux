@@ -2,7 +2,7 @@
 #
 # Source cmake configuration file - assemble project.
 #
-# Copyright (C) 2006-2009 Eliot Eshelman <battlestartux@6by9.net>
+# Copyright (C) 2006-2010 Eliot Eshelman <battlestartux@6by9.net>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -21,6 +21,7 @@ SUBDIRS(
     #server      -- not until server code in place
 	lib/btOgre
 	lib/bullet
+    lib/procedural
     lib/tinyxml
 )
 
@@ -28,6 +29,7 @@ SUBDIRS(
 INCLUDE_DIRECTORIES(
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/btOgre
+	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/procedural
 	# Libraries that make up Bullet Physics
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src
 	${BATTLESTAR_TUX_SOURCE_DIR}/src/lib/bullet/src/BulletDynamics
@@ -47,6 +49,7 @@ LINK_DIRECTORIES(
 	# Libraries included with Battlestar TUX
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/btOgre
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/bullet
+	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/procedural
 	${BATTLESTAR_TUX_BINARY_DIR}/src/lib/tinyxml
 )
 
