@@ -13,7 +13,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
 
-SET(PRODECURAL_SOURCES
+SET(PROCEDURAL_SOURCES
 	Simplex.cpp
     Textures.cpp
 )
