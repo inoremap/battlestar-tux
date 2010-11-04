@@ -23,6 +23,8 @@
 #include "HexShip.h"
 #include "PhysicsManager.h"
 
+
+// Static members
 btCollisionShape* HexCell::mHexCellShape;
 
 
@@ -103,7 +105,7 @@ void HexCell::separateCell() {
 
     // Cell's visual representation will be detached from the HexShip's node
     // and attached to the root scene node.
-    Ogre::Node* shipNode = mShip->getOgreNode();
+    Ogre::SceneNode* shipNode = mShip->getOgreNode();
     shipNode->removeChild(mOgreNode);
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     sceneMgr->getRootSceneNode()->addChild(mOgreNode);

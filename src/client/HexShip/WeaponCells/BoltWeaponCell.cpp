@@ -22,9 +22,14 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "WeaponCell.h"
 #include "BoltWeaponCell.h"
+#include "HexShip.h"
 #include "PhysicsManager.h"
+#include "WeaponCell.h"
+
+
+// Static members
+btCollisionShape* BoltWeaponCell::mWeaponShape;
 
 
 BoltWeaponCell::BoltWeaponCell(const std::string& name, const float mass, const float hitPoints,
@@ -41,97 +46,36 @@ BoltWeaponCell::~BoltWeaponCell() {
 
 void BoltWeaponCell::activateWeapon() {
     std::cout << "Shoot bolt!" << std::endl;
+
+    // We have to track the number of ammo objects (across all cells)
+    // to ensure Ogre objects are unique.
+    static int numFirings = 0;
+    numFirings++;
+
+    // Create ammo's visual entity.
+    std::string ammoName = "BeamAmmo" + numFirings;
+    Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
+    Ogre::Entity *ogreEntity = sceneMgr->createEntity(ammoName, Ogre::SceneManager::PT_SPHERE);
+    Ogre::SceneNode *ogreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(ammoName + "Node");
+    ogreNode->attachObject(ogreEntity);
+    // The built-in Ogre SPHERE has a size of 100 units.
+    ogreNode->setScale(0.002, 0.002, 0.002);
+
+    // Set position of ammo
+    Ogre::SceneNode* shipNode = mShip->getOgreNode();
+    ogreNode->setOrientation(shipNode->getOrientation());
+    ogreNode->setPosition(shipNode->getPosition());
+    ogreNode->translate(mOffset, Ogre::Node::TS_LOCAL);
+
+    // Add the ammo to the collision world.
+    btDiscreteDynamicsWorld *btDynamicsWorld = PhysicsManager::getSingletonPtr()->getDynamicsWorld();
+    BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(ogreNode);
+    btRigidBody *ammoRigidBody = new btRigidBody(1, state, getCollisionShapePtr());
+    btDynamicsWorld->addRigidBody(ammoRigidBody);
 }
 
 
-void BoltWeaponCell::createWeaponSphere(const float r, const int nRings, const int nSegments) {
-    // Code retrieved from OGRE wiki: ManualSphereMeshes
-
-    std::string strName = "WeaponSphere";
-
-    Ogre::MeshPtr pSphere = Ogre::MeshManager::getSingleton().createManual(strName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-    Ogre::SubMesh *pSphereVertex = pSphere->createSubMesh();
-
-    pSphere->sharedVertexData = new Ogre::VertexData();
-    Ogre::VertexData* vertexData = pSphere->sharedVertexData;
-
-    // define the vertex format
-    Ogre::VertexDeclaration* vertexDecl = vertexData->vertexDeclaration;
-    size_t currOffset = 0;
-    // positions
-    vertexDecl->addElement(0, currOffset, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
-    currOffset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
-    // normals
-    vertexDecl->addElement(0, currOffset, Ogre::VET_FLOAT3, Ogre::VES_NORMAL);
-    currOffset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
-    // two dimensional texture coordinates
-    vertexDecl->addElement(0, currOffset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 0);
-    currOffset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
-
-    vertexData->vertexCount = (nRings + 1) * (nSegments+1);
-    Ogre::HardwareVertexBufferSharedPtr vBuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(vertexDecl->getVertexSize(0), vertexData->vertexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
-    Ogre::VertexBufferBinding* binding = vertexData->vertexBufferBinding;
-    binding->setBinding(0, vBuf);
-    float* pVertex = static_cast<float*>(vBuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-
-    pSphereVertex->indexData->indexCount = 6 * nRings * (nSegments + 1);
-    pSphereVertex->indexData->indexBuffer = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(Ogre::HardwareIndexBuffer::IT_16BIT, pSphereVertex->indexData->indexCount, Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
-    Ogre::HardwareIndexBufferSharedPtr iBuf = pSphereVertex->indexData->indexBuffer;
-    unsigned short* pIndices = static_cast<unsigned short*>(iBuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-
-    float fDeltaRingAngle = (M_PI / nRings);
-    float fDeltaSegAngle = (2 * M_PI / nSegments);
-    unsigned short wVerticeIndex = 0 ;
-
-    // Generate the group of rings for the sphere
-    for(int ring = 0; ring <= nRings; ring++) {
-        float r0 = r * sinf(ring * fDeltaRingAngle);
-        float y0 = r * cosf(ring * fDeltaRingAngle);
-
-        // Generate the group of segments for the current ring
-        for(int seg = 0; seg <= nSegments; seg++) {
-            float x0 = r0 * sinf(seg * fDeltaSegAngle);
-            float z0 = r0 * cosf(seg * fDeltaSegAngle);
-
-            // Add one vertex to the strip which makes up the sphere
-            *pVertex++ = x0;
-            *pVertex++ = y0;
-            *pVertex++ = z0;
-
-            Ogre::Vector3 vNormal = Ogre::Vector3(x0, y0, z0).normalisedCopy();
-            *pVertex++ = vNormal.x;
-            *pVertex++ = vNormal.y;
-            *pVertex++ = vNormal.z;
-
-            *pVertex++ = (float) seg / (float) nSegments;
-            *pVertex++ = (float) ring / (float) nRings;
-
-            if (ring != nRings) {
-                // each vertex (except the last) has six indices pointing to it
-                *pIndices++ = wVerticeIndex + nSegments + 1;
-                *pIndices++ = wVerticeIndex;
-                *pIndices++ = wVerticeIndex + nSegments;
-                *pIndices++ = wVerticeIndex + nSegments + 1;
-                *pIndices++ = wVerticeIndex + 1;
-                *pIndices++ = wVerticeIndex;
-                wVerticeIndex ++;
-            }
-        }
-    }
-
-    // Unlock
-    vBuf->unlock();
-    iBuf->unlock();
-    // Generate face list
-    pSphereVertex->useSharedVertices = true;
-
-    pSphere->_setBounds(Ogre::AxisAlignedBox(Ogre::Vector3(-r, -r, -r), Ogre::Vector3(r, r, r)), false);
-    pSphere->_setBoundingSphereRadius(r);
-    pSphere->load();
-}
-
-
-/*btCollisionShape* BoltWeaponCell::getCollisionShapePtr() {
+btCollisionShape* BoltWeaponCell::getCollisionShapePtr() {
     if(! mWeaponShape) {
         mWeaponShape = new btSphereShape(0.5);
         btScalar mass = 1;
@@ -140,5 +84,5 @@ void BoltWeaponCell::createWeaponSphere(const float r, const int nRings, const i
     }
 
     return mWeaponShape;
-}*/
+}
 

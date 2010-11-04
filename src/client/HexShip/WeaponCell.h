@@ -27,7 +27,7 @@
 /** Weapons are available in various flavors.  We must able to tell them apart.
  */
 enum WeaponCellType {
-    POINT_WEAPON,   // Laser beams, lightning, neutron beams, etc.
+    BEAM_WEAPON,    // Laser beams, lightning, neutron beams, etc.
     BOLT_WEAPON     // Plasma balls, nanites, mines, etc.
 };
 
@@ -109,8 +109,8 @@ protected:
 
     /** Is the weapon currently energized?
      *
-     * For bolt weapons, this unlikely to ever be true (the weapon is done being
-     * energized as soon as the bold leaves.
+     * For bolt weapons, this is unlikely to ever be true (the weapon is done
+     * being energized as soon as the bold leaves).
      *
      * For point weapons, this is true until the beam has ceased.
      */

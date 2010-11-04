@@ -46,9 +46,6 @@ public:
                 const unsigned long restTime);
     ~BoltWeaponCell();
 
-    /// Build sphere mesh representing weapons fire.
-    void createWeaponSphere(const float r = 1, const int nRings = 16, const int nSegments = 16);
-
 protected:
     BoltWeaponCell();
     BoltWeaponCell(const BoltWeaponCell&);
@@ -56,6 +53,9 @@ protected:
 
     /// The actual activation of the weapon - consume energy and do damage.
     void activateWeapon();
+
+    /// Get (and create, if necessary) the weapon ammo collision object.
+    static btCollisionShape* getCollisionShapePtr();
 
     /// Weapon's ammo collision shape.
     static btCollisionShape *mWeaponShape;
