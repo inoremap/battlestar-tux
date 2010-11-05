@@ -179,8 +179,8 @@ void PlayState::keyReleased( const OIS::KeyEvent &e ) {
 
 void PlayState::mouseMoved( const OIS::MouseEvent &e ) {
     const OIS::MouseState &mouseState = e.state;
-    mMousePointer->setTop( mouseState.Y.abs );
-    mMousePointer->setLeft( mouseState.X.abs );
+    mMousePointer->setTop(mouseState.Y.abs - mMousePointer->getHeight()/2);
+    mMousePointer->setLeft(mouseState.X.abs - mMousePointer->getWidth()/2);
 }
 
 void PlayState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
