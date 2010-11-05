@@ -56,16 +56,17 @@ SET(	BATTLESTAR_TUX_CLIENT_SOURCES
 
 	GameManager.cpp
 	GameState.cpp
-	InputManager.cpp
-	IntroState.cpp
-	PauseState.cpp
-	PhysicsManager.cpp
-	PlayState.cpp
 	HexShip/EnergyCell.cpp
 	HexShip/HexCell.cpp
 	HexShip/HexShip.cpp
     HexShip/WeaponCell.cpp
     HexShip/WeaponCells/BoltWeaponCell.cpp
+	InputManager.cpp
+	IntroState.cpp
+	PauseState.cpp
+	PhysicsManager.cpp
+	PlayState.cpp
+    UniqueNames.cpp
     XmlEntity.cpp
 )
 

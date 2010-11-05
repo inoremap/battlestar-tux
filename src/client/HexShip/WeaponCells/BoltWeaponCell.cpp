@@ -25,6 +25,7 @@
 #include "BoltWeaponCell.h"
 #include "HexShip.h"
 #include "PhysicsManager.h"
+#include "UniqueNames.h"
 #include "WeaponCell.h"
 
 
@@ -47,19 +48,14 @@ BoltWeaponCell::~BoltWeaponCell() {
 void BoltWeaponCell::activateWeapon() {
     std::cout << "Shoot bolt!" << std::endl;
 
-    // We have to track the number of ammo objects (across all cells)
-    // to ensure Ogre objects are unique.
-    static int numFirings = 0;
-    numFirings++;
-
     // Create ammo's visual entity.
-    std::string ammoName = "BeamAmmo" + numFirings;
+    std::string ammoName = UniqueNames::Next("BeamAmmo");
     Ogre::SceneManager *sceneMgr = Ogre::Root::getSingletonPtr()->getSceneManager("ST_GENERIC");
     Ogre::Entity *ogreEntity = sceneMgr->createEntity(ammoName, Ogre::SceneManager::PT_SPHERE);
     Ogre::SceneNode *ogreNode = sceneMgr->getRootSceneNode()->createChildSceneNode(ammoName + "Node");
     ogreNode->attachObject(ogreEntity);
     // The built-in Ogre SPHERE has a size of 100 units.
-    ogreNode->setScale(0.002, 0.002, 0.002);
+    ogreNode->setScale(0.004, 0.004, 0.004);
 
     // Set position of ammo
     Ogre::SceneNode* shipNode = mShip->getOgreNode();
@@ -72,12 +68,14 @@ void BoltWeaponCell::activateWeapon() {
     BtOgre::RigidBodyState *state = new BtOgre::RigidBodyState(ogreNode);
     btRigidBody *ammoRigidBody = new btRigidBody(1, state, getCollisionShapePtr());
     btDynamicsWorld->addRigidBody(ammoRigidBody);
+    ammoRigidBody->setLinearFactor(btVector3(1,0,1));
+    ammoRigidBody->applyCentralImpulse(BtOgre::Convert::toBullet(Ogre::Vector3(-10,0,0)));
 }
 
 
 btCollisionShape* BoltWeaponCell::getCollisionShapePtr() {
     if(! mWeaponShape) {
-        mWeaponShape = new btSphereShape(0.5);
+        mWeaponShape = new btSphereShape(0.3);
         btScalar mass = 1;
         btVector3 inertia  = btVector3(0,0,0);
         mWeaponShape->calculateLocalInertia(mass, inertia);

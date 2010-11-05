@@ -50,6 +50,7 @@ public:
      * @param damagePoints Amount of damage the weapon deals.
      * @param energyRequired Amount of energy needed for each fire.
      * @param restTime Amount of time the weapon must rest after each firing.
+     * @param weaponType Specifies the weapon family/flavor.
      */
     WeaponCell(const std::string& name, const float mass, const float hitPoints,
                 const float damagePoints, const float energyRequired,
