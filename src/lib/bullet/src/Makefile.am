@@ -37,10 +37,10 @@ nobase_bullet_include_HEADERS += \
 	BulletMultiThreaded/Win32ThreadSupport.h \
 	BulletMultiThreaded/SequentialThreadSupport.h
 
-lib_LTLIBRARIES	= libbulletmath.la libbulletcollision.la libbulletdynamics.la libbulletsoftbody.la libbulletmultithreaded.la
+lib_LTLIBRARIES	= libLinearMath.la libBulletCollision.la libBulletDynamics.la libBulletSoftBody.la libBulletMultiThreaded.la
 
-libbulletmultithreaded_la_CXXFLAGS = ${CXXFLAGS} -I./BulletMultiThreaded/vectormath/scalar/cpp
-libbulletmultithreaded_la_SOURCES =\
+libBulletMultiThreaded_la_CXXFLAGS = ${CXXFLAGS} -I./BulletMultiThreaded/vectormath/scalar/cpp
+libBulletMultiThreaded_la_SOURCES =\
 		BulletMultiThreaded/SpuCollisionObjectWrapper.cpp \
 		BulletMultiThreaded/SpuSampleTask/SpuSampleTask.cpp \
 		BulletMultiThreaded/SpuLibspe2Support.cpp \
@@ -85,14 +85,15 @@ libbulletmultithreaded_la_SOURCES =\
 		BulletMultiThreaded/SpuNarrowPhaseCollisionTask/Box.h
 
 else
-lib_LTLIBRARIES	= libbulletmath.la libbulletcollision.la libbulletdynamics.la libbulletsoftbody.la
+lib_LTLIBRARIES	= libLinearMath.la libBulletCollision.la libBulletDynamics.la libBulletSoftBody.la
 endif
 
 
-libbulletmath_la_SOURCES	= \
+libLinearMath_la_SOURCES	= \
 		LinearMath/btQuickprof.cpp \
 		LinearMath/btGeometryUtil.cpp \
 		LinearMath/btAlignedAllocator.cpp \
+		LinearMath/btSerializer.cpp \
 		LinearMath/btConvexHull.cpp \
 		LinearMath/btHashMap.h \
 		LinearMath/btConvexHull.h \
@@ -111,6 +112,7 @@ libbulletmath_la_SOURCES	= \
 		LinearMath/btQuaternion.h \
 		LinearMath/btAlignedObjectArray.h \
 		LinearMath/btQuickprof.h \
+		LinearMath/btSerializer.h \
 		LinearMath/btTransformUtil.h \
 		LinearMath/btTransform.h \
 		LinearMath/btDefaultMotionState.h \
@@ -118,7 +120,7 @@ libbulletmath_la_SOURCES	= \
 		LinearMath/btRandom.h
 
 
-libbulletcollision_la_SOURCES = \
+libBulletCollision_la_SOURCES = \
 		BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp \
 		BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.cpp \
 		BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.cpp \
@@ -145,6 +147,7 @@ libbulletcollision_la_SOURCES = \
 		BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.cpp \
 		BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.cpp \
 		BulletCollision/CollisionDispatch/SphereTriangleDetector.cpp \
+		BulletCollision/CollisionDispatch/btInternalEdgeUtility.cpp \
 		BulletCollision/CollisionDispatch/btManifoldResult.cpp \
 		BulletCollision/CollisionDispatch/btCollisionWorld.cpp \
 		BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.cpp \
@@ -232,6 +235,7 @@ libbulletcollision_la_SOURCES = \
 		BulletCollision/CollisionDispatch/btSimulationIslandManager.h \
 		BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h \
 		BulletCollision/CollisionDispatch/btCollisionWorld.h \
+		BulletCollision/CollisionDispatch/btInternalEdgeUtility.h \
 		BulletCollision/CollisionDispatch/btManifoldResult.h \
 		BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h \
 		BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h \
@@ -253,6 +257,7 @@ libbulletcollision_la_SOURCES = \
 		BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h \
 		BulletCollision/CollisionShapes/btMaterial.h \
 		BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h \
+		BulletCollision/CollisionShapes/btTriangleInfoMap.h \
 		BulletCollision/CollisionShapes/btSphereShape.h \
 		BulletCollision/CollisionShapes/btConvexPointCloudShape.h \
 		BulletCollision/CollisionShapes/btCapsuleShape.h \
@@ -296,7 +301,7 @@ libbulletcollision_la_SOURCES = \
                 BulletCollision/Gimpact/gim_memory.cpp\
                 BulletCollision/Gimpact/gim_tri_collision.cpp
 
-libbulletdynamics_la_SOURCES = \
+libBulletDynamics_la_SOURCES = \
 		BulletDynamics/Dynamics/btContinuousDynamicsWorld.cpp \
 		BulletDynamics/Dynamics/btRigidBody.cpp \
 		BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp \
@@ -318,7 +323,7 @@ libbulletdynamics_la_SOURCES = \
 		BulletDynamics/Vehicle/btRaycastVehicle.cpp \
 		BulletDynamics/Character/btKinematicCharacterController.cpp \
 		BulletDynamics/Character/btKinematicCharacterController.h \
-		BulletDynamics/Character/btCharacterControllerInterface.h \		
+		BulletDynamics/Character/btCharacterControllerInterface.h \
 		BulletDynamics/Dynamics/btActionInterface.h \
 		BulletDynamics/Dynamics/btContinuousDynamicsWorld.h \
 		BulletDynamics/Dynamics/btSimpleDynamicsWorld.h \
@@ -346,7 +351,8 @@ libbulletdynamics_la_SOURCES = \
 		BulletDynamics/Vehicle/btRaycastVehicle.h \
 		BulletDynamics/Vehicle/btWheelInfo.h
 
-libbulletsoftbody_la_SOURCES = \
+libBulletSoftBody_la_SOURCES = \
+		BulletSoftBody/btDefaultSoftBodySolver.cpp \
 		BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.cpp \
 		BulletSoftBody/btSoftBody.cpp \
 		BulletSoftBody/btSoftRigidCollisionAlgorithm.cpp \
@@ -428,6 +434,7 @@ nobase_bullet_include_HEADERS += \
 	BulletCollision/CollisionShapes/btTriangleCallback.h \
 	BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.h \
 	BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h \
+	BulletCollision/CollisionShapes/btTriangleInfoMap.h \
 	BulletCollision/CollisionShapes/btTriangleBuffer.h \
 	BulletCollision/CollisionShapes/btConvexShape.h \
 	BulletCollision/CollisionShapes/btConvex2dShape.h \
@@ -493,6 +500,7 @@ nobase_bullet_include_HEADERS += \
 	BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.h \
 	BulletCollision/CollisionDispatch/btBoxBoxDetector.h \
 	BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h \
+	BulletCollision/CollisionDispatch/btInternalEdgeUtility.h \
 	BulletCollision/CollisionDispatch/btManifoldResult.h \
 	BulletCollision/Gimpact/gim_memory.h \
 	BulletCollision/Gimpact/gim_clip_polygon.h \
@@ -542,4 +550,5 @@ nobase_bullet_include_HEADERS += \
 	LinearMath/btStackAlloc.h \
 	LinearMath/btAlignedObjectArray.h \
 	LinearMath/btHashMap.h \
-	LinearMath/btQuickprof.h
+	LinearMath/btQuickprof.h\
+	LinearMath/btSerializer.h
