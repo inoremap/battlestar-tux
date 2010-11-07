@@ -74,7 +74,6 @@ public:
     /// HACK: forces should come from propulsion cells or object collisions.
     void applyCentralImpulse(const Ogre::Vector3& impulse);
 
-
     /** Obtain energy from an EnergyCell for use by another part of the ship.
      *
      * @param energy The amount of energy needed.
@@ -98,6 +97,12 @@ public:
 
     /// Get total ship mass.
     float getMass() const { return mMass; }
+
+    /// Set the current point for the ship to target in (x,z) space.
+    void setTargetPoint(const Ogre::Vector2& point) { mTargetPoint = point; }
+
+    /// Get the current point (x,z) the ship is targeting.
+    const Ogre::Vector2& getTargetPoint() const { return mTargetPoint; }
 
 private:
     HexShip();
@@ -140,6 +145,9 @@ private:
 
     /// Total mass of ship, including all cells (kg).
     float mMass;
+
+    /// Target location (x,z) - ship will point weapons towards this point.
+    Ogre::Vector2 mTargetPoint;
 };
 
 

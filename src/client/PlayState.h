@@ -1,5 +1,5 @@
 /* Battlestar TUX
- * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
+ * Copyright (C) 2008-2010 Eliot Eshelman <battlestartux@6by9.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,17 @@ private:
     Ogre::OverlayElement *mInfoInstruction;
 
     OIS::Keyboard        *mInputDevice;
+
+    /** Store the world coordinates of the location of the mouse cursor in (x,z)
+      * space.  This point is on the same plane the HexShips are on.
+      */
+    void updateMouseWorldCoords(const OIS::MouseState &mouseState);
+
+    /// World coordinates of the location of the mouse cursor in (x,z) space.
+    Ogre::Vector2 mMouseWorldCoords;
+
+    /// Imaginary plane for calculating cursor world coordinates.
+    Ogre::Plane mCoordPlane;
 
     PhysicsManager *mPhysicsManager;
 

@@ -68,6 +68,12 @@ public:
     /// Get weapon type.
     WeaponCellType getWeaponCellType() const { return mWeaponCellType; }
 
+    /// Set the current point for the ship to target in (x,z) space.
+    void setTargetPoint(const Ogre::Vector2& point) { mTargetPoint = point; }
+
+    /// Get the current point (x,z) the ship is targeting.
+    const Ogre::Vector2& getTargetPoint() const { return mTargetPoint; }
+
 protected:
     WeaponCell();
     WeaponCell(const WeaponCell&);
@@ -116,6 +122,9 @@ protected:
      * For point weapons, this is true until the beam has ceased.
      */
     bool bEnergized;
+
+    /// Target location (x,z) - cell will point weapons towards this point.
+    Ogre::Vector2 mTargetPoint;
 };
 
 

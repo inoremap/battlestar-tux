@@ -155,6 +155,9 @@ protected:
 
     /// Offset of this cell within the HexShip (if this cell is part of a ship).
     Ogre::Vector3 mOffset;
+
+    /// Target location (x,z) - cell will point weapons towards this point.
+    Ogre::Vector2 mTargetPoint;
 };
 
 

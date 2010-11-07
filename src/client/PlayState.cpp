@@ -1,5 +1,5 @@
 /* Battlestar TUX
- * Copyright (C) 2008-2009 Eliot Eshelman <battlestartux@6by9.net>
+ * Copyright (C) 2008-2010 Eliot Eshelman <battlestartux@6by9.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ void PlayState::enter() {
     mRoot             = Root::getSingletonPtr();
     mOverlayMgr       = OverlayManager::getSingletonPtr();
     mInputDevice      = InputManager::getSingletonPtr()->getKeyboard();
+    mMouseWorldCoords = Ogre::Vector2();
     mSceneMgr         = mRoot->getSceneManager( "ST_GENERIC" );
     mCamera           = mSceneMgr->createCamera( "PlayCamera" );
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
@@ -58,6 +59,8 @@ void PlayState::enter() {
     axes->end();
     axesNode->attachObject(axes);
 
+    // Imaginary plane for ray intersections.
+    mCoordPlane = Ogre::Plane(Ogre::Vector3::UNIT_Y, 2);
 
     // Initialize Bullet physics simulation
     mPhysicsManager = PhysicsManager::getSingletonPtr();
@@ -135,6 +138,9 @@ void PlayState::resume() {
 
 void PlayState::update( unsigned long lTimeElapsed ) {
     mPhysicsManager->update(lTimeElapsed);
+
+    // Set the target of the player's ship to the mouse coordinates.
+    mPlayer->setTargetPoint(mMouseWorldCoords);
     mPlayer->update(lTimeElapsed);
 
     Ogre::ColourValue newColor = mInfoInstruction->getColour();
@@ -178,19 +184,52 @@ void PlayState::keyReleased( const OIS::KeyEvent &e ) {
 }
 
 void PlayState::mouseMoved( const OIS::MouseEvent &e ) {
-    const OIS::MouseState &mouseState = e.state;
-    mMousePointer->setTop(mouseState.Y.abs - mMousePointer->getHeight()/2);
-    mMousePointer->setLeft(mouseState.X.abs - mMousePointer->getWidth()/2);
+    updateMouseWorldCoords(e.state);
+    mMousePointer->setTop(e.state.Y.abs - mMousePointer->getHeight()/2);
+    mMousePointer->setLeft(e.state.X.abs - mMousePointer->getWidth()/2);
 }
 
 void PlayState::mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    updateMouseWorldCoords(e.state);
     if(id == OIS::MB_Left)
         mPlayer->fireWeapons(true);
 }
 
 void PlayState::mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id ) {
+    updateMouseWorldCoords(e.state);
     if(id == OIS::MB_Left)
         mPlayer->fireWeapons(false);
+}
+
+void PlayState::updateMouseWorldCoords(const OIS::MouseState &mouseState) {
+    // Adapted from Ogre wiki article:
+    // http://www.ogre3d.org/tikiwiki/Get+XZ+coordinates  (11/06/2010)
+
+    // get window height and width
+    Ogre::Real screenWidth = mRoot->getAutoCreatedWindow()->getWidth();
+    Ogre::Real screenHeight = mRoot->getAutoCreatedWindow()->getHeight();
+
+    // convert to [0,1] offset
+    Ogre::Real offsetX = mouseState.X.abs / screenWidth;
+    Ogre::Real offsetY = mouseState.Y.abs / screenHeight;
+
+    // set up the ray
+    Ogre::Ray mouseRay = mCamera->getCameraToViewportRay(offsetX, offsetY);
+
+    // Check if the ray intersects our plane.
+    // intersects() will return whether it intersects or not (the bool value) and
+    // what distance (the Real value) along the ray the intersection occurs.
+    std::pair<bool, Ogre::Real> result = mouseRay.intersects(mCoordPlane);
+
+    if(result.first) {
+        // get the point where the intersection is
+        Ogre::Vector3 point = mouseRay.getPoint(result.second);
+
+        mMouseWorldCoords = Ogre::Vector2(point.x, point.z);
+    }
+
+    // If new coordinates couldn't be found, we'll leave the old coordinates in
+    // place - the only other options would be (0,0) or random coordinates.
 }
 
 PlayState* PlayState::getSingletonPtr() {

@@ -28,10 +28,10 @@
 
 HexShip::HexShip(const std::string& name, const Ogre::Vector3& pos) :
     mName(name),
-    mShipCells()
+    mShipCells(),
+    mMass(0),
+    mTargetPoint()
 {
-    mMass = 0;
-
     mHexShipRigidBody = NULL;
     mHexShipShape = NULL;
 
@@ -107,8 +107,14 @@ void HexShip::removeHexCell(HexCell* cell) {
 void HexShip::update( unsigned long lTimeElapsed ) {
     // Update each HexCell
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++)
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+        // Update targeting for weapon cells.
+        WeaponCell* cell = dynamic_cast<WeaponCell*> (*iter);
+        if(cell)
+            cell->setTargetPoint(mTargetPoint);
+
         (*iter)->update(lTimeElapsed);
+    }
 }
 
 
