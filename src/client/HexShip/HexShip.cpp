@@ -90,7 +90,7 @@ void HexShip::removeHexCell(HexCell* cell) {
 
     // Find and remove the correct HexCell.
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         if(*iter == cell) {
             mShipCells.erase(iter);
             break;
@@ -107,7 +107,7 @@ void HexShip::removeHexCell(HexCell* cell) {
 void HexShip::update( unsigned long lTimeElapsed ) {
     // Update each HexCell
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         // Update targeting for weapon cells.
         WeaponCell* cell = dynamic_cast<WeaponCell*> (*iter);
         if(cell)
@@ -131,7 +131,7 @@ float HexShip::getEnergy(const float energyNeeded, const bool needAllRequested) 
     //XXX: If needAllRequested is true, but each individual cell doesn't have
     //enough energy, this loop will return 0.
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         EnergyCell* cell = dynamic_cast<EnergyCell*> (*iter);
         if(cell) {
             available += cell->getEnergy(energyNeeded - available, needAllRequested);
@@ -148,7 +148,7 @@ float HexShip::getEnergy(const float energyNeeded, const bool needAllRequested) 
 void HexShip::fireWeapons(const bool fire) {
     // Instruct all weapon cells to fire or stop firing.
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         WeaponCell* cell = dynamic_cast<WeaponCell*> (*iter);
         if(cell) {
             if(fire)
@@ -166,7 +166,7 @@ void HexShip::toXml(TiXmlElement* node) const {
     shipNode->SetAttribute("name", mName);
 
     std::vector<HexCell*>::const_iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         (*iter)->toXml(shipNode);
     }
 
@@ -193,7 +193,7 @@ void HexShip::rebuildCollisionHull() {
 
     // Add the collision shape of each HexCell.
     std::vector<HexCell*>::iterator iter;
-    for(iter = mShipCells.begin(); iter != mShipCells.end(); iter++) {
+    for(iter = mShipCells.begin(); iter != mShipCells.end(); ++iter) {
         btTransform cellShapeTrans(
                 btQuaternion(),
                 BtOgre::Convert::toBullet((*iter)->getOffset()));
