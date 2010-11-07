@@ -98,11 +98,11 @@ public:
     /// Get total ship mass.
     float getMass() const { return mMass; }
 
-    /// Set the current point for the ship to target in (x,z) space.
-    void setTargetPoint(const Ogre::Vector2& point) { mTargetPoint = point; }
+    /// Set the current point for the ship to target.
+    void setTargetPoint(const Ogre::Vector3& point) { mTargetPoint = point; }
 
-    /// Get the current point (x,z) the ship is targeting.
-    const Ogre::Vector2& getTargetPoint() const { return mTargetPoint; }
+    /// Get the current point the ship is targeting.
+    const Ogre::Vector3& getTargetPoint() const { return mTargetPoint; }
 
 private:
     HexShip();
@@ -146,8 +146,8 @@ private:
     /// Total mass of ship, including all cells (kg).
     float mMass;
 
-    /// Target location (x,z) - ship will point weapons towards this point.
-    Ogre::Vector2 mTargetPoint;
+    /// Target location - ship will point weapons towards this point.
+    Ogre::Vector3 mTargetPoint;
 };
 
 

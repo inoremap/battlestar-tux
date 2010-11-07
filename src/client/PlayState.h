@@ -69,8 +69,8 @@ private:
       */
     void updateMouseWorldCoords(const OIS::MouseState &mouseState);
 
-    /// World coordinates of the location of the mouse cursor in (x,z) space.
-    Ogre::Vector2 mMouseWorldCoords;
+    /// World coordinates of the location of the mouse cursor.
+    Ogre::Vector3 mMouseWorldCoords;
 
     /// Imaginary plane for calculating cursor world coordinates.
     Ogre::Plane mCoordPlane;

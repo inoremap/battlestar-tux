@@ -29,6 +29,7 @@ WeaponCell::WeaponCell(const std::string& name, const float mass, const float hi
     mRestTime(restTime),
     bFiring(false),
     bEnergized(false),
+    mTargetPoint(),
     HexCell(name, mass, hitPoints, WEAPON_CELL)
 {
 }

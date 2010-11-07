@@ -32,7 +32,7 @@ void PlayState::enter() {
     mRoot             = Root::getSingletonPtr();
     mOverlayMgr       = OverlayManager::getSingletonPtr();
     mInputDevice      = InputManager::getSingletonPtr()->getKeyboard();
-    mMouseWorldCoords = Ogre::Vector2();
+    mMouseWorldCoords = Ogre::Vector3();
     mSceneMgr         = mRoot->getSceneManager( "ST_GENERIC" );
     mCamera           = mSceneMgr->createCamera( "PlayCamera" );
     mViewport         = mRoot->getAutoCreatedWindow()->addViewport( mCamera );
@@ -223,13 +223,11 @@ void PlayState::updateMouseWorldCoords(const OIS::MouseState &mouseState) {
 
     if(result.first) {
         // get the point where the intersection is
-        Ogre::Vector3 point = mouseRay.getPoint(result.second);
-
-        mMouseWorldCoords = Ogre::Vector2(point.x, point.z);
+        mMouseWorldCoords = mouseRay.getPoint(result.second);
     }
 
     // If new coordinates couldn't be found, we'll leave the old coordinates in
-    // place - the only other options would be (0,0) or random coordinates.
+    // place - the only other options would be (0,0,0) or arbitrary coordinates.
 }
 
 PlayState* PlayState::getSingletonPtr() {
