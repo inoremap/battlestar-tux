@@ -313,10 +313,11 @@ class Application(object):
 
 if __name__ == '__main__':
     try:
+        # Run the game.
         ta = Application()
         ta.go()
-        logging.shutdown()
-    except ogre.OgreException, e:
-        logging.exception(e)
-        print e
+    except Exception:
+        logging.exception("An unexpected error occurred. Application exiting...")
 
+    # Shut down logging - do this last so we can log any errors during shutdown.
+    logging.shutdown()
