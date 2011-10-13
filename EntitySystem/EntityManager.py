@@ -25,19 +25,15 @@ class EntityManager(object):
     An Entity is nothing more than a unique ID.
     """
 
-    _all_entities = None
-    """Set of all entities"""
-
-    _all_entities_readable_names = None
-    """Matches entity IDs with human-readable names"""
-
-    _component_stores = None
-    """Dictionary of all components"""
-
     def __init__(self):
         self._all_entities = set()
+        """Set of all entities"""
+
         self._all_entities_readable_names = dict()
+        """Matches entity IDs with human-readable names"""
+
         self._component_stores = dict()
+        """Dictionary of all components"""
 
     def create_entity(self, name=None):
         """Create a new Entity using a random UUID.

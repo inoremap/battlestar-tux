@@ -17,7 +17,7 @@
 import abc
 import logging
 
-from Component import ComponentTypes
+import Component
 
 class System(object):
     """Systems determine Entity behavior and take action using the data
@@ -26,12 +26,12 @@ class System(object):
     """
     __metaclass__ = abc.ABCMeta
 
-    _component_types = None
-    """Defines the types of components processed by the System."""
-
-    def __init__(self, component_types=None):
-        if component_types is not None and component_types.issubset(ComponentTypes):
-            self._component_types = component_types
+    def __init__(self, component_type):
+        if component_type is not None and component_type.issubset(
+                                        Component.Component.ComponentTypes):
+            self._component_type = component_type
+            """Defines the types of components processed by the System."""
+            logging.debug("System created for Component type: %s", component_type)
         else:
             logging.error("The specified Component types have not been defined.")
             raise AttributeError
@@ -44,7 +44,7 @@ class System(object):
         """
 
     @abc.abstractmethod
-    def game_step(self, lastFrameTime):
+    def game_step(self, time_since_last_frame):
         """Process one game tick.
         Must be defined for all Systems.
         """

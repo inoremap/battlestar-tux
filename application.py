@@ -21,6 +21,8 @@ import ogre.renderer.OGRE as ogre
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 
+import EntitySystem.SystemManager as SystemManager
+
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
                     OIS.MouseListener, OIS.KeyListener, OIS.JoyStickListener):
     """
@@ -29,7 +31,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
     using callbacks (buffered input).
     """
 
-    def __init__(self, renderWindow,
+    def __init__(self, application,
                  buffer_mouse=True,
                  buffer_keys=True,
                  buffer_joystick=False):
@@ -43,7 +45,8 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         self.quitApplication = False
         """Set to True when the application should exit."""
 
-        self.renderWindow = renderWindow
+        self.renderWindow = application.renderWindow
+        self.entitySystemManager = application.entitySystemManager
         # Listen for window close events.
         ogre.WindowEventUtilities.addWindowEventListener(self.renderWindow, self)
         # Create the inputManager using the supplied renderWindow.
@@ -107,6 +110,9 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
             # for i in axes_int:
             #    axes.append(i.abs)
             # print axes
+
+        # Update all Entity Systems
+        self.entitySystemManager.game_step(evt.timeSinceLastFrame)
 
         return not self.quitApplication
 
@@ -192,6 +198,7 @@ class Application(object):
         self.setupRenderSystem()
         self.createRenderWindow()
         self.initializeResourceGroups()
+        self.createEntitySystem()
         self.setupScene()
         self.createFrameListener()
         self.setupCEGUI()
@@ -253,6 +260,10 @@ class Application(object):
         ogre.TextureManager.getSingleton().setDefaultNumMipmaps(5)
         ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
 
+    def createEntitySystem(self):
+        self.entitySystemManager = SystemManager.SystemManager()
+        """SystemManager oversees all the systems as they operate on Component data."""
+
     def setupScene(self):
         """Create the initial scene (first items to appear)."""
         self.renderWindow = self.root.getAutoCreatedWindow()
@@ -261,8 +272,8 @@ class Application(object):
         self.camera = self.sceneManager.createCamera("Camera")
         self.viewPort = self.root.getAutoCreatedWindow().addViewport(self.camera)
 
-        self.camera.setPosition(ogre.Vector3(0, 100, -400))
-        self.camera.lookAt(ogre.Vector3(0, 0, 1))
+        self.camera.setPosition(ogre.Vector3(0, 0, -400))
+        self.camera.lookAt(ogre.Vector3(0, 0, 0))
 
         self.sceneManager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
         self.sceneManager.setSkyDome(True, 'Examples/CloudySky', 4, 8)
@@ -275,11 +286,12 @@ class Application(object):
         self.entityOgre = self.sceneManager.createEntity('Ogre', 'ogrehead.mesh')
         self.nodeOgre = self.rn.createChildSceneNode('nodeOgre')
         self.nodeOgre.setPosition(ogre.Vector3(0, 0, 0))
+        self.nodeOgre.yaw(3.141592)
         self.nodeOgre.attachObject(self.entityOgre)
 
     def createFrameListener(self):
         """Initialize event listener for window and user-input events."""
-        self.eventListener = EventListener(self.renderWindow)
+        self.eventListener = EventListener(self)
         self.root.addFrameListener(self.eventListener)
 
     def setupCEGUI(self):

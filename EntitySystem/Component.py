@@ -18,13 +18,6 @@ import logging
 
 import utils
 
-ComponentTypes = utils.enum(["HexCell",
-                            "HexShip",
-                            "Graphics",
-                            "Physics"
-                            ])
-"""List of valid component types."""
-
 class Component(dict):
     """Components are added to Entities to define their data.
     
@@ -32,16 +25,26 @@ class Component(dict):
     the Component defines the layout of the database table row.
     """
 
-    _component_types = None
-    """Defines the type of component data."""
+    ComponentTypes = utils.enum(["HexCell",
+                                "HexShip",
+                                "Graphics",
+                                "Physics"
+                                ])
+    """List of valid component types."""
+    #TODO: According to Adam, a better choice would be defining DB tables here.
+    # For the time being, the best bet is to read from the DB at startup and
+    # not write back until exiting. Each component holds one DB table. Each system
+    # operates on one or more DB tables.
 
-    def __init__(self, component_types=None):
-        if component_types is not None and component_types in ComponentTypes:
-            self._component_types = component_types
+    def __init__(self, component_type):
+        if component_type is not None and component_type in Component.ComponentTypes:
+            self._component_type = component_type
+            """Defines the type of component data."""
+            logging.debug("Created Component type: %s", component_type)
         else:
             logging.error("The specified Component type has not been defined.")
             raise AttributeError
 
     def get_type(self):
         """Defines the type of Component."""
-        return self._component_types
+        return self._component_type
