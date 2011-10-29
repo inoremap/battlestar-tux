@@ -17,7 +17,7 @@
 import abc
 import logging
 
-import Component
+import Component.Component.ComponentTypes as ComponentTypes
 
 class System(object):
     """Systems determine Entity behavior and take action using the data
@@ -27,10 +27,10 @@ class System(object):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, component_type):
-        if component_type is not None and component_type.issubset(
-                                        Component.Component.ComponentTypes):
+        if component_type is not None and component_type.issubset(ComponentTypes):
             self._component_type = component_type
             """Defines the types of components processed by the System."""
+
             logging.debug("System created for Component type: %s", component_type)
         else:
             logging.error("The specified Component types have not been defined.")

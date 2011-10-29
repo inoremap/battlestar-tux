@@ -25,10 +25,20 @@ class Component(dict):
     the Component defines the layout of the database table row.
     """
 
-    ComponentTypes = utils.enum(["HexCell",
-                                "HexShip",
-                                "Graphics",
-                                "Physics"
+    ComponentTypes = utils.enum([
+         # Macro-level properties
+         "AI",
+         "Graphics",
+         "Music",
+         "Physics",
+         "SoundEffects",
+         # Game object (primarily HexCell) properties
+         "Damageable",
+         "EnergyConsumer",
+         "EnergyGenerator",
+         "EnergyStorage",
+         "Propulsion",
+         "Weapon"
                                 ])
     """List of valid component types."""
     #TODO: According to Adam, a better choice would be defining DB tables here.
@@ -40,6 +50,7 @@ class Component(dict):
         if component_type is not None and component_type in Component.ComponentTypes:
             self._component_type = component_type
             """Defines the type of component data."""
+
             logging.debug("Created Component type: %s", component_type)
         else:
             logging.error("The specified Component type has not been defined.")
