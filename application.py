@@ -22,6 +22,7 @@ import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 
 import EntitySystem.SystemManager as SystemManager
+import EntitySystem.EntityManager as EntityManager
 
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
                     OIS.MouseListener, OIS.KeyListener, OIS.JoyStickListener):
@@ -261,6 +262,9 @@ class Application(object):
         ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
 
     def createEntitySystem(self):
+        self.entityManager = EntityManager.EntityManager()
+        """EntityManager provides access to all Entity data."""
+
         self.entitySystemManager = SystemManager.SystemManager()
         """SystemManager oversees all the systems as they operate on Component data."""
 
@@ -272,21 +276,19 @@ class Application(object):
         self.camera = self.sceneManager.createCamera("Camera")
         self.viewPort = self.root.getAutoCreatedWindow().addViewport(self.camera)
 
-        self.camera.setPosition(ogre.Vector3(0, 0, -400))
+        self.camera.setPosition(ogre.Vector3(0, 0, -100))
         self.camera.lookAt(ogre.Vector3(0, 0, 0))
 
         self.sceneManager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
-        self.sceneManager.setSkyDome(True, 'Examples/CloudySky', 4, 8)
         self.sceneManager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
         self.light = self.sceneManager.createLight('lightMain')
-        self.light.setPosition (ogre.Vector3(20, 80, 50))
+        self.light.setPosition(ogre.Vector3(20, 80, 50))
 
         self.rn = self.sceneManager.getRootSceneNode()
 
-        self.entityOgre = self.sceneManager.createEntity('Ogre', 'ogrehead.mesh')
+        self.entityOgre = self.sceneManager.createEntity('Cell', 'HexCell.mesh')
         self.nodeOgre = self.rn.createChildSceneNode('nodeOgre')
         self.nodeOgre.setPosition(ogre.Vector3(0, 0, 0))
-        self.nodeOgre.yaw(3.141592)
         self.nodeOgre.attachObject(self.entityOgre)
 
     def createFrameListener(self):
