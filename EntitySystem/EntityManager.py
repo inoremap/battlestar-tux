@@ -83,6 +83,7 @@ class EntityManager(object):
             store = self._component_stores[component_type]
         except KeyError:
             self._component_stores[component_type] = Component(component_type)
+            store = self._component_stores[component_type]
         store[entity] = data
 
     def get_component(self, entity, component_type):
