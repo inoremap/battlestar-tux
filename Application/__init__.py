@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright (c) 2011 Eliot Eshelman
 #
 # This program is free software: you can redistribute it and/or modify
@@ -32,7 +30,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
     using callbacks (buffered input).
     """
 
-    def __init__(self, application,
+    def __init__(self, render_window, entity_system_manager,
                  buffer_mouse=True,
                  buffer_keys=True,
                  buffer_joystick=False):
@@ -46,8 +44,8 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         self.quitApplication = False
         """Set to True when the application should exit."""
 
-        self.renderWindow = application.renderWindow
-        self.entitySystemManager = application.entitySystemManager
+        self.renderWindow = render_window
+        self.entitySystemManager = entity_system_manager
         # Listen for window close events.
         ogre.WindowEventUtilities.addWindowEventListener(self.renderWindow, self)
         # Create the inputManager using the supplied renderWindow.
@@ -188,150 +186,142 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         return True
 
 
-class Application(object):
+app_title = "Battlestar T.U.X."
 
-    app_title = "Battlestar T.U.X."
+entity_manager = None
+system_manager = None
 
-    def go(self):
-        self.initializeLogging()
-        self.createRoot()
-        self.defineResources()
-        self.setupRenderSystem()
-        self.createRenderWindow()
-        self.initializeResourceGroups()
-        self.createEntitySystem()
-        self.setupScene()
-        self.createFrameListener()
-        self.setupCEGUI()
-        self.startRenderLoop()
-        self.cleanUp()
+ogre_root = None
+ogre_render_window = None
+ogre_event_listener = None
 
-    def initializeLogging(self):
-        """Set up logging of in-game info/warnings/errors.
-        All log messages are written to file and to the console, but the file
-        and the console may have different log levels (e.g. DEBUG vs INFO).
-        
-        OGRE and CEGUI automatically create their own logs.
-        """
-        logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(levelname)-8s %(message)s',
-                    filename='BattlestarTUX.log',
-                    filemode='w')
-        console = logging.StreamHandler()
-        console.setLevel(logging.DEBUG)
-        # set a format which is simpler for console use
-        formatter = logging.Formatter('[battlestar-tux]: %(levelname)-8s %(message)s')
-        console.setFormatter(formatter)
-        logging.getLogger('').addHandler(console)
-        logging.info(Application.app_title + " initialization...")
-
-    def createRoot(self):
-        """Create OGRE Root object."""
-        self.root = ogre.Root()
-
-    def defineResources(self):
-        """Parse OGRE resources.cfg file."""
-        # Read the resources.cfg file and add all resource locations in it
-        cf = ogre.ConfigFile()
-        cf.load("resources.cfg")
-        seci = cf.getSectionIterator()
-        while seci.hasMoreElements():
-            secName = seci.peekNextKey()
-            settings = seci.getNext()
-
-            for item in settings:
-                typeName = item.key
-                archName = item.value
-                ogre.ResourceGroupManager.getSingleton().addResourceLocation(
-                                                 archName, typeName, secName)
-
-    def setupRenderSystem(self):
-        """Load the renderer (e.g. OpenGL) or present a menu of options."""
-        # Show the config dialog if we don't yet have an ogre.cfg file
-        if not self.root.restoreConfig() and not self.root.showConfigDialog():
-            logging.critical("User canceled OGRE config dialog!")
-            raise Exception("User canceled OGRE config dialog!")
-
-    def createRenderWindow(self):
-        """Create the main OGRE window."""
-        self.root.initialise(True, self.app_title)
-
-    def initializeResourceGroups(self):
-        """Initialize all the resources."""
-        ogre.TextureManager.getSingleton().setDefaultNumMipmaps(5)
-        ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
-
-    def createEntitySystem(self):
-        self.entityManager = EntityManager.EntityManager()
-        """EntityManager provides access to all Entity data."""
-
-        self.entitySystemManager = SystemManager.SystemManager()
-        """SystemManager oversees all the systems as they operate on Component data."""
-
-    def setupScene(self):
-        """Create the initial scene (first items to appear)."""
-        self.renderWindow = self.root.getAutoCreatedWindow()
-        self.sceneManager = self.root.createSceneManager(ogre.ST_GENERIC,
-                                                         "Default SceneManager")
-        self.camera = self.sceneManager.createCamera("Camera")
-        self.viewPort = self.root.getAutoCreatedWindow().addViewport(self.camera)
-
-        self.camera.setPosition(ogre.Vector3(0, 0, -100))
-        self.camera.lookAt(ogre.Vector3(0, 0, 0))
-
-        self.sceneManager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
-        self.sceneManager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
-        self.light = self.sceneManager.createLight('lightMain')
-        self.light.setPosition(ogre.Vector3(20, 80, 50))
-
-        self.rn = self.sceneManager.getRootSceneNode()
-
-        self.entityOgre = self.sceneManager.createEntity('Cell', 'HexCell.mesh')
-        self.nodeOgre = self.rn.createChildSceneNode('nodeOgre')
-        self.nodeOgre.setPosition(ogre.Vector3(0, 0, 0))
-        self.nodeOgre.attachObject(self.entityOgre)
-
-    def createFrameListener(self):
-        """Initialize event listener for window and user-input events."""
-        self.eventListener = EventListener(self)
-        self.root.addFrameListener(self.eventListener)
-
-    def setupCEGUI(self):
-        """Initialize CEGUI - application menus."""
-        self.renderer = CEGUI.OgreRenderer.bootstrapSystem()
-        self.system = CEGUI.System.getSingleton()
-        CEGUI.SchemeManager.getSingleton().create("TaharezLookSkin.scheme")
-        self.system.setDefaultMouseCursor("TaharezLook", "MouseArrow")
-        self.system.setDefaultFont("BlueHighway-12")
-
-        # Uncomment the following to read in a CEGUI sheet (from CELayoutEditor)
-        # 
-        # self.mainSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("myapplication.layout")
-        # self.system.setGUISheet(self.mainSheet)
-
-    def startRenderLoop(self):
-        """Begin rendering - will continue until interrupted."""
-        self.root.startRendering()
-
-    def cleanUp(self):
-        """Halt and delete resources."""
-        logging.info("Shutting down and cleaning up resources.")
-        logging.debug("Deleting CEGUI")
-        del self.system
-        del self.renderer
-        logging.debug("Deleting OIS/OGRE Listener")
-        del self.eventListener
-        logging.debug("Deleting OGRE")
-        del self.root
+cegui_renderer = None
+cegui_system = None
 
 
-if __name__ == '__main__':
-    try:
-        # Run the game.
-        ta = Application()
-        ta.go()
-    except Exception:
-        logging.exception("An unexpected error occurred. Application exiting...")
+def go():
+    createRoot()
+    defineResources()
+    setupRenderSystem()
+    createRenderWindow()
+    initializeResourceGroups()
+    createEntitySystem()
+    setupScene()
+    createFrameListener()
+    setupCEGUI()
+    startRenderLoop()
+    cleanUp()
 
-    # Shut down logging - do this last so we can log any errors during shutdown.
-    logging.shutdown()
+def createRoot():
+    """Create OGRE Root object."""
+    global ogre_root
+    ogre_root = ogre.Root()
+
+def defineResources():
+    """Parse OGRE resources.cfg file."""
+    # Read the resources.cfg file and add all resource locations in it
+    cf = ogre.ConfigFile()
+    cf.load("resources.cfg")
+    seci = cf.getSectionIterator()
+    while seci.hasMoreElements():
+        secName = seci.peekNextKey()
+        settings = seci.getNext()
+
+        for item in settings:
+            typeName = item.key
+            archName = item.value
+            ogre.ResourceGroupManager.getSingleton().addResourceLocation(
+                                             archName, typeName, secName)
+
+def setupRenderSystem():
+    """Load the renderer (e.g. OpenGL) or present a menu of options."""
+    # Show the config dialog if we don't yet have an ogre.cfg file
+    if not ogre_root.restoreConfig() and not ogre_root.showConfigDialog():
+        logging.critical("User canceled OGRE config dialog!")
+        raise Exception("User canceled OGRE config dialog!")
+
+def createRenderWindow():
+    """Create the main OGRE window."""
+    ogre_root.initialise(True, app_title)
+
+def initializeResourceGroups():
+    """Initialize all the resources."""
+    ogre.TextureManager.getSingleton().setDefaultNumMipmaps(5)
+    ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
+
+def createEntitySystem():
+    """Initialize the Entity/Component/System managers."""
+    global entity_manager
+    global system_manager
+
+    entity_manager = EntityManager.EntityManager()
+    """EntityManager provides access to all Entity data."""
+
+    system_manager = SystemManager.SystemManager()
+    """SystemManager oversees all the systems as they operate on Component data."""
+
+def setupScene():
+    """Create the initial scene (first items to appear)."""
+    global ogre_render_window
+    ogre_render_window = ogre_root.getAutoCreatedWindow()
+    scene_manager = ogre_root.createSceneManager(ogre.ST_GENERIC,
+                                                     "Default SceneManager")
+    camera = scene_manager.createCamera("Camera")
+    ogre_root.getAutoCreatedWindow().addViewport(camera)
+
+    camera.setPosition(ogre.Vector3(0, 0, -100))
+    camera.lookAt(ogre.Vector3(0, 0, 0))
+
+    scene_manager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
+    scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
+    light = scene_manager.createLight('lightMain')
+    light.setPosition(ogre.Vector3(20, 80, 50))
+
+    root_node = scene_manager.getRootSceneNode()
+
+    ogre_entity = scene_manager.createEntity('Cell', 'HexCell.mesh')
+    ogre_node = root_node.createChildSceneNode('nodeOgre')
+    ogre_node.setPosition(ogre.Vector3(0, 0, 0))
+    ogre_node.attachObject(ogre_entity)
+
+def createFrameListener():
+    """Initialize event listener for window and user-input events."""
+    global ogre_event_listener
+    ogre_event_listener = EventListener(ogre_render_window, system_manager)
+    ogre_root.addFrameListener(ogre_event_listener)
+
+def setupCEGUI():
+    """Initialize CEGUI - application menus."""
+    global cegui_renderer
+    global cegui_system
+    cegui_renderer = CEGUI.OgreRenderer.bootstrapSystem()
+    cegui_system = CEGUI.System.getSingleton()
+    CEGUI.SchemeManager.getSingleton().create("TaharezLookSkin.scheme")
+    cegui_system.setDefaultMouseCursor("TaharezLook", "MouseArrow")
+    cegui_system.setDefaultFont("BlueHighway-12")
+
+    # Uncomment the following to read in a CEGUI sheet (from CELayoutEditor)
+    # 
+    # mainSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("myapplication.layout")
+    # cegui_system.setGUISheet(mainSheet)
+
+def startRenderLoop():
+    """Begin rendering - will continue until interrupted."""
+    ogre_root.startRendering()
+
+def cleanUp():
+    """Halt and delete resources."""
+    global cegui_system
+    global cegui_renderer
+    global ogre_event_listener
+    global ogre_root
+
+    logging.info("Shutting down and cleaning up resources.")
+    logging.debug("Deleting CEGUI")
+    del cegui_system
+    del cegui_renderer
+    logging.debug("Deleting OIS/OGRE Listener")
+    del ogre_event_listener
+    logging.debug("Deleting OGRE")
+    del ogre_root
+
