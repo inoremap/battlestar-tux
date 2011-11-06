@@ -39,11 +39,11 @@ class EntityManager(object):
         """Create a new Entity using a random UUID.
         If a human-readable 'name' is provided, it is assigned to the Entity.
         """
-        uuid = uuid.uuid4()
-        self._all_entities.add(uuid)
+        entity_id = uuid.uuid4()
+        self._all_entities.add(entity_id)
         if name is not None:
-            self._all_entities_readable_names[uuid] = name
-        return uuid
+            self._all_entities_readable_names[entity_id] = name
+        return entity_id
 
     def delete_entity(self, entity):
         """Remove an Entity and all associated component data."""
@@ -65,7 +65,7 @@ class EntityManager(object):
     def set_entity_name(self, entity, name=None):
         """Assign a human-readable name to an Entity."""
         if name is not None:
-            self._all_entities_readable_names[uuid] = name
+            self._all_entities_readable_names[entity] = name
 
     def get_entity_name(self, entity):
         """Get the human-readable name for an Entity (if available)."""
