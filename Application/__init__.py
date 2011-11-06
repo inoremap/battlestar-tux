@@ -19,6 +19,7 @@ import ogre.renderer.OGRE as ogre
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 
+import Assemblages.HexShip as HexShip
 import EntitySystem.SystemManager as SystemManager
 import EntitySystem.EntityManager as EntityManager
 
@@ -192,6 +193,8 @@ entity_manager = None
 system_manager = None
 
 ogre_root = None
+ogre_scene_manager = None
+ogre_root_node = None
 ogre_render_window = None
 ogre_event_listener = None
 
@@ -200,6 +203,7 @@ cegui_system = None
 
 
 def go():
+    # Inialize everything and enter main menu.
     createRoot()
     defineResources()
     setupRenderSystem()
@@ -210,6 +214,8 @@ def go():
     createFrameListener()
     setupCEGUI()
     startRenderLoop()
+
+    # Window has closed.
     cleanUp()
 
 def createRoot():
@@ -261,28 +267,27 @@ def createEntitySystem():
     """SystemManager oversees all the systems as they operate on Component data."""
 
 def setupScene():
-    """Create the initial scene (first items to appear)."""
+    """Create the initial OGRE scene (first items to appear)."""
+    global ogre_scene_manager
     global ogre_render_window
+    global ogre_root_node
+
     ogre_render_window = ogre_root.getAutoCreatedWindow()
-    scene_manager = ogre_root.createSceneManager(ogre.ST_GENERIC,
+    ogre_scene_manager = ogre_root.createSceneManager(ogre.ST_GENERIC,
                                                      "Default SceneManager")
-    camera = scene_manager.createCamera("Camera")
+    camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
     camera.setPosition(ogre.Vector3(0, 0, -100))
     camera.lookAt(ogre.Vector3(0, 0, 0))
 
-    scene_manager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
-    scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
-    light = scene_manager.createLight('lightMain')
+    ogre_scene_manager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
+    ogre_scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
+    light = ogre_scene_manager.createLight('lightMain')
     light.setPosition(ogre.Vector3(20, 80, 50))
 
-    root_node = scene_manager.getRootSceneNode()
+    ogre_root_node = ogre_scene_manager.getRootSceneNode()
 
-    ogre_entity = scene_manager.createEntity('Cell', 'HexCell.mesh')
-    ogre_node = root_node.createChildSceneNode('nodeOgre')
-    ogre_node.setPosition(ogre.Vector3(0, 0, 0))
-    ogre_node.attachObject(ogre_entity)
 
 def createFrameListener():
     """Initialize event listener for window and user-input events."""
@@ -307,6 +312,7 @@ def setupCEGUI():
 
 def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
+    HexShip.create()
     ogre_root.startRendering()
 
 def cleanUp():
