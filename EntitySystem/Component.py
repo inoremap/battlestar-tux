@@ -18,6 +18,29 @@ import logging
 
 import utils
 
+
+ComponentTypes = utils.enum([
+     # Macro-level properties
+     "AI",
+     "Graphics",
+     "Music",
+     "Physics",
+     "SoundEffects",
+     # Game object (primarily HexCell) properties
+     "Damageable",
+     "EnergyConsumer",
+     "EnergyGenerator",
+     "EnergyStorage",
+     "Propulsion",
+     "Weapon"
+                            ])
+"""List of valid component types."""
+#TODO: According to Adam, a better choice would be defining DB tables here.
+# For the time being, the best bet is to read from the DB at startup and
+# not write back until exiting. Each component holds one DB table. Each system
+# operates on one or more DB tables.
+
+
 class Component(dict):
     """Components are added to Entities to define their data.
     
@@ -25,29 +48,8 @@ class Component(dict):
     the Component defines the layout of the database table row.
     """
 
-    ComponentTypes = utils.enum([
-         # Macro-level properties
-         "AI",
-         "Graphics",
-         "Music",
-         "Physics",
-         "SoundEffects",
-         # Game object (primarily HexCell) properties
-         "Damageable",
-         "EnergyConsumer",
-         "EnergyGenerator",
-         "EnergyStorage",
-         "Propulsion",
-         "Weapon"
-                                ])
-    """List of valid component types."""
-    #TODO: According to Adam, a better choice would be defining DB tables here.
-    # For the time being, the best bet is to read from the DB at startup and
-    # not write back until exiting. Each component holds one DB table. Each system
-    # operates on one or more DB tables.
-
     def __init__(self, component_type):
-        if component_type is not None and component_type in Component.ComponentTypes:
+        if component_type is not None and component_type in ComponentTypes:
             self._component_type = component_type
             """Defines the type of component data."""
 

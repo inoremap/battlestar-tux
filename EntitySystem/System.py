@@ -17,7 +17,7 @@
 import abc
 import logging
 
-import Component.Component.ComponentTypes as ComponentTypes
+import Component.ComponentTypes as ComponentTypes
 
 class System(object):
     """Systems determine Entity behavior and take action using the data
