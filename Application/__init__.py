@@ -20,8 +20,7 @@ import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 
 import Assemblages.HexShip as HexShip
-import EntitySystem.SystemManager as SystemManager
-import EntitySystem.EntityManager as EntityManager
+import EntitySystem
 
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
                     OIS.MouseListener, OIS.KeyListener, OIS.JoyStickListener):
@@ -31,7 +30,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
     using callbacks (buffered input).
     """
 
-    def __init__(self, render_window, entity_system_manager,
+    def __init__(self, render_window,
                  buffer_mouse=True,
                  buffer_keys=True,
                  buffer_joystick=False):
@@ -46,7 +45,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         """Set to True when the application should exit."""
 
         self.renderWindow = render_window
-        self.entitySystemManager = entity_system_manager
+
         # Listen for window close events.
         ogre.WindowEventUtilities.addWindowEventListener(self.renderWindow, self)
         # Create the inputManager using the supplied renderWindow.
@@ -112,7 +111,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
             # print axes
 
         # Update all Entity Systems
-        self.entitySystemManager.game_step(evt.timeSinceLastFrame)
+        EntitySystem.game_step(evt.timeSinceLastFrame)
 
         return not self.quitApplication
 
@@ -189,9 +188,6 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
 
 app_title = "Battlestar T.U.X."
 
-entity_manager = None
-system_manager = None
-
 ogre_root = None
 ogre_scene_manager = None
 ogre_root_node = None
@@ -209,7 +205,6 @@ def go():
     setupRenderSystem()
     createRenderWindow()
     initializeResourceGroups()
-    createEntitySystem()
     setupScene()
     createFrameListener()
     setupCEGUI()
@@ -255,17 +250,6 @@ def initializeResourceGroups():
     ogre.TextureManager.getSingleton().setDefaultNumMipmaps(5)
     ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
 
-def createEntitySystem():
-    """Initialize the Entity/Component/System managers."""
-    global entity_manager
-    global system_manager
-
-    entity_manager = EntityManager.EntityManager()
-    """EntityManager provides access to all Entity data."""
-
-    system_manager = SystemManager.SystemManager()
-    """SystemManager oversees all the systems as they operate on Component data."""
-
 def setupScene():
     """Create the initial OGRE scene (first items to appear)."""
     global ogre_scene_manager
@@ -292,7 +276,7 @@ def setupScene():
 def createFrameListener():
     """Initialize event listener for window and user-input events."""
     global ogre_event_listener
-    ogre_event_listener = EventListener(ogre_render_window, system_manager)
+    ogre_event_listener = EventListener(ogre_render_window)
     ogre_root.addFrameListener(ogre_event_listener)
 
 def setupCEGUI():

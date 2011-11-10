@@ -18,11 +18,12 @@ import logging
 import ogre.renderer.OGRE as ogre
 
 import Application
+import EntitySystem
 
 def create():
     """Create a HexShip entity."""
 
-    ship_id = Application.entity_manager.create_entity()
+    ship_id = EntitySystem.create_entity()
     logging.debug("HexShip id: " + str(ship_id))
 
     ogre_entity = Application.ogre_scene_manager.createEntity('Cell', 'HexCell.mesh')
