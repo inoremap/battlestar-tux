@@ -50,5 +50,4 @@ if __name__ == '__main__':
         logging.exception("An unexpected error occurred. Application exiting...")
     finally:
         logging.info("Game is done - End Of Line")
-        # Shut down logging - do this last so we can log any errors during shutdown.
         logging.shutdown()

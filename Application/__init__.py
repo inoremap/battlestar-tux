@@ -189,13 +189,25 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
 app_title = "Battlestar T.U.X."
 
 ogre_root = None
+"""OGRE Root object - must be created before OGRE does anything."""
+
 ogre_scene_manager = None
+"""OGRE scene manager handles OGRE entities and objects."""
+
 ogre_root_node = None
+"""All in-game OGRE objects are descendents of this root."""
+
 ogre_render_window = None
+"""Ogre Render Window - everything is drawn here"""
+
 ogre_event_listener = None
+"""Listens for Ogre events as well as user input."""
 
 cegui_renderer = None
+"""Draws GUI for CEGUI."""
+
 cegui_system = None
+"""Core CEGUI object."""
 
 
 def go():
@@ -271,7 +283,6 @@ def setupScene():
     light.setPosition(ogre.Vector3(20, 80, 50))
 
     ogre_root_node = ogre_scene_manager.getRootSceneNode()
-
 
 def createFrameListener():
     """Initialize event listener for window and user-input events."""
