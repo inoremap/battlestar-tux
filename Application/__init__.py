@@ -15,6 +15,7 @@
 ###############################################################################
 
 import logging
+import math
 import ogre.renderer.OGRE as ogre
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
@@ -274,13 +275,13 @@ def setupScene():
     camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
-    camera.setPosition(ogre.Vector3(0, 0, -100))
+    camera.setPosition(ogre.Vector3(0, 0, 120))
     camera.lookAt(ogre.Vector3(0, 0, 0))
 
     ogre_scene_manager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
     ogre_scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
     light = ogre_scene_manager.createLight('lightMain')
-    light.setPosition(ogre.Vector3(20, 80, 50))
+    light.setPosition(ogre.Vector3(10, 10, 10))
 
     ogre_root_node = ogre_scene_manager.getRootSceneNode()
 
@@ -307,7 +308,15 @@ def setupCEGUI():
 
 def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
-    HexShip.create()
+    # Create ships - arrange in a circle.
+    for i in range(0, 360, 360 / 6):
+        HexShip.create((
+                       math.sin(math.radians(i)) * 8,
+                       math.cos(math.radians(i)) * 8,
+                       5
+                       ))
+
+    # Begin running game
     ogre_root.startRendering()
 
 def cleanUp():

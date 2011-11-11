@@ -20,13 +20,21 @@ import ogre.renderer.OGRE as ogre
 import Application
 import EntitySystem
 
-def create():
+def create(ship_position=(0, 0, 0)):
     """Create a HexShip entity."""
 
     ship_id = EntitySystem.create_entity()
-    logging.debug("HexShip id: " + str(ship_id))
+    logging.debug("HexShip id: " + str(ship_id) + "   pos: (" +
+                   str(ship_position[0]) + ", " +
+                   str(ship_position[1]) + ", " +
+                   str(ship_position[2]) + ")"
+                  )
 
-    ogre_entity = Application.ogre_scene_manager.createEntity('Cell', 'HexCell.mesh')
-    ogre_node = Application.ogre_root_node.createChildSceneNode(str(ship_id))
-    ogre_node.setPosition(ogre.Vector3(0, 0, 0))
+    ogre_entity = Application.ogre_scene_manager.createEntity(
+                          'ogreEntity-' + str(ship_id), 'HexCell.mesh')
+    ogre_node = Application.ogre_root_node.createChildSceneNode(
+                          'ogreNode-' + str(ship_id))
+    ogre_node.setPosition(ogre.Vector3(ship_position[0],
+                                       ship_position[1],
+                                       ship_position[2]))
     ogre_node.attachObject(ogre_entity)
