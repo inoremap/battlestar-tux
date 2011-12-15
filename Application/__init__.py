@@ -19,9 +19,11 @@ import math
 import ogre.renderer.OGRE as ogre
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
+import ogre.physics.bullet as bullet
 
 import Assemblages.HexShip as HexShip
 import EntitySystem
+import utils.OgreBulletUtils as OgreBulletUtils
 
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
                     OIS.MouseListener, OIS.KeyListener, OIS.JoyStickListener):
@@ -31,7 +33,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
     using callbacks (buffered input).
     """
 
-    def __init__(self, render_window,
+    def __init__(self, render_window, bullet,
                  buffer_mouse=True,
                  buffer_keys=True,
                  buffer_joystick=False):
@@ -46,6 +48,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         """Set to True when the application should exit."""
 
         self.renderWindow = render_window
+        self.bullet_world = bullet
 
         # Listen for window close events.
         ogre.WindowEventUtilities.addWindowEventListener(self.renderWindow, self)
@@ -91,6 +94,10 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         ogre.WindowEventUtilities.removeWindowEventListener(self.renderWindow, self)
         self.windowClosed(self.renderWindow)
 
+    def frameEnded(self, evt):
+        """Called at the end of a frame."""
+        self.bullet_world.getDebugDrawer().frameEnded(evt)
+
     def frameRenderingQueued(self, evt):
         """ 
         Called before a frame is displayed - handles events.
@@ -110,6 +117,11 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
             # for i in axes_int:
             #    axes.append(i.abs)
             # print axes
+
+        # Update Bullet Physics simulation
+        self.bullet_world.stepSimulation(evt.timeSinceLastFrame, 50)
+        self.bullet_world.getDebugDrawer().frameRenderingQueued(evt)
+        self.bullet_world.debugDrawWorld()
 
         # Update all Entity Systems
         EntitySystem.game_step(evt.timeSinceLastFrame)
@@ -204,6 +216,17 @@ ogre_render_window = None
 ogre_event_listener = None
 """Listens for Ogre events as well as user input."""
 
+bullet_world = None
+"""Manages Bullet Physics engine."""
+
+bullet_collision_configuration = None
+bullet_dispatcher = None
+bullet_broadphase = None
+bullet_solver = None
+
+bullet_debug_drawer = None
+"""Allows Bullet Physics to draw collision debugging details."""
+
 cegui_renderer = None
 """Draws GUI for CEGUI."""
 
@@ -219,6 +242,7 @@ def go():
     createRenderWindow()
     initializeResourceGroups()
     setupScene()
+    initializePhysics()
     createFrameListener()
     setupCEGUI()
     startRenderLoop()
@@ -285,10 +309,40 @@ def setupScene():
 
     ogre_root_node = ogre_scene_manager.getRootSceneNode()
 
+def initializePhysics():
+    """Start the Bullet Physics engine."""
+    global bullet_world
+    global bullet_debug_drawer
+    global bullet_collision_configuration
+    global bullet_dispatcher
+    global bullet_broadphase
+    global bullet_solver
+
+    bullet_collision_configuration = bullet.get_btDefaultCollisionConfiguration()
+    bullet_dispatcher = bullet.get_btCollisionDispatcher1(bullet_collision_configuration)
+    #bullet_broadphase = bullet.btDbvtBroadphase()
+    bullet_broadphase = bullet.btAxisSweep3(
+                                    bullet.btVector3(-10000, -10000, -10000),
+                                    bullet.btVector3(10000, 10000, 10000),
+                                    1024)
+    bullet_solver = bullet.btSequentialImpulseConstraintSolver()
+
+    bullet_world = bullet.btDiscreteDynamicsWorld(
+                                    bullet_dispatcher,
+                                    bullet_broadphase,
+                                    bullet_solver,
+                                    bullet_collision_configuration)
+    bullet_world.setGravity(bullet.btVector3(0, 0, -10))
+    bullet_world.getDispatchInfo().m_enableSPU = True
+
+    bullet_debug_drawer = OgreBulletUtils.DebugDrawer(ogre_scene_manager)
+    bullet_world.setDebugDrawer(bullet_debug_drawer)
+    bullet_world.getDebugDrawer().setDebugMode(bullet.btIDebugDraw.DBG_NoDebug)
+
 def createFrameListener():
     """Initialize event listener for window and user-input events."""
     global ogre_event_listener
-    ogre_event_listener = EventListener(ogre_render_window)
+    ogre_event_listener = EventListener(ogre_render_window, bullet_world)
     ogre_root.addFrameListener(ogre_event_listener)
 
 def setupCEGUI():
@@ -323,15 +377,33 @@ def cleanUp():
     """Halt and delete resources."""
     global cegui_system
     global cegui_renderer
+    global bullet_debug_drawer
+    global bullet_world
+    global bullet_solver
+    global bullet_broadphase
+    global bullet_dispatcher
+    global bullet_collision_configuration
     global ogre_event_listener
     global ogre_root
 
     logging.info("Shutting down and cleaning up resources.")
+
     logging.debug("Deleting CEGUI")
     del cegui_system
     del cegui_renderer
+
+    logging.debug("Deleting Bullet Physics")
+    # TODO: Clean up collision objects
+    del bullet_debug_drawer
+    del bullet_world
+    del bullet_solver
+    del bullet_broadphase
+    del bullet_dispatcher
+    del bullet_collision_configuration
+
     logging.debug("Deleting OIS/OGRE Listener")
     del ogre_event_listener
+
     logging.debug("Deleting OGRE")
     del ogre_root
 
