@@ -1,0 +1,4 @@
+# Files git should ignore
+*.pyc
+*.log
+*.cfg
