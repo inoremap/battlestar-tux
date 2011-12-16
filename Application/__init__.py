@@ -97,6 +97,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
     def frameEnded(self, evt):
         """Called at the end of a frame."""
         self.bullet_world.getDebugDrawer().frameEnded(evt)
+        return True
 
     def frameRenderingQueued(self, evt):
         """ 
