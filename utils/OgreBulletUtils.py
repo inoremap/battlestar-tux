@@ -419,6 +419,9 @@ class CollisionObject():
         if self.isDynamic():
             self.mShape.calculateLocalInertia(self.mMass, self.mInertia)
 
+    def setShape(self, shape):
+        self.mShape = shape
+
     def setMass(self, mass):
         # A Bullet rigidbody is dynamic if and only if mass is non zero.
         self.mMass = mass

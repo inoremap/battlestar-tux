@@ -16,10 +16,10 @@
 
 import logging
 import math
-import ogre.renderer.OGRE as ogre
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 import ogre.physics.bullet as bullet
+import ogre.renderer.OGRE as ogre
 
 import Assemblages.HexShip as HexShip
 import EntitySystem
@@ -300,8 +300,9 @@ def setupScene():
     camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
-    camera.setPosition(ogre.Vector3(0, 0, 120))
+    camera.setPosition(ogre.Vector3(25, 25, 25))
     camera.lookAt(ogre.Vector3(0, 0, 0))
+    camera.nearClipDistance = 10
 
     ogre_scene_manager.setAmbientLight(ogre.ColourValue(0.7, 0.7, 0.7))
     ogre_scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.0002)
@@ -338,7 +339,12 @@ def initializePhysics():
 
     bullet_debug_drawer = OgreBulletUtils.DebugDrawer(ogre_scene_manager)
     bullet_world.setDebugDrawer(bullet_debug_drawer)
-    bullet_world.getDebugDrawer().setDebugMode(bullet.btIDebugDraw.DBG_NoDebug)
+    bullet_world.getDebugDrawer().setDebugMode(
+                                       bullet.btIDebugDraw.DBG_DrawWireframe |
+                                       bullet.btIDebugDraw.DBG_DrawAabb |
+                                       bullet.btIDebugDraw.DBG_DrawContactPoints
+                                       #bullet.btIDebugDraw.DBG_NoDebug
+                                               )
 
 def createFrameListener():
     """Initialize event listener for window and user-input events."""
@@ -363,6 +369,19 @@ def setupCEGUI():
 
 def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
+
+    # Create an infinite non-moving collision plane.
+    # TODO: limit physics world to plane size  
+    plane = OgreBulletUtils.CollisionObject(bullet_world)
+    plane.mShape = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0), 0)
+    plane.setMass(0.0)
+    plane.setInertia(bullet.btVector3(0, 0, 0))
+    plane.setTransform(bullet.btVector3(0, 0, 0))
+    plane.setMotion(None)
+    #XXX: self.collisionObjects.append(plane)
+    assert(plane.mRigidBody.getFlags() == plane.mRigidBody.getFlags() &
+           bullet.btCollisionObject.CollisionFlags.CF_STATIC_OBJECT)
+
     # Create ships - arrange in a circle.
     for i in range(0, 360, 360 / 6):
         HexShip.create((

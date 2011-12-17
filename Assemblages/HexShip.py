@@ -15,10 +15,12 @@
 ###############################################################################
 
 import logging
+import ogre.physics.bullet as bullet
 import ogre.renderer.OGRE as ogre
 
 import Application
 import EntitySystem
+import utils.OgreBulletUtils as OgreBulletUtils
 
 def create(ship_position=(0, 0, 0)):
     """Create a HexShip entity."""
@@ -34,7 +36,18 @@ def create(ship_position=(0, 0, 0)):
                           'ogreEntity-' + str(ship_id), 'HexCell.mesh')
     ogre_node = Application.ogre_root_node.createChildSceneNode(
                           'ogreNode-' + str(ship_id))
-    ogre_node.setPosition(ogre.Vector3(ship_position[0],
-                                       ship_position[1],
-                                       ship_position[2]))
     ogre_node.attachObject(ogre_entity)
+#   ogre_entity.setUserAny(
+#              ogre.createAny(['i', OgreBulletUtils.BulletShapes.CYLINDERZ]))
+    collision_object = OgreBulletUtils.CollisionObject(Application.bullet_world)
+    collision_object.setShape(
+               OgreBulletUtils.MeshInfo.createCylinderShape(
+                          ogre_entity,
+                          OgreBulletUtils.BulletShapes.CYLINDERZ))
+    collision_object.setTransform(bullet.btVector3(ship_position[0],
+                                                   ship_position[1],
+                                                   ship_position[2]))
+    collision_object.setMass(1.0)
+    collision_object.setInertia(bullet.btVector3(0, 0, 0))
+    collision_object.setMotion(ogre_entity.getParentSceneNode())
+    #collision_objects.append(collision_object)
