@@ -153,16 +153,15 @@ class MeshInfo:
         if axis == BulletShapes.CYLINDERX:
             height = size.x()
             radius = max(size.z(), size.y())
-            shape = bullet.btCylinderShape(bullet.btVector3(height, radius, radius))
+            shape = bullet.btCylinderShapeX(bullet.btVector3(height, radius, radius))
         if axis == BulletShapes.CYLINDERY:
             height = size.y()
             radius = max(size.z(), size.x())
-            #shape = bullet.btCylinderShape(bullet.btVector3(radius, height, radius))
-            shape = bullet.btCylinderShapeX(bullet.btVector3(radius, height, radius))
+            shape = bullet.btCylinderShape(bullet.btVector3(radius, height, radius))
         if axis == BulletShapes.CYLINDERZ:
             height = size.z()
             radius = max(size.x(), size.y())
-            shape = bullet.btCylinderShape(bullet.btVector3(radius, radius, height))
+            shape = bullet.btCylinderShapeZ(bullet.btVector3(radius, radius, height))
         return shape
 
     @staticmethod
@@ -211,7 +210,8 @@ class MeshInfo:
                 faces += MeshInfo.GetIndicies (sm.indexData)
 
 
-        print "FACES " , len(faces), len(vertices)
+        logging.debug("Mesh faces: " + len(faces) + len(vertices))
+
         mTriMesh = bullet.btTriangleMesh()
         for ind in faces:
             v1 = vertices[ind[0]]
@@ -348,7 +348,7 @@ class DebugDrawer(bullet.btIDebugDraw):
         bullet.btIDebugDraw.drawAabb(self, btVecFrom, btVecTo, btVecColor)
 
     def reportErrorWarning(self, warningString):
-        logging.debug("DebugDrawer: " + warningString)
+        logging.debug("Bullet DebugDrawer: " + warningString)
 
     def draw3dText(self, btVecLocation, textString):
         pass

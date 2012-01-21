@@ -20,6 +20,7 @@ import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 import ogre.physics.bullet as bullet
 import ogre.renderer.OGRE as ogre
+import random
 
 import Assemblages.HexShip as HexShip
 import EntitySystem
@@ -300,7 +301,7 @@ def setupScene():
     camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
-    camera.setPosition(ogre.Vector3(25, 25, 25))
+    camera.setPosition(ogre.Vector3(25, 25, 100))
     camera.lookAt(ogre.Vector3(0, 0, 0))
     camera.nearClipDistance = 10
 
@@ -334,15 +335,15 @@ def initializePhysics():
                                     bullet_broadphase,
                                     bullet_solver,
                                     bullet_collision_configuration)
-    bullet_world.setGravity(bullet.btVector3(0, 0, -10))
+    bullet_world.setGravity(bullet.btVector3(0, -10, 0))
     bullet_world.getDispatchInfo().m_enableSPU = True
 
     bullet_debug_drawer = OgreBulletUtils.DebugDrawer(ogre_scene_manager)
     bullet_world.setDebugDrawer(bullet_debug_drawer)
     bullet_world.getDebugDrawer().setDebugMode(
                                        bullet.btIDebugDraw.DBG_DrawWireframe |
-                                       bullet.btIDebugDraw.DBG_DrawAabb |
-                                       bullet.btIDebugDraw.DBG_DrawContactPoints
+                                       bullet.btIDebugDraw.DBG_DrawAabb
+                                       #bullet.btIDebugDraw.DBG_DrawContactPoints
                                        #bullet.btIDebugDraw.DBG_NoDebug
                                                )
 
@@ -386,8 +387,8 @@ def startRenderLoop():
     for i in range(0, 360, 360 / 6):
         HexShip.create((
                        math.sin(math.radians(i)) * 8,
+                       20,
                        math.cos(math.radians(i)) * 8,
-                       5
                        ))
 
     # Begin running game
