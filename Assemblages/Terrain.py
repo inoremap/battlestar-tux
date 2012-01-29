@@ -21,7 +21,7 @@ import ogre.renderer.OGRE as ogre
 import Application
 import EntitySystem
 import utils.OgreBulletUtils as OgreBulletUtils
-import utils.SimplexTextures as SimplexTextures
+import utils.SimplexNoise as SimplexNoise
 
 
 def create():
@@ -29,90 +29,64 @@ def create():
     terrain_id = EntitySystem.create_entity()
     logging.debug('Terrain id: ' + str(terrain_id))
 
-    # Generate random terrain points
-    width = height = 10
-    terrain_heights = [[0 for col in range(width)] for row in range(height)]
-    for row in range(height):
-        for column in range(width):
-            terrain_heights[row][column] = SimplexTextures.marbleNoise2d(
-                                                        1, 1, 1, row, column
-                                                    )
-
     # Map the terrain onto an Ogre mesh
+    width = height = 100
+    offsetX = width / 2.0
+    offsetY = height / 2.0
     terrain_object = ogre.ManualObject('Manual-' + str(terrain_id))
     terrain_object.estimateVertexCount(width * height)
     terrain_object.estimateIndexCount(width * height)
-    for strip in range(height - 1):
-        # begin a strip of triangles
-        logging.debug('####   Beginning row: ' + str(strip) + '   ####')
-        terrain_object.begin(
-                                "BaseWhiteNoLighting",
-                                ogre.RenderOperation.OT_TRIANGLE_LIST
-                            )
-        vertexID = 0
-        for triangle in range(width - 1):
-            logging.debug('    vertex: (' + str(triangle + 1) + ', ' +
-                                    str(terrain_heights[triangle+1][strip]) + ', ' +
-                                    str(strip) + ')')
-            # triangle 0, vertex 0
-            terrain_object.position(
-                                    triangle + 1,                       # x
-                                    terrain_heights[triangle+1][strip], # y
-                                    strip                               # z
-                                )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            # triangle 0, vertex 1
-            terrain_object.position(
-                                    triangle,                           # x
-                                    terrain_heights[triangle][strip],   # y
-                                    strip                               # z
-                                )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            # triangle 0, vertex 2
-            terrain_object.position(
-                                    triangle,                           # x
-                                    terrain_heights[triangle][strip+1], # y
-                                    strip + 1                           # z
-                                )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            terrain_object.triangle(vertexID, vertexID+1, vertexID+2)
-            vertexID += 3
 
-            # triangle 1, vertex 0
+    # Generate heights and input the indices into OGRE.
+    terrain_object.begin(
+                        "BaseWhiteNoLighting",
+                        ogre.RenderOperation.OT_TRIANGLE_LIST
+                    )
+    for row in range(height):
+        for column in range(width):
+            terrain_height = SimplexNoise.ScaledOctave2d(
+                                3, 0.2, 0.1,    # Noise settings
+                                -10, 0,         # Height range
+                                column - offsetX,
+                                row - offsetY
+                            )
             terrain_object.position(
-                                    triangle + 1,                       # x
-                                    terrain_heights[triangle+1][strip], # y
-                                    strip                               # z
+                                    column - offsetX,   # x
+                                    terrain_height,     # y
+                                    row - offsetY       # z
                                 )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            # triangle 1, vertex 1
-            terrain_object.position(
-                                    triangle,                           # x
-                                    terrain_heights[triangle][strip+1], # y
-                                    strip + 1                           # z
+            #terrain_object.normal(0, 0, 0)
+            terrain_object.colour(
+                                    abs(terrain_height)/10,
+                                    abs(terrain_height)/10,
+                                    abs(terrain_height)/10,
+                                    1
                                 )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            # triangle 1, vertex 2
-            terrain_object.position(
-                                    triangle + 1,                        # x
-                                    terrain_heights[triangle+1][strip+1],# y
-                                    strip + 1                            # z
+
+    # Build a mesh of vertices.
+    vertexID = 0
+    for strip in range(height - 1):
+        for quad in range(width - 1):
+            terrain_object.quad(vertexID,             # top-left
+                                vertexID + width,     # bottom-left
+                                vertexID + width + 1, # bottom-right
+                                vertexID + 1          # top-right
                                 )
-            terrain_object.normal(0, 0, 0)
-            terrain_object.colour(1, 1, 1, 1)
-            terrain_object.triangle(vertexID, vertexID+1, vertexID+2)
-            vertexID += 3
-        terrain_object.end()
-        # end of the strip of triangles
+            vertexID += 1
+    terrain_object.end()
+
+    # Attach mesh to OGRE scene.
+    terrain_object.convertToMesh('Mesh-' + str(terrain_id))
+    ogre_entity = Application.ogre_scene_manager.createEntity(
+                            'ogreEntity-' + str(terrain_id),
+                            'Mesh-' + str(terrain_id)
+                        )
     ogre_node = Application.ogre_root_node.createChildSceneNode(
-                          'ogreNode-' + str(terrain_id))
-    ogre_node.attachObject(terrain_object)
-    terrain_object.setCastShadows(False)
+                            'ogreNode-' + str(terrain_id))
+    ogre_node.attachObject(ogre_entity)
+    ogre_entity.setCastShadows(False)
+
+    # Setup terrain collisions.
     # collision_object = OgreBulletUtils.CollisionObject(Application.bullet_world)
     # collision_object.setShape(OgreBulletUtils.MeshInfo.createCylinderShape(
     #                                        ogre_entity,

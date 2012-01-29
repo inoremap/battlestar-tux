@@ -303,7 +303,7 @@ def setupScene():
     camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
-    camera.setPosition(ogre.Vector3(25, 25, 100))
+    camera.setPosition(ogre.Vector3(50, 50, 100))
     camera.lookAt(ogre.Vector3(0, 0, 0))
     camera.nearClipDistance = 10
 
@@ -373,8 +373,10 @@ def setupCEGUI():
 def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
 
-    # Create an infinite non-moving collision plane.
+    # Create procedural terrain
     Terrain.create()
+
+    # Create an infinite non-moving collision plane.
     # TODO: limit physics world to plane size
     plane = OgreBulletUtils.CollisionObject(bullet_world)
     plane.mShape = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0), 0)
