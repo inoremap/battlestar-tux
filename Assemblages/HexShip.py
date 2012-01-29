@@ -22,12 +22,9 @@ import Application
 import EntitySystem
 import utils.OgreBulletUtils as OgreBulletUtils
 
-collision_objects = []
 
 def create(ship_position=(0, 0, 0)):
     """Create a HexShip entity."""
-    global collision_objects
-
     ship_id = EntitySystem.create_entity()
     logging.debug("HexShip id: " + str(ship_id) + "   pos: (" +
                    str(ship_position[0]) + ", " +
@@ -52,4 +49,4 @@ def create(ship_position=(0, 0, 0)):
     collision_object.setMass(1.0)
     collision_object.setInertia(bullet.btVector3(0.0, 0.0, 0.0))
     collision_object.setMotion(ogre_entity.getParentSceneNode())
-    collision_objects.append(collision_object)
+    Application.collision_objects.append(collision_object)

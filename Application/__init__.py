@@ -23,6 +23,7 @@ import ogre.renderer.OGRE as ogre
 import random
 
 import Assemblages.HexShip as HexShip
+import Assemblages.Terrain as Terrain
 import EntitySystem
 import utils.OgreBulletUtils as OgreBulletUtils
 
@@ -101,7 +102,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         return True
 
     def frameRenderingQueued(self, evt):
-        """ 
+        """
         Called before a frame is displayed - handles events.
         Capture any buffered events and call any required callback functions.
 
@@ -225,6 +226,7 @@ bullet_collision_configuration = None
 bullet_dispatcher = None
 bullet_broadphase = None
 bullet_solver = None
+collision_objects = []
 
 bullet_debug_drawer = None
 """Allows Bullet Physics to draw collision debugging details."""
@@ -364,7 +366,7 @@ def setupCEGUI():
     cegui_system.setDefaultFont("BlueHighway-12")
 
     # Uncomment the following to read in a CEGUI sheet (from CELayoutEditor)
-    # 
+    #
     # mainSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("myapplication.layout")
     # cegui_system.setGUISheet(mainSheet)
 
@@ -372,7 +374,8 @@ def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
 
     # Create an infinite non-moving collision plane.
-    # TODO: limit physics world to plane size  
+    Terrain.create()
+    # TODO: limit physics world to plane size
     plane = OgreBulletUtils.CollisionObject(bullet_world)
     plane.mShape = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0), 0)
     plane.setMass(0.0)
