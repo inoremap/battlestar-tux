@@ -37,7 +37,7 @@ def create(ship_position=(0, 0, 0)):
     ogre_node = Application.ogre_root_node.createChildSceneNode(
                           'ogreNode-' + str(ship_id))
     ogre_node.attachObject(ogre_entity)
-    ogre_entity.setCastShadows(False)
+    ogre_entity.setCastShadows(True)
     ogre_node.setScale(ogre.Vector3(1.0, 1.0, 1.0))
     collision_object = OgreBulletUtils.CollisionObject(Application.bullet_world)
     collision_object.setShape(OgreBulletUtils.MeshInfo.createCylinderShape(

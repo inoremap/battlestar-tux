@@ -1,0 +1,22 @@
+material Terrain_Azul
+{
+	receive_shadows on
+	technique
+	{
+        // Wireframe component of terrain
+        pass
+        {
+            polygon_mode wireframe
+            ambient 0 0 0 1
+            diffuse 0 0 0 1
+        }
+
+        // Filled-in polygons of terrain
+		pass
+		{
+			ambient vertexcolour
+			diffuse vertexcolour
+			specular 1.000000 1.000000 1.000000 1.000000 33.750000
+		}
+	}
+}

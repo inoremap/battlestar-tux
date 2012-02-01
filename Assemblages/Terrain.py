@@ -39,7 +39,7 @@ def create():
 
     # Generate heights and input the indices into OGRE.
     terrain_object.begin(
-                        "BaseWhiteNoLighting",
+                        "Terrain_Azul",
                         ogre.RenderOperation.OT_TRIANGLE_LIST
                     )
     for row in range(height):
