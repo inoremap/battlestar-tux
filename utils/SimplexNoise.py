@@ -48,17 +48,21 @@ def Octave2d(octaves, persistence, scale, x, y):
     to the original. The higher the persistence [0-1], the more of each
     succeeding octave will be added.
     """
-
     total = 0.0
     frequency = scale
     amplitude = 1.0
 
+    # We have to keep track of the largest possible amplitude,
+    # because each octave adds more, and we need a value in [-1, 1].
+    maxAmplitude = 0.0;
+
     for i in range(octaves):
         total += Raw2d(x * frequency, y * frequency) * amplitude
         frequency *= 2.0
+        maxAmplitude += amplitude;
         amplitude *= persistence
 
-    return total / float(octaves)
+    return total / maxAmplitude
 
 def Octave3d(octaves, persistence, scale, x, y, z):
     """3D Multi-Octave Simplex noise.
@@ -67,19 +71,23 @@ def Octave3d(octaves, persistence, scale, x, y, z):
     to the original. The higher the persistence [0-1], the more of each
     succeeding octave will be added.
     """
-
     total = 0.0
     frequency = scale
     amplitude = 1.0
+
+    # We have to keep track of the largest possible amplitude,
+    # because each octave adds more, and we need a value in [-1, 1].
+    maxAmplitude = 0.0;
 
     for i in range(octaves):
         total += Raw3d( x * frequency,
                         y * frequency,
                         z * frequency) * amplitude
         frequency *= 2.0
+        maxAmplitude += amplitude;
         amplitude *= persistence
 
-    return total / float(octaves)
+    return total / maxAmplitude
 
 def Octave4d(octaves, persistence, scale, x, y, z, w):
     """4D Multi-Octave Simplex noise.
@@ -88,10 +96,13 @@ def Octave4d(octaves, persistence, scale, x, y, z, w):
     to the original. The higher the persistence [0-1], the more of each
     succeeding octave will be added.
     """
-
     total = 0.0
     frequency = scale
     amplitude = 1.0
+
+    # We have to keep track of the largest possible amplitude,
+    # because each octave adds more, and we need a value in [-1, 1].
+    maxAmplitude = 0.0;
 
     for i in range(octaves):
         total += Raw4d( x * frequency,
@@ -99,9 +110,10 @@ def Octave4d(octaves, persistence, scale, x, y, z, w):
                         z * frequency,
                         w * frequency) * amplitude
         frequency *= 2.0
+        maxAmplitude += amplitude;
         amplitude *= persistence
 
-    return total / float(octaves)
+    return total / maxAmplitude
 
 def ScaledOctave2d(octaves, persistence, scale, loBound, hiBound, x, y):
     """2D Scaled Multi-Octave Simplex noise.
