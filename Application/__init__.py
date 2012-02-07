@@ -303,7 +303,7 @@ def setupScene():
     camera = ogre_scene_manager.createCamera("Camera")
     ogre_root.getAutoCreatedWindow().addViewport(camera)
 
-    camera.setPosition(ogre.Vector3(10, 50, 25))
+    camera.setPosition(ogre.Vector3(10, 50, 40))
     camera.lookAt(ogre.Vector3(0, 0, 0))
     camera.nearClipDistance = 10
 
