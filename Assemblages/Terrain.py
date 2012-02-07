@@ -21,7 +21,7 @@ import ogre.renderer.OGRE as ogre
 import Application
 import EntitySystem
 import utils.OgreBulletUtils as OgreBulletUtils
-import utils.SimplexNoise as SimplexNoise
+import Procedural.SimplexNoise as SimplexNoise
 
 
 def create():
