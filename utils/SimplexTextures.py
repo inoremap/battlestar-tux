@@ -16,7 +16,7 @@
 
 """Composite procedural textures built from noise functions.
 
-Various textures are available in multiple dimensions (1, 2, 3, and 4).
+Various textures are available in multiple dimensions (2D, 3D, and 4D).
 """
 
 import math
@@ -27,17 +27,17 @@ import SimplexNoise as SimplexNoise
 def marbleNoise2d(octaves, persistence, scale, x, y):
     """2D Marble Noise on the x-axis."""
     return math.cos(float(x) * scale + SimplexNoise.Octave2d(
-            octaves, persistence, scale / 3, x, y)
+            octaves, persistence, float(scale) / 3.0, x, y)
         );
 
 def marbleNoise3d(octaves, persistence, scale, x, y, z):
     """3D Marble Noise on the x-axis."""
     return math.cos(float(x) * scale + SimplexNoise.Octave3d(
-            octaves, persistence, scale / 3, x, y, z)
+            octaves, persistence, float(scale) / 3.0, x, y, z)
         );
 
 def marbleNoise4d(octaves, persistence, scale, x, y, z, w):
     """4D Marble Noise on the x-axis."""
     return math.cos(float(x) * scale + SimplexNoise.Octave4d(
-            octaves, persistence, scale / 3, x, y, z, w)
+            octaves, persistence, float(scale) / 3.0, x, y, z, w)
         );
