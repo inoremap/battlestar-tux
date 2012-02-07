@@ -29,7 +29,7 @@ int main() {
             for(int j=0; j < iterations; ++j) {
                 for(int k=0; k < iterations; ++k) {
                     std::cout << simplexNoise(3, 0.5, 1, h, i, j, k) << std::endl;
-                    std::cout << marbleNoise(1, 0.5, 1, h, i, j, k) << std::endl;
+                    std::cout << marbleNoise(3, 0.5, 1, h, i, j, k) << std::endl;
                 }
             }
         }
