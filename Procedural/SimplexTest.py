@@ -30,5 +30,5 @@ if __name__ == '__main__':
         for i in range(iterations):
             for j in range(iterations):
                 for k in range(iterations):
-                    print SimplexNoise.Octave4d(3, 0.5, 1, h, i, j, k)
-                    print SimplexTextures.marbleNoise4d(3, 0.5, 1, h, i, j, k)
+                    print SimplexNoise.OctaveNoise4d(3, 0.5, 1, h, i, j, k)
+                    print SimplexTextures.MarbleNoise4d(3, 0.5, 1, h, i, j, k)

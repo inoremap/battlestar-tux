@@ -41,7 +41,7 @@ all look identical.
 import math
 
 
-def Octave2d(octaves, persistence, scale, x, y):
+def OctaveNoise2d(octaves, persistence, scale, x, y):
     """2D Multi-Octave Simplex noise.
 
     For each octave, a higher frequency/lower amplitude function will be added
@@ -57,14 +57,14 @@ def Octave2d(octaves, persistence, scale, x, y):
     maxAmplitude = 0.0;
 
     for i in range(octaves):
-        total += Raw2d(x * frequency, y * frequency) * amplitude
+        total += RawNoise2d(x * frequency, y * frequency) * amplitude
         frequency *= 2.0
         maxAmplitude += amplitude;
         amplitude *= persistence
 
     return total / maxAmplitude
 
-def Octave3d(octaves, persistence, scale, x, y, z):
+def OctaveNoise3d(octaves, persistence, scale, x, y, z):
     """3D Multi-Octave Simplex noise.
 
     For each octave, a higher frequency/lower amplitude function will be added
@@ -80,7 +80,7 @@ def Octave3d(octaves, persistence, scale, x, y, z):
     maxAmplitude = 0.0;
 
     for i in range(octaves):
-        total += Raw3d( x * frequency,
+        total += RawNoise3d( x * frequency,
                         y * frequency,
                         z * frequency) * amplitude
         frequency *= 2.0
@@ -89,7 +89,7 @@ def Octave3d(octaves, persistence, scale, x, y, z):
 
     return total / maxAmplitude
 
-def Octave4d(octaves, persistence, scale, x, y, z, w):
+def OctaveNoise4d(octaves, persistence, scale, x, y, z, w):
     """4D Multi-Octave Simplex noise.
 
     For each octave, a higher frequency/lower amplitude function will be added
@@ -105,7 +105,7 @@ def Octave4d(octaves, persistence, scale, x, y, z, w):
     maxAmplitude = 0.0;
 
     for i in range(octaves):
-        total += Raw4d( x * frequency,
+        total += RawNoise4d( x * frequency,
                         y * frequency,
                         z * frequency,
                         w * frequency) * amplitude
@@ -115,61 +115,61 @@ def Octave4d(octaves, persistence, scale, x, y, z, w):
 
     return total / maxAmplitude
 
-def ScaledOctave2d(octaves, persistence, scale, loBound, hiBound, x, y):
+def ScaledOctaveNoise2d(octaves, persistence, scale, loBound, hiBound, x, y):
     """2D Scaled Multi-Octave Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Octave2d(octaves, persistence, scale, x, y) *
+    return  (OctaveNoise2d(octaves, persistence, scale, x, y) *
             (hiBound - loBound) / 2 +
             (hiBound + loBound) / 2)
 
-def ScaledOctave3d(octaves, persistence, scale, loBound, hiBound, x, y, z):
+def ScaledOctaveNoise3d(octaves, persistence, scale, loBound, hiBound, x, y, z):
     """3D Scaled Multi-Octave Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Octave3d(octaves, persistence, scale, x, y, z) *
+    return  (OctaveNoise3d(octaves, persistence, scale, x, y, z) *
             (hiBound - loBound) / 2 +
             (hiBound + loBound) / 2)
 
-def ScaledOctave4d(octaves, persistence, scale, loBound, hiBound, x, y, z, w):
+def ScaledOctaveNoise4d(octaves, persistence, scale, loBound, hiBound, x, y, z, w):
     """4D Scaled Multi-Octave Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Octave4d(octaves, persistence, scale, x, y, z, w) *
+    return  (OctaveNoise4d(octaves, persistence, scale, x, y, z, w) *
             (hiBound - loBound) / 2 +
             (hiBound + loBound) / 2)
 
-def ScaledRaw2d(loBound, hiBound, x, y):
+def ScaledRawNoise2d(loBound, hiBound, x, y):
     """2D Scaled Raw Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Raw2d(x, y) *
+    return  (RawNoise2d(x, y) *
             (hiBound - loBound) / 2+
             (hiBound + loBound) / 2)
 
-def ScaledRaw3d(loBound, hiBound, x, y, z):
+def ScaledRawNoise3d(loBound, hiBound, x, y, z):
     """3D Scaled Raw Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Raw3d(x, y, z) *
+    return  (RawNoise3d(x, y, z) *
             (hiBound - loBound) / 2+
             (hiBound + loBound) / 2)
 
-def ScaledRaw4d(loBound, hiBound, x, y, z, w):
+def ScaledRawNoise4d(loBound, hiBound, x, y, z, w):
     """4D Scaled Raw Simplex noise.
 
     Returned value will be between loBound and hiBound.
     """
-    return  (Raw4d(x, y, z, w) *
+    return  (RawNoise4d(x, y, z, w) *
             (hiBound - loBound) / 2+
             (hiBound + loBound) / 2)
 
-def Raw2d(x, y):
+def RawNoise2d(x, y):
     """2D Raw Simplex noise."""
     # Noise contributions from the three corners
     n0, n1, n2 = 0.0, 0.0, 0.0
@@ -241,7 +241,7 @@ def Raw2d(x, y):
     # The result is scaled to return values in the interval [-1,1].
     return 70.0 * (n0 + n1 + n2)
 
-def Raw3d(x, y, z):
+def RawNoise3d(x, y, z):
     """3D Raw Simplex noise."""
     # Noise contributions from the four corners
     n0, n1, n2, n3 = 0.0, 0.0, 0.0, 0.0
@@ -371,7 +371,7 @@ def Raw3d(x, y, z):
     # The result is scaled to stay just inside [-1,1]
     return 32.0 * (n0 + n1 + n2 + n3)
 
-def Raw4d(x, y, z, w):
+def RawNoise4d(x, y, z, w):
     """4D Raw Simplex noise."""
     # Noise contributions from the five corners
     n0, n1, n2, n3, n4 = 0.0, 0.0, 0.0, 0.0, 0.0

@@ -23,19 +23,19 @@
 
 
 // 2D Marble Noise: x-axis.
-float marbleNoise( const float octaves, const float persistence, const float scale, const float x, const float y ) {
-	return cosf( x * scale + simplexNoise(octaves, persistence, scale / 3, x, y) );
+float MarbleNoise2d( const float octaves, const float persistence, const float scale, const float x, const float y ) {
+	return cosf( x * scale + OctaveNoise2d(octaves, persistence, scale / 3, x, y) );
 }
 
 
 // 3D Marble Noise: x-axis.
-float marbleNoise( const float octaves, const float persistence, const float scale, const float x, const float y, const float z ) {
-	return cosf( x * scale + simplexNoise(octaves, persistence, scale / 3, x, y, z) );
+float MarbleNoise3d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z ) {
+	return cosf( x * scale + OctaveNoise3d(octaves, persistence, scale / 3, x, y, z) );
 }
 
 
 // 4D Marble Noise: x-axis.
-float marbleNoise( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w ) {
-	return cosf( x * scale + simplexNoise(octaves, persistence, scale / 3, x, y, z, w) );
+float MarbleNoise4d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w ) {
+	return cosf( x * scale + OctaveNoise4d(octaves, persistence, scale / 3, x, y, z, w) );
 }
 

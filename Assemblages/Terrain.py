@@ -44,7 +44,7 @@ def create():
                     )
     for row in range(height):
         for column in range(width):
-            terrain_height = SimplexNoise.ScaledOctave2d(
+            terrain_height = SimplexNoise.ScaledOctaveNoise2d(
                                 3, 0.2, 0.1,    # Noise settings
                                 -10, 0,         # Height range
                                 column - offsetX,

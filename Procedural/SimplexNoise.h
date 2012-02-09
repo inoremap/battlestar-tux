@@ -45,34 +45,86 @@ all look identical.
 */
 
 
-// Multi-octave Simplex noise - multiple noise values are combined.
-float simplexNoise( const float, const float, const float, const float, const float );
-float simplexNoise( const float, const float, const float, const float, const float, const float );
-float simplexNoise( const float, const float, const float, const float, const float, const float, const float );
+// Multi-octave Simplex noise
+// For each octave, a higher frequency/lower amplitude function will be added to the original.
+// The higher the persistence [0-1], the more of each succeeding octave will be added.
+float OctaveNoise2d(const float octaves,
+					const float persistence,
+					const float scale,
+					const float x,
+					const float y);
+float OctaveNoise3d(const float octaves,
+					const float persistence,
+					const float scale,
+					const float x,
+					const float y,
+					const float z);
+float OctaveNoise4d(const float octaves,
+					const float persistence,
+					const float scale,
+					const float x,
+					const float y,
+					const float z,
+					const float w);
 
 
-// Multi-octave Scaled Simplex noise - the result will be between the two parameters passed.
-float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float );
-float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float, const float );
-float simplexScaledNoise( const float, const float, const float, const float, const float, const float, const float, const float, const float );
+// Scaled Multi-octave Simplex noise
+// The result will be between the two parameters passed.
+float ScaledOctaveNoise2d(	const float octaves,
+							const float persistence,
+							const float scale,
+							const float loBound,
+							const float hiBound,
+							const float x,
+							const float y);
+float ScaledOctaveNoise3d(	const float octaves,
+							const float persistence,
+							const float scale,
+							const float loBound,
+							const float hiBound,
+							const float x,
+							const float y,
+							const float z);
+float ScaledOctaveNoise4d(	const float octaves,
+							const float persistence,
+							const float scale,
+							const float loBound,
+							const float hiBound,
+							const float x,
+							const float y,
+							const float z,
+							const float w);
 
-// Scaled Raw Simplex noise - the result will be between the two parameters passed.
-float simplexScaledRawNoise( const float, const float, const float, const float );
-float simplexScaledRawNoise( const float, const float, const float, const float, const float );
-float simplexScaledRawNoise( const float, const float, const float, const float, const float, const float );
+// Scaled Raw Simplex noise
+// The result will be between the two parameters passed.
+float ScaledRawNoise2d(	const float loBound,
+						const float hiBound,
+						const float x,
+						const float y);
+float ScaledRawNoise3d(	const float loBound,
+						const float hiBound,
+						const float x,
+						const float y,
+						const float z);
+float ScaledRawNoise4d(	const float loBound,
+						const float hiBound,
+						const float x,
+						const float y,
+						const float z,
+						const float w);
 
 
 // Raw Simplex noise - a single noise value.
-float simplexRawNoise( const float, const float );
-float simplexRawNoise( const float, const float, const float );
-float simplexRawNoise( const float, const float, const float, const float );
+float RawNoise2d(const float x, const float y);
+float RawNoise3d(const float x, const float y, const float z);
+float RawNoise4d(const float x, const float y, const float, const float w);
 
 
-int fastfloor( const float );
+int fastfloor(const float x);
 
-float dot( const int*, const float, const float );
-float dot( const int*, const float, const float, const float );
-float dot( const int*, const float, const float, const float, const float );
+float dot(const int* g, const float x, const float y);
+float dot(const int* g, const float x, const float y, const float z);
+float dot(const int* g, const float x, const float y, const float z, const float w);
 
 
 // The gradients are the midpoints of the vertices of a cube.

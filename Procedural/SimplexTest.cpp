@@ -28,8 +28,8 @@ int main() {
         for(int i=0; i < iterations; ++i) {
             for(int j=0; j < iterations; ++j) {
                 for(int k=0; k < iterations; ++k) {
-                    std::cout << simplexNoise(3, 0.5, 1, h, i, j, k) << std::endl;
-                    std::cout << marbleNoise(3, 0.5, 1, h, i, j, k) << std::endl;
+                    std::cout << OctaveNoise4d(3, 0.5, 1, h, i, j, k) << std::endl;
+                    std::cout << MarbleNoise4d(3, 0.5, 1, h, i, j, k) << std::endl;
                 }
             }
         }
