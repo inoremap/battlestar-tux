@@ -15,8 +15,8 @@
  *****************************************************************************/
 
 
-#include "SimplexNoise.h"
-#include "SimplexTextures.h"
+#include "simplexnoise.h"
+#include "simplextextures.h"
 #include <iostream>
 
 int main() {
@@ -28,8 +28,8 @@ int main() {
         for(int i=0; i < iterations; ++i) {
             for(int j=0; j < iterations; ++j) {
                 for(int k=0; k < iterations; ++k) {
-                    std::cout << OctaveNoise4d(3, 0.5, 1, h, i, j, k) << std::endl;
-                    std::cout << MarbleNoise4d(3, 0.5, 1, h, i, j, k) << std::endl;
+                    std::cout << octave_noise_4d(3, 0.5, 1, h, i, j, k) << std::endl;
+                    std::cout << marble_noise_4d(3, 0.5, 1, h, i, j, k) << std::endl;
                 }
             }
         }

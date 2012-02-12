@@ -15,12 +15,11 @@
 ###############################################################################
 
 import logging
+
 import ogre.renderer.OGRE as ogre
 import ogre.physics.bullet as bullet
 
-
 # Following code adapted from OgreBullet_BasicDemo.py included with Python-Ogre.
-
 
 class MeshInfo:
     """Provide bounding boxes, as well as mesh conversion from OGRE to Bullet."""
@@ -69,7 +68,7 @@ class MeshInfo:
 
         # What we need is the actual address of the buffer,
         # so we have to check if there's an offset as well.
-        # This is basically what baseVertexPointerToElement does. 
+        # This is basically what baseVertexPointerToElement does.
         newaddress = posElem.getOffset() + ogre.castAsInt(vertex) # note the cast to int to get the address
 
         for i in range (vertex_data.vertexCount):
@@ -137,14 +136,14 @@ class MeshInfo:
     @staticmethod
     def createSphereShape(entity):
         """Bullet Sphere Shape"""
-        ## mesh extents 
+        ## mesh extents
         radius = MeshInfo.getExtentsRadius(entity)
         return bullet.btSphereShape(radius)
 
     @staticmethod
     def createCylinderShape(entity, axis):
         """Bullet Cylinder Shape"""
-        ## mesh extents 
+        ## mesh extents
         e = MeshInfo.getBoundingBox(entity)
         size = bullet.btVector3(e.getHalfSize().x,
                                 e.getHalfSize().y,
@@ -231,9 +230,9 @@ class MeshInfo:
 
 class DebugDrawer(bullet.btIDebugDraw):
     """DebugDrawer using Ogre ManualObject
-    
+
     This kills the frame rate, but shows actual body positions for bullet
-    objects and is therefore useful for debugging. 
+    objects and is therefore useful for debugging.
 """
 
     def __init__(self, sceneManager):
@@ -260,7 +259,7 @@ class DebugDrawer(bullet.btIDebugDraw):
         tu = mtl.getTechnique(0).getPass(0).createTextureUnitState()
         tu.setColourOperationEx(ogre.LBX_SOURCE1, ogre.LBS_DIFFUSE)
         mtl.getTechnique(0).setLightingEnabled(False)
-        ##mtl.getTechnique(0).setSelfIllumination( ogre.ColourValue().White ) 
+        ##mtl.getTechnique(0).setSelfIllumination( ogre.ColourValue().White )
 
         mLines.begin(matName, ogre.RenderOperation.OT_LINE_LIST)
         mLines.position(ogre.Vector3().ZERO)

@@ -18,16 +18,14 @@ import logging
 import ogre.physics.bullet as bullet
 import ogre.renderer.OGRE as ogre
 
-import Application
-import EntitySystem
-from EntitySystem.Component import ComponentTypes
+import application
+import entitysystem
 import utils.OgreBulletUtils as OgreBulletUtils
-import Procedural.SimplexNoise as SimplexNoise
-
+import procedural.simplexnoise as simplexnoise
 
 def create():
     """Create a procedural Terrain entity."""
-    terrain_id = EntitySystem.create_entity()
+    terrain_id = entitysystem.create_entity()
     logging.debug('Terrain id: ' + str(terrain_id))
 
     # Map the terrain onto an Ogre mesh
@@ -45,7 +43,7 @@ def create():
                     )
     for row in range(height):
         for column in range(width):
-            terrain_height = SimplexNoise.ScaledOctaveNoise2d(
+            terrain_height = simplexnoise.scaled_octave_noise_2d(
                                 3, 0.2, 0.1,    # Noise settings
                                 -10, 0,         # Height range
                                 column - offsetX,
@@ -78,18 +76,20 @@ def create():
 
     # Attach mesh to OGRE scene.
     terrain_object.convertToMesh('Mesh-' + str(terrain_id))
-    ogre_entity = Application.ogre_scene_manager.createEntity(
+    ogre_entity = application.ogre_scene_manager.createEntity(
                             'ogreEntity-' + str(terrain_id),
                             'Mesh-' + str(terrain_id)
                         )
-    ogre_node = Application.ogre_root_node.createChildSceneNode(
+    ogre_node = application.ogre_root_node.createChildSceneNode(
                             'ogreNode-' + str(terrain_id))
     ogre_node.attachObject(ogre_entity)
     ogre_entity.setCastShadows(False)
-    EntitySystem.add_component(terrain_id, ComponentTypes.Graphics, ogre_node)
+    entitysystem.add_component( terrain_id,
+                                entitysystem.ComponentTypes.Graphics,
+                                ogre_node)
 
     # Setup terrain collisions.
-    # collision_object = OgreBulletUtils.CollisionObject(Application.bullet_world)
+    # collision_object = OgreBulletUtils.CollisionObject(application.bullet_world)
     # collision_object.setShape(OgreBulletUtils.MeshInfo.createCylinderShape(
     #                                        ogre_entity,
     #                                        OgreBulletUtils.BulletShapes.CYLINDERZ))
@@ -97,4 +97,6 @@ def create():
     #                                                terrain_position[1],
     #                                                terrain_position[2]))
     # collision_object.setMass(0)
-    # EntitySystem.add_component(terrain_id, ComponentTypes.Physics, collision_object)
+    # entitysystem.add_component( terrain_id,
+    #                             entitysystem.ComponentTypes.Physics,
+    #                             collision_object)

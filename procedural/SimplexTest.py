@@ -16,8 +16,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import SimplexNoise
-import SimplexTextures
+import simplexnoise
+import simplextextures
 
 if __name__ == '__main__':
     iterations = 5;
@@ -30,5 +30,5 @@ if __name__ == '__main__':
         for i in range(iterations):
             for j in range(iterations):
                 for k in range(iterations):
-                    print SimplexNoise.OctaveNoise4d(3, 0.5, 1, h, i, j, k)
-                    print SimplexTextures.MarbleNoise4d(3, 0.5, 1, h, i, j, k)
+                    print simplexnoise.octave_noise_4d(3, 0.5, 1, h, i, j, k)
+                    print simplextextures.marble_noise_4d(3, 0.5, 1, h, i, j, k)

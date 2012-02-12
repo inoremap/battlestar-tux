@@ -21,24 +21,24 @@
 
 
 // Composite procedural textures built from noise functions.
-float MarbleNoise2d(const float octaves,
-                    const float persistence,
-                    const float scale,
-                    const float x,
-                    const float y);
-float MarbleNoise3d(const float octaves,
-                    const float persistence,
-                    const float scale,
-                    const float x,
-                    const float y,
-                    const float z);
-float MarbleNoise4d(const float octaves,
-                    const float persistence,
-                    const float scale,
-                    const float x,
-                    const float y,
-                    const float z,
-                    const float w);
+float marble_noise_2d(   const float octaves,
+                         const float persistence,
+                         const float scale,
+                         const float x,
+                         const float y);
+float marble_noise_3d(   const float octaves,
+                         const float persistence,
+                         const float scale,
+                         const float x,
+                         const float y,
+                         const float z);
+float marble_noise_4d(   const float octaves,
+                         const float persistence,
+                         const float scale,
+                         const float x,
+                         const float y,
+                         const float z,
+                         const float w);
 
 
 #endif /*TEXTURES_H_*/

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2011 Eliot Eshelman
+# Copyright (c) 2011-2012 Eliot Eshelman
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@
 
 import logging
 
-import Application
+import application
 
 
-def initializeLogging():
+def initialize_logging():
     """Set up logging of in-game info/warnings/errors.
     All log messages are written to file and to the console, but the file
     and the console may have different log levels (e.g. DEBUG vs INFO).
-    
+
     OGRE and CEGUI automatically create their own logs.
     """
     logging.basicConfig(level=logging.DEBUG,
@@ -42,10 +42,10 @@ def initializeLogging():
 
 
 if __name__ == '__main__':
-    initializeLogging()
+    initialize_logging()
 
     try:
-        Application.go()
+        application.go()
     except Exception:
         logging.exception("An unexpected error occurred. Application exiting...")
     finally:

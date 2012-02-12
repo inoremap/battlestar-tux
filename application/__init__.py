@@ -1,4 +1,4 @@
-# Copyright (c) 2011 Eliot Eshelman
+# Copyright (c) 2011-2012 Eliot Eshelman
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
 
 import logging
 import math
+import random
+
 import ogre.io.OIS as OIS
 import ogre.gui.CEGUI as CEGUI
 import ogre.physics.bullet as bullet
 import ogre.renderer.OGRE as ogre
-import random
 
-import Assemblages.HexShip as HexShip
-import Assemblages.Terrain as Terrain
-import EntitySystem
-from EntitySystem.Component import ComponentTypes
-from EntitySystem.System import System
+import assemblages.hexship as HexShip
+import assemblages.terrain as Terrain
+import entitysystem
 import utils.OgreBulletUtils as OgreBulletUtils
 
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
@@ -129,7 +128,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         self.bullet_world.debugDrawWorld()
 
         # Update all Entity Systems
-        EntitySystem.game_step(evt.timeSinceLastFrame)
+        entitysystem.game_step(evt.timeSinceLastFrame)
 
         return not self.quitApplication
 
@@ -296,8 +295,10 @@ def initializeResourceGroups():
 
 def initializeEntitySystem():
     """Initialize the EntitySystem framework."""
-    EntitySystem.add_system(System(ComponentTypes.Graphics))
-    EntitySystem.add_system(System(ComponentTypes.Physics))
+    entitysystem.add_system(entitysystem.System(
+                entitysystem.ComponentTypes.Graphics))
+    entitysystem.add_system(entitysystem.System(
+                entitysystem.ComponentTypes.Physics))
 
 def setupScene():
     """Create the initial OGRE scene (first items to appear)."""
@@ -438,10 +439,10 @@ def cleanUp():
     del cegui_system
     del cegui_renderer
 
-    logging.debug("Deleting EntitySystem")
-    # Remove all game state/data.
-    EntitySystem.delete_all_entities()
-    EntitySystem.delete_all_systems()
+    logging.debug("Deleting EntitySystem Entities and Component data")
+    entitysystem.delete_all_entities()
+    logging.debug("Deleting EntitySystem Systems")
+    entitysystem.delete_all_systems()
 
     logging.debug("Deleting Bullet Physics")
     del bullet_debug_drawer

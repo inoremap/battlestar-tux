@@ -48,18 +48,18 @@ all look identical.
 // Multi-octave Simplex noise
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float OctaveNoise2d(const float octaves,
+float octave_noise_2d(const float octaves,
                     const float persistence,
                     const float scale,
                     const float x,
                     const float y);
-float OctaveNoise3d(const float octaves,
+float octave_noise_3d(const float octaves,
                     const float persistence,
                     const float scale,
                     const float x,
                     const float y,
                     const float z);
-float OctaveNoise4d(const float octaves,
+float octave_noise_4d(const float octaves,
                     const float persistence,
                     const float scale,
                     const float x,
@@ -70,14 +70,14 @@ float OctaveNoise4d(const float octaves,
 
 // Scaled Multi-octave Simplex noise
 // The result will be between the two parameters passed.
-float ScaledOctaveNoise2d(  const float octaves,
+float scaled_octave_noise_2d(  const float octaves,
                             const float persistence,
                             const float scale,
                             const float loBound,
                             const float hiBound,
                             const float x,
                             const float y);
-float ScaledOctaveNoise3d(  const float octaves,
+float scaled_octave_noise_3d(  const float octaves,
                             const float persistence,
                             const float scale,
                             const float loBound,
@@ -85,7 +85,7 @@ float ScaledOctaveNoise3d(  const float octaves,
                             const float x,
                             const float y,
                             const float z);
-float ScaledOctaveNoise4d(  const float octaves,
+float scaled_octave_noise_4d(  const float octaves,
                             const float persistence,
                             const float scale,
                             const float loBound,
@@ -97,16 +97,16 @@ float ScaledOctaveNoise4d(  const float octaves,
 
 // Scaled Raw Simplex noise
 // The result will be between the two parameters passed.
-float ScaledRawNoise2d( const float loBound,
+float scaled_raw_noise_2d( const float loBound,
                         const float hiBound,
                         const float x,
                         const float y);
-float ScaledRawNoise3d( const float loBound,
+float scaled_raw_noise_3d( const float loBound,
                         const float hiBound,
                         const float x,
                         const float y,
                         const float z);
-float ScaledRawNoise4d( const float loBound,
+float scaled_raw_noise_4d( const float loBound,
                         const float hiBound,
                         const float x,
                         const float y,
@@ -115,9 +115,9 @@ float ScaledRawNoise4d( const float loBound,
 
 
 // Raw Simplex noise - a single noise value.
-float RawNoise2d(const float x, const float y);
-float RawNoise3d(const float x, const float y, const float z);
-float RawNoise4d(const float x, const float y, const float, const float w);
+float raw_noise_2d(const float x, const float y);
+float raw_noise_3d(const float x, const float y, const float z);
+float raw_noise_4d(const float x, const float y, const float, const float w);
 
 
 int fastfloor(const float x);

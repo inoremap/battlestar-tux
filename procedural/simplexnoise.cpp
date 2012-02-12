@@ -18,7 +18,7 @@
 
 #include <math.h>
 
-#include "SimplexNoise.h"
+#include "simplexnoise.h"
 
 
 /* 2D, 3D and 4D Simplex Noise functions return 'random' values in (-1, 1).
@@ -50,7 +50,7 @@ all look identical.
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float OctaveNoise2d( const float octaves, const float persistence, const float scale, const float x, const float y ) {
+float octave_noise_2d( const float octaves, const float persistence, const float scale, const float x, const float y ) {
     float total = 0;
     float frequency = scale;
     float amplitude = 1;
@@ -60,7 +60,7 @@ float OctaveNoise2d( const float octaves, const float persistence, const float s
     float maxAmplitude = 0;
 
     for( int i=0; i < octaves; i++ ) {
-        total += RawNoise2d( x * frequency, y * frequency ) * amplitude;
+        total += raw_noise_2d( x * frequency, y * frequency ) * amplitude;
 
         frequency *= 2;
         maxAmplitude += amplitude;
@@ -75,7 +75,7 @@ float OctaveNoise2d( const float octaves, const float persistence, const float s
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float OctaveNoise3d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z ) {
+float octave_noise_3d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z ) {
     float total = 0;
     float frequency = scale;
     float amplitude = 1;
@@ -85,7 +85,7 @@ float OctaveNoise3d( const float octaves, const float persistence, const float s
     float maxAmplitude = 0;
 
     for( int i=0; i < octaves; i++ ) {
-        total += RawNoise3d( x * frequency, y * frequency, z * frequency ) * amplitude;
+        total += raw_noise_3d( x * frequency, y * frequency, z * frequency ) * amplitude;
 
         frequency *= 2;
         maxAmplitude += amplitude;
@@ -100,7 +100,7 @@ float OctaveNoise3d( const float octaves, const float persistence, const float s
 //
 // For each octave, a higher frequency/lower amplitude function will be added to the original.
 // The higher the persistence [0-1], the more of each succeeding octave will be added.
-float OctaveNoise4d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w ) {
+float octave_noise_4d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w ) {
     float total = 0;
     float frequency = scale;
     float amplitude = 1;
@@ -110,7 +110,7 @@ float OctaveNoise4d( const float octaves, const float persistence, const float s
     float maxAmplitude = 0;
 
     for( int i=0; i < octaves; i++ ) {
-        total += RawNoise4d( x * frequency, y * frequency, z * frequency, w * frequency ) * amplitude;
+        total += raw_noise_4d( x * frequency, y * frequency, z * frequency, w * frequency ) * amplitude;
 
         frequency *= 2;
         maxAmplitude += amplitude;
@@ -125,23 +125,23 @@ float OctaveNoise4d( const float octaves, const float persistence, const float s
 // 2D Scaled Multi-octave Simplex noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledOctaveNoise2d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y ) {
-    return OctaveNoise2d(octaves, persistence, scale, x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_octave_noise_2d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y ) {
+    return octave_noise_2d(octaves, persistence, scale, x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
 // 3D Scaled Multi-octave Simplex noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledOctaveNoise3d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z ) {
-    return OctaveNoise3d(octaves, persistence, scale, x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_octave_noise_3d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z ) {
+    return octave_noise_3d(octaves, persistence, scale, x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 // 4D Scaled Multi-octave Simplex noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledOctaveNoise4d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
-    return OctaveNoise4d(octaves, persistence, scale, x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_octave_noise_4d( const float octaves, const float persistence, const float scale, const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
+    return octave_noise_4d(octaves, persistence, scale, x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
@@ -149,29 +149,29 @@ float ScaledOctaveNoise4d( const float octaves, const float persistence, const f
 // 2D Scaled Simplex raw noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledRawNoise2d( const float loBound, const float hiBound, const float x, const float y ) {
-    return RawNoise2d(x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_raw_noise_2d( const float loBound, const float hiBound, const float x, const float y ) {
+    return raw_noise_2d(x, y) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
 // 3D Scaled Simplex raw noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledRawNoise3d( const float loBound, const float hiBound, const float x, const float y, const float z ) {
-    return RawNoise3d(x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_raw_noise_3d( const float loBound, const float hiBound, const float x, const float y, const float z ) {
+    return raw_noise_3d(x, y, z) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 // 4D Scaled Simplex raw noise.
 //
 // Returned value will be between loBound and hiBound.
-float ScaledRawNoise4d( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
-    return RawNoise4d(x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
+float scaled_raw_noise_4d( const float loBound, const float hiBound, const float x, const float y, const float z, const float w ) {
+    return raw_noise_4d(x, y, z, w) * (hiBound - loBound) / 2 + (hiBound + loBound) / 2;
 }
 
 
 
 // 2D raw Simplex noise
-float RawNoise2d( const float x, const float y ) {
+float raw_noise_2d( const float x, const float y ) {
     // Noise contributions from the three corners
     float n0, n1, n2;
 
@@ -241,7 +241,7 @@ float RawNoise2d( const float x, const float y ) {
 
 
 // 3D raw Simplex noise
-float RawNoise3d( const float x, const float y, const float z ) {
+float raw_noise_3d( const float x, const float y, const float z ) {
     float n0, n1, n2, n3; // Noise contributions from the four corners
 
     // Skew the input space to determine which simplex cell we're in
@@ -335,7 +335,7 @@ float RawNoise3d( const float x, const float y, const float z ) {
 
 
 // 4D raw Simplex noise
-float RawNoise4d( const float x, const float y, const float z, const float w ) {
+float raw_noise_4d( const float x, const float y, const float z, const float w ) {
     // The skewing and unskewing factors are hairy again for the 4D case
     float F4 = (sqrtf(5.0)-1.0)/4.0;
     float G4 = (5.0-sqrtf(5.0))/20.0;
