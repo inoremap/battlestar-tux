@@ -25,6 +25,8 @@ import random
 import Assemblages.HexShip as HexShip
 import Assemblages.Terrain as Terrain
 import EntitySystem
+from EntitySystem.Component import ComponentTypes
+from EntitySystem.System import System
 import utils.OgreBulletUtils as OgreBulletUtils
 
 class EventListener(ogre.FrameListener, ogre.WindowEventListener,
@@ -226,7 +228,6 @@ bullet_collision_configuration = None
 bullet_dispatcher = None
 bullet_broadphase = None
 bullet_solver = None
-collision_objects = []
 
 bullet_debug_drawer = None
 """Allows Bullet Physics to draw collision debugging details."""
@@ -239,12 +240,14 @@ cegui_system = None
 
 
 def go():
+    """Run the game and then exit."""
     # Inialize everything and enter main menu.
     createRoot()
     defineResources()
     setupRenderSystem()
     createRenderWindow()
     initializeResourceGroups()
+    initializeEntitySystem()
     setupScene()
     initializePhysics()
     createFrameListener()
@@ -290,6 +293,11 @@ def initializeResourceGroups():
     """Initialize all the resources."""
     ogre.TextureManager.getSingleton().setDefaultNumMipmaps(5)
     ogre.ResourceGroupManager.getSingleton().initialiseAllResourceGroups()
+
+def initializeEntitySystem():
+    """Initialize the EntitySystem framework."""
+    EntitySystem.add_system(System(ComponentTypes.Graphics))
+    EntitySystem.add_system(System(ComponentTypes.Physics))
 
 def setupScene():
     """Create the initial OGRE scene (first items to appear)."""
@@ -430,8 +438,12 @@ def cleanUp():
     del cegui_system
     del cegui_renderer
 
+    logging.debug("Deleting EntitySystem")
+    # Remove all game state/data.
+    EntitySystem.delete_all_entities()
+    EntitySystem.delete_all_systems()
+
     logging.debug("Deleting Bullet Physics")
-    # TODO: Clean up collision objects
     del bullet_debug_drawer
     del bullet_world
     del bullet_solver
@@ -444,4 +456,3 @@ def cleanUp():
 
     logging.debug("Deleting OGRE")
     del ogre_root
-

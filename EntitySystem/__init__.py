@@ -17,7 +17,7 @@
 import logging
 import uuid
 
-import Component
+from Component import Component
 
 """The EntitySystem ties together Entities, Components and Systems.
 All in-game objects are represented by EntitySystem objects.
@@ -40,6 +40,9 @@ _all_systems = set()
 """Dict of all systems."""
 
 
+#TODO: synchronize for multi-threaded support
+
+
 ## Entity Functions ##
 def create_entity(name=None):
     """Create a new Entity using a random UUID.
@@ -53,12 +56,10 @@ def create_entity(name=None):
 
 def delete_entity(entity):
     """Remove an Entity and all associated component data."""
-    #TODO: synchronize
-
     # Delete all component data
     for store in _component_stores:
         try:
-            del store[entity]
+            del _component_stores[store][entity]
         except KeyError:
             # An Entity will not have all components
             pass
@@ -71,6 +72,12 @@ def delete_entity(entity):
         return False
     else:
         return True
+
+def delete_all_entities():
+    """Remove all Entities and their associated component data."""
+    _component_stores.clear()
+    _all_entities_readable_names.clear()
+    _all_entities.clear()
 
 def set_entity_name(entity, name=None):
     """Assign a human-readable name to an Entity."""
@@ -97,19 +104,14 @@ def remove_entity_name(entity):
 ## Component Functions ##
 def add_component(entity, component_type, data):
     """Add component data for the specified Entity."""
-    #TODO: synchronize
-
     try:
         store = _component_stores[component_type]
     except KeyError:
-        _component_stores[component_type] = Component(component_type)
-        store = _component_stores[component_type]
+        store = _component_stores[component_type] = Component(component_type)
     store[entity] = data
 
 def get_component(entity, component_type):
     """Returns component data for the specified Entity."""
-    #TODO: synchronize
-
     try:
         store = _component_stores[component_type]
     except KeyError:
@@ -123,8 +125,6 @@ def get_component(entity, component_type):
 
 def remove_component(entity, component_type):
     """Remove component data for the specified Entity."""
-    #TODO: synchronize
-
     try:
         store = _component_stores[component_type]
     except KeyError:
@@ -140,26 +140,20 @@ def remove_component(entity, component_type):
 
 def has_component(entity, component_type):
     """Check if the specified Entity contains component data."""
-    #TODO: synchronize
-
     try:
-        store = _component_stores[component_type]
+        return entity in _component_stores[component_type]
     except KeyError:
         logging.exception("The component requested has not been initialized.")
         return False
-    else:
-        return entity in store
 
 def get_entity_components(entity):
     """Return all component data stored for the specified Entity.
     WARNING: low performance implementation!
     """
-    #TODO: synchronize
-
     components = set()
     for store in _component_stores:
         try:
-            component = store[entity]
+            component = _component_stores[store][entity]
             components.add(component)
         except KeyError:
             pass
@@ -167,20 +161,16 @@ def get_entity_components(entity):
 
 def get_component_data(component_type):
     """Return the component data of all entities for the specified component."""
-    #TODO: synchronize
-
     try:
         store = _component_stores[component_type]
     except KeyError:
         logging.exception("The component requested has not been initialized.")
         return None
     else:
-        return store.values()
+        return store
 
 def get_entity_ids(component_type):
     """Return all Entity IDs for the specified component."""
-    #TODO: synchronize
-
     try:
         store = _component_stores[component_type]
     except KeyError:
@@ -201,13 +191,16 @@ def add_system(system):
     """Add a System to the set."""
     _all_systems.add(system)
 
-def remove_system(system):
-    """Remove a System from the set."""
+def delete_system(system):
+    """Delete a System."""
     try:
-        _all_systems.remove(system)
+        del _all_systems[system]
     except KeyError:
         logging.exception("System %s does not exist.", system)
         return False
     else:
         return True
 
+def delete_all_systems():
+    """Delete all Systems."""
+    _all_systems.clear()

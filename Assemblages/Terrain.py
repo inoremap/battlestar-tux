@@ -20,6 +20,7 @@ import ogre.renderer.OGRE as ogre
 
 import Application
 import EntitySystem
+from EntitySystem.Component import ComponentTypes
 import utils.OgreBulletUtils as OgreBulletUtils
 import Procedural.SimplexNoise as SimplexNoise
 
@@ -85,6 +86,7 @@ def create():
                             'ogreNode-' + str(terrain_id))
     ogre_node.attachObject(ogre_entity)
     ogre_entity.setCastShadows(False)
+    EntitySystem.add_component(terrain_id, ComponentTypes.Graphics, ogre_node)
 
     # Setup terrain collisions.
     # collision_object = OgreBulletUtils.CollisionObject(Application.bullet_world)
@@ -95,4 +97,4 @@ def create():
     #                                                terrain_position[1],
     #                                                terrain_position[2]))
     # collision_object.setMass(0)
-    # Application.collision_objects.append(collision_object)
+    # EntitySystem.add_component(terrain_id, ComponentTypes.Physics, collision_object)

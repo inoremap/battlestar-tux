@@ -16,10 +16,9 @@
 
 import logging
 
-import utils
+from utils import enum
 
-
-ComponentTypes = utils.enum([
+ComponentTypes = enum([
      # Macro-level properties
      "AI",
      "Graphics",
@@ -33,7 +32,7 @@ ComponentTypes = utils.enum([
      "EnergyStorage",
      "Propulsion",
      "Weapon"
-                            ])
+])
 """List of valid component types."""
 #TODO: According to Adam, a better choice would be defining DB tables here.
 # For the time being, the best bet is to read from the DB at startup and
@@ -43,7 +42,7 @@ ComponentTypes = utils.enum([
 
 class Component(dict):
     """Components are added to Entities to define their data.
-    
+
     If an Entity is the unique ID of a database object, then
     the Component defines the layout of the database table row.
     """
