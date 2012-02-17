@@ -330,7 +330,7 @@ def setupScene():
 
     ogre_camera.setPosition(ogre.Vector3(0, 40, 5))
     ogre_camera.lookAt(ogre.Vector3(0, 0, 0))
-    ogre_camera.nearClipDistance = 10
+    ogre_camera.nearClipDistance = 5
 
     ogre_scene_manager.setAmbientLight(ogre.ColourValue(0, 0, 0))
     ogre_scene_manager.setShadowTechnique(ogre.SHADOWTYPE_STENCIL_ADDITIVE)

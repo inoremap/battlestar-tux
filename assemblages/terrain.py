@@ -44,8 +44,8 @@ def create():
     for row in range(height):
         for column in range(width):
             terrain_height = simplexnoise.scaled_octave_noise_2d(
-                                3, 0.2, 0.1,    # Noise settings
-                                -10, 0,         # Height range
+                                3, 0.3, 0.05,    # Noise settings
+                                -30, 0,          # Height range
                                 column - offsetX,
                                 row - offsetY
                             )
@@ -56,9 +56,9 @@ def create():
                                 )
             #terrain_object.normal(0, 0, 0)
             terrain_object.colour(
-                                    abs(terrain_height)/10,
-                                    abs(terrain_height)/10,
-                                    abs(terrain_height)/10,
+                                    abs(terrain_height/50),
+                                    abs(terrain_height/50),
+                                    abs(terrain_height/50),
                                     1
                                 )
 
@@ -72,6 +72,7 @@ def create():
                                 vertexID + 1          # top-right
                                 )
             vertexID += 1
+        vertexID += 1
     terrain_object.end()
 
     # Attach mesh to OGRE scene.
