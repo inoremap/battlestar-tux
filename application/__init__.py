@@ -179,6 +179,18 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         """Process any keyboard key presses."""
         if evt.key == OIS.KC_ESCAPE:
             self.quitApplication = True
+        elif evt.key == OIS.KC_A:
+            ogre_camera.move(ogre.Vector3(-3, 0, 0))
+        elif evt.key == OIS.KC_U:
+            ogre_camera.move(ogre.Vector3(3, 0, 0))
+        elif evt.key == OIS.KC_COMMA:
+            ogre_camera.move(ogre.Vector3(0, 0, -3))
+        elif evt.key == OIS.KC_O:
+            ogre_camera.move(ogre.Vector3(0, 0, 3))
+        elif evt.key == OIS.KC_E:
+            ogre_camera.move(ogre.Vector3(0, -2, 0))
+        elif evt.key == OIS.KC_PERIOD:
+            ogre_camera.move(ogre.Vector3(0, 2, 0))
         else:
             print("Key pressed: ", evt.key)
         return True
@@ -215,7 +227,10 @@ ogre_root_node = None
 """All in-game OGRE objects are descendents of this root."""
 
 ogre_render_window = None
-"""Ogre Render Window - everything is drawn here"""
+"""Ogre Render Window - everything is drawn here."""
+
+ogre_camera = None
+"""Ogre camera - provides a view of the scene."""
 
 ogre_event_listener = None
 """Listens for Ogre events as well as user input."""
@@ -305,16 +320,17 @@ def setupScene():
     global ogre_scene_manager
     global ogre_render_window
     global ogre_root_node
+    global ogre_camera
 
     ogre_render_window = ogre_root.getAutoCreatedWindow()
     ogre_scene_manager = ogre_root.createSceneManager(ogre.ST_GENERIC,
                                                      "Default SceneManager")
-    camera = ogre_scene_manager.createCamera("Camera")
-    ogre_root.getAutoCreatedWindow().addViewport(camera)
+    ogre_camera = ogre_scene_manager.createCamera("Camera")
+    ogre_root.getAutoCreatedWindow().addViewport(ogre_camera)
 
-    camera.setPosition(ogre.Vector3(10, 50, 40))
-    camera.lookAt(ogre.Vector3(0, 0, 0))
-    camera.nearClipDistance = 10
+    ogre_camera.setPosition(ogre.Vector3(0, 40, 5))
+    ogre_camera.lookAt(ogre.Vector3(0, 0, 0))
+    ogre_camera.nearClipDistance = 10
 
     ogre_scene_manager.setAmbientLight(ogre.ColourValue(0, 0, 0))
     ogre_scene_manager.setShadowTechnique(ogre.SHADOWTYPE_STENCIL_ADDITIVE)
