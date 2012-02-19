@@ -332,22 +332,15 @@ def setupScene():
     ogre_camera.lookAt(ogre.Vector3(0, 0, 0))
     ogre_camera.nearClipDistance = 5
 
-    ogre_scene_manager.setAmbientLight(ogre.ColourValue(0, 0, 0))
+    ogre_scene_manager.setAmbientLight(ogre.ColourValue(0.05, 0.05, 0.05))
     ogre_scene_manager.setShadowTechnique(ogre.SHADOWTYPE_STENCIL_ADDITIVE)
     ogre_scene_manager.setFog(ogre.FOG_EXP, ogre.ColourValue(1, 1, 1), 0.002)
 
     directional_light = ogre_scene_manager.createLight('Light-Directional')
     directional_light.setType(ogre.Light.LT_DIRECTIONAL)
     directional_light.setDirection(0.1, -1, 0.5)
-    directional_light.setDiffuseColour(0.0, 0.0, 0.0)
-    directional_light.setSpecularColour(0.1, 0, 0)
-
-
-    point_light = ogre_scene_manager.createLight('Light-Point')
-    point_light.setType(ogre.Light.LT_POINT)
-    point_light.setPosition(ogre.Vector3(50, 40, 50))
-    point_light.setDiffuseColour(1, 1, 1)
-    point_light.setSpecularColour(0, 0, 0)
+    directional_light.setDiffuseColour(0.5, 0.5, 0.5)
+    directional_light.setSpecularColour(0.02, 0, 0)
 
     ogre_root_node = ogre_scene_manager.getRootSceneNode()
 

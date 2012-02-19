@@ -54,7 +54,8 @@ def create():
                                     terrain_height,     # y
                                     row - offsetY       # z
                                 )
-            #terrain_object.normal(0, 0, 0)
+            #XXX: these normals are fake and will break lighting
+            terrain_object.normal(0, 1, 0)
             terrain_object.colour(
                                     abs(terrain_height/20),
                                     abs(terrain_height/20),
