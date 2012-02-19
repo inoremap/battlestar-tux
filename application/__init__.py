@@ -125,7 +125,7 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         # Update Bullet Physics simulation
         self.bullet_world.stepSimulation(evt.timeSinceLastFrame, 50)
         self.bullet_world.getDebugDrawer().frameRenderingQueued(evt)
-        self.bullet_world.debugDrawWorld()
+        #self.bullet_world.debugDrawWorld()
 
         # Update all Entity Systems
         entitysystem.game_step(evt.timeSinceLastFrame)
@@ -413,24 +413,12 @@ def startRenderLoop():
     # Create procedural terrain
     Terrain.create()
 
-    # Create an infinite non-moving collision plane.
-    # TODO: limit physics world to plane size
-    plane = OgreBulletUtils.CollisionObject(bullet_world)
-    plane.mShape = bullet.btStaticPlaneShape(bullet.btVector3(0, 1, 0), 0)
-    plane.setMass(0.0)
-    plane.setInertia(bullet.btVector3(0, 0, 0))
-    plane.setTransform(bullet.btVector3(0, 0, 0))
-    plane.setMotion(None)
-    #XXX: self.collisionObjects.append(plane)
-    assert(plane.mRigidBody.getFlags() == plane.mRigidBody.getFlags() &
-           bullet.btCollisionObject.CollisionFlags.CF_STATIC_OBJECT)
-
     # Create ships - arrange in a circle.
-    for i in range(0, 360, 360 / 6):
+    for i in range(0, 360, 360 / 12):
         HexShip.create((
-                       math.sin(math.radians(i)) * 8,
+                       math.sin(math.radians(i)) * 12,
                        20,
-                       math.cos(math.radians(i)) * 8,
+                       math.cos(math.radians(i)) * 12,
                        ))
 
     # Begin running game

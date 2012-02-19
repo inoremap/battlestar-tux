@@ -45,7 +45,7 @@ def create():
         for column in range(width):
             terrain_height = simplexnoise.scaled_octave_noise_2d(
                                 3, 0.3, 0.05,    # Noise settings
-                                -30, 0,          # Height range
+                                -20, 0,          # Height range
                                 column - offsetX,
                                 row - offsetY
                             )
@@ -56,9 +56,9 @@ def create():
                                 )
             #terrain_object.normal(0, 0, 0)
             terrain_object.colour(
-                                    abs(terrain_height/50),
-                                    abs(terrain_height/50),
-                                    abs(terrain_height/50),
+                                    abs(terrain_height/20),
+                                    abs(terrain_height/20),
+                                    abs(terrain_height/20),
                                     1
                                 )
 
@@ -90,14 +90,10 @@ def create():
                                 ogre_node)
 
     # Setup terrain collisions.
-    # collision_object = OgreBulletUtils.CollisionObject(application.bullet_world)
-    # collision_object.setShape(OgreBulletUtils.MeshInfo.createCylinderShape(
-    #                                        ogre_entity,
-    #                                        OgreBulletUtils.BulletShapes.CYLINDERZ))
-    # collision_object.setTransform(bullet.btVector3(terrain_position[0],
-    #                                                terrain_position[1],
-    #                                                terrain_position[2]))
-    # collision_object.setMass(0)
-    # entitysystem.add_component( terrain_id,
-    #                             entitysystem.ComponentTypes.Physics,
-    #                             collision_object)
+    collision_object = OgreBulletUtils.CollisionObject(application.bullet_world)
+    triangle_mesh, collision_shape = OgreBulletUtils.MeshInfo.createTriMeshShape(ogre_entity)
+    collision_object.setShape(collision_shape)
+    collision_object.setMotion(None)
+    entitysystem.add_component( terrain_id,
+                                entitysystem.ComponentTypes.Physics,
+                                (collision_object, triangle_mesh))

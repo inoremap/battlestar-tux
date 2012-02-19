@@ -209,7 +209,8 @@ class MeshInfo:
                 faces += MeshInfo.GetIndicies (sm.indexData)
 
 
-        logging.debug("Mesh faces: " + len(faces) + len(vertices))
+        logging.debug("Mesh faces: " + str(len(faces)) +
+                        "\tvertices: " + str(len(vertices)))
 
         mTriMesh = bullet.btTriangleMesh()
         for ind in faces:
@@ -219,7 +220,6 @@ class MeshInfo:
             b1 = bullet.btVector3(v1[0], v1[1], v1[2])
             b2 = bullet.btVector3(v2[0], v2[1], v2[2])
             b3 = bullet.btVector3(v3[0], v3[1], v3[2])
-            #print b1.x(),b1.y(),b1.z()
             mTriMesh.addTriangle(b1, b2, b3)
 
         useQuantizedAABB = True
