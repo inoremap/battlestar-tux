@@ -391,14 +391,14 @@ def setupCEGUI():
     global cegui_system
     cegui_renderer = CEGUI.OgreRenderer.bootstrapSystem()
     cegui_system = CEGUI.System.getSingleton()
-    CEGUI.SchemeManager.getSingleton().create("TaharezLookSkin.scheme")
-    cegui_system.setDefaultMouseCursor("TaharezLook", "MouseArrow")
+    CEGUI.SchemeManager.getSingleton().create("SleekSpace.scheme")
+    cegui_system.setDefaultMouseCursor("SleekSpace", "MouseArrow")
     cegui_system.setDefaultFont("BlueHighway-12")
 
     # Uncomment the following to read in a CEGUI sheet (from CELayoutEditor)
     #
-    # mainSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("myapplication.layout")
-    # cegui_system.setGUISheet(mainSheet)
+    introSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("IntroWindow.layout")
+    cegui_system.setGUISheet(introSheet)
 
 def startRenderLoop():
     """Begin rendering - will continue until interrupted."""
