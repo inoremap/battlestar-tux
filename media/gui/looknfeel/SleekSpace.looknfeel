@@ -3199,6 +3199,7 @@
     ***************************************************
         SleekSpace/MenuItem
     ***************************************************
+    -->
     <WidgetLook name="SleekSpace/MenuItem">
         <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="DisabledTextColour" initialValue="FF7F7F7F" redrawOnWrite="true" />
@@ -3346,9 +3347,11 @@
         </StateImagery>
     </WidgetLook>
     
+    <!--
     ***************************************************
         SleekSpace/PopupMenu
     ***************************************************
+    -->
     <WidgetLook name="SleekSpace/PopupMenu">
         <NamedArea name="ItemRenderArea">
             <Area>
@@ -3403,8 +3406,6 @@
         </StateImagery>
     </WidgetLook>
 
-    -->
-    
     <!--
     ***************************************************
         SleekSpace/LargeVerticalScrollbarThumb
