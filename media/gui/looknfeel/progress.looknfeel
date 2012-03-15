@@ -1,0 +1,585 @@
+<?xml version="1.0" ?>
+<Falagard>
+	<!--
+	***************************************************
+		LineSpace/ProgressBar
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/ProgressBar">
+		<NamedArea name="ProgressArea">
+			<Area>
+				<Dim type="LeftEdge" ><ImageDim imageset="LineSpace" image="ProgressBarLeft" dimension="Width" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="RightEdge" >
+					<UnifiedDim scale="1" type="RightEdge">
+						<DimOperator op="Subtract">
+							<ImageDim imageset="LineSpace" image="ProgressBarRight" dimension="Width" />
+						</DimOperator>
+					</UnifiedDim>
+				</Dim>
+				<Dim type="Height" ><ImageDim imageset="LineSpace" image="ProgressBarLeft" dimension="Height" /></Dim>
+			</Area>
+		</NamedArea>
+		<ImagerySection name="frame">
+			<FrameComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><ImageDim imageset="LineSpace" image="ProgressBarLeft" dimension="Height" /></Dim>
+				</Area>
+				<Image type="LeftEdge" imageset="LineSpace" image="ProgressBarLeft" />
+				<Image type="RightEdge" imageset="LineSpace" image="ProgressBarRight" />
+				<Image type="Background" imageset="LineSpace" image="ProgressBarMiddle" />
+			</FrameComponent>
+		</ImagerySection>
+		<ImagerySection name="progress_lights" >
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="1" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="1" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="ProgressBarLitSegment" />
+				<VertFormat type="Stretch" />
+				<HorzFormat type="Stretch" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="frame" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="frame">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+		<StateImagery name="EnabledProgress">
+			<Layer>
+				<Section section="progress_lights" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="DisabledProgress">
+			<Layer>
+				<Section section="progress_lights">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/AlternateProgressBar
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/AltProgressBar">
+		<NamedArea name="ProgressArea">
+			<Area>
+				<Dim type="LeftEdge" ><ImageDim imageset="LineSpace" image="AltProgressLeft" dimension="Width" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="2" /></Dim>
+				<Dim type="RightEdge" >
+					<UnifiedDim scale="1" type="RightEdge">
+						<DimOperator op="Subtract">
+							<ImageDim imageset="LineSpace" image="AltProgressRight" dimension="Width" />
+						</DimOperator>
+					</UnifiedDim>
+				</Dim>
+				<Dim type="Height" ><UnifiedDim scale="1" offset="-4" type="Height" /></Dim>
+			</Area>
+		</NamedArea>
+		<ImagerySection name="frame">
+			<FrameComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image type="LeftEdge" imageset="LineSpace" image="AltProgressLeft" />
+				<Image type="RightEdge" imageset="LineSpace" image="AltProgressRight" />
+				<Image type="Background" imageset="LineSpace" image="AltProgressMiddle" />
+			</FrameComponent>
+		</ImagerySection>
+		<ImagerySection name="progress_lights" >
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight1" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.1" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight2" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.2" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight3" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.3" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight4" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.4" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight5" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.5" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight6" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.6" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight7" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.7" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight8" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.8" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight9" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0.9" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="0.1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="AltProgressLight10" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Tiled" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="frame" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="frame">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+		<StateImagery name="EnabledProgress">
+			<Layer>
+				<Section section="progress_lights" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="DisabledProgress">
+			<Layer>
+				<Section section="progress_lights">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/VUMeter (progress bar)
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/VUMeter">
+		<Property name="VerticalProgress" value="True" />
+		<NamedArea name="ProgressArea">
+			<Area>
+				<Dim type="LeftEdge" ><UnifiedDim scale="0" type="LeftEdge" /></Dim>
+				<Dim type="TopEdge" ><UnifiedDim scale="0" type="TopEdge" /></Dim>
+				<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+				<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+			</Area>
+		</NamedArea>
+		<ImagerySection name="progress_lights" >
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><UnifiedDim scale="0.5" type="TopEdge" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="0.5" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="TextSelectionBrush" />
+				<Colours topLeft="FF00FF00" topRight="FF00FF00" bottomLeft="FF00FF00" bottomRight="FF00FF00" />
+				<VertFormat type="Tiled" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><UnifiedDim scale="0.2" type="TopEdge" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="0.3" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="TextSelectionBrush" />
+				<Colours topLeft="FFFFFF00" topRight="FFFFFF00" bottomLeft="FFFFFF00" bottomRight="FFFFFF00" />
+				<VertFormat type="Tiled" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><UnifiedDim scale="0" type="LeftEdge" /></Dim>
+					<Dim type="TopEdge" ><UnifiedDim scale="0" type="TopEdge" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="0.2" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="TextSelectionBrush" />
+				<Colours topLeft="FFFF0000" topRight="FFFF0000" bottomLeft="FFFF0000" bottomRight="FFFF0000" />
+				<VertFormat type="Tiled" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled">
+		</StateImagery>
+		<StateImagery name="Disabled">
+		</StateImagery>
+		<StateImagery name="EnabledProgress">
+			<Layer>
+				<Section section="progress_lights" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="DisabledProgress">
+			<Layer>
+				<Section section="progress_lights">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/HorizontalSlider
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/HorizontalSlider">
+		<Property name="MouseButtonDownAutoRepeat" value="True" />
+		<Property name="WantsMultiClickEvents" value="False" />
+		<NamedArea name="ThumbTrackArea">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="RightEdge" ><UnifiedDim scale="1.0" type="RightEdge" /></Dim>
+				<Dim type="BottomEdge" ><UnifiedDim scale="1.0" type="BottomEdge" /></Dim>
+			</Area>
+		</NamedArea>
+		<Child type="LineSpace/HorizontalSliderThumb" nameSuffix="__auto_thumb__">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="Width" ><ImageDim imageset="LineSpace" image="HorzSliderThumbNormal" dimension="Width" /></Dim>
+				<Dim type="Height" ><ImageDim imageset="LineSpace" image="HorzSliderThumbNormal" dimension="Height" /></Dim>
+			</Area>
+			<VertAlignment type="CentreAligned" />
+		</Child>
+		<ImagerySection name="main">
+			<FrameComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="3" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" offset="-6" type="Height" /></Dim>
+				</Area>
+				<Image type="LeftEdge" imageset="LineSpace" image="HorzSliderLeftNormal" />
+				<Image type="RightEdge" imageset="LineSpace" image="HorzSliderRightNormal" />
+				<Image type="Background" imageset="LineSpace" image="HorzSliderBody" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</FrameComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="main" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="main">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/Slider
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/Slider">
+		<Property name="VerticalSlider" value="True" />
+		<Property name="MouseButtonDownAutoRepeat" value="True" />
+		<Property name="WantsMultiClickEvents" value="False" />
+		<NamedArea name="ThumbTrackArea">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="RightEdge" ><UnifiedDim scale="1.0" type="RightEdge" /></Dim>
+				<Dim type="BottomEdge" ><UnifiedDim scale="1.0" type="BottomEdge" /></Dim>
+			</Area>
+		</NamedArea>
+		<Child  type="LineSpace/SliderThumb" nameSuffix="__auto_thumb__">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="Width" ><ImageDim imageset="LineSpace" image="VertSliderThumbNormal" dimension="Width" /></Dim>
+				<Dim type="Height" ><ImageDim imageset="LineSpace" image="VertSliderThumbNormal" dimension="Height" /></Dim>
+			</Area>
+		</Child>
+		<ImagerySection name="main">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="3" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" offset="-6" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="VertSliderBody" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="main" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="main">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/HorizontalSliderThumb
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/HorizontalSliderThumb">
+		<Property name="HorzFree" value="True" />
+		<ImagerySection name="normal">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="HorzSliderThumbNormal" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<ImagerySection name="hover">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="HorzSliderThumbHover" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Normal">
+			<Layer>
+				<Section section="normal" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Hover">
+			<Layer>
+				<Section section="hover" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Pushed">
+			<Layer>
+				<Section section="hover" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="normal">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/SliderThumb
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/SliderThumb">
+		<Property name="VertFree" value="True" />
+		<ImagerySection name="normal">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="VertSliderThumbNormal" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<ImagerySection name="hover">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1.0" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1.0" type="Height" /></Dim>
+				</Area>
+				<Image imageset="LineSpace" image="VertSliderThumbHover" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Normal">
+			<Layer>
+				<Section section="normal" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Hover">
+			<Layer>
+				<Section section="hover" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Pushed">
+			<Layer>
+				<Section section="hover" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="normal">
+					<Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+
+	<!--
+	***************************************************
+		LineSpace/Spinner
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/Spinner">
+		<Child  type="LineSpace/Editbox" nameSuffix="__auto_editbox__">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="RightEdge" >
+					<UnifiedDim scale="1" type="RightEdge">
+						<DimOperator op="Subtract">
+							<ImageDim imageset="LineSpace" image="VertScrollUpNormal" dimension="Width" />
+						</DimOperator>
+					</UnifiedDim>
+				</Dim>
+				<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+			</Area>
+		</Child>
+		<Child  type="LineSpace/Button" nameSuffix="__auto_incbtn__">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="Width" ><ImageDim imageset="LineSpace" image="VertScrollUpNormal" dimension="Width" /></Dim>
+				<Dim type="Height" ><UnifiedDim scale="0.5" type="Height" /></Dim>
+			</Area>
+			<HorzAlignment type="RightAligned" />
+			<Property name="NormalImage" value="set:LineSpace image:VertScrollUpNormal" />
+			<Property name="HoverImage" value="set:LineSpace image:VertScrollUpHover" />
+			<Property name="PushedImage" value="set:LineSpace image:VertScrollUpNormal" />
+		</Child>
+		<Child  type="LineSpace/Button" nameSuffix="__auto_decbtn__">
+			<Area>
+				<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+				<Dim type="TopEdge" ><UnifiedDim scale="0.5" type="TopEdge" /></Dim>
+				<Dim type="Width" ><ImageDim imageset="LineSpace" image="VertScrollUpNormal" dimension="Width" /></Dim>
+				<Dim type="Height" ><UnifiedDim scale="0.5" type="Height" /></Dim>
+			</Area>
+			<HorzAlignment type="RightAligned" />
+			<Property name="NormalImage" value="set:LineSpace image:VertScrollDownNormal" />
+			<Property name="HoverImage" value="set:LineSpace image:VertScrollDownHover" />
+			<Property name="PushedImage" value="set:LineSpace image:VertScrollDownNormal" />
+		</Child>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
+	</WidgetLook>
+</Falagard>
+

@@ -130,6 +130,9 @@ class EventListener(ogre.FrameListener, ogre.WindowEventListener,
         # Update all Entity Systems
         entitysystem.game_step(evt.timeSinceLastFrame)
 
+        # Update CEGUI interface
+        CEGUI.System.getSingleton().injectTimePulse(evt.timeSinceLastFrame)
+
         return not self.quitApplication
 
 
@@ -391,13 +394,13 @@ def setupCEGUI():
     global cegui_system
     cegui_renderer = CEGUI.OgreRenderer.bootstrapSystem()
     cegui_system = CEGUI.System.getSingleton()
-    CEGUI.SchemeManager.getSingleton().create("SleekSpace.scheme")
-    cegui_system.setDefaultMouseCursor("SleekSpace", "MouseArrow")
+    CEGUI.SchemeManager.getSingleton().create("LineSpace.scheme")
+    cegui_system.setDefaultMouseCursor("LineSpace", "MouseArrow")
     cegui_system.setDefaultFont("BlueHighway-12")
 
     # Uncomment the following to read in a CEGUI sheet (from CELayoutEditor)
     #
-    introSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("IntroWindow.layout")
+    introSheet = CEGUI.WindowManager.getSingleton().loadWindowLayout("TestWindow.layout")
     cegui_system.setGUISheet(introSheet)
 
 def startRenderLoop():

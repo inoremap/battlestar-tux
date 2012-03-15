@@ -1,0 +1,570 @@
+<?xml version="1.0" ?>
+<Falagard>
+    <!--
+    ***************************************************
+        LineSpace/TabButton
+    ***************************************************
+    -->
+	<WidgetLook name="LineSpace/TabButton">
+		<PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="HoverTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="PushedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="DisabledTextColour" initialValue="FF7F7F7F" redrawOnWrite="true" />
+		<PropertyDefinition name="VertLabelFormatting" initialValue="CentreAligned" />
+		<PropertyDefinition name="HorzLabelFormatting" initialValue="CentreAligned" />
+		<PropertyDefinition name="NormalImage" initialValue="" redrawOnWrite="true" />
+		<PropertyDefinition name="HoverImage" initialValue="" redrawOnWrite="true" />
+		<PropertyDefinition name="PushedImage" initialValue="" redrawOnWrite="true" />
+		<PropertyDefinition name="DisabledImage" initialValue="" redrawOnWrite="true" />
+		<PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" />
+		<PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" />
+        <ImagerySection name="label">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" >
+						<UnifiedDim scale="1" type="Width">
+                            <DimOperator op="Add">
+                                <AbsoluteDim value="12" />
+                            </DimOperator>
+						</UnifiedDim>
+					</Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <VertFormat type="CentreAligned" />
+                <HorzFormat type="CentreAligned" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="top_normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabButtonUpperLeftNormal" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabButtonUpperRightNormal" />
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabButtonLowerLeftNormal" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabButtonLowerRight2Normal" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftNormal" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightNormal" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabButtonUpperNormal" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabButtonLowerNormal" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleNormal" />
+            </FrameComponent>
+        </ImagerySection>
+        <ImagerySection name="bot_normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabButtonUpperLeft2Normal" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabButtonUpperRightNormal" />
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabButtonLowerLeftNormal" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabButtonLowerRightNormal" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftNormal" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightNormal" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabButtonUpperNormal" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabButtonLowerNormal" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleNormal" />
+            </FrameComponent>
+        </ImagerySection>
+        <ImagerySection name="top_hover">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabButtonUpperLeftNormal" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabButtonUpperRightNormal" />
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabButtonLowerLeftNormal" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabButtonLowerRight2Normal" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftNormal" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightNormal" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabButtonUpperNormal" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabButtonLowerNormal" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleNormal" />
+            </FrameComponent>
+        </ImagerySection>
+        <ImagerySection name="bot_hover">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabButtonUpperLeft2Normal" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabButtonUpperRightNormal" />
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabButtonLowerLeftNormal" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabButtonLowerRightNormal" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftNormal" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightNormal" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabButtonUpperNormal" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabButtonLowerNormal" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleNormal" />
+            </FrameComponent>
+        </ImagerySection>
+        <ImagerySection name="top_selected">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabButtonUpperLeftSelected" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabButtonUpperSelected" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabButtonUpperRightSelected" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftSelected" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleSelected" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightSelected" />
+            </FrameComponent>
+        </ImagerySection>
+        <ImagerySection name="bot_selected">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="LeftEdge" imageset="LineSpace" image="TabButtonLeftSelected" />
+                <Image type="Background" imageset="LineSpace" image="TabButtonMiddleSelected" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabButtonRightSelected" />
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabButtonLowerLeftNormal" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabButtonLowerNormal" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabButtonLowerRightNormal" />
+            </FrameComponent>
+        </ImagerySection>
+        <StateImagery name="TopNormal">
+            <Layer>
+                <Section section="top_normal" />
+                <Section section="label">
+                    <ColourProperty name="NormalTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="BottomNormal">
+            <Layer>
+                <Section section="bot_normal" />
+                <Section section="label">
+                    <ColourProperty name="NormalTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="TopHover">
+            <Layer>
+                <Section section="top_hover" />
+                <Section section="label">
+                    <ColourProperty name="HoverTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="BottomHover">
+            <Layer>
+                <Section section="bot_hover" />
+                <Section section="label">
+                    <ColourProperty name="HoverTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="TopSelected">
+            <Layer>
+                <Section section="top_selected" />
+                <Section section="label">
+                    <ColourProperty name="SelectedTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="BottomSelected">
+            <Layer>
+                <Section section="bot_selected" />
+                <Section section="label">
+                    <ColourProperty name="SelectedTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="TopPushed">
+            <Layer>
+                <Section section="top_normal" />
+                <Section section="label">
+                    <ColourProperty name="PushedTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="BottomPushed">
+            <Layer>
+                <Section section="bot_normal" />
+                <Section section="label">
+                    <ColourProperty name="PushedTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="TopDisabled">
+            <Layer>
+                <Section section="top_normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+                <Section section="label">
+                    <ColourProperty name="DisabledTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="BottomDisabled">
+            <Layer>
+                <Section section="bot_normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+                <Section section="label">
+                    <ColourProperty name="DisabledTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+	</WidgetLook>
+
+
+    <!--
+    ***************************************************
+        LineSpace/TabContentPane
+    ***************************************************
+    -->
+    <WidgetLook name="LineSpace/TabContentPane">
+        <PropertyDefinition name="EnableTop" initialValue="0" redrawOnWrite="true" layoutOnWrite="true" />
+        <PropertyDefinition name="EnableBottom" initialValue="0" redrawOnWrite="true" layoutOnWrite="true" />
+        <ImagerySection name="normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" >
+                        <ImageDim imageset="LineSpace" image="TabContentPaneUpperLeft" dimension="Height">
+                            <DimOperator op="Multiply">
+                                <PropertyDim name="EnableTop" />
+                            </DimOperator>
+                        </ImageDim>
+                    </Dim>
+                </Area>
+                <Image type="TopLeftCorner" imageset="LineSpace" image="TabContentPaneUpperLeft" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabContentPaneUpper" />
+                <Image type="TopRightCorner" imageset="LineSpace" image="TabContentPaneUpperRight" />
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" >
+                        <ImageDim imageset="LineSpace" image="TabContentPaneUpperLeft" dimension="Height">
+                            <DimOperator op="Multiply">
+                                <PropertyDim name="EnableTop" />
+                            </DimOperator>
+                        </ImageDim>
+                    </Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" >
+                        <UnifiedDim scale="1" type="Height">
+                            <DimOperator op="Subtract">
+                                <ImageDim imageset="LineSpace" image="TabContentPaneLowerLeft" dimension="Height">
+                                    <DimOperator op="Multiply">
+                                        <PropertyDim name="EnableBottom" />
+                                    </DimOperator>
+                                </ImageDim>
+                            </DimOperator>
+                        </UnifiedDim>
+                    </Dim>
+                </Area>
+                <Image type="LeftEdge" imageset="LineSpace" image="TabContentPaneLeft" />
+                <Image type="Background" imageset="LineSpace" image="TabContentPaneMiddle" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabContentPaneRight" />
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" >
+                        <UnifiedDim scale="1" type="Height">
+                            <DimOperator op="Subtract">
+                                <ImageDim imageset="LineSpace" image="TabContentPaneLowerLeft" dimension="Height">
+                                    <DimOperator op="Multiply">
+                                        <PropertyDim name="EnableBottom" />
+                                    </DimOperator>
+                                </ImageDim>
+                            </DimOperator>
+                        </UnifiedDim>
+                    </Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabContentPaneLowerLeft" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabContentPaneLower" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabContentPaneLowerRight" />
+            </FrameComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+            <Layer>
+                <Section section="normal" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+            <Layer>
+                <Section section="normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+		<Child type="DefaultWindow" nameSuffix="__auto_clientarea__">
+			<Area>
+				<Dim type="LeftEdge" >
+					<UnifiedDim scale="0"  offset="5" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge" >
+					<UnifiedDim scale="0"  offset="5" type="TopEdge" />
+				</Dim>
+				<Dim type="RightEdge" >
+					<UnifiedDim scale="1"  offset="-5" type="RightEdge" />
+				</Dim>
+				<Dim type="BottomEdge" >
+					<UnifiedDim scale="1"  offset="-5" type="BottomEdge" />
+				</Dim>
+			</Area>
+			<Property name="MousePassThroughEnabled" value="true" />
+		</Child>
+    </WidgetLook>
+
+    <!--
+    ***************************************************
+        LineSpace/TabButtonPane
+    ***************************************************
+    -->
+    <WidgetLook name="LineSpace/TabButtonPane">
+        <PropertyDefinition name="EnableTop" initialValue="1" redrawOnWrite="true" layoutOnWrite="true" />
+        <PropertyDefinition name="EnableBottom" initialValue="1" redrawOnWrite="true" layoutOnWrite="true" />
+        <ImagerySection name="normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" >
+                        <ImageDim imageset="LineSpace" image="TabHorizontalFiller" dimension="Height">
+                            <DimOperator op="Multiply">
+                                <PropertyDim name="EnableTop" />
+                            </DimOperator>
+                        </ImageDim>
+                    </Dim>
+                </Area>
+                <Image type="TopEdge" imageset="LineSpace" image="TabHorizontalFiller" />
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" >
+                        <ImageDim imageset="LineSpace" image="TabHorizontalFiller" dimension="Height">
+                            <DimOperator op="Multiply">
+                                <PropertyDim name="EnableTop" />
+                            </DimOperator>
+                        </ImageDim>
+                    </Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" >
+                        <UnifiedDim scale="1" type="Height">
+                            <DimOperator op="Subtract">
+                                <ImageDim imageset="LineSpace" image="TabHorizontalFiller" dimension="Height">
+                                    <DimOperator op="Multiply">
+                                        <PropertyDim name="EnableBottom" />
+                                    </DimOperator>
+                                </ImageDim>
+                            </DimOperator>
+                        </UnifiedDim>
+                    </Dim>
+                </Area>
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" >
+                        <UnifiedDim scale="1" type="Height">
+                            <DimOperator op="Subtract">
+                                <ImageDim imageset="LineSpace" image="TabHorizontalFiller" dimension="Height">
+                                    <DimOperator op="Multiply">
+                                        <PropertyDim name="EnableBottom" />
+                                    </DimOperator>
+                                </ImageDim>
+                            </DimOperator>
+                        </UnifiedDim>
+                    </Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="BottomEdge" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="BottomEdge" imageset="LineSpace" image="TabHorizontalFiller" />
+            </FrameComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+            <Layer>
+                <Section section="normal" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+            <Layer>
+                <Section section="normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+    </WidgetLook>
+
+    <!--
+    ***************************************************
+        LineSpace/TabControl
+    ***************************************************
+    -->
+    <WidgetLook name="LineSpace/TabControl">
+        <Property name="TabButtonType" value="LineSpace/TabButton" />
+        <Property name="TabTextPadding" value="{0,6}" />
+        <Child type="LineSpace/TabContentPane" nameSuffix="__auto_TabPane__">
+            <Area>
+                <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+                <Dim type="RightEdge"><UnifiedDim scale="1" type="Width" /></Dim>
+                <Dim type="TopEdge">
+                    <PropertyDim widget="__auto_TabPane__" name="EnableBottom">
+                        <DimOperator op="Multiply">
+                            <PropertyDim name="TabHeight" type="Height" />
+                        </DimOperator>
+                    </PropertyDim>
+                </Dim>
+                <Dim type="Height">
+                    <UnifiedDim scale="1" type="Height">
+                        <DimOperator op="Subtract">
+                            <PropertyDim name="TabHeight" type="Height" />
+                        </DimOperator>
+                    </UnifiedDim>
+                </Dim>
+            </Area>
+        </Child>
+        <Child  type="LineSpace/TabButtonPane" nameSuffix="__auto_TabPane__Buttons">
+            <Area>
+                <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+                <Dim type="RightEdge"><UnifiedDim scale="1" type="Width" /></Dim>
+                <Dim type="TopEdge">
+                    <PropertyDim widget="__auto_TabPane__Buttons" name="EnableTop">
+                        <DimOperator op="Multiply">
+                            <UnifiedDim scale="1" type="Height">
+                                <DimOperator op="Subtract">
+                                    <PropertyDim name="TabHeight" type="Height" />
+                                </DimOperator>
+                            </UnifiedDim>
+                        </DimOperator>
+                    </PropertyDim>
+                </Dim>
+                <Dim type="Height"><PropertyDim name="TabHeight" type="Height" /></Dim>
+            </Area>
+        </Child>
+        <Child type="LineSpace/SystemButton" nameSuffix="__auto_TabPane__ScrollLeft">
+            <Area>
+                <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+                <Dim type="TopEdge">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="TopEdge" />
+                </Dim>
+                <Dim type="Width">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="Height">
+                        <DimOperator op="Multiply">
+                            <ImageDim imageset="LineSpace" image="TabButtonScrollLeftNormal" dimension="Width">
+                                <DimOperator op="Divide">
+                                    <ImageDim imageset="LineSpace" image="TabButtonScrollLeftNormal" dimension="Height" />
+                                </DimOperator>
+                            </ImageDim>
+                        </DimOperator>
+                    </WidgetDim>
+                </Dim>
+                <Dim type="BottomEdge">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="BottomEdge" />
+                </Dim>
+            </Area>
+            <Property name="AlwaysOnTop" value="True" />
+            <Property name="NormalImage" value="set:LineSpace image:TabButtonScrollLeftNormal" />
+            <Property name="HoverImage" value="set:LineSpace image:TabButtonScrollLeftHover" />
+            <Property name="PushedImage" value="set:LineSpace image:TabButtonScrollLeftHover" />
+        </Child>
+        <Child type="LineSpace/SystemButton" nameSuffix="__auto_TabPane__ScrollRight">
+            <Area>
+                <Dim type="Width">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="Height">
+                        <DimOperator op="Multiply">
+                            <ImageDim imageset="LineSpace" image="TabButtonScrollRightNormal" dimension="Width">
+                                <DimOperator op="Divide">
+                                    <ImageDim imageset="LineSpace" image="TabButtonScrollRightNormal" dimension="Height" />
+                                </DimOperator>
+                            </ImageDim>
+                        </DimOperator>
+                    </WidgetDim>
+                </Dim>
+                <Dim type="LeftEdge">
+                    <UnifiedDim scale="1" type="Width">
+                        <DimOperator op="Subtract">
+                            <WidgetDim widget="__auto_TabPane__ScrollRight" dimension="Width" />
+                        </DimOperator>
+                    </UnifiedDim>
+                </Dim>
+                <Dim type="TopEdge">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="TopEdge" />
+                </Dim>
+                <Dim type="Height">
+                    <WidgetDim widget="__auto_TabPane__Buttons" dimension="Height" />
+                </Dim>
+            </Area>
+            <Property name="AlwaysOnTop" value="True" />
+            <Property name="NormalImage" value="set:LineSpace image:TabButtonScrollRightNormal" />
+            <Property name="HoverImage" value="set:LineSpace image:TabButtonScrollRightHover" />
+            <Property name="PushedImage" value="set:LineSpace image:TabButtonScrollRightHover" />
+        </Child>
+        <StateImagery name="Enabled" />
+        <StateImagery name="Disabled" />
+    </WidgetLook>
+
+    <!--
+    ***************************************************
+        LineSpace/TabPane
+    ***************************************************
+    -->
+    <!-- The TabPane seems to be obsolete - it is not in TaharezLook
+    <WidgetLook name="LineSpace/TabPane">
+        <ImagerySection name="normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                    <Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image type="BottomLeftCorner" imageset="LineSpace" image="TabPaneLowerLeft" />
+                <Image type="BottomRightCorner" imageset="LineSpace" image="TabPaneLowerRight" />
+                <Image type="LeftEdge" imageset="LineSpace" image="TabPaneLeft" />
+                <Image type="RightEdge" imageset="LineSpace" image="TabPaneRight" />
+                <Image type="TopEdge" imageset="LineSpace" image="TabControlButtonPaneFiller" />
+                <Image type="BottomEdge" imageset="LineSpace" image="TabPaneLower" />
+                <Image type="Background" imageset="LineSpace" image="TabPaneMiddle" />
+            </FrameComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+            <Layer>
+                <Section section="normal" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+            <Layer>
+                <Section section="normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+    </WidgetLook>
+    -->
+</Falagard>
+

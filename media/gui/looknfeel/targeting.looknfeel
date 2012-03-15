@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<Falagard>
+	<!--
+	***************************************************
+		LineSpace/TargetingReticle
+		(Targeting reticle)
+	***************************************************
+	-->
+	<WidgetLook name="LineSpace/TargetingReticle">
+		<PropertyDefinition name="FrameColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="TextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<Property name="FrameEnabled" value="True" />
+		<Property name="BackgroundEnabled" value="False" />
+		<ImagerySection name="frame">
+			<FrameComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<Image type="TopLeftCorner" imageset="LineSpace" image="ReticleTopLeft" />
+				<Image type="TopRightCorner" imageset="LineSpace" image="ReticleTopRight" />
+				<Image type="BottomLeftCorner" imageset="LineSpace" image="ReticleBottomLeft" />
+				<Image type="BottomRightCorner" imageset="LineSpace" image="ReticleBottomRight" />
+				<Image type="LeftEdge" imageset="LineSpace" image="ReticleLeftEdge" />
+				<Image type="RightEdge" imageset="LineSpace" image="ReticleRightEdge" />
+				<Image type="TopEdge" imageset="LineSpace" image="ReticleTopEdge" />
+				<Image type="BottomEdge" imageset="LineSpace" image="ReticleBottomEdge" />
+			</FrameComponent>
+		</ImagerySection>
+		<ImagerySection name="Label">
+			<TextComponent>
+				<Area>
+					<Dim type="LeftEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="TopEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="RightEdge">
+						<UnifiedDim scale="1" offset="0" type="RightEdge" />
+					</Dim>
+					<Dim type="BottomEdge">
+						<UnifiedDim scale="1" offset="0" type="BottomEdge" />
+					</Dim>
+				</Area>
+				<VertFormat type="TopAligned" />
+				<HorzFormat type="WordWrapCentreAligned" />
+			</TextComponent>
+		</ImagerySection>
+		<ImagerySection name="image_withframe">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><ImageDim imageset="LineSpace" image="ReticleLeftEdge" dimension="Width" /></Dim>
+					<Dim type="TopEdge" ><ImageDim imageset="LineSpace" image="ReticleTopEdge" dimension="Height" /></Dim>
+					<Dim type="RightEdge" >
+						<UnifiedDim scale="1" type="RightEdge">
+							<DimOperator op="Subtract">
+								<ImageDim imageset="LineSpace" image="ReticleRightEdge" dimension="Width" />
+							</DimOperator>
+						</UnifiedDim>
+					</Dim>
+					<Dim type="BottomEdge" >
+						<UnifiedDim scale="1" type="BottomEdge">
+							<DimOperator op="Subtract">
+								<ImageDim imageset="LineSpace" image="ReticleBottomEdge" dimension="Height" />
+							</DimOperator>
+						</UnifiedDim>
+					</Dim>
+				</Area>
+				<ImageProperty name="Image" />
+				<ColourRectProperty name="ImageColours" />
+				<VertFormatProperty name="VertFormatting" />
+				<HorzFormatProperty name="HorzFormatting" />
+			</ImageryComponent>
+		</ImagerySection>
+		<ImagerySection name="image_noframe">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height" ><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<ImageProperty name="Image" />
+				<ColourRectProperty name="ImageColours" />
+				<VertFormatProperty name="VertFormatting" />
+				<HorzFormatProperty name="HorzFormatting" />
+			</ImageryComponent>
+		</ImagerySection>
+		<!--ImagerySection name="background">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LeftEdge" ><ImageDim imageset="LineSpace" image="ReticleLeftEdge" dimension="Width" /></Dim>
+					<Dim type="TopEdge" ><ImageDim imageset="LineSpace" image="ReticleTopEdge" dimension="Height" /></Dim>
+					<Dim type="RightEdge" >
+						<UnifiedDim scale="1" type="RightEdge">
+							<DimOperator op="Subtract">
+								<ImageDim imageset="LineSpace" image="ReticleRightEdge" dimension="Width" />
+							</DimOperator>
+						</UnifiedDim>
+					</Dim>
+					<Dim type="BottomEdge" >
+						<UnifiedDim scale="1" type="BottomEdge">
+							<DimOperator op="Subtract">
+								<ImageDim imageset="LineSpace" image="ReticleBottomEdge" dimension="Height" />
+							</DimOperator>
+						</UnifiedDim>
+					</Dim>
+				</Area>
+				<Image imageset="LineSpace" image="ReticleBackdrop" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection-->
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="Label">
+					<ColourProperty name="TextColour" />
+				</Section>
+			</Layer>
+		</StateImagery>
+		<StateImagery name="EnabledFrame">
+			<Layer>
+				<Section section="frame">
+					<ColourProperty name="FrameColour" />
+				</Section>
+				<Section section="Label">
+					<ColourProperty name="TextColour" />
+				</Section>
+			</Layer>
+		</StateImagery>
+		<StateImagery name="WithFrameImage">
+			<Layer>
+				<Section section="frame">
+					<ColourProperty name="FrameColour" />
+				</Section>
+				<Section section="image_withframe" />
+				<Section section="Label">
+					<ColourProperty name="TextColour" />
+				</Section>
+			</Layer>
+		</StateImagery>
+		<StateImagery name="NoFrameImage">
+			<Layer>
+				<Section section="image_noframe" />
+				<Section section="Label">
+					<ColourProperty name="TextColour" />
+				</Section>
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+</Falagard>
+

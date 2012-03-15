@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Thanks to HyperNexus on CEGUI forums for this great widget-testing layout! -->
+<!-- http://www.cegui.org.uk/phpBB2/viewtopic.php?f=9&t=5967 -->
+
+<GUILayout>
+  <Window Name="root" Type="DefaultWindow">
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property Name="Font" Value="BlueHighway-8" />
+    <Window Name="root/StaticImage" Type="LineSpace/StaticImage">
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property Name="Font" Value="BlueHighway-8" />
+      <Window Name="root/StaticImage/button" Type="LineSpace/Button">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,5},{0,125},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Button" />
+      </Window>
+      <Window Name="root/StaticImage/disabledListbox" Type="LineSpace/Listbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,420},{0,205},{0,480}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <Window Name="root/StaticImage/disabledListbox/ListboxItem" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,200},{0,20}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 1" />
+          <Property Name="Selected" Value="True" />
+        </Window>
+        <Window Name="root/StaticImage/disabledListbox/ListboxItem2" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,20},{0,200},{0,40}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 2" />
+        </Window>
+        <Window Name="root/StaticImage/disabledListbox/ListboxItem3" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,40},{0,200},{0,60}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 3" />
+          <Property Name="AutoRenderingSurface" Value="True" />
+        </Window>
+      </Window>
+      <Window Name="root/StaticImage/listbox" Type="LineSpace/Listbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,335},{0,205},{0,415}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="ForceHorzScrollbar" Value="True" />
+        <Property Name="ForceVertScrollbar" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <Window Name="root/StaticImage/listbox/ListboxItem" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,200},{0,20}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 1" />
+          <Property Name="AutoRenderingSurface" Value="True" />
+        </Window>
+        <Window Name="root/StaticImage/listbox/ListboxItem2" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,20},{0,200},{0,40}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 2" />
+          <Property Name="AutoRenderingSurface" Value="True" />
+        </Window>
+        <Window Name="root/StaticImage/listbox/ListboxItem3" Type="LineSpace/ListboxItem">
+          <Property Name="UnifiedAreaRect" Value="{{0,0},{0,40},{0,200},{0,60}}" />
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="Item 3" />
+        </Window>
+      </Window>
+      <Window Name="root/StaticImage/disabledScrollbar" Type="LineSpace/HorizontalScrollbar">
+        <Property Name="UnifiedAreaRect" Value="{{0,210},{0,280},{0,410},{0,295}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/scrollbar" Type="LineSpace/HorizontalScrollbar">
+        <Property Name="UnifiedAreaRect" Value="{{0,210},{0,260},{0,410},{0,275}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/disabledVertProgressBar" Type="LineSpace/VUMeter">
+        <Property Name="UnifiedAreaRect" Value="{{0,235},{0,315},{0,255},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="StepSize" Value="0.01" />
+        <Property Name="CurrentProgress" Value="0.5" />
+      </Window>
+      <Window Name="root/StaticImage/disabledSlider" Type="LineSpace/Slider">
+        <Property Name="UnifiedAreaRect" Value="{{0,285},{0,315},{0,305},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="CurrentValue" Value="1" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/disabledProgressBar" Type="LineSpace/ProgressBar">
+        <Property Name="UnifiedAreaRect" Value="{{0,210},{0,235},{0,410},{0,255}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="StepSize" Value="0.01" />
+        <Property Name="CurrentProgress" Value="0.01" />
+      </Window>
+      <Window Name="root/StaticImage/progressBar" Type="LineSpace/ProgressBar">
+        <Property Name="UnifiedAreaRect" Value="{{0,210},{0,210},{0,410},{0,230}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="StepSize" Value="0.01" />
+        <Property Name="CurrentProgress" Value="0.5" />
+      </Window>
+      <Window Name="root/StaticImage/disabledGroupBox" Type="LineSpace/GroupBox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,270},{0,205},{0,320}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Group Box Disabled" />
+        <AutoWindow NameSuffix="__auto_contentpane__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/titlebar" Type="LineSpace/Titlebar">
+        <Property Name="UnifiedAreaRect" Value="{{0,130},{0,30},{0,330},{0,50}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Title Bar" />
+        <Property Name="AlwaysOnTop" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/disabledEditbox" Type="LineSpace/Editbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,380},{0,5},{0,500},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled" />
+        <Property Name="Disabled" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/disabledTitlebar" Type="LineSpace/Titlebar">
+        <Property Name="UnifiedAreaRect" Value="{{0,345},{0,30},{0,545},{0,50}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Title Bar" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="AlwaysOnTop" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/readOnlyEditbox" Type="LineSpace/Editbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,505},{0,5},{0,625},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Read Only" />
+        <Property Name="ReadOnly" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/vertProgressBar" Type="LineSpace/VUMeter">
+        <Property Name="UnifiedAreaRect" Value="{{0,210},{0,315},{0,230},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="StepSize" Value="0.01" />
+        <Property Name="CurrentProgress" Value="0.5" />
+      </Window>
+      <Window Name="root/StaticImage/slider" Type="LineSpace/Slider">
+        <Property Name="UnifiedAreaRect" Value="{{0,260},{0,315},{0,280},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="CurrentValue" Value="1" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/checkBox2" Type="LineSpace/Checkbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,130},{0,125},{0,150}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="CheckBox 2" />
+      </Window>
+      <Window Name="root/StaticImage/disabledCheckedRadioButton" Type="LineSpace/RadioButton">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,90},{0,125},{0,110}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Marked" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="Selected" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/disabledButton" Type="LineSpace/Button">
+        <Property Name="UnifiedAreaRect" Value="{{0,130},{0,5},{0,250},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled" />
+        <Property Name="Disabled" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/radioButton1" Type="LineSpace/RadioButton">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,30},{0,125},{0,50}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Radio Button 1" />
+      </Window>
+      <Window Name="root/StaticImage/radioButton2" Type="LineSpace/RadioButton">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,50},{0,125},{0,70}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Radio Button 2" />
+      </Window>
+      <Window Name="root/StaticImage/disabledUncheckedRadioButton" Type="LineSpace/RadioButton">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,70},{0,125},{0,90}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Unmarked" />
+        <Property Name="Disabled" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/checkBox1" Type="LineSpace/Checkbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,110},{0,125},{0,130}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="CheckBox 1" />
+      </Window>
+      <Window Name="root/StaticImage/frameWindow" Type="LineSpace/FrameWindow">
+        <Property Name="UnifiedAreaRect" Value="{{0,130},{0,60},{0,330},{0,200}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Frame Window" />
+        <Property Name="CaptionFont" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_titlebar__">
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_closebutton__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/groupBox" Type="LineSpace/GroupBox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,210},{0,205},{0,260}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Group Box" />
+        <AutoWindow NameSuffix="__auto_contentpane__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/scrollbar2" Type="LineSpace/VerticalScrollbar">
+        <Property Name="UnifiedAreaRect" Value="{{0,310},{0,315},{0,325},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/disabledScrollbar2" Type="LineSpace/VerticalScrollbar">
+        <Property Name="UnifiedAreaRect" Value="{{0,330},{0,315},{0,345},{0,515}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/editbox" Type="LineSpace/Editbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,255},{0,5},{0,375},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Edit Box" />
+      </Window>
+      <Window Name="root/StaticImage/disabledCheckedCheckbox" Type="LineSpace/Checkbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,170},{0,125},{0,190}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Marked" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="Selected" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/disabledUncheckedCheckbox" Type="LineSpace/Checkbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,150},{0,125},{0,170}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Unmarked" />
+        <Property Name="Disabled" Value="True" />
+      </Window>
+      <Window Name="root/StaticImage/ComboEditbox" Type="LineSpace/ComboEditbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,630},{0,5},{0,790},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+      </Window>
+      <Window Name="root/StaticImage/disabledComboBox" Type="LineSpace/Combobox">
+        <Property Name="UnifiedAreaRect" Value="{{0,675},{0,30},{0,795},{0,150}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="ReadOnly" Value="True" />
+        <AutoWindow NameSuffix="__auto_button__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_editbox__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="ReadOnly" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_droplist__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_hscrollbar__">
+            <Property Name="Font" Value="BlueHighway-8" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_vscrollbar__">
+            <Property Name="Font" Value="BlueHighway-8" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/combobox" Type="LineSpace/Combobox">
+        <Property Name="UnifiedAreaRect" Value="{{0,550},{0,30},{0,670},{0,150}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_button__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_editbox__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_droplist__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_hscrollbar__">
+            <Property Name="Font" Value="BlueHighway-8" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_vscrollbar__">
+            <Property Name="Font" Value="BlueHighway-8" />
+            <AutoWindow NameSuffix="__auto_thumb__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_decbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+            <AutoWindow NameSuffix="__auto_incbtn__">
+              <Property Name="Font" Value="BlueHighway-8" />
+            </AutoWindow>
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/Spinner" Type="LineSpace/Spinner">
+        <Property Name="UnifiedAreaRect" Value="{{0,550},{0,60},{0,600},{0,80}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="0" />
+        <Property Name="AutoRenderingSurface" Value="True" />
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="WantsMultiClickEvents" Value="False" />
+          <Property Name="MouseAutoRepeatEnabled" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="WantsMultiClickEvents" Value="False" />
+          <Property Name="MouseAutoRepeatEnabled" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_editbox__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="0" />
+          <Property Name="ValidationString" Value="-?\d*" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/Spinner2" Type="LineSpace/Spinner">
+        <Property Name="UnifiedAreaRect" Value="{{0,610},{0,60},{0,660},{0,80}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="0" />
+        <Property Name="Disabled" Value="True" />
+        <AutoWindow NameSuffix="__auto_decbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="WantsMultiClickEvents" Value="False" />
+          <Property Name="MouseAutoRepeatEnabled" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_incbtn__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="WantsMultiClickEvents" Value="False" />
+          <Property Name="MouseAutoRepeatEnabled" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_editbox__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Text" Value="0" />
+          <Property Name="ValidationString" Value="-?\d*" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/StaticImage" Type="LineSpace/StaticImage">
+        <Property Name="UnifiedAreaRect" Value="{{0,550},{0,85},{0,678},{0,174}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+      </Window>
+      <Window Name="root/StaticImage/StaticText" Type="LineSpace/StaticText">
+        <Property Name="UnifiedAreaRect" Value="{{0,685},{0,60},{0,885},{0,175}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text">Let's talk about text baby. Let's talk about you and me. Let's talk about all the good things and the bad things that maybe. Let's talk aboooout text. Let's talk about text!</Property>
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/MultiColumnList" Type="LineSpace/MultiColumnList">
+        <Property Name="UnifiedAreaRect" Value="{{0,400},{0,500},{0,950},{0,600}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="ColumnHeader" Value="text:Server Name width:{0.33,0} id:0" />
+        <Property Name="ColumnHeader" Value="text:Address width:{0.5,0} id:1" />
+        <Property Name="ColumnHeader" Value="text:Ping width:{0.2,0} id:2" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_listheader__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_seg_0">
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_seg_1">
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_seg_2">
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/MultiLineEditbox" Type="LineSpace/MultiLineEditbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,420},{0,210},{0,620},{0,290}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text"></Property>
+        <Property Name="WordWrap" Value="False" />
+        <Property Name="BlinkCaret" Value="True" />
+        <Property Name="AutoRenderingSurface" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/MultiLineEditbox2" Type="LineSpace/MultiLineEditbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,420},{0,300},{0,620},{0,380}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text">Let's talk about text baby. Let's talk about you and me. Let's talk about all the good things and the bad things that may be. Let's talk aboooout text. Let's talk about text!</Property>
+        <Property Name="ReadOnly" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/MultiLineEditbox3" Type="LineSpace/MultiLineEditbox">
+        <Property Name="UnifiedAreaRect" Value="{{0,420},{0,390},{0,620},{0,470}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text">This is text that belongs to a dsibaled.</Property>
+        <Property Name="Disabled" Value="True" />
+        <Property Name="AutoRenderingSurface" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/Button" Type="LineSpace/Button">
+        <Property Name="UnifiedAreaRect" Value="{{0,800},{0,5},{0,920},{0,25}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Tool Tip on Roll over" />
+        <Property Name="TooltipText" Value="This is a lonely button. :(" />
+      </Window>
+      <Window Name="root/StaticImage/ScrollablePane" Type="LineSpace/ScrollablePane">
+        <Property Name="UnifiedAreaRect" Value="{{0,630},{0,180},{0,830},{0,290}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="ForceHorzScrollbar" Value="True" />
+        <Property Name="ForceVertScrollbar" Value="True" />
+        <AutoWindow NameSuffix="__auto_container__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="MouseInputPropagationEnabled" Value="True" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="AlwaysOnTop" Value="True" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/TabControl" Type="LineSpace/TabControl">
+        <Property Name="UnifiedAreaRect" Value="{{0,5},{0,500},{0,205},{0,620}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="TabHeight" Value="{0,-1}" />
+        <Property Name="TabPanePosition" Value="Bottom" />
+        <AutoWindow NameSuffix="__auto_TabPane__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="EnableTop" Value="1" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_TabPane__Buttons">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="EnableBottom" Value="0" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_TabPane__ScrollLeft">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Visible" Value="False" />
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_TabPane__ScrollRight">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <Property Name="Visible" Value="False" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/Menubar" Type="LineSpace/Menubar">
+        <Property Name="UnifiedAreaRect" Value="{{0,630},{0,300},{0,830},{0,320}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+      </Window>
+      <Window Name="root/StaticImage/Tree" Type="LineSpace/Tree">
+        <Property Name="UnifiedAreaRect" Value="{{0,630},{0,330},{0,830},{0,490}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="ForceHorzScrollbar" Value="True" />
+        <Property Name="ForceVertScrollbar" Value="True" />
+        <AutoWindow NameSuffix="__auto_hscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_vscrollbar__">
+          <Property Name="Font" Value="BlueHighway-8" />
+          <AutoWindow NameSuffix="__auto_thumb__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_decbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+          <AutoWindow NameSuffix="__auto_incbtn__">
+            <Property Name="Font" Value="BlueHighway-8" />
+          </AutoWindow>
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/FrameWindow" Type="LineSpace/FrameWindow">
+        <Property Name="UnifiedAreaRect" Value="{{0,345},{0,60},{0,545},{0,200}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <Property Name="Text" Value="Disabled Frame Window" />
+        <Property Name="Disabled" Value="True" />
+        <Property Name="CaptionFont" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_titlebar__">
+        </AutoWindow>
+        <AutoWindow NameSuffix="__auto_closebutton__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/HorizontalSlider" Type="LineSpace/HorizontalSlider">
+        <Property Name="UnifiedAreaRect" Value="{{0,215},{0,530},{0,385},{0,560}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+      <Window Name="root/StaticImage/HorizontalSlider2" Type="LineSpace/HorizontalSlider">
+        <Property Name="UnifiedAreaRect" Value="{{0,215},{0,570},{0,385},{0,600}}" />
+        <Property Name="Font" Value="BlueHighway-8" />
+        <AutoWindow NameSuffix="__auto_thumb__">
+          <Property Name="Font" Value="BlueHighway-8" />
+        </AutoWindow>
+      </Window>
+    </Window>
+  </Window>
+</GUILayout>

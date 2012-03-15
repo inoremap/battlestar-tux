@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <GUILayout >
-    <Window Type="SleekSpace/FrameWindow" Name="IntroWindow" >
+    <Window Type="LineSpace/FrameWindow" Name="IntroWindow" >
         <Property Name="TitlebarEnabled" Value="True" />
         <Property Name="UnifiedAreaRect" Value="{{0.161914,0},{0.108397,0},{0.832812,0},{0.816412,0}}" />
         <Property Name="CloseButtonEnabled" Value="False" />
-        <Window Type="SleekSpace/Button" Name="IntroWindow/StartScenarioButton" >
+        <Window Type="LineSpace/Button" Name="IntroWindow/StartScenarioButton" >
             <Property Name="Text" Value="Launch Battlestar T.U.X." />
             <Property Name="UnifiedAreaRect" Value="{{0.29083,0},{0.0999099,0},{0.702401,0},{0.177403,0}}" />
         </Window>
-        <Window Type="SleekSpace/Editbox" Name="IntroWindow/UsernameEdit" >
+        <Window Type="LineSpace/Editbox" Name="IntroWindow/UsernameEdit" >
             <Property Name="Font" Value="BlueHighway-12" />
             <Property Name="Text" Value="Username" />
             <Property Name="MaxTextLength" Value="1073741823" />
             <Property Name="UnifiedAreaRect" Value="{{0.0138281,0},{0.911504,0},{0.397744,0},{0.99259,0}}" />
             <Property Name="TextParsingEnabled" Value="False" />
         </Window>
-        <Window Type="SleekSpace/Button" Name="IntroWindow/ExitButton" >
+        <Window Type="LineSpace/Button" Name="IntroWindow/ExitButton" >
             <Property Name="Font" Value="BlueHighway-12" />
             <Property Name="Text" Value="Exit" />
             <Property Name="UnifiedAreaRect" Value="{{0.293159,0},{0.198203,0},{0.700364,0},{0.270305,0}}" />
